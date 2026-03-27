@@ -166,13 +166,12 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
 .sl-item{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--dim)}
 .sl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
-
 /* 하단 고정 배너 스타일 */
 .ad-container { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 420px; height: 60px; background: var(--bg2); border-top: 1px solid var(--gb); display: none; align-items: center; justify-content: center; z-index: 2000; }
 .ad-text { font-size: 10px; color: var(--muted); letter-spacing: 1px; }
 
 /* 광고가 화면을 가리지 않게 하단 여백 추가 */
-.main-inner, .calc-inner, .app, .unse-inner { padding-bottom: 80px !important; }
+.main-wrap, .scr-inner { padding-bottom: 80px !important; }
 </style>
 </head>
 <body>
@@ -489,11 +488,11 @@ function buildPrompt(d){
 (작성 방식 예시: 건강 면에서는 오행의 불균형으로 인한 주의가 필요합니다. 일간 을목(乙木)이 겨울 축월(丑月)에 태어나 차가운 기운이 강하고, 금(金) 기운이 강하여 목(木) 기운이 손상되기 쉽습니다. 이는 간, 담, 신경계통의 약화를 의미할 수 있으며, 스트레스에 취약해질 수 있습니다... 특히 상관견관(傷官見官)의 구조는 심리적인 압박감이나 스트레스를 유발하기 쉬워 신경성 질환이나 소화기 계통의 문제를 겪을 수 있습니다. 평소 규칙적인 생활 습관과 균형 잡힌 식단으로 건강을 관리하고, 충분한 휴식과 명상, 취미 활동 등을 통해 스트레스를 해소하는 것이 중요합니다.)`;
 }
 
+/* ── ❗ 최적화 1: 평생 사주풀이 캐싱 (API 절약) ── */
 async function reqAI(){
   if(!LD){alert('먼저 사주를 계산해주세요');return;}
   const btn=document.getElementById('bai');
   btn.disabled=true;
-  btn.innerHTML='<span>&#10022;</span> 풀이를 받는 중...';
   
   const panel=document.getElementById('aip');
   panel.classList.add('show');
@@ -501,8 +500,22 @@ async function reqAI(){
   document.getElementById('aierr').style.display='none';
   document.getElementById('aitabs').innerHTML='';
   document.getElementById('aisecs').innerHTML='';
-  
   panel.scrollIntoView({behavior:'smooth',block:'start'});
+
+  // 캐시 키 생성 (생년월일시_성별)
+  const cacheKey = 'saju_' + LD.sstr.replace(/\s/g,'') + '_' + LD.gen;
+  let sajuCache = JSON.parse(localStorage.getItem('saju_cache') || '{}');
+
+  // 이미 캐시가 있으면 API 호출 없이 바로 보여줌
+  if(sajuCache[cacheKey]) {
+    setTimeout(function() {
+      document.getElementById('aild').style.display='none';
+      renderSajuResult(sajuCache[cacheKey]);
+      btn.innerHTML='<span>&#10022;</span> 풀이 다시 받기';
+      btn.disabled=false;
+    }, 800); // 0.8초 딜레이로 자연스러운 연출
+    return;
+  }
   
   const msgs=['사주를 읽는 중...','오행을 분석하는 중...','천간지지를 살피는 중...','풀이를 작성하는 중...'];
   let mi=0;
@@ -518,8 +531,6 @@ async function reqAI(){
   
   function showE(msg,det){
     stopL();
-    document.getElementById('aitabs').innerHTML='';
-    document.getElementById('aisecs').innerHTML='';
     const e=document.getElementById('aierr');
     e.style.display='block';
     e.innerHTML='<div style="font-size:18px;margin-bottom:8px">&#9888;</div><div>'+msg+'</div>'+(det?'<div style="font-size:11px;margin-top:6px;opacity:.6;word-break:break-all">'+det+'</div>':'');
@@ -537,7 +548,6 @@ async function reqAI(){
       body:JSON.stringify({
         model:'gemini',
         max_tokens:8000,
-        // 💡 원래 쓰시던 system 프롬프트로 복구해 두었습니다!
         system:'당신은 한국 전통 사주명리학 전문가입니다. 반드시 [TOTAL] [NATURE] [WEALTH] [LOVE] [HEALTH] 태그를 정확히 사용하세요.',
         messages:[{role:'user',content:buildPrompt(LD)}]
       })
@@ -558,49 +568,42 @@ async function reqAI(){
   }
   
   let data;
-  try{
-    data=await res.json();
-  }catch(e){
-    showE('응답 파싱 실패',e.message);
-    return;
-  }
+  try{data=await res.json();}catch(e){showE('응답 파싱 실패',e.message);return;}
   
   const raw=data.content&&data.content[0]?data.content[0].text||'':'';
-  if(!raw){
-    showE('응답이 비어있습니다','');
-    return;
-  }
+  if(!raw){showE('응답이 비어있습니다','');return;}
   
   const TAGS = [{tag:'TOTAL',id:'total'}, {tag:'NATURE',id:'nature'}, {tag:'WEALTH',id:'wealth'}, {tag:'LOVE',id:'love'}, {tag:'HEALTH',id:'health'}];
   const secs = { total: '', nature: '', wealth: '', love: '', health: '' };
   let tagFound = false;
 
   for (let i = 0; i < TAGS.length; i++) {
-    const regex = new RegExp(`\\[?${TAGS[i].tag}\\]?`, 'i');
+    // ❗ 공백 방어 정규식으로 유연성 추가
+    const regex = new RegExp(`\\[?${TAGS[i].tag}\\]?\\s*([\\s\\S]*?)\\s*\\[?\\/${TAGS[i].tag}\\]?`, 'i');
     const match = raw.match(regex);
-    if (!match) {
+    if (match && match[1]) {
+      tagFound = true;
+      secs[TAGS[i].id] = match[1].replace(/^[^가-힣a-zA-Z0-9]+/, '').trim();
+    } else {
       secs[TAGS[i].id] = '내용을 준비 중이거나 분석할 수 없습니다.';
-      continue;
     }
-    tagFound = true;
-    let s = match.index + match[0].length;
-    let e = raw.length;
-    for (let j = i + 1; j < TAGS.length; j++) {
-      const nextMatch = raw.slice(s).match(new RegExp(`\\[?${TAGS[j].tag}\\]?`, 'i'));
-      if (nextMatch) {
-        e = s + nextMatch.index;
-        break;
-      }
-    }
-    secs[TAGS[i].id] = raw.slice(s, e).replace(/^[^가-힣a-zA-Z0-9]+/, '').trim();
   }
 
-  if (!tagFound) {
-    secs['total'] = raw || '풀이 내용을 찾을 수 없습니다.';
-  }
+  if (!tagFound) secs['total'] = raw || '풀이 내용을 찾을 수 없습니다.';
 
   stopL();
 
+  // 성공적으로 파싱된 데이터를 캐시에 저장
+  sajuCache[cacheKey] = secs;
+  localStorage.setItem('saju_cache', JSON.stringify(sajuCache));
+
+  renderSajuResult(secs);
+  btn.innerHTML='<span>&#10022;</span> 풀이 다시 받기';
+  btn.disabled=false;
+}
+
+// ── 사주 결과 화면 그리기 함수 ──
+function renderSajuResult(secs) {
   try {
     const te=document.getElementById('aitabs'),se=document.getElementById('aisecs');
     CATS.forEach(function(cat,i){
@@ -619,7 +622,7 @@ async function reqAI(){
     });
     
     AT='total';
-    for(const tg of TAGS){
+    for(const tg of CATS){
       const el=document.getElementById('atx-'+tg.id);
       if(!el)continue;
       if(tg.id==='total') tyTxt(el, secs[tg.id] || '내용 없음', 10);
@@ -628,9 +631,6 @@ async function reqAI(){
   } catch (err) {
     console.error("화면 그리기 에러:", err);
   }
-  
-  btn.innerHTML='<span>&#10022;</span> 풀이 다시 받기';
-  btn.disabled=false;
 }
 
 function tyTxt(el,text,sp){el.innerHTML='';let i=0;const cur=document.createElement('span');cur.className='cur';el.appendChild(cur);const t=setInterval(function(){if(i>=text.length){clearInterval(t);cur.remove();return;}cur.insertAdjacentText('beforebegin',text[i++]);},sp||12);}
@@ -669,7 +669,7 @@ function renderMainRecent(){
 }
 function loadAndGo(i){ldH(i);goScreen('calcScreen');}
 
-/* ── 광고 로직 (에러 방지 안전 버전) ── */
+/* ── 스플래시 및 광고 ── */
 async function initAdMob() {
   try {
     if (typeof window.capacitorAdMob === 'undefined') return;
@@ -684,9 +684,8 @@ async function initAdMob() {
   } catch(e) { console.log("AdMob 에러:", e); }
 }
 
-/* ── 스플래시 및 광고 실행 ── */
-window.addEventListener('load',function(){
-  var ad = document.getElementById('adBanner');
+window.addEventListener('load', function(){
+  const ad = document.getElementById('adBanner');
   if(ad) ad.style.display = 'none';
 
   try { 
@@ -697,14 +696,15 @@ window.addEventListener('load',function(){
 
   setTimeout(function(){
     try {
-      goScreen('mainScreen');
-      renderMainRecent();
+      goMain(); 
     } catch(e) { console.log("화면 전환 에러:", e); }
     
     if(ad) ad.style.display = 'flex';
     initAdMob();
-  },1800);
+  }, 1800);
 });
+
+try { buildPickers(); rdH(); } catch(e) {}
 
 /* ══════════════════════════════════
    운세 화면
@@ -941,9 +941,60 @@ function buildUPrompt(d,type,target){
   ].join('\n');
 }
 
-/* ── AI 운세 요청 ── */
+/* ── ❗ 최적화 2 & 3: 운세 캐싱 및 롤오버 (날짜 넘어가면 재활용) ── */
 async function reqUnseAI(target){
   var d=uData;
+  var cacheKey = 'unse_' + d.sstr.replace(/\s/g,'') + '_' + d.gen;
+  var unseCache = JSON.parse(localStorage.getItem('unse_cache') || '{}');
+  var userCache = unseCache[cacheKey] || {};
+
+  var todayObj = new Date();
+  var todayStr = todayObj.getFullYear() + '-' + (todayObj.getMonth()+1) + '-' + todayObj.getDate();
+  var tomorrowObj = new Date(todayObj.getTime() + 86400000);
+  var tomorrowStr = tomorrowObj.getFullYear() + '-' + (tomorrowObj.getMonth()+1) + '-' + tomorrowObj.getDate();
+
+  var finalScores = null;
+  var finalTexts = null;
+  var needFetch = true;
+
+  if (UNSE_TYPE === 'today') {
+    if (userCache.todayDate === todayStr && userCache.todayData) {
+      // 이미 오늘 운세 캐시가 있음
+      finalScores = userCache.todayData.scores; 
+      finalTexts = userCache.todayData.texts; 
+      needFetch = false;
+    } else if (userCache.tomorrowDate === todayStr && userCache.tomorrowData) {
+      // 롤오버: 어제 받아둔 '내일의 운세'가 오늘 날짜와 일치함!
+      userCache.todayDate = todayStr;
+      userCache.todayData = userCache.tomorrowData;
+      userCache.tomorrowDate = null; // 사용한 내일의 운세는 비움
+      userCache.tomorrowData = null;
+      unseCache[cacheKey] = userCache;
+      localStorage.setItem('unse_cache', JSON.stringify(unseCache));
+      
+      finalScores = userCache.todayData.scores; 
+      finalTexts = userCache.todayData.texts; 
+      needFetch = false;
+    }
+  } else { // tomorrow
+    if (userCache.tomorrowDate === tomorrowStr && userCache.tomorrowData) {
+      // 이미 내일 운세 캐시가 있음
+      finalScores = userCache.tomorrowData.scores; 
+      finalTexts = userCache.tomorrowData.texts; 
+      needFetch = false;
+    }
+  }
+
+  // 캐시된 데이터가 있으면 API 호출 없이 렌더링
+  if (!needFetch) {
+    setTimeout(function(){
+      document.getElementById('uLd').style.display='none';
+      renderUnseResult(finalScores, finalTexts);
+    }, 800); // 부드러운 화면 전환을 위해 약간의 딜레이
+    return;
+  }
+
+  // 데이터가 없으면 API 통신
   var msgs=['서버를 연결하는 중...','일진을 분석하는 중...','합충을 계산하는 중...','운세를 작성하는 중...'];
   var mi=0;
   var lv=setInterval(function(){var e=document.getElementById('uLdTxt');if(e)e.textContent=msgs[mi++%msgs.length];},1800);
@@ -968,14 +1019,31 @@ async function reqUnseAI(target){
   var raw=(data.content&&data.content[0])?data.content[0].text||'':'';
   if(!raw){showE('응답이 비어있습니다','');return;}
 
-  function pScore(tag){var m=raw.match(new RegExp('\\['+tag+'_SCORE\\](\\d+)\\[/'+tag+'_SCORE\\]','i'));return m?Math.min(100,Math.max(0,parseInt(m[1]))):50;}
-  function pText(tag){var m=raw.match(new RegExp('\\['+tag+'\\]([\\s\\S]*?)\\[/'+tag+'\\]','i'));return m?m[1].trim():'내용을 받지 못했습니다.';}
+  // ❗ 운세 정규식 안정성 강화 (띄어쓰기 예외 처리)
+  function pScore(tag){var m=raw.match(new RegExp('\\['+tag+'_SCORE\\]\\s*(\\d+)\\s*\\[/'+tag+'_SCORE\\]','i'));return m?Math.min(100,Math.max(0,parseInt(m[1]))):50;}
+  function pText(tag){var m=raw.match(new RegExp('\\['+tag+'\\]([\\s\\S]*?)\\[/'+tag+'\\]','i'));return m?m[1].trim():'내용을 분석할 수 없습니다.';}
 
   var scores={overall:pScore('OVERALL'),money:pScore('MONEY'),love:pScore('LOVE'),work:pScore('WORK'),health:pScore('HEALTH')};
   var texts={overall:pText('OVERALL'),money:pText('MONEY'),love:pText('LOVE'),work:pText('WORK'),health:pText('HEALTH')};
 
   stopL();
 
+  // API에서 받아온 결과를 캐시에 저장
+  if(UNSE_TYPE === 'today'){
+     userCache.todayDate = todayStr;
+     userCache.todayData = {scores: scores, texts: texts};
+  } else {
+     userCache.tomorrowDate = tomorrowStr;
+     userCache.tomorrowData = {scores: scores, texts: texts};
+  }
+  unseCache[cacheKey] = userCache;
+  localStorage.setItem('unse_cache', JSON.stringify(unseCache));
+
+  renderUnseResult(scores, texts);
+}
+
+// ── 운세 결과 화면 그리기 함수 ──
+function renderUnseResult(scores, texts) {
   var tc=scores.overall;
   var tcol=tc>=80?'#4a9a6a':tc>=60?'var(--gold2)':tc>=40?'#e8a090':'#e09090';
   var tel=document.getElementById('uTotalScore');tel.textContent=tc;tel.style.color=tcol;
@@ -994,7 +1062,6 @@ async function reqUnseAI(target){
     return '<div class="sl-item"><div class="sl-dot" style="background:'+s.color+'"></div><span>'+s.lbl+'</span><strong style="color:var(--text)">'+scores[s.id]+'</strong></div>';
   }).join('');
 
-  var idMap={overall:'OVERALL',money:'MONEY',love:'LOVE',work:'WORK',health:'HEALTH'};
   var te=document.getElementById('uTabs'),se=document.getElementById('uSecs');
   scoreArr.forEach(function(cat,i){
     var tab=document.createElement('button');
@@ -1002,6 +1069,7 @@ async function reqUnseAI(target){
     tab.textContent=cat.lbl+' '+scores[cat.id];
     tab.onclick=function(){uSwTab(cat.id);};
     tab.id='utb-'+cat.id;te.appendChild(tab);
+    
     var sec=document.createElement('div');
     sec.className='aisec'+(i===0?' show':'');sec.id='usc-'+cat.id;
     var sv=scores[cat.id];
@@ -1012,11 +1080,13 @@ async function reqUnseAI(target){
       +'</div><div class="aitxt" id="utx-'+cat.id+'"></div>';
     se.appendChild(sec);
   });
+  
   scoreArr.forEach(function(cat,i){
     var el=document.getElementById('utx-'+cat.id);if(!el)return;
     if(i===0)tyTxt(el,texts[cat.id],10);else el.textContent=texts[cat.id];
   });
 }
+
 function uSwTab(sid){
   document.querySelectorAll('#uTabs .aitab').forEach(function(t){t.className='aitab'+(t.id==='utb-'+sid?' on':'');});
   document.querySelectorAll('#uSecs .aisec').forEach(function(s){s.className='aisec'+(s.id==='usc-'+sid?' show':'');});

@@ -5,22 +5,61 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>만점백과</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
-
-<div class="ad-container" id="adBanner">
-  <div class="ad-text">ADVERTISEMENT</div>
-</div>
-
 <style>
-
+/* ═══════════════ [1] 공통 스타일 ═══════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a26;--gold:#c8a96e;--gold2:#e8c98a;--gb:rgba(200,169,110,0.3);--text:#f0ead8;--dim:rgba(240,234,216,0.5);--muted:rgba(240,234,216,0.3);--ih:44px;}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
+
+/* ═══════════════ [2] 화면 전환 시스템 ═══════════════ */
+.screen{position:fixed;inset:0;background:var(--bg);overflow-y:auto;overflow-x:hidden;transition:transform .4s cubic-bezier(.4,0,.2,1),opacity .4s;-webkit-overflow-scrolling:touch; z-index:1;}
+.screen.hidden{transform:translateX(100%);pointer-events:none;opacity:0}
+.screen.active{transform:translateX(0);opacity:1}
+
+/* ═══════════════ [3] 광고 배너 스타일 (추가됨) ═══════════════ */
+.ad-container {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 420px;
+  height: 60px;
+  background: var(--bg2);
+  border-top: 1px solid var(--gb);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  display: none; /* 초기에는 숨김 */
+}
+.ad-text { font-size: 10px; color: var(--muted); letter-spacing: 1px; }
+
+/* 광고 공간 확보를 위한 여백 */
+.main-inner, .calc-inner, .app, .unse-inner { padding-bottom: 80px !important; }
+
+/* ═══════════════ [4] 각 화면별 디자인 ═══════════════ */
+/* 스플래시 */
+#splash{display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);z-index:100}
+.sp-sym{font-size:48px;letter-spacing:12px;color:var(--gold);font-family:'Noto Serif KR',serif;font-weight:300;animation:spIn 1s ease forwards;opacity:0}
+.sp-title{font-family:'Noto Serif KR',serif;font-size:32px;font-weight:600;color:var(--gold2);letter-spacing:6px;margin-top:12px;animation:spIn 1s .3s ease forwards;opacity:0}
+@keyframes spIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* 메인 메뉴 */
+.main-inner{max-width:420px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;padding-bottom:32px}
+.main-hdr{text-align:center;padding:52px 24px 28px;position:relative}
+.main-title{font-family:'Noto Serif KR',serif;font-size:28px;font-weight:700;color:var(--gold2);letter-spacing:5px}
+.menu-section{padding:0 16px}
+.menu-label{font-size:10px;color:var(--muted);letter-spacing:3px;margin-bottom:12px}
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+.menu-card{background:var(--bg2);border:1px solid var(--gb);border-radius:16px;padding:20px 16px;cursor:pointer;position:relative}
+.menu-card.main-card{grid-column:1/-1;display:flex;align-items:center;gap:16px}
+.mc-title{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:600;color:var(--gold2)}
+
+/* 만세력 UI */
 .app{max-width:420px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
 .hdr{text-align:center;padding:32px 24px 16px}
-.hdr::after{content:'';display:block;width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:14px auto 0}
-.hdr-sym{font-size:26px;letter-spacing:8px;color:var(--gold);font-family:'Noto Serif KR',serif;font-weight:300;opacity:.8;margin-bottom:6px}
 .hdr-ttl{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:600;color:var(--gold2);letter-spacing:4px}
-.hdr-sub{font-size:11px;color:var(--muted);letter-spacing:2px;margin-top:4px}
 .card{margin:0 16px 14px;background:var(--bg2);border:1px solid var(--gb);border-radius:16px;overflow:hidden}
 .srow{display:flex;justify-content:space-between;padding:14px 16px 8px;gap:10px}
 .tg{display:flex;background:var(--bg3);border:1px solid var(--gb);border-radius:10px;overflow:hidden;flex:1}
@@ -172,25 +211,22 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
 .sl-item{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--dim)}
 .sl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
-
 /* 하단 고정 배너 스타일 */
 .ad-container { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 420px; height: 60px; background: var(--bg2); border-top: 1px solid var(--gb); display: none; align-items: center; justify-content: center; z-index: 2000; }
 .ad-text { font-size: 10px; color: var(--muted); letter-spacing: 1px; }
 
 /* 광고가 화면을 가리지 않게 하단 여백 추가 */
-.main-inner, .calc-inner, .app, .unse-inner { padding-bottom: 80px !important; }
+.main-wrap, .scr-inner { padding-bottom: 80px !important; }
 </style>
 </head>
 <body>
 
-<!-- 스플래시 -->
 <div id="splash" class="screen active">
   <div class="sp-sym">&#9776; &#9777; &#9778; &#9779;</div>
   <div class="sp-ttl">&#47564;&#51216;&#48177;&#44284;</div>
   <div class="sp-sub">AI &#49324;&#51452; &#54620;&#47749;&#47532;</div>
 </div>
 
-<!-- 메인화면 -->
 <div id="mainScreen" class="screen hidden">
   <div class="main-wrap">
     <div class="main-hdr">
@@ -230,7 +266,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
   </div>
 </div>
 
-<!-- 사주보기 화면 -->
 <div id="calcScreen" class="screen hidden">
   <div class="scr-inner">
     <div class="topbar">
@@ -292,7 +327,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
   </div>
 </div>
 
-<!-- 운세 화면 -->
 <div id="unseScreen" class="screen hidden">
   <div class="scr-inner">
     <div class="topbar">
@@ -301,18 +335,15 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
     </div>
     <div style="padding:0 16px 40px">
 
-      <!-- 입력 탭 -->
       <div class="unse-tab-wrap" style="margin-bottom:12px">
         <button class="tb on" id="uTabRec" onclick="uMode('recent')">&#51265;&#44540; &#49324;&#51452;</button>
         <button class="tb" id="uTabDir" onclick="uMode('direct')">&#51649;&#51217; &#51077;&#47141;</button>
       </div>
 
-      <!-- 최근 사주 목록 -->
       <div id="uRecentWrap">
         <div id="uRecentList"></div>
       </div>
 
-      <!-- 직접 입력 -->
       <div id="uDirectWrap" style="display:none">
         <div class="card" style="margin:0 0 8px">
           <div style="display:flex;justify-content:space-between;padding:10px 16px 6px;gap:10px">
@@ -338,9 +369,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
         <button onclick="uConfirm()" style="width:100%;height:46px;background:linear-gradient(135deg,#8b7340,#c8a96e,#8b7340);border:none;border-radius:12px;color:#1a1208;font-family:'Noto Serif KR',serif;font-size:15px;font-weight:700;letter-spacing:3px;cursor:pointer;margin-bottom:12px">&#50868; &#49464; &#48372; &#44592;</button>
       </div>
 
-      <!-- 결과 -->
       <div id="uResult" style="display:none">
-        <!-- 프로필 카드 -->
         <div style="background:var(--bg2);border:1px solid var(--gb);border-radius:14px;padding:14px 16px;margin-bottom:14px">
           <div style="font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:6px" id="uDateLbl"></div>
           <div style="display:flex;align-items:center;justify-content:space-between">
@@ -354,25 +383,25 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
             </div>
           </div>
         </div>
-        <!-- 레이더 차트 -->
         <div class="radar-wrap">
           <svg id="uRadar" viewBox="0 0 300 280" style="width:100%;max-width:300px"></svg>
           <div class="score-legend" id="uLegend"></div>
         </div>
-        <!-- 로딩 -->
         <div id="uLd" style="text-align:center;padding:28px 16px;display:none">
           <div class="aidots" style="margin-bottom:10px"><span></span><span></span><span></span></div>
           <div style="font-size:12px;color:var(--muted);letter-spacing:2px" id="uLdTxt">&#50868;&#49464;&#47484; &#48516;&#49437;&#54616;&#45716; &#51473;...</div>
         </div>
-        <!-- 에러 -->
         <div id="uErr" class="aierr" style="display:none"></div>
-        <!-- 탭 -->
         <div id="uTabs" class="aitabs"></div>
         <div id="uSecs"></div>
       </div>
 
     </div>
   </div>
+</div>
+
+<div class="ad-container" id="adBanner">
+  <div class="ad-text">ADVERTISEMENT</div>
 </div>
 
 <script>
@@ -463,7 +492,6 @@ function calc(){
   svH({cal:AS.cal,gen:AS.gen,leap:AS.leap,year:yV,month:mV,day:dV,hour:hV,min:minV,gY,gM,gD,lstr,saju:CH[ys]+JH[yb]+' '+CH[ms]+JH[mb]+' '+CH[ds]+JH[db]+' '+CH[hs]+JH[hb]});
 }
 
-// 💡 원래 쓰시던 프롬프트 지시사항이 그대로 유지된 곳입니다!
 function buildPrompt(d){
   const g = d.gen === 'male' ? '남성' : '여성';
   const il = CG[d.ds] + '(' + CH[d.ds] + ')';
@@ -553,7 +581,6 @@ async function reqAI(){
       body:JSON.stringify({
         model:'gemini',
         max_tokens:8000,
-        // 💡 원래 쓰시던 system 프롬프트로 복구해 두었습니다!
         system:'당신은 한국 전통 사주명리학 전문가입니다. 반드시 [TOTAL] [NATURE] [WEALTH] [LOVE] [HEALTH] 태그를 정확히 사용하세요.',
         messages:[{role:'user',content:buildPrompt(LD)}]
       })
@@ -658,8 +685,6 @@ function dlH(i){const h=gh();h.splice(i,1);localStorage.setItem('msr_h',JSON.str
 function rdH(){const h=gh(),sec=document.getElementById('hsec'),list=document.getElementById('hlist');if(!h.length){sec.style.display='none';return;}sec.style.display='block';list.innerHTML=h.map(function(e,i){return '<div class="hcard"><div class="hcl" onclick="ldH('+i+')"><div class="hcd">양력 '+e.gY+'년 '+p2(e.gM)+'월 '+p2(e.gD)+'일 '+p2(e.hour)+'시</div>'+(e.lstr?'<div class="hclu">'+e.lstr+'</div>':'')+'<div class="hcs">'+e.saju+'</div></div><span class="hcb '+(e.gen==='male'?'m':'f')+'">'+(e.gen==='male'?'남 ♂':'여 ♀')+'</span><button class="hcdel" onclick="dlH('+i+');event.stopPropagation()">×</button></div>';}).join('');}
 function ldH(i){const h=gh()[i];if(!h)return;setCal(h.cal);setGen(h.gen);if(h.cal==='lunar'&&h.leap){document.getElementById('lchk').checked=true;AS.leap=true;}function sv(id,val){const d=pd.find(function(x){return x.id===id;});if(!d)return;const idx=d.items.findIndex(function(x){return x.v===val;});if(idx>=0)setIdx(id,idx,pi[id],true);}sv('year',h.year);sv('month',h.month);sv('day',h.day);sv('hour',h.hour);sv('min',h.min);window.scrollTo({top:0,behavior:'smooth'});}
 
-buildPickers();rdH();
-
 /* ── 화면 전환 ── */
 function goScreen(id){
   document.querySelectorAll('.screen').forEach(function(s){
@@ -687,13 +712,10 @@ function renderMainRecent(){
 }
 function loadAndGo(i){ldH(i);goScreen('calcScreen');}
 
-/* ── 스플래시 ── */
-/* 광고 실행 함수 (에러 방지 안전 버전) */
+/* ── 스플래시 및 광고 ── */
 async function initAdMob() {
   try {
-    // 플러그인이 없으면 에러 내지 말고 조용히 종료!
     if (typeof window.capacitorAdMob === 'undefined') return;
-
     const { AdMob, BannerAdSize, BannerAdPosition } = window.capacitorAdMob;
     await AdMob.initialize();
     await AdMob.showBanner({
@@ -705,7 +727,6 @@ async function initAdMob() {
   } catch(e) { console.log("AdMob 에러:", e); }
 }
 
-/* 스플래시 후 광고 켜기 */
 window.addEventListener('load', function(){
   const ad = document.getElementById('adBanner');
   if(ad) ad.style.display = 'none';
@@ -717,19 +738,17 @@ window.addEventListener('load', function(){
   } catch(e) {}
 
   setTimeout(function(){
-    // 화면 먼저 무조건 넘기기!
+    // 화면 넘기기
     try {
-      showScreen('mainScreen');
-      renderRecent();
+      goMain(); 
     } catch(e) { console.log("화면 전환 에러:", e); }
     
-    // 그 다음 광고 켜기
+    // 광고 켜기
     if(ad) ad.style.display = 'flex';
     initAdMob();
   }, 1800);
 });
 
-// 기존 피커 및 기록 불러오기 (절대 지우지 마!)
 try { buildPickers(); rdH(); } catch(e) {}
 
 /* ══════════════════════════════════

@@ -340,7 +340,7 @@ async function reqAI(){
   const ctrl=new AbortController(),tid=setTimeout(function(){ctrl.abort();},40000);
   let res;
   try{
-    res = await fetch('https://my-saju-api.onrender.com',{
+    res = await fetch('/api/saju',{
       method:'POST',
       signal:ctrl.signal,
       headers:{'Content-Type':'application/json'},

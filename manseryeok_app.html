@@ -3,9 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>만세력</title>
+<title>만점백과</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+
+<div class="ad-container" id="adBanner">
+  <div class="ad-text">ADVERTISEMENT</div>
+</div>
+
 <style>
+
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a26;--gold:#c8a96e;--gold2:#e8c98a;--gb:rgba(200,169,110,0.3);--text:#f0ead8;--dim:rgba(240,234,216,0.5);--muted:rgba(240,234,216,0.3);--ih:44px;}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
@@ -108,69 +114,269 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
 .hcb.m{background:rgba(74,126,200,.2);color:#7ab0f0}.hcb.f{background:rgba(200,74,126,.2);color:#f07ab0}
 .hcdel{background:transparent;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:4px;flex-shrink:0;line-height:1}
 ::-webkit-scrollbar{display:none}
+
+/* ── 화면 전환 ── */
+.screen{position:fixed;inset:0;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch;transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.screen.hidden{transform:translateX(100%);pointer-events:none}
+.screen.active{transform:translateX(0)}
+
+/* ── 스플래시 ── */
+#splash{display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100}
+.sp-sym{font-size:44px;letter-spacing:10px;color:var(--gold);font-family:'Noto Serif KR',serif;font-weight:300;animation:fadeUp 1s ease forwards;opacity:0}
+.sp-ttl{font-family:'Noto Serif KR',serif;font-size:30px;font-weight:700;color:var(--gold2);letter-spacing:6px;margin-top:10px;animation:fadeUp 1s .3s ease forwards;opacity:0}
+.sp-sub{font-size:11px;color:var(--muted);letter-spacing:3px;margin-top:8px;animation:fadeUp 1s .6s ease forwards;opacity:0}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── 메인화면 ── */
+#mainScreen{z-index:10}
+.main-wrap{max-width:420px;margin:0 auto;padding-bottom:40px}
+.main-hdr{text-align:center;padding:52px 24px 24px}
+.main-hdr::after{content:'';display:block;width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:16px auto 0}
+.main-sym{font-size:20px;letter-spacing:6px;color:var(--gold);font-family:'Noto Serif KR',serif;opacity:.7;margin-bottom:8px}
+.main-ttl{font-family:'Noto Serif KR',serif;font-size:28px;font-weight:700;color:var(--gold2);letter-spacing:5px}
+.main-sub{font-size:11px;color:var(--muted);letter-spacing:2px;margin-top:6px}
+.msec{padding:0 16px;margin-bottom:20px}
+.msec-lbl{font-size:10px;color:var(--muted);letter-spacing:3px;margin-bottom:10px;padding-left:2px}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mcard{background:var(--bg2);border:1px solid var(--gb);border-radius:16px;padding:18px 16px;cursor:pointer;transition:background .2s;position:relative;overflow:hidden}
+.mcard:active{background:var(--bg3)}
+.mcard.wide{grid-column:1/-1;display:flex;align-items:center;gap:16px;padding:20px 20px}
+.mcard.dim{opacity:.45;cursor:not-allowed}
+.mc-badge{position:absolute;top:10px;right:10px;font-size:9px;background:rgba(200,169,110,.2);color:var(--gold);padding:2px 7px;border-radius:8px;letter-spacing:1px}
+.mc-ico{font-size:26px;margin-bottom:8px;display:block}
+.mc-ico-lg{font-size:34px;flex-shrink:0}
+.mc-ttl{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:600;color:var(--gold2);letter-spacing:1px;margin-bottom:3px}
+.mc-ttl-lg{font-family:'Noto Serif KR',serif;font-size:17px;font-weight:700;color:var(--gold2);letter-spacing:2px;margin-bottom:4px}
+.mc-desc{font-size:11px;color:var(--dim);line-height:1.6}
+.mc-arr{position:absolute;right:14px;bottom:14px;font-size:16px;color:var(--muted)}
+.rec-card{background:var(--bg2);border:1px solid var(--gb);border-radius:12px;padding:12px 16px;margin-bottom:8px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .2s}
+.rec-card:active{background:var(--bg3)}
+.rec-saju{font-family:'Noto Serif KR',serif;font-size:15px;color:var(--gold2);letter-spacing:4px;margin-bottom:3px}
+.rec-date{font-size:11px;color:var(--dim)}
+.rec-gen{font-size:11px;padding:3px 8px;border-radius:10px}
+.rec-gen.m{background:rgba(74,126,200,.2);color:#7ab0f0}
+.rec-gen.f{background:rgba(200,74,126,.2);color:#f07ab0}
+
+/* ── 공통 상단바 ── */
+#calcScreen,#unseScreen{z-index:5}
+.topbar{display:flex;align-items:center;padding:16px 16px 8px;gap:12px;max-width:420px;margin:0 auto}
+.back-btn{width:36px;height:36px;background:transparent;border:1px solid var(--gb);border-radius:10px;color:var(--gold);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1}
+.back-btn:active{background:var(--bg3)}
+.topbar-ttl{font-family:'Noto Serif KR',serif;font-size:16px;color:var(--gold2);letter-spacing:3px}
+.scr-inner{max-width:420px;margin:0 auto}
+
+/* ── 운세 화면 ── */
+.unse-tab-wrap{display:flex;background:var(--bg3);border:1px solid var(--gb);border-radius:10px;overflow:hidden}
+.radar-wrap{background:var(--bg2);border:1px solid var(--gb);border-radius:14px;padding:16px;margin-bottom:14px;text-align:center}
+.score-legend{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 14px;margin-top:10px}
+.sl-item{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--dim)}
+.sl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+
+/* 하단 고정 배너 스타일 */
+.ad-container { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 420px; height: 60px; background: var(--bg2); border-top: 1px solid var(--gb); display: none; align-items: center; justify-content: center; z-index: 2000; }
+.ad-text { font-size: 10px; color: var(--muted); letter-spacing: 1px; }
+
+/* 광고가 화면을 가리지 않게 하단 여백 추가 */
+.main-inner, .calc-inner, .app, .unse-inner { padding-bottom: 80px !important; }
 </style>
 </head>
 <body>
-<div class="app">
-<div class="hdr">
-  <div class="hdr-sym">&#9776; &#9777; &#9778; &#9779;</div>
-  <div class="hdr-ttl">&#47564;&#49464;&#47141;</div>
-  <div class="hdr-sub">&#8511; &#27603; &#26308;</div>
+
+<!-- 스플래시 -->
+<div id="splash" class="screen active">
+  <div class="sp-sym">&#9776; &#9777; &#9778; &#9779;</div>
+  <div class="sp-ttl">&#47564;&#51216;&#48177;&#44284;</div>
+  <div class="sp-sub">AI &#49324;&#51452; &#54620;&#47749;&#47532;</div>
 </div>
-<div class="card">
-  <div class="srow">
-    <div class="tg">
-      <button class="tb on" id="bSol" onclick="setCal('solar')">&#50577;&#47141;</button>
-      <button class="tb" id="bLun" onclick="setCal('lunar')">&#51020;&#47141;</button>
+
+<!-- 메인화면 -->
+<div id="mainScreen" class="screen hidden">
+  <div class="main-wrap">
+    <div class="main-hdr">
+      <div class="main-sym">&#9776; &#9777; &#9778; &#9779;</div>
+      <div class="main-ttl">&#47564;&#51216;&#48177;&#44284;</div>
+      <div class="main-sub">AI &#49324;&#51452; &#54620;&#47749;&#47532;</div>
     </div>
-    <div class="tg">
-      <button class="tb mon" id="bMal" onclick="setGen('male')">&#45224; &#9794;</button>
-      <button class="tb" id="bFem" onclick="setGen('female')">&#50668; &#9792;</button>
-    </div>
-  </div>
-  <div id="lrow" class="lrow" style="display:none">
-    <label class="llbl">
-      <input type="checkbox" id="lchk" onchange="AS.leap=this.checked">
-      <span>&#50980;&#45813; (&#38970;&#26376;)</span>
-    </label>
-  </div>
-  <div class="pw" id="pw">
-    <div class="phl"></div><div class="pft"></div><div class="pfb"></div>
-  </div>
-</div>
-<div class="bw">
-  <button class="bcalc" onclick="calc()">&#49324; &#51452; &#47480; &#44592;</button>
-</div>
-<div id="result" class="result">
-  <div class="card" style="margin:0 0 12px">
-    <div style="padding:14px 14px 0">
-      <div id="rhdr" class="rhdr"></div>
-      <div id="sg" class="sg"></div>
-      <div id="s1l" class="s1l"></div>
-    </div>
-    <div style="padding:14px">
-      <div id="ohw" class="ohw"></div>
-      <button class="bai" id="bai" onclick="reqAI()">
-        <span>&#10022;</span> &#49324;&#51452; &#54480;&#51060; &#48155;&#44592;
-      </button>
-      <div class="aip" id="aip">
-        <div class="aitabs" id="aitabs"></div>
-        <div id="aild" class="aild" style="display:none">
-          <div class="aidots"><span></span><span></span><span></span></div>
-          <div class="ailtxt" id="ailtxt">&#49324;&#51452;&#47484; &#51213;&#45716; &#51473;...</div>
+    <div class="msec">
+      <div class="msec-lbl">&#49324;&#51452; &#48516;&#49437;</div>
+      <div class="mgrid">
+        <div class="mcard wide" onclick="goScreen('calcScreen')">
+          <span class="mc-ico-lg">&#10022;</span>
+          <div>
+            <div class="mc-ttl-lg">&#49324;&#51452;&#48372;&#44592;</div>
+            <div class="mc-desc">&#49373;&#45380;&#50900;&#51068;&#49884;&#47196; &#45208;&#51032; &#49324;&#51452;&#47484;<br>AI&#44032; &#51221;&#48128; &#48516;&#49437;&#54644;&#46300;&#47629;&#45768;&#45796;</div>
+          </div>
+          <span class="mc-arr">&#8250;</span>
         </div>
-        <div id="aierr" class="aierr" style="display:none"></div>
-        <div id="aisecs"></div>
+        <div class="mcard" onclick="goUnse('today')">
+          <div class="mc-badge">NEW</div>
+          <span class="mc-ico">&#9728;</span>
+          <div class="mc-ttl">&#50724;&#45720;&#51032; &#50868;&#49464;</div>
+          <div class="mc-desc">&#50624;&#45212; &#51312;&#50616;&#44284;<br>&#44ธ&#51077;&#47161; &#54869;&#51064;</div>
+        </div>
+        <div class="mcard" onclick="goUnse('tomorrow')">
+          <div class="mc-badge">NEW</div>
+          <span class="mc-ico">&#9790;</span>
+          <div class="mc-ttl">&#45236;&#51068;&#51032; &#50868;&#49464;</div>
+          <div class="mc-desc">&#45236;&#51068; &#50868;&#44592;&#50752;<br>&#51452;&#51032;&#49324;&#54637;</div>
+        </div>
+      </div>
+    </div>
+    <div class="msec">
+      <div class="msec-lbl">&#52572;&#44540; &#49324;&#51452;&#48372;&#44592;</div>
+      <div id="mainRecent"><div style="text-align:center;padding:20px;font-size:12px;color:var(--muted)">&#50500;&#51649; &#51200;&#51109;&#46108; &#49324;&#51452;&#44032; &#50630;&#49845;&#45768;&#45796;</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 사주보기 화면 -->
+<div id="calcScreen" class="screen hidden">
+  <div class="scr-inner">
+    <div class="topbar">
+      <button class="back-btn" onclick="goScreen('mainScreen')">&#8249;</button>
+      <span class="topbar-ttl">&#49324;&#51452;&#48372;&#44592;</span>
+    </div>
+    <div class="app">
+      <div class="card">
+        <div class="srow">
+          <div class="tg">
+            <button class="tb on" id="bSol" onclick="setCal('solar')">&#50577;&#47141;</button>
+            <button class="tb" id="bLun" onclick="setCal('lunar')">&#51020;&#47141;</button>
+          </div>
+          <div class="tg">
+            <button class="tb mon" id="bMal" onclick="setGen('male')">&#45224; &#9794;</button>
+            <button class="tb" id="bFem" onclick="setGen('female')">&#50668; &#9792;</button>
+          </div>
+        </div>
+        <div id="lrow" class="lrow" style="display:none">
+          <label class="llbl">
+            <input type="checkbox" id="lchk" onchange="AS.leap=this.checked">
+            <span>&#50980;&#45813; (&#38970;&#26376;)</span>
+          </label>
+        </div>
+        <div class="pw" id="pw">
+          <div class="phl"></div><div class="pft"></div><div class="pfb"></div>
+        </div>
+      </div>
+      <div class="bw">
+        <button class="bcalc" onclick="calc()">&#49324; &#51452; &#48372; &#44592;</button>
+      </div>
+      <div id="result" class="result">
+        <div class="card" style="margin:0 0 12px">
+          <div style="padding:14px 14px 0">
+            <div id="rhdr" class="rhdr"></div>
+            <div id="sg" class="sg"></div>
+            <div id="s1l" class="s1l"></div>
+          </div>
+          <div style="padding:14px">
+            <div id="ohw" class="ohw"></div>
+            <button class="bai" id="bai" onclick="reqAI()"><span>&#10022;</span> &#49324;&#51452; &#54480;&#51060; &#48155;&#44592;</button>
+            <div class="aip" id="aip">
+              <div class="aitabs" id="aitabs"></div>
+              <div id="aild" class="aild" style="display:none">
+                <div class="aidots"><span></span><span></span><span></span></div>
+                <div class="ailtxt" id="ailtxt">&#49324;&#51452;&#47484; &#51213;&#45716; &#51473;...</div>
+              </div>
+              <div id="aierr" class="aierr" style="display:none"></div>
+              <div id="aisecs"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="hsec" class="hsec">
+        <div class="hslbl">&#45796;&#47480; &#49373;&#45380;&#50900;&#51068;</div>
+        <div id="hlist"></div>
       </div>
     </div>
   </div>
 </div>
-<div id="hsec" class="hsec">
-  <div class="hslbl">&#45796; &#47480; &#49373; &#45380; &#50900; &#51068;</div>
-  <div id="hlist"></div>
+
+<!-- 운세 화면 -->
+<div id="unseScreen" class="screen hidden">
+  <div class="scr-inner">
+    <div class="topbar">
+      <button class="back-btn" onclick="goScreen('mainScreen')">&#8249;</button>
+      <span class="topbar-ttl" id="unseTopTitle">&#50724;&#45720;&#51032; &#50868;&#49464;</span>
+    </div>
+    <div style="padding:0 16px 40px">
+
+      <!-- 입력 탭 -->
+      <div class="unse-tab-wrap" style="margin-bottom:12px">
+        <button class="tb on" id="uTabRec" onclick="uMode('recent')">&#51265;&#44540; &#49324;&#51452;</button>
+        <button class="tb" id="uTabDir" onclick="uMode('direct')">&#51649;&#51217; &#51077;&#47141;</button>
+      </div>
+
+      <!-- 최근 사주 목록 -->
+      <div id="uRecentWrap">
+        <div id="uRecentList"></div>
+      </div>
+
+      <!-- 직접 입력 -->
+      <div id="uDirectWrap" style="display:none">
+        <div class="card" style="margin:0 0 8px">
+          <div style="display:flex;justify-content:space-between;padding:10px 16px 6px;gap:10px">
+            <div class="tg">
+              <button class="tb on" id="uCalSol" onclick="uSetCal('solar')">&#50577;&#47141;</button>
+              <button class="tb" id="uCalLun" onclick="uSetCal('lunar')">&#51020;&#47141;</button>
+            </div>
+            <div class="tg">
+              <button class="tb mon" id="uGenM" onclick="uSetGen('male')">&#45224; &#9794;</button>
+              <button class="tb" id="uGenF" onclick="uSetGen('female')">&#50668; &#9792;</button>
+            </div>
+          </div>
+          <div id="ulrow" style="display:none;align-items:center;padding:2px 20px 6px;gap:8px">
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dim)">
+              <input type="checkbox" id="ulchk" onchange="uAS.leap=this.checked" style="accent-color:var(--gold);width:16px;height:16px">
+              <span>&#50980;&#45813;</span>
+            </label>
+          </div>
+          <div class="pw" id="upw" style="height:180px">
+            <div class="phl"></div><div class="pft"></div><div class="pfb"></div>
+          </div>
+        </div>
+        <button onclick="uConfirm()" style="width:100%;height:46px;background:linear-gradient(135deg,#8b7340,#c8a96e,#8b7340);border:none;border-radius:12px;color:#1a1208;font-family:'Noto Serif KR',serif;font-size:15px;font-weight:700;letter-spacing:3px;cursor:pointer;margin-bottom:12px">&#50868; &#49464; &#48372; &#44592;</button>
+      </div>
+
+      <!-- 결과 -->
+      <div id="uResult" style="display:none">
+        <!-- 프로필 카드 -->
+        <div style="background:var(--bg2);border:1px solid var(--gb);border-radius:14px;padding:14px 16px;margin-bottom:14px">
+          <div style="font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:6px" id="uDateLbl"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <div style="font-family:'Noto Serif KR',serif;font-size:17px;color:var(--gold2);letter-spacing:4px" id="uSaju"></div>
+              <div style="font-size:11px;color:var(--dim);margin-top:3px" id="uInfo"></div>
+            </div>
+            <div style="text-align:center">
+              <div style="font-size:10px;color:var(--muted);margin-bottom:2px">&#50741;&#50868;</div>
+              <div id="uTotalScore" style="font-size:28px;font-weight:700;color:var(--gold2);font-family:'Noto Serif KR',serif;line-height:1"></div>
+            </div>
+          </div>
+        </div>
+        <!-- 레이더 차트 -->
+        <div class="radar-wrap">
+          <svg id="uRadar" viewBox="0 0 300 280" style="width:100%;max-width:300px"></svg>
+          <div class="score-legend" id="uLegend"></div>
+        </div>
+        <!-- 로딩 -->
+        <div id="uLd" style="text-align:center;padding:28px 16px;display:none">
+          <div class="aidots" style="margin-bottom:10px"><span></span><span></span><span></span></div>
+          <div style="font-size:12px;color:var(--muted);letter-spacing:2px" id="uLdTxt">&#50868;&#49464;&#47484; &#48516;&#49437;&#54616;&#45716; &#51473;...</div>
+        </div>
+        <!-- 에러 -->
+        <div id="uErr" class="aierr" style="display:none"></div>
+        <!-- 탭 -->
+        <div id="uTabs" class="aitabs"></div>
+        <div id="uSecs"></div>
+      </div>
+
+    </div>
+  </div>
 </div>
-</div>
+
 <script>
+
 const CG=['갑','을','병','정','무','기','경','신','임','계'];
 const CH=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
 const JJ=['자','축','인','묘','진','사','오','미','신','유','술','해'];
@@ -340,7 +546,7 @@ async function reqAI(){
   const ctrl=new AbortController(),tid=setTimeout(function(){ctrl.abort();},40000);
   let res;
   try{
-    res = await fetch('/api/saju',{
+    res = await fetch('https://my-saju-api.onrender.com/api/saju',{
       method:'POST',
       signal:ctrl.signal,
       headers:{'Content-Type':'application/json'},
@@ -451,6 +657,396 @@ function svH(e){let h=gh();h=h.filter(function(x){return!(x.gY===e.gY&&x.gM===e.
 function dlH(i){const h=gh();h.splice(i,1);localStorage.setItem('msr_h',JSON.stringify(h));rdH();}
 function rdH(){const h=gh(),sec=document.getElementById('hsec'),list=document.getElementById('hlist');if(!h.length){sec.style.display='none';return;}sec.style.display='block';list.innerHTML=h.map(function(e,i){return '<div class="hcard"><div class="hcl" onclick="ldH('+i+')"><div class="hcd">양력 '+e.gY+'년 '+p2(e.gM)+'월 '+p2(e.gD)+'일 '+p2(e.hour)+'시</div>'+(e.lstr?'<div class="hclu">'+e.lstr+'</div>':'')+'<div class="hcs">'+e.saju+'</div></div><span class="hcb '+(e.gen==='male'?'m':'f')+'">'+(e.gen==='male'?'남 ♂':'여 ♀')+'</span><button class="hcdel" onclick="dlH('+i+');event.stopPropagation()">×</button></div>';}).join('');}
 function ldH(i){const h=gh()[i];if(!h)return;setCal(h.cal);setGen(h.gen);if(h.cal==='lunar'&&h.leap){document.getElementById('lchk').checked=true;AS.leap=true;}function sv(id,val){const d=pd.find(function(x){return x.id===id;});if(!d)return;const idx=d.items.findIndex(function(x){return x.v===val;});if(idx>=0)setIdx(id,idx,pi[id],true);}sv('year',h.year);sv('month',h.month);sv('day',h.day);sv('hour',h.hour);sv('min',h.min);window.scrollTo({top:0,behavior:'smooth'});}
+
+buildPickers();rdH();
+
+/* ── 화면 전환 ── */
+function goScreen(id){
+  document.querySelectorAll('.screen').forEach(function(s){
+    s.classList.remove('active');
+    s.classList.add('hidden');
+  });
+  var el=document.getElementById(id);
+  el.classList.remove('hidden');
+  el.classList.add('active');
+  el.scrollTop=0;
+}
+function goCalc(){goScreen('calcScreen');}
+function goMain(){goScreen('mainScreen');renderMainRecent();}
+
+/* ── 메인 최근 사주 ── */
+function renderMainRecent(){
+  var h=gh(),el=document.getElementById('mainRecent');
+  if(!h.length){el.innerHTML='<div style="text-align:center;padding:20px;font-size:12px;color:var(--muted)">아직 저장된 사주가 없습니다</div>';return;}
+  el.innerHTML=h.map(function(e,i){
+    return '<div class="rec-card" onclick="loadAndGo('+i+')">'
+      +'<div><div class="rec-saju">'+e.saju+'</div><div class="rec-date">'+e.gY+'년 '+p2(e.gM)+'월 '+p2(e.gD)+'일 '+p2(e.hour)+'시</div></div>'
+      +'<div style="display:flex;align-items:center;gap:8px"><span class="rec-gen '+(e.gen==='male'?'m':'f')+'">'+(e.gen==='male'?'남 ♂':'여 ♀')+'</span><span style="color:var(--muted)">›</span></div>'
+      +'</div>';
+  }).join('');
+}
+function loadAndGo(i){ldH(i);goScreen('calcScreen');}
+
+/* ── 스플래시 ── */
+/* 광고 실행 함수 (에러 방지 안전 버전) */
+async function initAdMob() {
+  try {
+    // 플러그인이 없으면 에러 내지 말고 조용히 종료!
+    if (typeof window.capacitorAdMob === 'undefined') return;
+
+    const { AdMob, BannerAdSize, BannerAdPosition } = window.capacitorAdMob;
+    await AdMob.initialize();
+    await AdMob.showBanner({
+      adId: 'ca-app-pub-3940256099942544/6300978111', 
+      adSize: BannerAdSize.BANNER,
+      position: BannerAdPosition.BOTTOM_CENTER,
+      margin: 0, isTesting: true
+    });
+  } catch(e) { console.log("AdMob 에러:", e); }
+}
+
+/* 스플래시 후 광고 켜기 */
+window.addEventListener('load', function(){
+  const ad = document.getElementById('adBanner');
+  if(ad) ad.style.display = 'none';
+
+  try { 
+    if(typeof window.capacitorSplashScreen !== 'undefined') {
+      window.capacitorSplashScreen.SplashScreen.hide(); 
+    }
+  } catch(e) {}
+
+  setTimeout(function(){
+    // 화면 먼저 무조건 넘기기!
+    try {
+      showScreen('mainScreen');
+      renderRecent();
+    } catch(e) { console.log("화면 전환 에러:", e); }
+    
+    // 그 다음 광고 켜기
+    if(ad) ad.style.display = 'flex';
+    initAdMob();
+  }, 1800);
+});
+
+// 기존 피커 및 기록 불러오기 (절대 지우지 마!)
+try { buildPickers(); rdH(); } catch(e) {}
+
+/* ══════════════════════════════════
+   운세 화면
+══════════════════════════════════ */
+var UNSE_TYPE='today';
+var uAS={cal:'solar',gen:'male',leap:false};
+var upd=[],upi={},ups={};
+var uData=null;
+
+var UCATS=[
+  {id:'overall',lbl:'총운',   color:'#c8a96e'},
+  {id:'money',  lbl:'재물운', color:'#4a9a6a'},
+  {id:'love',   lbl:'연애운', color:'#c84a7e'},
+  {id:'work',   lbl:'직업운', color:'#4a7ec8'},
+  {id:'health', lbl:'건강운', color:'#9a6ac8'},
+];
+
+function goUnse(type){
+  UNSE_TYPE=type;
+  document.getElementById('unseTopTitle').textContent=type==='today'?'오늘의 운세':'내일의 운세';
+  goScreen('unseScreen');
+  uMode('recent');
+  renderURecent();
+  document.getElementById('uResult').style.display='none';
+}
+
+function uMode(m){
+  document.getElementById('uTabRec').className='tb'+(m==='recent'?' on':'');
+  document.getElementById('uTabDir').className='tb'+(m==='direct'?' on':'');
+  document.getElementById('uRecentWrap').style.display=m==='recent'?'block':'none';
+  document.getElementById('uDirectWrap').style.display=m==='direct'?'block':'none';
+  if(m==='direct'&&upd.length===0)buildUPickers();
+}
+
+function renderURecent(){
+  var h=gh(),el=document.getElementById('uRecentList');
+  if(!h.length){
+    el.innerHTML='<div style="text-align:center;padding:24px;font-size:12px;color:var(--muted)">저장된 사주가 없습니다<br>직접 입력 탭을 사용해주세요</div>';
+    return;
+  }
+  el.innerHTML=h.map(function(e,i){
+    return '<div onclick="uSelectRecent('+i+')" style="background:var(--bg2);border:1px solid var(--gb);border-radius:12px;padding:12px 16px;margin-bottom:8px;cursor:pointer;display:flex;align-items:center;justify-content:space-between">'
+      +'<div><div style="font-family:\'Noto Serif KR\',serif;font-size:16px;color:var(--gold2);letter-spacing:4px;margin-bottom:3px">'+e.saju+'</div>'
+      +'<div style="font-size:11px;color:var(--dim)">'+e.gY+'년 '+p2(e.gM)+'월 '+p2(e.gD)+'일 '+p2(e.hour)+'시</div></div>'
+      +'<div style="display:flex;align-items:center;gap:8px">'
+      +'<span style="font-size:11px;padding:3px 8px;border-radius:10px;background:'+(e.gen==='male'?'rgba(74,126,200,.2)':'rgba(200,74,126,.2)')+';color:'+(e.gen==='male'?'#7ab0f0':'#f07ab0')+'">'+(e.gen==='male'?'남 ♂':'여 ♀')+'</span>'
+      +'<span style="color:var(--muted);font-size:14px">›</span></div></div>';
+  }).join('');
+}
+
+function uSelectRecent(i){
+  var h=gh()[i];if(!h)return;
+  var gY=h.gY,gM=h.gM,gD=h.gD,hV=h.hour,minV=h.min||0;
+  var s;try{s=calcSaju(gY,gM,gD,hV,minV);}catch(e){alert('사주 계산 오류');return;}
+  var lunar=g2l(gY,gM,gD,hV);
+  var lstr=lunar?'음력 '+lunar.year+'년 '+p2(lunar.month)+'월 '+p2(lunar.day)+'일'+(lunar.isLeap?' (윤달)':''):null;
+  var cnt={목:0,화:0,토:0,금:0,수:0};
+  var cols=[{s:s.ys,b:s.yb},{s:s.ms,b:s.mb},{s:s.ds,b:s.db},{s:s.hs,b:s.hb}];
+  for(var k=0;k<cols.length;k++){cnt[OHC[cols[k].s]]++;cnt[OHJ[cols[k].b]]++;}
+  uData=Object.assign({},s,{cnt:cnt,gen:h.gen,ani:ANI[s.yb],sstr:gY+'년 '+p2(gM)+'월 '+p2(gD)+'일 '+p2(hV)+'시',lstr:lstr});
+  startUnse();
+}
+
+/* ── 직접 입력 피커 ── */
+function buildUPickers(){
+  var w=document.getElementById('upw');
+  w.querySelectorAll('.cw').forEach(function(e){e.remove();});
+  upd.length=0;
+  upd.push({id:'uy',l:'년',items:Array.from({length:120},function(_,i){return{v:1920+i,t:String(1920+i)};})});
+  upd.push({id:'um',l:'월',items:Array.from({length:12},function(_,i){return{v:i+1,t:String(i+1).padStart(2,'0')};})});
+  upd.push({id:'ud',l:'일',items:Array.from({length:31},function(_,i){return{v:i+1,t:String(i+1).padStart(2,'0')};})});
+  upd.push({id:'uh',l:'시',items:Array.from({length:24},function(_,i){return{v:i,t:String(i).padStart(2,'0')};})});
+  var now=new Date(),dv={uy:now.getFullYear(),um:now.getMonth()+1,ud:now.getDate(),uh:now.getHours()};
+  for(var di=0;di<upd.length;di++){
+    var d=upd[di];
+    var ii=d.items.findIndex(function(x){return x.v===dv[d.id];});
+    ups[d.id]=ii<0?0:ii;
+    var cw=document.createElement('div');cw.className='cw';
+    var lb=document.createElement('div');lb.className='cl';lb.textContent=d.l;
+    var cc=document.createElement('div');cc.className='cc';
+    var ci=document.createElement('div');ci.className='ci';
+    ci.style.paddingTop=ci.style.paddingBottom=IH*2+'px';
+    d.items.forEach(function(it){var el=document.createElement('div');el.className='citem';el.textContent=it.t;ci.appendChild(el);});
+    cc.appendChild(ci);cw.appendChild(lb);cw.appendChild(cc);w.appendChild(cw);
+    upi[d.id]=ci;uSetIdx(d.id,ups[d.id],ci,false);setupDrag(cc,d,ci);
+  }
+}
+function uSetIdx(id,idx,ci,an){
+  if(an===undefined)an=true;
+  var d=upd.find(function(x){return x.id===id;});if(!d)return;
+  idx=Math.max(0,Math.min(d.items.length-1,idx));
+  ups[id]=idx;
+  ci.style.transition=an?'transform .22s cubic-bezier(.25,.8,.25,1)':'none';
+  ci.style.transform='translateY('+(-idx*IH)+'px)';
+  Array.from(ci.children).forEach(function(el,i){var dv=Math.abs(i-idx);el.className='citem'+(dv===0?' sel':dv===1?' nr':'');});
+}
+function uSetCal(t){uAS.cal=t;document.getElementById('uCalSol').className='tb'+(t==='solar'?' on':'');document.getElementById('uCalLun').className='tb'+(t==='lunar'?' on':'');document.getElementById('ulrow').style.display=t==='lunar'?'flex':'none';if(t==='lunar'){document.getElementById('ulchk').checked=false;uAS.leap=false;}}
+function uSetGen(g){uAS.gen=g;document.getElementById('uGenM').className='tb'+(g==='male'?' mon':'');document.getElementById('uGenF').className='tb'+(g==='female'?' fon':'');}
+
+function uConfirm(){
+  var yV=upd[0].items[ups.uy].v,mV=upd[1].items[ups.um].v,dV=upd[2].items[ups.ud].v,hV=upd[3].items[ups.uh].v;
+  var gY,gM,gD;
+  if(uAS.cal==='lunar'){var g=l2g(yV,mV,dV,uAS.leap);if(!g){alert('유효하지 않은 음력 날짜');return;}gY=g.year;gM=g.month;gD=g.day;}
+  else{gY=yV;gM=mV;gD=dV;}
+  var s;try{s=calcSaju(gY,gM,gD,hV,0);}catch(e){alert('날짜를 확인해주세요');return;}
+  var lunar=g2l(gY,gM,gD,hV);
+  var lstr=lunar?'음력 '+lunar.year+'년 '+p2(lunar.month)+'월 '+p2(lunar.day)+'일'+(lunar.isLeap?' (윤달)':''):null;
+  var cnt={목:0,화:0,토:0,금:0,수:0};
+  var cols=[{s:s.ys,b:s.yb},{s:s.ms,b:s.mb},{s:s.ds,b:s.db},{s:s.hs,b:s.hb}];
+  for(var k=0;k<cols.length;k++){cnt[OHC[cols[k].s]]++;cnt[OHJ[cols[k].b]]++;}
+  uData=Object.assign({},s,{cnt:cnt,gen:uAS.gen,ani:ANI[s.yb],sstr:gY+'년 '+p2(gM)+'월 '+p2(gD)+'일 '+p2(hV)+'시',lstr:lstr});
+  startUnse();
+}
+
+/* ── 운세 시작 ── */
+function startUnse(){
+  if(!uData)return;
+  var today=new Date(),target=UNSE_TYPE==='tomorrow'?new Date(today.getTime()+86400000):today;
+  var days=['일','월','화','수','목','금','토'];
+  var ymd=target.getFullYear()+'년 '+(target.getMonth()+1)+'월 '+target.getDate()+'일 ('+days[target.getDay()]+'요일)';
+  document.getElementById('uDateLbl').textContent=(UNSE_TYPE==='today'?'오늘 ':'내일 ')+ymd;
+  document.getElementById('uSaju').textContent=CH[uData.ys]+JH[uData.yb]+' '+CH[uData.ms]+JH[uData.mb]+' '+CH[uData.ds]+JH[uData.db]+' '+CH[uData.hs]+JH[uData.hb];
+  document.getElementById('uInfo').textContent=uData.ani+'띠 · '+CG[uData.ys]+JJ[uData.yb]+'년 · '+(uData.gen==='male'?'남성':'여성');
+  document.getElementById('uTotalScore').textContent='';
+  document.getElementById('uTabs').innerHTML='';
+  document.getElementById('uSecs').innerHTML='';
+  document.getElementById('uErr').style.display='none';
+  document.getElementById('uLd').style.display='block';
+  document.getElementById('uResult').style.display='block';
+  drawRadar([0,0,0,0,0]);
+  document.getElementById('uLegend').innerHTML='';
+  document.getElementById('uResult').scrollIntoView({behavior:'smooth',block:'start'});
+  reqUnseAI(target);
+}
+
+/* ── 레이더 차트 ── */
+function drawRadar(scores){
+  var svg=document.getElementById('uRadar');
+  svg.innerHTML='';
+  var cx=150,cy=148,R=95,n=5;
+  var colors=['#c8a96e','#4a9a6a','#c84a7e','#4a7ec8','#9a6ac8'];
+  var labels=['총운','재물운','연애운','직업운','건강운'];
+  var angles=[];
+  for(var i=0;i<n;i++)angles.push(i*2*Math.PI/n - Math.PI/2);
+
+  function pt(r,i){return [cx+r*Math.cos(angles[i]), cy+r*Math.sin(angles[i])];}
+
+  // 배경 그리드
+  [20,40,60,80,100].forEach(function(v){
+    var pts=[];for(var i=0;i<n;i++){var p=pt(R*v/100,i);pts.push(p[0]+','+p[1]);}
+    var poly=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+    poly.setAttribute('points',pts.join(' '));
+    poly.setAttribute('fill','none');poly.setAttribute('stroke','rgba(200,169,110,0.12)');poly.setAttribute('stroke-width','1');
+    svg.appendChild(poly);
+  });
+
+  // 축
+  for(var i=0;i<n;i++){
+    var p=pt(R,i),line=document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',cx);line.setAttribute('y1',cy);line.setAttribute('x2',p[0]);line.setAttribute('y2',p[1]);
+    line.setAttribute('stroke','rgba(200,169,110,0.15)');line.setAttribute('stroke-width','1');
+    svg.appendChild(line);
+  }
+
+  // 데이터
+  var dataPts=[];for(var i=0;i<n;i++)dataPts.push(pt(R*Math.max(scores[i]||0,4)/100,i));
+  var poly=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+  poly.setAttribute('points',dataPts.map(function(p){return p[0]+','+p[1];}).join(' '));
+  poly.setAttribute('fill','rgba(200,169,110,0.15)');poly.setAttribute('stroke','rgba(200,169,110,0.6)');poly.setAttribute('stroke-width','2');
+  svg.appendChild(poly);
+
+  // 점 + 라벨
+  for(var i=0;i<n;i++){
+    var dp=dataPts[i];
+    var c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',dp[0]);c.setAttribute('cy',dp[1]);c.setAttribute('r','5');
+    c.setAttribute('fill',colors[i]);c.setAttribute('stroke','#0a0a0f');c.setAttribute('stroke-width','2');
+    svg.appendChild(c);
+
+    var lp=pt(R+22,i);
+    var t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',lp[0]);t.setAttribute('y',lp[1]+4);t.setAttribute('text-anchor','middle');
+    t.setAttribute('font-size','10');t.setAttribute('fill',colors[i]);t.setAttribute('font-family','Noto Sans KR,sans-serif');
+    t.textContent=labels[i];
+    svg.appendChild(t);
+
+    if(scores[i]>0){
+      var sp=pt(R*Math.max(scores[i],4)/100-14,i);
+      var st=document.createElementNS('http://www.w3.org/2000/svg','text');
+      st.setAttribute('x',sp[0]);st.setAttribute('y',sp[1]+4);st.setAttribute('text-anchor','middle');
+      st.setAttribute('font-size','10');st.setAttribute('fill','rgba(240,234,216,0.8)');
+      st.textContent=scores[i];svg.appendChild(st);
+    }
+  }
+}
+
+/* ── AI 운세 프롬프트 ── */
+function buildUPrompt(d,type,target){
+  var g=d.gen==='male'?'남성':'여성';
+  var days=['일','월','화','수','목','금','토'];
+  var dateStr=target.getFullYear()+'년 '+(target.getMonth()+1)+'월 '+target.getDate()+'일 '+days[target.getDay()]+'요일';
+  var dn=type==='today'?'오늘':'내일';
+  return [
+    '당신은 한국 전통 사주명리학 전문가입니다.',
+    '',
+    '【사주 정보】',
+    '- 사주팔자: '+CG[d.ys]+JJ[d.yb]+'('+CH[d.ys]+JH[d.yb]+') '+CG[d.ms]+JJ[d.mb]+'('+CH[d.ms]+JH[d.mb]+') '+CG[d.ds]+JJ[d.db]+'('+CH[d.ds]+JH[d.db]+') '+CG[d.hs]+JJ[d.hb]+'('+CH[d.hs]+JH[d.hb]+')',
+    '- 일간: '+CG[d.ds]+'('+CH[d.ds]+')',
+    '- 성별: '+g,
+    '- 오행: '+Object.entries(d.cnt).map(function(e){return e[0]+':'+e[1]+'개';}).join(', '),
+    '',
+    '【분석 날짜】 '+dateStr,
+    '',
+    dn+'의 운세를 일진과 사주 합충을 고려해 분석해주세요.',
+    '각 항목마다 0~100 점수와 250자 내외 설명을 작성하세요.',
+    '전문가 톤(~습니다)으로 작성하세요.',
+    '',
+    '반드시 아래 형식을 정확히 사용하세요:',
+    '',
+    '[OVERALL_SCORE]숫자[/OVERALL_SCORE]',
+    '[OVERALL]총운 설명[/OVERALL]',
+    '',
+    '[MONEY_SCORE]숫자[/MONEY_SCORE]',
+    '[MONEY]재물운 설명[/MONEY]',
+    '',
+    '[LOVE_SCORE]숫자[/LOVE_SCORE]',
+    '[LOVE]연애운 설명[/LOVE]',
+    '',
+    '[WORK_SCORE]숫자[/WORK_SCORE]',
+    '[WORK]직업운 설명[/WORK]',
+    '',
+    '[HEALTH_SCORE]숫자[/HEALTH_SCORE]',
+    '[HEALTH]건강운 설명[/HEALTH]'
+  ].join('\n');
+}
+
+/* ── AI 운세 요청 ── */
+async function reqUnseAI(target){
+  var d=uData;
+  var msgs=['일진을 분석하는 중...','합충을 계산하는 중...','운세를 작성하는 중...'];
+  var mi=0;
+  var lv=setInterval(function(){var e=document.getElementById('uLdTxt');if(e)e.textContent=msgs[mi++%msgs.length];},1800);
+  function stopL(){clearInterval(lv);document.getElementById('uLd').style.display='none';}
+  function showE(msg,det){
+    stopL();var e=document.getElementById('uErr');e.style.display='block';
+    e.innerHTML='<div style="font-size:18px;margin-bottom:8px">&#9888;</div><div>'+msg+'</div>'+(det?'<div style="font-size:11px;margin-top:6px;opacity:.6">'+det+'</div>':'');
+  }
+  var ctrl=new AbortController(),tid=setTimeout(function(){ctrl.abort();},40000);
+  var res;
+  try{
+    res=await fetch('https://my-saju-api.onrender.com/api/saju',{
+      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'gemini',max_tokens:3000,
+        system:'당신은 한국 전통 사주명리학 전문가입니다. 반드시 지정된 태그 형식을 정확히 사용하세요.',
+        messages:[{role:'user',content:buildUPrompt(d,UNSE_TYPE,target)}]})
+    });
+  }catch(e){clearTimeout(tid);if(e.name==='AbortError')showE('요청 시간 초과','');else showE('서버 연결 실패','');return;}
+  clearTimeout(tid);
+  if(!res.ok){var msg='오류 '+res.status;try{var j=await res.json();msg=j.error?j.error.message||msg:msg;}catch(x){}showE('운세를 받지 못했습니다',msg);return;}
+  var data;try{data=await res.json();}catch(e){showE('응답 파싱 실패','');return;}
+  var raw=(data.content&&data.content[0])?data.content[0].text||'':'';
+  if(!raw){showE('응답이 비어있습니다','');return;}
+
+  function pScore(tag){var m=raw.match(new RegExp('\\['+tag+'_SCORE\\](\\d+)\\[/'+tag+'_SCORE\\]','i'));return m?Math.min(100,Math.max(0,parseInt(m[1]))):50;}
+  function pText(tag){var m=raw.match(new RegExp('\\['+tag+'\\]([\\s\\S]*?)\\[/'+tag+'\\]','i'));return m?m[1].trim():'내용을 받지 못했습니다.';}
+
+  var scores={overall:pScore('OVERALL'),money:pScore('MONEY'),love:pScore('LOVE'),work:pScore('WORK'),health:pScore('HEALTH')};
+  var texts={overall:pText('OVERALL'),money:pText('MONEY'),love:pText('LOVE'),work:pText('WORK'),health:pText('HEALTH')};
+
+  stopL();
+
+  var tc=scores.overall;
+  var tcol=tc>=80?'#4a9a6a':tc>=60?'var(--gold2)':tc>=40?'#e8a090':'#e09090';
+  var tel=document.getElementById('uTotalScore');tel.textContent=tc;tel.style.color=tcol;
+
+  drawRadar([scores.overall,scores.money,scores.love,scores.work,scores.health]);
+
+  var leg=document.getElementById('uLegend');
+  var scoreArr=[
+    {id:'overall',lbl:'총운',   color:'#c8a96e'},
+    {id:'money',  lbl:'재물운', color:'#4a9a6a'},
+    {id:'love',   lbl:'연애운', color:'#c84a7e'},
+    {id:'work',   lbl:'직업운', color:'#4a7ec8'},
+    {id:'health', lbl:'건강운', color:'#9a6ac8'},
+  ];
+  leg.innerHTML=scoreArr.map(function(s){
+    return '<div class="sl-item"><div class="sl-dot" style="background:'+s.color+'"></div><span>'+s.lbl+'</span><strong style="color:var(--text)">'+scores[s.id]+'</strong></div>';
+  }).join('');
+
+  var idMap={overall:'OVERALL',money:'MONEY',love:'LOVE',work:'WORK',health:'HEALTH'};
+  var te=document.getElementById('uTabs'),se=document.getElementById('uSecs');
+  scoreArr.forEach(function(cat,i){
+    var tab=document.createElement('button');
+    tab.className='aitab'+(i===0?' on':'');
+    tab.textContent=cat.lbl+' '+scores[cat.id];
+    tab.onclick=function(){uSwTab(cat.id);};
+    tab.id='utb-'+cat.id;te.appendChild(tab);
+    var sec=document.createElement('div');
+    sec.className='aisec'+(i===0?' show':'');sec.id='usc-'+cat.id;
+    var sv=scores[cat.id];
+    var scol=sv>=80?'#4a9a6a':sv>=60?'var(--gold2)':sv>=40?'#e8a090':'#e09090';
+    sec.innerHTML='<div class="aist" style="display:flex;justify-content:space-between;align-items:center">'
+      +'<span>'+cat.lbl+'</span>'
+      +'<span style="font-size:22px;font-weight:700;color:'+scol+';font-family:\'Noto Serif KR\',serif">'+sv+'점</span>'
+      +'</div><div class="aitxt" id="utx-'+cat.id+'"></div>';
+    se.appendChild(sec);
+  });
+  scoreArr.forEach(function(cat,i){
+    var el=document.getElementById('utx-'+cat.id);if(!el)return;
+    if(i===0)tyTxt(el,texts[cat.id],10);else el.textContent=texts[cat.id];
+  });
+}
+function uSwTab(sid){
+  document.querySelectorAll('#uTabs .aitab').forEach(function(t){t.className='aitab'+(t.id==='utb-'+sid?' on':'');});
+  document.querySelectorAll('#uSecs .aisec').forEach(function(s){s.className='aisec'+(s.id==='usc-'+sid?' show':'');});
+}
 
 buildPickers();rdH();
 </script>

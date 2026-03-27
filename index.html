@@ -360,9 +360,10 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
 </div>
 
 <script>
-/* ═══════════════ 엔진 로직 ═══════════════ */
-const CG=['갑','을','병','정','무','기','경','신','임','계'], CH=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
-const JJ=['자','축','인','묘','진','사','오','미','신','유','술','해'], JH=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+const CG=['갑','을','병','정','무','기','경','신','임','계'];
+const CH=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+const JJ=['자','축','인','묘','진','사','오','미','신','유','술','해'];
+const JH=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
 const ANI=['쥐','소','호랑이','토끼','용','뱀','말','양','원숭이','닭','개','돼지'];
 const OHC=['목','목','화','화','토','토','금','금','수','수'];
 const UYC=['양','음','양','음','양','음','양','음','양','음'];
@@ -393,13 +394,13 @@ let LD=null,AT='total';
 /* ── ❗ 수정 1: 피커 초기화 방어 및 '분(min)' 부활 ── */
 function buildPickers(){
   const w=document.getElementById('pw');
-  w.innerHTML = '<div class="phl"></div><div class="pft"></div><div class="pfb"></div>'; // 초기화 
+  w.innerHTML = '<div class="phl"></div><div class="pft"></div><div class="pfb"></div>'; 
   pd.length=0;
   pd.push({id:'year',l:'년',items:Array.from({length:120},function(_,i){return{v:1920+i,t:String(1920+i)};})});
   pd.push({id:'month',l:'월',items:Array.from({length:12},function(_,i){return{v:i+1,t:String(i+1).padStart(2,'0')};})});
   pd.push({id:'day',l:'일',items:Array.from({length:31},function(_,i){return{v:i+1,t:String(i+1).padStart(2,'0')};})});
   pd.push({id:'hour',l:'시',items:Array.from({length:24},function(_,i){return{v:i,t:String(i).padStart(2,'0')};})});
-  pd.push({id:'min',l:'분',items:Array.from({length:60},function(_,i){return{v:i,t:String(i).padStart(2,'0')};})}); // ❗ 분 추가
+  pd.push({id:'min',l:'분',items:Array.from({length:60},function(_,i){return{v:i,t:String(i).padStart(2,'0')};})}); 
   const now=new Date(),dv={year:now.getFullYear(),month:now.getMonth()+1,day:now.getDate(),hour:now.getHours(),min:now.getMinutes()};
   for(const d of pd){
     const ii=d.items.findIndex(function(x){return x.v===dv[d.id];});ps[d.id]=ii<0?0:ii;
@@ -448,17 +449,14 @@ function calc(){
   svH({cal:AS.cal,gen:AS.gen,leap:AS.leap,year:yV,month:mV,day:dV,hour:hV,min:minV,gY,gM,gD,lstr,saju:CH[ys]+JH[yb]+' '+CH[ms]+JH[mb]+' '+CH[ds]+JH[db]+' '+CH[hs]+JH[hb]});
 }
 
-// 💡 원래 쓰시던 프롬프트 지시사항이 그대로 유지된 곳입니다!
 function buildPrompt(d){
   const g = d.gen === 'male' ? '남성' : '여성';
   const il = CG[d.ds] + '(' + CH[d.ds] + ')';
   const oh = Object.entries(d.cnt).map(e => e[0] + ':' + e[1] + '개').join(', ');
-
   return `당신은 한국 전통 사주명리학 전문가입니다.
 
 【사주 정보】
 - 양력: ${d.sstr}
-- 음력: ${d.lstr || '미상'}
 - 성별: ${g}
 - 사주팔자: ${CG[d.ys]}${JJ[d.yb]}(${CH[d.ys]}${JH[d.yb]}) ${CG[d.ms]}${JJ[d.mb]}(${CH[d.ms]}${JH[d.mb]}) ${CG[d.ds]}${JJ[d.db]}(${CH[d.ds]}${JH[d.db]}) ${CG[d.hs]}${JJ[d.hb]}(${CH[d.hs]}${JH[d.hb]})
 - 일간: ${il}
@@ -466,31 +464,15 @@ function buildPrompt(d){
 - 절기: ${d.jn}
 
 【작성 지침】
-1. 일간 ${il} 중심, 격국 용신 추론, ${g} 특성 반영.
-2. 각 섹션은 반드시 500자 내외로 구체적이고 밀도 있게 작성할 것.
-3. 문체는 정중하고 신뢰감 있는 전문가 톤('~습니다', '~합니다')을 유지할 것.
-4. 명리학 용어(십성, 오행, 합충 등)를 먼저 제시하고, 그에 따른 현실적이고 구체적인 상황을 이어서 설명하는 방식을 엄격하게 따를 것.
-
-【출력 양식 및 톤앤매너 예시】
-반드시 아래의 5개 태그를 정확히 사용하세요. 아래는 당신이 따라야 할 '문장 구조와 분석 깊이'를 보여주는 훌륭한 예시입니다. 이 예시들의 말투와 전개 방식을 완벽하게 모방하되, 내용은 반드시 현재 주어진 【사주 정보】에 맞게 완전히 새로 분석하여 작성하세요.
-
-[TOTAL]
-(작성 방식 예시: 본 사주는 일간 을목(乙木)이 겨울의 끝자락인 축월(丑月)에 태어났습니다. 을목은 부드럽고 유연하며 생명력이 강한 화초와 같지만, 겨울의 한기 속에서는 뿌리내리기 어려워... (중략) ...'상관견관(傷官見官)'의 구조를 띠고 있습니다. 이는 자신의 능력과 재능을 발휘하여 어려움을 극복하고 목표를 달성하려는 강한 의지를 나타내지만... 전반적으로 영리하고 재능이 뛰어나며, 강한 생활력을 바탕으로 주어진 환경을 개척해나가는 독립적인 삶을 살게 될 것입니다.)
-
-[NATURE]
-(작성 방식 예시: 일간 을목(乙木)은 타고난 성품이 온화하고 유연하여 주변 사람들과 잘 어울리며 포용력이 뛰어납니다... 그러나 사주에 강하게 드러난 상관(傷官)과 관살(官殺)의 기운은 겉모습과 달리 내면에는 강인하고 독립적인 기질을 품고 있음을 보여줍니다... 옳고 그름에 대한 판단이 분명하여 불의를 보면 참지 못하는 정의로운 면도 있습니다. 때로는 자기 주장이 강하고 직선적이라 오해를 받을 수도 있으나, 이는 자신의 신념을 지키려는 강한 의지에서 비롯됩니다.)
-
-[WEALTH]
-(작성 방식 예시: 재물운과 직업운을 보면, 월지 축토(丑土)는 편재(偏財)로, 재물에 대한 감각이 뛰어나고 사업적 수완이 있음을 의미합니다. 큰 재물을 다루거나 유통, 무역, 금융 등 자유롭고 역동적인 분야에서 능력을 발휘할 수 있습니다. 일지와 시지에 강한 상관(傷官)이 자리하고 있어 탁월한 재능과 창의력을 바탕으로 자신만의 전문 분야를 개척하는 데 유리합니다... 조직 내에서는 혁신적인 아이디어를 제시하고 변화를 주도하는 리더십을 발휘할 수 있으나, 기존의 틀에 얽매이는 것을 싫어할 수 있습니다. 꾸준히 역량을 개발하고 변화에 유연하게 대처한다면 큰 재물을 모으고 사회적으로 성공할 것입니다.)
-
-[LOVE]
-(작성 방식 예시: 애정운은 다소 복잡한 양상을 띨 수 있습니다. 여성 사주에서 관살(官殺)은 배우자나 남편을 의미하는데, 본 사주에는 유금(酉金)과 신금(辛金)으로 관살 기운이 강하게 나타납니다. 이는 인연이 많거나 배우자 복이 좋다는 의미로 해석될 수 있으나... 따라서 배우자를 선택할 때는 자신의 개성을 존중해주고 이해심이 많은 상대를 만나는 것이 중요합니다. 연애 초기에는 매력적이고 활발한 모습으로 인기를 얻지만, 결혼 후에는 서로의 가치관을 존중하고 대화로 문제를 해결하려는 노력이 필요합니다. 늦은 결혼이나 자신만의 전문성을 갖춘 후 결혼하는 것이 안정적인 관계를 유지하는 데 도움이 될 수 있습니다.)
-
-[HEALTH]
-(작성 방식 예시: 건강 면에서는 오행의 불균형으로 인한 주의가 필요합니다. 일간 을목(乙木)이 겨울 축월(丑月)에 태어나 차가운 기운이 강하고, 금(金) 기운이 강하여 목(木) 기운이 손상되기 쉽습니다. 이는 간, 담, 신경계통의 약화를 의미할 수 있으며, 스트레스에 취약해질 수 있습니다... 특히 상관견관(傷官見官)의 구조는 심리적인 압박감이나 스트레스를 유발하기 쉬워 신경성 질환이나 소화기 계통의 문제를 겪을 수 있습니다. 평소 규칙적인 생활 습관과 균형 잡힌 식단으로 건강을 관리하고, 충분한 휴식과 명상, 취미 활동 등을 통해 스트레스를 해소하는 것이 중요합니다.)`;
+반드시 아래의 5개 태그를 정확히 사용하세요.
+[TOTAL]총운 설명[/TOTAL]
+[NATURE]성격 설명[/NATURE]
+[WEALTH]재물운 설명[/WEALTH]
+[LOVE]연애운 설명[/LOVE]
+[HEALTH]건강운 설명[/HEALTH]`;
 }
 
-/* ── ❗ 최적화 2: 평생 사주풀이 캐싱 (API 비용 절약) ── */
+/* ── ❗ 최적화 2: 평생 사주풀이 캐싱 및 에러 파싱 강화 ── */
 async function reqAI(){
   if(!LD){alert('먼저 사주를 계산해주세요');return;}
   const btn=document.getElementById('bai');
@@ -515,7 +497,7 @@ async function reqAI(){
       renderSajuResult(sajuCache[cacheKey]);
       btn.innerHTML = '<span>&#10022;</span> 풀이 다시 받기';
       btn.disabled = false;
-    }, 500); // 캐시가 있으면 바로 보여줌
+    }, 500); 
     return;
   }
   
@@ -541,7 +523,7 @@ async function reqAI(){
       method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         model:'gemini',max_tokens:8000,
-        system:'당신은 한국 전통 사주명리학 전문가입니다. 반드시 [TOTAL] [NATURE] [WEALTH] [LOVE] [HEALTH] 태그를 정확히 사용하세요.',
+        system:'당신은 한국 전통 사주명리학 전문가입니다. 반드시 지정된 태그를 사용하세요.',
         messages:[{role:'user',content:buildPrompt(LD)}]
       })
     });
@@ -561,7 +543,8 @@ async function reqAI(){
   const TAGS = [{tag:'TOTAL',id:'total'}, {tag:'NATURE',id:'nature'}, {tag:'WEALTH',id:'wealth'}, {tag:'LOVE',id:'love'}, {tag:'HEALTH',id:'health'}];
   const secs = { total: '', nature: '', wealth: '', love: '', health: '' };
   
-  raw = raw.replace(/\*\*/g, ''); // 마크다운 제거
+  raw = raw.replace(/\*\*/g, ''); 
+  raw = raw.replace(/#/g, ''); 
   let tagFound = false;
 
   for (let i = 0; i < TAGS.length; i++) {
@@ -569,7 +552,9 @@ async function reqAI(){
     const match = raw.match(regex);
     if (match && match[1]) {
       tagFound = true;
-      secs[TAGS[i].id] = match[1].replace(new RegExp(`^\\]|^\\s*\\]`), '').trim();
+      let txt = match[1].replace(new RegExp(`^\\]|^\\s*\\]`), '').trim();
+      txt = txt.replace(new RegExp(`\\[\\/${TAGS[i].tag}\\]`, 'i'), '').trim();
+      secs[TAGS[i].id] = txt || '내용을 찾을 수 없습니다.';
     } else {
       secs[TAGS[i].id] = '내용을 분석할 수 없습니다.';
     }
@@ -578,7 +563,6 @@ async function reqAI(){
 
   stopL();
   
-  // 결과 캐시 저장
   sajuCache[cacheKey] = secs;
   localStorage.setItem('saju_cache', JSON.stringify(sajuCache));
 
@@ -675,14 +659,6 @@ var uAS={cal:'solar',gen:'male',leap:false};
 var upd=[],upi={},ups={};
 var uData=null;
 
-var UCATS=[
-  {id:'overall',lbl:'총운',   color:'#c8a96e'},
-  {id:'money',  lbl:'재물운', color:'#4a9a6a'},
-  {id:'love',   lbl:'연애운', color:'#c84a7e'},
-  {id:'work',   lbl:'직업운', color:'#4a7ec8'},
-  {id:'health', lbl:'건강운', color:'#9a6ac8'},
-];
-
 function goUnse(type){
   UNSE_TYPE=type;
   document.getElementById('unseTopTitle').textContent=type==='today'?'오늘의 운세':'내일의 운세';
@@ -729,16 +705,16 @@ function uSelectRecent(i){
   startUnse();
 }
 
-/* ── 직접 입력 피커: ❗ 분(minute) 롤 추가 ── */
+/* ── 직접 입력 피커: 분(minute) 롤 복원 ── */
 function buildUPickers(){
   var w=document.getElementById('upw');
-  w.innerHTML = '<div class="phl"></div><div class="pft"></div><div class="pfb"></div>'; // 초기화
+  w.innerHTML = '<div class="phl"></div><div class="pft"></div><div class="pfb"></div>';
   upd.length=0;
   upd.push({id:'uy',l:'년',items:Array.from({length:120},function(_,i){return{v:1920+i,t:String(1920+i)};})});
   upd.push({id:'um',l:'월',items:Array.from({length:12},function(_,i){return{v:i+1,t:String(i+1).padStart(2,'0')};})});
   upd.push({id:'ud',l:'일',items:Array.from({length:31},function(_,i){return{v:i+1,t:String(i+1).padStart(2,'0')};})});
   upd.push({id:'uh',l:'시',items:Array.from({length:24},function(_,i){return{v:i,t:String(i).padStart(2,'0')};})});
-  upd.push({id:'umin',l:'분',items:Array.from({length:60},function(_,i){return{v:i,t:String(i).padStart(2,'0')};})}); // ❗ 분 추가
+  upd.push({id:'umin',l:'분',items:Array.from({length:60},function(_,i){return{v:i,t:String(i).padStart(2,'0')};})}); 
   var now=new Date(),dv={uy:now.getFullYear(),um:now.getMonth()+1,ud:now.getDate(),uh:now.getHours(),umin:now.getMinutes()};
   for(var di=0;di<upd.length;di++){
     var d=upd[di];
@@ -766,7 +742,7 @@ function uSetCal(t){uAS.cal=t;document.getElementById('uCalSol').className='tb'+
 function uSetGen(g){uAS.gen=g;document.getElementById('uGenM').className='tb'+(g==='male'?' mon':'');document.getElementById('uGenF').className='tb'+(g==='female'?' fon':'');}
 
 function uConfirm(){
-  var yV=upd[0].items[ups.uy].v,mV=upd[1].items[ups.um].v,dV=upd[2].items[ups.ud].v,hV=upd[3].items[ups.uh].v,minV=upd[4].items[ups.umin].v; // ❗ 분 사용
+  var yV=upd[0].items[ups.uy].v,mV=upd[1].items[ups.um].v,dV=upd[2].items[ups.ud].v,hV=upd[3].items[ups.uh].v,minV=upd[4].items[ups.umin].v;
   var gY,gM,gD;
   if(uAS.cal==='lunar'){var g=l2g(yV,mV,dV,uAS.leap);if(!g){alert('유효하지 않은 음력 날짜');return;}gY=g.year;gM=g.month;gD=g.day;}
   else{gY=yV;gM=mV;gD=dV;}
@@ -780,7 +756,6 @@ function uConfirm(){
   startUnse();
 }
 
-/* ── 운세 시작 ── */
 function startUnse(){
   if(!uData)return;
   var today=new Date(),target=UNSE_TYPE==='tomorrow'?new Date(today.getTime()+86400000):today;
@@ -801,7 +776,6 @@ function startUnse(){
   reqUnseAI(target);
 }
 
-/* ── 레이더 차트 ── */
 function drawRadar(scores){
   var svg=document.getElementById('uRadar');
   svg.innerHTML='';
@@ -810,9 +784,7 @@ function drawRadar(scores){
   var labels=['총운','재물운','연애운','직업운','건강운'];
   var angles=[];
   for(var i=0;i<n;i++)angles.push(i*2*Math.PI/n - Math.PI/2);
-
   function pt(r,i){return [cx+r*Math.cos(angles[i]), cy+r*Math.sin(angles[i])];}
-
   [20,40,60,80,100].forEach(function(v){
     var pts=[];for(var i=0;i<n;i++){var p=pt(R*v/100,i);pts.push(p[0]+','+p[1]);}
     var poly=document.createElementNS('http://www.w3.org/2000/svg','polygon');
@@ -820,34 +792,29 @@ function drawRadar(scores){
     poly.setAttribute('fill','none');poly.setAttribute('stroke','rgba(200,169,110,0.12)');poly.setAttribute('stroke-width','1');
     svg.appendChild(poly);
   });
-
   for(var i=0;i<n;i++){
     var p=pt(R,i),line=document.createElementNS('http://www.w3.org/2000/svg','line');
     line.setAttribute('x1',cx);line.setAttribute('y1',cy);line.setAttribute('x2',p[0]);line.setAttribute('y2',p[1]);
     line.setAttribute('stroke','rgba(200,169,110,0.15)');line.setAttribute('stroke-width','1');
     svg.appendChild(line);
   }
-
   var dataPts=[];for(var i=0;i<n;i++)dataPts.push(pt(R*Math.max(scores[i]||0,4)/100,i));
   var poly=document.createElementNS('http://www.w3.org/2000/svg','polygon');
   poly.setAttribute('points',dataPts.map(function(p){return p[0]+','+p[1];}).join(' '));
   poly.setAttribute('fill','rgba(200,169,110,0.15)');poly.setAttribute('stroke','rgba(200,169,110,0.6)');poly.setAttribute('stroke-width','2');
   svg.appendChild(poly);
-
   for(var i=0;i<n;i++){
     var dp=dataPts[i];
     var c=document.createElementNS('http://www.w3.org/2000/svg','circle');
     c.setAttribute('cx',dp[0]);c.setAttribute('cy',dp[1]);c.setAttribute('r','5');
     c.setAttribute('fill',colors[i]);c.setAttribute('stroke','#0a0a0f');c.setAttribute('stroke-width','2');
     svg.appendChild(c);
-
     var lp=pt(R+22,i);
     var t=document.createElementNS('http://www.w3.org/2000/svg','text');
     t.setAttribute('x',lp[0]);t.setAttribute('y',lp[1]+4);t.setAttribute('text-anchor','middle');
     t.setAttribute('font-size','10');t.setAttribute('fill',colors[i]);t.setAttribute('font-family','Noto Sans KR,sans-serif');
     t.textContent=labels[i];
     svg.appendChild(t);
-
     if(scores[i]>0){
       var sp=pt(R*Math.max(scores[i],4)/100-14,i);
       var st=document.createElementNS('http://www.w3.org/2000/svg','text');
@@ -858,7 +825,6 @@ function drawRadar(scores){
   }
 }
 
-/* ── AI 운세 프롬프트 ── */
 function buildUPrompt(d,type,target){
   var g=d.gen==='male'?'남성':'여성';
   var days=['일','월','화','수','목','금','토'];
@@ -866,38 +832,23 @@ function buildUPrompt(d,type,target){
   var dn=type==='today'?'오늘':'내일';
   return [
     '당신은 한국 전통 사주명리학 전문가입니다.',
-    '',
     '【사주 정보】',
     '- 양력: '+d.sstr,
     '- 사주팔자: '+CG[d.ys]+JJ[d.yb]+' '+CG[d.ms]+JJ[d.mb]+' '+CG[d.ds]+JJ[d.db]+' '+CG[d.hs]+JJ[d.hb],
     '- 일간: '+CG[d.ds]+'('+CH[d.ds]+')',
     '- 성별: '+g,
-    '',
     '【분석 날짜】 '+dateStr,
-    '',
     dn+'의 운세를 일진과 사주 합충을 고려해 분석해주세요.',
-    '전문가 톤(~습니다)으로 작성하세요.',
-    '',
     '반드시 아래 형식을 정확히 사용하세요:',
-    '',
-    '[OVERALL_SCORE]점수[/OVERALL_SCORE]',
-    '[OVERALL]총운 설명[/OVERALL]',
-    '',
-    '[MONEY_SCORE]점수[/MONEY_SCORE]',
-    '[MONEY]재물운 설명[/MONEY]',
-    '',
-    '[LOVE_SCORE]점수[/LOVE_SCORE]',
-    '[LOVE]연애운 설명[/LOVE]',
-    '',
-    '[WORK_SCORE]점수[/WORK_SCORE]',
-    '[WORK]직업운 설명[/WORK]',
-    '',
-    '[HEALTH_SCORE]점수[/HEALTH_SCORE]',
-    '[HEALTH]건강운 설명[/HEALTH]'
+    '[OVERALL_SCORE]점수[/OVERALL_SCORE]\n[OVERALL]총운 설명[/OVERALL]',
+    '[MONEY_SCORE]점수[/MONEY_SCORE]\n[MONEY]재물운 설명[/MONEY]',
+    '[LOVE_SCORE]점수[/LOVE_SCORE]\n[LOVE]연애운 설명[/LOVE]',
+    '[WORK_SCORE]점수[/WORK_SCORE]\n[WORK]직업운 설명[/WORK]',
+    '[HEALTH_SCORE]점수[/HEALTH_SCORE]\n[HEALTH]건강운 설명[/HEALTH]'
   ].join('\n');
 }
 
-/* ── ❗ 최적화 3: 운세 캐싱 & 롤오버 처리 ── */
+/* ── ❗ 최적화 3: 운세 캐싱, 롤오버 및 무적 정규식 적용 ── */
 async function reqUnseAI(target){
   var d=uData;
   var cacheKey = 'unse_' + d.sstr.replace(/\s/g,'') + '_' + d.gen;
@@ -916,9 +867,7 @@ async function reqUnseAI(target){
     if (userCache.todayDate === todayStr && userCache.todayData) {
       finalScores = userCache.todayData.scores; finalTexts = userCache.todayData.texts; needFetch = false;
     } else if (userCache.tomorrowDate === todayStr && userCache.tomorrowData) {
-      // 롤오버 (어제의 내일 운세 -> 오늘의 운세로 변경)
-      userCache.todayDate = todayStr;
-      userCache.todayData = userCache.tomorrowData;
+      userCache.todayDate = todayStr; userCache.todayData = userCache.tomorrowData;
       userCache.tomorrowDate = null; userCache.tomorrowData = null;
       unseCache[cacheKey] = userCache; localStorage.setItem('unse_cache', JSON.stringify(unseCache));
       finalScores = userCache.todayData.scores; finalTexts = userCache.todayData.texts; needFetch = false;
@@ -929,11 +878,16 @@ async function reqUnseAI(target){
     }
   }
 
+  // 이전에 에러 메시지가 캐싱되어 있으면 무시하고 다시 API 요청
+  if (!needFetch && finalTexts && (finalTexts.overall.includes('받지 못했') || finalTexts.overall.includes('찾을 수 없') || finalTexts.overall.includes('문제'))) {
+      needFetch = true;
+  }
+
   if (!needFetch) {
     setTimeout(function(){
       document.getElementById('uLd').style.display='none';
       renderUnseResult(finalScores, finalTexts);
-    }, 500); // 0.5초 딜레이
+    }, 500); 
     return;
   }
 
@@ -963,15 +917,20 @@ async function reqUnseAI(target){
   var raw=(data.content&&data.content[0])?data.content[0].text||'':'';
   if(!raw){showE('응답이 비어있습니다');return;}
 
-  // ❗ 초강력 정규식 파싱
   raw = raw.replace(/\*\*/g, ''); 
+  raw = raw.replace(/#/g, ''); 
   function pScore(tag){
     var m = raw.match(new RegExp('\\['+tag+'_SCORE\\][^\\d]*(\\d+)', 'i'));
     return m ? Math.min(100, Math.max(0, parseInt(m[1]))) : 50;
   }
   function pText(tag){
     var m = raw.match(new RegExp('\\['+tag+'\\]([\\s\\S]*?)(?=\\[\\/?[A-Z_]+\\]|$)', 'i'));
-    return m ? m[1].replace(new RegExp('^\\]|^\\s*\\]'), '').trim() : '운세 내용을 찾을 수 없습니다.';
+    if(m && m[1]) {
+        let txt = m[1].replace(new RegExp('^\\]|^\\s*\\]'), '').trim();
+        txt = txt.replace(new RegExp('\\[\\/'+tag+'\\]', 'i'), '').trim();
+        return txt || '내용을 찾을 수 없습니다.';
+    }
+    return '운세 내용을 가져오는 중 문제가 발생했습니다.';
   }
 
   var scores={overall:pScore('OVERALL'),money:pScore('MONEY'),love:pScore('LOVE'),work:pScore('WORK'),health:pScore('HEALTH')};
@@ -979,7 +938,6 @@ async function reqUnseAI(target){
 
   stopL();
 
-  // 결과 저장
   if(UNSE_TYPE === 'today'){
      userCache.todayDate = todayStr; userCache.todayData = {scores: scores, texts: texts};
   } else {

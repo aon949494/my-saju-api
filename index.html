@@ -108,6 +108,33 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Noto S
 .hcb.m{background:rgba(74,126,200,.2);color:#7ab0f0}.hcb.f{background:rgba(200,74,126,.2);color:#f07ab0}
 .hcdel{background:transparent;border:none;color:var(--muted);font-size:16px;cursor:pointer;padding:4px;flex-shrink:0;line-height:1}
 ::-webkit-scrollbar{display:none}
+/* ═══════════════ 광고 배너 스타일 ═══════════════ */
+.ad-container {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 420px; /* 앱 최대 폭과 동일하게 설정 */
+  height: 60px;     /* 일반적인 모바일 배너 높이 */
+  background: var(--bg2);
+  border-top: 1px solid var(--gb);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;    /* 모든 화면보다 위에 표시 */
+}
+
+.ad-text {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+/* 중요: 광고가 버튼을 가리지 않도록 모든 화면 하단에 여백 추가 */
+.main-inner, .calc-inner, .app {
+  padding-bottom: 80px !important; 
+}
 </style>
 </head>
 <body>
@@ -451,8 +478,54 @@ function svH(e){let h=gh();h=h.filter(function(x){return!(x.gY===e.gY&&x.gM===e.
 function dlH(i){const h=gh();h.splice(i,1);localStorage.setItem('msr_h',JSON.stringify(h));rdH();}
 function rdH(){const h=gh(),sec=document.getElementById('hsec'),list=document.getElementById('hlist');if(!h.length){sec.style.display='none';return;}sec.style.display='block';list.innerHTML=h.map(function(e,i){return '<div class="hcard"><div class="hcl" onclick="ldH('+i+')"><div class="hcd">양력 '+e.gY+'년 '+p2(e.gM)+'월 '+p2(e.gD)+'일 '+p2(e.hour)+'시</div>'+(e.lstr?'<div class="hclu">'+e.lstr+'</div>':'')+'<div class="hcs">'+e.saju+'</div></div><span class="hcb '+(e.gen==='male'?'m':'f')+'">'+(e.gen==='male'?'남 ♂':'여 ♀')+'</span><button class="hcdel" onclick="dlH('+i+');event.stopPropagation()">×</button></div>';}).join('');}
 function ldH(i){const h=gh()[i];if(!h)return;setCal(h.cal);setGen(h.gen);if(h.cal==='lunar'&&h.leap){document.getElementById('lchk').checked=true;AS.leap=true;}function sv(id,val){const d=pd.find(function(x){return x.id===id;});if(!d)return;const idx=d.items.findIndex(function(x){return x.v===val;});if(idx>=0)setIdx(id,idx,pi[id],true);}sv('year',h.year);sv('month',h.month);sv('day',h.day);sv('hour',h.hour);sv('min',h.min);window.scrollTo({top:0,behavior:'smooth'});}
+async function initAdMob() {
+  const { AdMob, BannerAdSize, BannerAdPosition, BannerAdPluginEvents } = capacitorAdMob;
 
+  // 1. 초기화
+  await AdMob.initialize({ requestTrackingAuthorization: true });
+
+  // 2. 배너 광고 옵션 설정
+  const options = {
+    adId: 'ca-app-pub-3940256099942544/6300978111', // ⚠️ 테스트용 ID입니다! 나중에 본인 광고 단위 ID로 바꾸세요.
+    adSize: BannerAdSize.BANNER,
+    position: BannerAdPosition.BOTTOM_CENTER,
+    margin: 0,
+    isTesting: true // ⚠️ 개발 중에는 반드시 true로 두세요! (안 그러면 계정 정지 먹습니다)
+  };
+
+  // 3. 광고 표시
+  await AdMob.showBanner(options);
+}
+
+// 스플래시 화면 종료 후 호출되도록 window load 이벤트에 추가
+window.addEventListener('load', function(){
+  setTimeout(function(){
+    showScreen('mainScreen');
+    renderRecent();
+    // 광고 실행!
+    initAdMob(); 
+  }, 1800);
+});
+
+window.addEventListener('load', function(){
+  // 1. 앱이 처음 켜질 때는 하단 광고 배너를 숨깁니다.
+  const ad = document.getElementById('adBanner');
+  if(ad) ad.style.display = 'none';
+
+  setTimeout(function(){
+    // 2. 1.8초 뒤에 스플래시를 끄고 메인 화면을 보여줍니다.
+    showScreen('mainScreen');
+    renderRecent();
+
+    // 3. 메인 화면이 떴을 때 광고 배너를 다시 보여줍니다.
+    if(ad) ad.style.display = 'flex';
+  }, 1800);
+});
 buildPickers();rdH();
 </script>
+<div class="ad-container" id="adBanner">
+  <div class="ad-text">ADVERTISEMENT</div>
+</div>
+
 </body>
 </html>

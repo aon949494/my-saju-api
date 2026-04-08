@@ -25,7 +25,7 @@ def index():
 @app.route('/api/saju', methods=['POST'])
 def saju_api():
     if not GEMINI_API_KEY:
-        print("!!! 에러: API 키가 설정되지 않았습니다.")
+        print("!!! 에러: API 키가 환경변수에 없습니다.")
         return jsonify({'error': {'message': '서버에 API 키가 설정되지 않았습니다.'}}), 500
 
     try:
@@ -34,15 +34,14 @@ def saju_api():
         msgs = payload.get('messages', [])
         max_tokens = payload.get('max_tokens', 8000)
         
-        # 메시지 내용이 비어있는지 확인 (400 에러 방지)
         if not msgs or not msgs[0].get('content'):
-            print("!!! 에러: 요청 메시지가 비어있습니다.")
+            print("!!! 에러: 전달된 메시지 내용이 비어있습니다.")
             return jsonify({'error': {'message': '질문 내용이 없습니다.'}}), 400
             
         user_prompt = msgs[0]['content']
-        print(f" → Gemini 요청 시작 (모델: {MODEL_NAME})")
+        print(f" → Gemini 요청 시도 (모델: {MODEL_NAME})")
 
-        # [중요] 세이프티 필터 해제: 사주 풀이 중 차단되는 것을 방지합니다.
+        # [안전 설정] 사주 풀이 차단 방지
         safety_settings = [
             {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
             {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
@@ -75,32 +74,29 @@ def saju_api():
             with urllib.request.urlopen(req, timeout=60) as r:
                 gd = json.loads(r.read())
                 
-                # 응답 구조 안전하게 검사
                 if 'candidates' in gd and len(gd['candidates']) > 0:
                     candidate = gd['candidates'][0]
                     
-                    # 차단 여부 확인
                     if candidate.get('finishReason') == 'SAFETY':
-                        print("!!! 차단됨: 콘텐츠가 세이프티 필터에 의해 거부되었습니다.")
-                        return jsonify({'error': {'message': '안전 정책에 의해 답변이 차단되었습니다.'}}), 500
+                        print("!!! 차단됨: 세이프티 필터에 의해 답변이 거부되었습니다.")
+                        return jsonify({'error': {'message': '안전 정책으로 차단되었습니다.'}}), 500
                     
                     if 'content' in candidate and 'parts' in candidate['content']:
                         text = candidate['content']['parts'][0]['text']
-                        print(" → 분석 완료!")
+                        print(" → 성공: 답변 생성 완료")
                         return jsonify({'content': [{'type': 'text', 'text': text}]})
                 
-                print(f"!!! 에러: 예상치 못한 응답 구조입니다: {gd}")
-                return jsonify({'error': {'message': '응답 데이터를 읽을 수 없습니다.'}}), 500
+                return jsonify({'error': {'message': '응답 형식이 올바르지 않습니다.'}}), 500
 
         except urllib.error.HTTPError as e:
-            # 구글 API가 직접 뱉는 에러 메시지를 Render 로그에 출력
-            error_msg = e.read().decode()
-            print(f"!!! Google API HTTP 에러 ({e.code}): {error_msg}")
-            return jsonify({'error': {'message': f'Google API 에러 ({e.code})', 'details': error_msg}}), e.code
+            # ★ 여기가 핵심입니다. 구글이 보낸 에러 '본문'을 읽어서 로그에 찍습니다.
+            error_body = e.read().decode()
+            print(f"!!! Google API 상세 에러 (Code {e.code}): {error_body}")
+            return jsonify({'error': {'message': f'Google API 에러 {e.code}', 'details': error_body}}), e.code
 
     except Exception as e:
         import traceback
-        print(f"!!! 서버 로직 에러: {str(e)}")
+        print(f"!!! 서버 내부 에러: {str(e)}")
         print(traceback.format_exc())
         return jsonify({'error': {'message': str(e)}}), 500
 

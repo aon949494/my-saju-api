@@ -56,26 +56,22 @@ def saju_api():
             method='POST'
         )
 
-# ... (생략: urllib.request.Request 부분까지)
+# ... (중략: 58행 부근) ...
+    try:
+        with urllib.request.urlopen(req, timeout=60) as r:
+            gd = json.loads(r.read())
+            # (정상 처리 로직...)
+            text = gd['candidates'][0]['content']['parts'][0]['text']
+            return jsonify({'content': [{'type': 'text', 'text': text}]})
 
-        try:
-            with urllib.request.urlopen(req, timeout=60) as r:
-                gd = json.loads(r.read())
-                text = gd['candidates'][0]['content']['parts'][0]['text']
-                print(" → 분석 완료!")
-                return jsonify({'content': [{'type': 'text', 'text': text}]})
-        
-        # 구글 API가 에러를 뱉었을 때 (400, 404, 429 등)
-        except urllib.error.HTTPError as e:
-            error_body = e.read().decode() # 구글이 보내준 진짜 에러 메시지 읽기
-            print(f"!!! 구글 API 에러 발생: {e.code} !!!")
-            print(f"상세 내용: {error_body}")
-            return jsonify({'error': {'message': f'Google API Error {e.code}', 'details': error_body}}), e.code
+    except urllib.error.HTTPError as e:
+        # 구글 API가 보내는 400 에러의 상세 내용을 로그에 찍습니다.
+        error_details = e.read().decode()
+        print(f"!!! Google API 400 Error Details: {error_details}")
+        return jsonify({'error': {'message': 'Google API Error', 'details': error_details}}), 400
 
     except Exception as e:
-        import traceback
-        print("!!! 서버 내부 로직 에러 !!!")
-        print(traceback.format_exc()) # 어디서 터졌는지 전체 경로 출력
+        print(f" → 서버 내부 에러: {str(e)}")
         return jsonify({'error': {'message': str(e)}}), 500
 
 if __name__ == '__main__':

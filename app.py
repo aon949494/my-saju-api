@@ -57,7 +57,7 @@ def saju_api():
         user_prompt = payload.get('messages', [{}])[0].get('content', '사주 분석해줘')
         
         # 모델 생성 시에도 명시적으로 프로젝트를 지정할 수 있습니다.
-        model = GenerativeModel("gemini-1.5-flash")
+        model = GenerativeModel("gemini-2.5-flash")
         
         safety_settings = [
             SafetySetting(category=HarmCategory.HARM_CATEGORY_HARASSMENT, threshold=HarmBlockThreshold.BLOCK_NONE),

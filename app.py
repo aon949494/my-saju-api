@@ -14,7 +14,7 @@ CORS(app)
 # ─── [보안과 작동을 모두 잡는 설정] ───
 # 1. 프로젝트 ID: 공개되어도 안전합니다. 여기에 직접 입력하세요.
 # 예: PROJECT_ID = "gen-lang-client-0051198627"
-PROJECT_ID = "여기에_GCP_콘솔에서_복사한_프로젝트_ID를_넣으세요" 
+PROJECT_ID = "gen-lang-client-0051198627" 
 
 # 2. JSON 키: 절대 노출 금지! Render 환경변수(GCP_SERVICE_ACCOUNT_KEY)에서 가져옵니다.
 GCP_KEY_JSON = os.environ.get("GCP_SERVICE_ACCOUNT_KEY")

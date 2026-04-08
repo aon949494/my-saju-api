@@ -9,11 +9,8 @@ app = Flask(__name__)
 CORS(app)
 
 # ═══════════════════════════════════════
-# [보안 적용] API 키를 환경 변수에서 가져옵니다.
-# 로컬 테스트 시에는 터미널에서 설정을 해주어야 하며, 
-# Render 배포 시에는 Environment Variables 설정창에 입력하면 됩니다.
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-MODEL_NAME = "gemini-2.5-flash"
+MODEL_NAME = "gemini-2.5-flash" 
 # ═══════════════════════════════════════
 
 DIR = os.path.dirname(os.path.abspath(__file__))
@@ -27,8 +24,8 @@ def index():
 
 @app.route('/api/saju', methods=['POST'])
 def saju_api():
-    # 키가 설정되지 않았을 경우 에러 처리
     if not GEMINI_API_KEY:
+        print("!!! 에러: API 키가 설정되지 않았습니다.")
         return jsonify({'error': {'message': '서버에 API 키가 설정되지 않았습니다.'}}), 500
 
     try:
@@ -36,14 +33,32 @@ def saju_api():
         system_prompt = payload.get('system', '')
         msgs = payload.get('messages', [])
         max_tokens = payload.get('max_tokens', 8000)
-        user_prompt = msgs[0]['content'] if msgs else ''
+        
+        # 메시지 내용이 비어있는지 확인 (400 에러 방지)
+        if not msgs or not msgs[0].get('content'):
+            print("!!! 에러: 요청 메시지가 비어있습니다.")
+            return jsonify({'error': {'message': '질문 내용이 없습니다.'}}), 400
+            
+        user_prompt = msgs[0]['content']
+        print(f" → Gemini 요청 시작 (모델: {MODEL_NAME})")
 
-        print(f" → Gemini 요청중... (모델: {MODEL_NAME})")
+        # [중요] 세이프티 필터 해제: 사주 풀이 중 차단되는 것을 방지합니다.
+        safety_settings = [
+            {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
+            {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
+            {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
+            {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"}
+        ]
 
         gbody = {
             'contents': [{'role': 'user', 'parts': [{'text': user_prompt}]}],
-            'generationConfig': {'maxOutputTokens': max_tokens, 'temperature': 0.7}
+            'generationConfig': {
+                'maxOutputTokens': max_tokens, 
+                'temperature': 0.7
+            },
+            'safetySettings': safety_settings
         }
+        
         if system_prompt.strip():
             gbody['systemInstruction'] = {'parts': [{'text': system_prompt}]}
 
@@ -56,24 +71,38 @@ def saju_api():
             method='POST'
         )
 
-# ... (중략: 58행 부근) ...
-    try:
-        with urllib.request.urlopen(req, timeout=60) as r:
-            gd = json.loads(r.read())
-            # (정상 처리 로직...)
-            text = gd['candidates'][0]['content']['parts'][0]['text']
-            return jsonify({'content': [{'type': 'text', 'text': text}]})
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                gd = json.loads(r.read())
+                
+                # 응답 구조 안전하게 검사
+                if 'candidates' in gd and len(gd['candidates']) > 0:
+                    candidate = gd['candidates'][0]
+                    
+                    # 차단 여부 확인
+                    if candidate.get('finishReason') == 'SAFETY':
+                        print("!!! 차단됨: 콘텐츠가 세이프티 필터에 의해 거부되었습니다.")
+                        return jsonify({'error': {'message': '안전 정책에 의해 답변이 차단되었습니다.'}}), 500
+                    
+                    if 'content' in candidate and 'parts' in candidate['content']:
+                        text = candidate['content']['parts'][0]['text']
+                        print(" → 분석 완료!")
+                        return jsonify({'content': [{'type': 'text', 'text': text}]})
+                
+                print(f"!!! 에러: 예상치 못한 응답 구조입니다: {gd}")
+                return jsonify({'error': {'message': '응답 데이터를 읽을 수 없습니다.'}}), 500
 
-    except urllib.error.HTTPError as e:
-        # 구글 API가 보내는 400 에러의 상세 내용을 로그에 찍습니다.
-        error_details = e.read().decode()
-        print(f"!!! Google API 400 Error Details: {error_details}")
-        return jsonify({'error': {'message': 'Google API Error', 'details': error_details}}), 400
+        except urllib.error.HTTPError as e:
+            # 구글 API가 직접 뱉는 에러 메시지를 Render 로그에 출력
+            error_msg = e.read().decode()
+            print(f"!!! Google API HTTP 에러 ({e.code}): {error_msg}")
+            return jsonify({'error': {'message': f'Google API 에러 ({e.code})', 'details': error_msg}}), e.code
 
     except Exception as e:
-        print(f" → 서버 내부 에러: {str(e)}")
+        import traceback
+        print(f"!!! 서버 로직 에러: {str(e)}")
+        print(traceback.format_exc())
         return jsonify({'error': {'message': str(e)}}), 500
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 8080))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=5000)

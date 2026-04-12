@@ -1,4 +1,4 @@
-import os, json, traceback, time
+import os, json, traceback, time, logging, sys
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import vertexai
@@ -7,6 +7,14 @@ from vertexai.generative_models import (
     HarmBlockThreshold, Content, Part
 )
 from google.oauth2 import service_account
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s %(message)s',
+    stream=sys.stdout,
+    force=True
+)
+log = logging.getLogger(__name__)
 
 app = Flask(__name__)
 CORS(app)
@@ -21,8 +29,10 @@ def init_vertex():
     try:
         creds = service_account.Credentials.from_service_account_info(json.loads(GCP_KEY_JSON))
         vertexai.init(project=PROJECT_ID, location=LOCATION, credentials=creds)
+        log.info("Vertex AI 초기화 성공")
         return True, "OK"
     except Exception as e:
+        log.error(f"Vertex AI 초기화 실패: {e}")
         return False, str(e)
 
 is_ready, init_msg = init_vertex()
@@ -35,47 +45,30 @@ SAFETY = [
     SafetySetting(category=HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold=HarmBlockThreshold.BLOCK_NONE),
 ]
 
-def looks_complete(text):
-    """텍스트가 자연스럽게 끝났는지 판단"""
-    t = (text or '').rstrip()
-    if not t:
-        return True
-    # 문장 마무리 표현
-    endings = ('다.', '요.', '야.', '어.', '네.', '죠.', '게.', '다!', '요!', '다?', '요?', '…', '👍')
-    return any(t.endswith(e) for e in endings)
+ENDINGS = ('다', '요', '야', '어', '네', '죠', '게', '.', '!', '?', '…')
 
-def smart_continuation(model, prev_text, gen_cfg):
-    """
-    무조건 2차 호출 — 모델이 스스로 완료 여부 판단
-    완료면 [END], 미완료면 이어서 작성
-    """
-    last_ctx = prev_text[-300:].strip()
-    cont_prompt = (
-        f"방금 작성한 답변의 마지막 부분입니다:\n\"{last_ctx}\"\n\n"
-        "위 답변이 자연스럽게 마무리됐으면 [END] 라고만 써주세요.\n"
-        "마무리가 안 됐으면 끊긴 부분 다음부터 이어서 완성해주세요.\n"
-        "이미 쓴 내용은 절대 반복하지 말고, 이어지는 내용만 작성하세요."
-    )
+def make_model(sys_prompt):
+    sys_short = (sys_prompt or '')[:3000]
     try:
-        resp = model.generate_content(cont_prompt, generation_config=gen_cfg, safety_settings=SAFETY)
-        chunk = (getattr(resp, 'text', '') or '').strip()
-        print(f"[2차 호출] '{chunk[:50]}...' ({len(chunk)}자)")
-
-        if chunk == '[END]' or chunk.startswith('[END]'):
-            print("[2차] 완료 확인")
-            return prev_text
-
-        return prev_text + "\n" + chunk
+        return GenerativeModel(
+            'gemini-2.5-flash',
+            system_instruction=sys_short if sys_short else None
+        )
     except Exception as e:
-        print(f"[2차 호출 오류] {e}")
-        return prev_text
+        log.warning(f"system_instruction 실패, 빈값 사용: {e}")
+        return GenerativeModel('gemini-2.5-flash')
 
+def generate(model, prompt_or_chat, gen_cfg, is_chat=False, last_msg=None):
+    if is_chat:
+        resp = prompt_or_chat.send_message(last_msg, generation_config=gen_cfg, safety_settings=SAFETY)
+    else:
+        resp = model.generate_content(prompt_or_chat, generation_config=gen_cfg, safety_settings=SAFETY)
+    return (getattr(resp, 'text', '') or '').rstrip()
 
 @app.route('/')
 def index():
     files = [f for f in os.listdir(DIR) if f.endswith('.html')]
     return send_from_directory(DIR, files[0]) if files else ("No HTML", 404)
-
 
 @app.route('/api/saju', methods=['POST'])
 def saju_api():
@@ -88,40 +81,12 @@ def saju_api():
         if data.get('ping'):
             return jsonify({'content': [{'type': 'text', 'text': 'pong'}]})
 
-        sys_prompt = (data.get('system', '') or '').strip()
-        messages   = data.get('messages', [])
-        mode       = data.get('mode', '')
+        sys_prompt   = (data.get('system', '') or '').strip()
+        messages     = data.get('messages', [])
+        mode         = data.get('mode', '')
+        req_tokens   = min(int(data.get('max_tokens', 8000)), 8000)
 
-        # 모드 설정
-        # mode 없음 → 사주/운세/타로 (이어쓰기 없음, 태그 구조 보존)
-        # mode='long' → 페르소나 채팅 (2차 호출로 이어쓰기)
-        if mode == 'long':
-            tokens = 2000
-            do_continuation = True
-        elif mode == 'normal':
-            tokens = 2000
-            do_continuation = False
-        elif mode == 'short':
-            tokens = 1200
-            do_continuation = False
-        else:
-            # 사주/운세: 이어쓰기 절대 없음
-            tokens = min(int(data.get('max_tokens', 8000)), 8000)
-            do_continuation = False
-
-        gen_cfg = {'temperature': 0.85, 'max_output_tokens': tokens}
-
-        # system_instruction 길이 제한 (안전)
-        sys_short = sys_prompt[:3500] if len(sys_prompt) > 3500 else sys_prompt
-
-        try:
-            model = GenerativeModel(
-                'gemini-2.5-flash',
-                system_instruction=sys_short if sys_short else None
-            )
-        except Exception as e:
-            print(f"[모델 생성 오류] {e}")
-            model = GenerativeModel('gemini-2.5-flash')
+        log.info(f"요청: mode='{mode}', msgs={len(messages)}, sys={len(sys_prompt)}자")
 
         if not messages:
             return jsonify({'content': [{'type': 'text', 'text': ''}]})
@@ -129,35 +94,69 @@ def saju_api():
         last_msg     = messages[-1].get('content', '')
         history_msgs = messages[:-1]
         t_start = time.time()
+        model = make_model(sys_prompt)
 
-        # 1차 생성
-        if history_msgs:
-            history = []
-            for m in history_msgs:
-                role = 'model' if m.get('role') == 'assistant' else 'user'
-                history.append(Content(role=role, parts=[Part.from_text(m.get('content', ''))]))
+        # ── 히스토리 변환 ──
+        history = []
+        for m in history_msgs:
+            role = 'model' if m.get('role') == 'assistant' else 'user'
+            history.append(Content(role=role, parts=[Part.from_text(m.get('content', ''))]))
+
+        # ══ 사주/운세: mode 없음 → 단순 1회 호출 ══
+        if not mode:
+            gen_cfg = {'temperature': 0.85, 'max_output_tokens': req_tokens}
+            if history:
+                chat = model.start_chat(history=history)
+                text = generate(model, chat, gen_cfg, is_chat=True, last_msg=last_msg)
+            else:
+                text = generate(model, last_msg, gen_cfg)
+            log.info(f"사주/운세 완료: {len(text)}자, {round(time.time()-t_start,1)}s")
+            return jsonify({'content': [{'type': 'text', 'text': text}]})
+
+        # ══ 페르소나: mode 있음 → 2단계 생성 ══
+        gen_cfg_1 = {'temperature': 0.85, 'max_output_tokens': 2000}
+        gen_cfg_2 = {'temperature': 0.85, 'max_output_tokens': 1500}
+
+        # 1단계
+        if history:
             chat = model.start_chat(history=history)
-            resp = chat.send_message(last_msg, generation_config=gen_cfg, safety_settings=SAFETY)
+            text1 = generate(model, chat, gen_cfg_1, is_chat=True, last_msg=last_msg)
         else:
-            resp = model.generate_content(last_msg, generation_config=gen_cfg, safety_settings=SAFETY)
+            text1 = generate(model, last_msg, gen_cfg_1)
 
-        full_text = getattr(resp, 'text', '') or ''
-        print(f"[1차] {len(full_text)}자, complete={looks_complete(full_text)}")
+        log.info(f"1단계: {len(text1)}자, 끝='{text1[-15:] if text1 else ''}'")
 
-        # 2차 호출: mode='long'이고 자연스럽게 끝나지 않은 경우
-        if do_continuation and not looks_complete(full_text):
-            print("[2차 호출 시작]")
-            full_text = smart_continuation(model, full_text, gen_cfg)
+        # 완료 여부 확인
+        is_done = any(text1.endswith(e) for e in ENDINGS)
+        log.info(f"완료 여부: {is_done}")
+
+        if is_done or mode == 'short':
+            full_text = text1
+        else:
+            # 2단계: 이어쓰기
+            last_ctx = text1[-250:].strip()
+            cont = (
+                f"앞서 작성한 답변의 마지막 부분:\n\"{last_ctx}\"\n\n"
+                "위 내용 바로 다음 문장부터 자연스럽게 이어서 작성해주세요.\n"
+                "앞 내용 반복, 자기소개, 인사말 절대 금지.\n"
+                "끊긴 부분 다음 내용만 이어서 마무리해주세요."
+            )
+            try:
+                text2 = generate(model, cont, gen_cfg_2)
+                log.info(f"2단계: {len(text2)}자")
+                full_text = text1 + "\n\n" + text2 if text2 else text1
+            except Exception as e:
+                log.error(f"2단계 오류: {e}")
+                full_text = text1
 
         elapsed = round(time.time() - t_start, 2)
-        print(f"[DONE] {len(full_text)}자, {elapsed}s, mode='{mode or '기본'}'")
-
+        log.info(f"완료: {len(full_text)}자, {elapsed}s")
         return jsonify({'content': [{'type': 'text', 'text': full_text}]})
 
     except Exception as e:
         traceback.print_exc()
+        log.error(f"오류: {e}")
         return jsonify({'error': {'message': str(e)}}), 500
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 10000)))

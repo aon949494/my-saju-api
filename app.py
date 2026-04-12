@@ -35,60 +35,40 @@ SAFETY = [
     SafetySetting(category=HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold=HarmBlockThreshold.BLOCK_NONE),
 ]
 
-def check_max_tokens(response):
+def looks_complete(text):
+    """텍스트가 자연스럽게 끝났는지 판단"""
+    t = (text or '').rstrip()
+    if not t:
+        return True
+    # 문장 마무리 표현
+    endings = ('다.', '요.', '야.', '어.', '네.', '죠.', '게.', '다!', '요!', '다?', '요?', '…', '👍')
+    return any(t.endswith(e) for e in endings)
+
+def smart_continuation(model, prev_text, gen_cfg):
+    """
+    무조건 2차 호출 — 모델이 스스로 완료 여부 판단
+    완료면 [END], 미완료면 이어서 작성
+    """
+    last_ctx = prev_text[-300:].strip()
+    cont_prompt = (
+        f"방금 작성한 답변의 마지막 부분입니다:\n\"{last_ctx}\"\n\n"
+        "위 답변이 자연스럽게 마무리됐으면 [END] 라고만 써주세요.\n"
+        "마무리가 안 됐으면 끊긴 부분 다음부터 이어서 완성해주세요.\n"
+        "이미 쓴 내용은 절대 반복하지 말고, 이어지는 내용만 작성하세요."
+    )
     try:
-        fr = response.candidates[0].finish_reason
-        if hasattr(fr, 'name'):
-            result = fr.name == 'MAX_TOKENS'
-        elif hasattr(fr, 'value'):
-            result = fr.value == 2
-        else:
-            result = int(fr) == 2
-        print(f"[finish_reason] {fr} → cut={result}")
-        return result
+        resp = model.generate_content(cont_prompt, generation_config=gen_cfg, safety_settings=SAFETY)
+        chunk = (getattr(resp, 'text', '') or '').strip()
+        print(f"[2차 호출] '{chunk[:50]}...' ({len(chunk)}자)")
+
+        if chunk == '[END]' or chunk.startswith('[END]'):
+            print("[2차] 완료 확인")
+            return prev_text
+
+        return prev_text + "\n" + chunk
     except Exception as e:
-        print(f"[finish_reason 확인 실패] {e}")
-        return False
-
-
-def run_continuation(sys_prompt, prev_text, gen_cfg, max_extra=2):
-    """이어쓰기 — system_instruction 유지"""
-    try:
-        cont_model = GenerativeModel(
-            'gemini-2.5-flash',
-            system_instruction=sys_prompt if sys_prompt else None
-        )
-    except Exception:
-        cont_model = GenerativeModel('gemini-2.5-flash')
-
-    full = prev_text
-    for i in range(max_extra):
-        last_ctx = full[-200:].strip()
-        cont_prompt = (
-            "이전 답변이 글자 수 제한으로 중간에 끊겼습니다.\n"
-            f"마지막으로 작성된 내용: \"{last_ctx}\"\n\n"
-            "위 내용 바로 다음 문장부터 자연스럽게 이어서 작성해주세요.\n"
-            "인사말, 자기소개, 앞 내용 요약을 절대 반복하지 마세요.\n"
-            "끊긴 부분 다음 내용만 이어서 마무리해주세요."
-        )
-        try:
-            resp = cont_model.generate_content(
-                cont_prompt,
-                generation_config=gen_cfg,
-                safety_settings=SAFETY
-            )
-            chunk = getattr(resp, 'text', '') or ''
-            print(f"[이어쓰기 {i+1}] {len(chunk)}자")
-            if not chunk:
-                break
-            full += "\n" + chunk
-            if not check_max_tokens(resp):
-                break
-        except Exception as e:
-            print(f"[이어쓰기 오류] {e}")
-            break
-
-    return full
+        print(f"[2차 호출 오류] {e}")
+        return prev_text
 
 
 @app.route('/')
@@ -108,32 +88,31 @@ def saju_api():
         if data.get('ping'):
             return jsonify({'content': [{'type': 'text', 'text': 'pong'}]})
 
-        sys_prompt   = data.get('system', '') or ''
-        messages     = data.get('messages', [])
-        mode         = data.get('mode', '')      # 빈 문자열 = 이어쓰기 안 함
-        req_tokens   = int(data.get('max_tokens', 8000))
+        sys_prompt = (data.get('system', '') or '').strip()
+        messages   = data.get('messages', [])
+        mode       = data.get('mode', '')
 
-        # mode에 따라 설정
-        # mode 없음 → 사주/운세 (태그 파싱 필요, 이어쓰기 절대 안 함)
-        # mode='long' → 페르소나 채팅 (이어쓰기 O)
+        # 모드 설정
+        # mode 없음 → 사주/운세/타로 (이어쓰기 없음, 태그 구조 보존)
+        # mode='long' → 페르소나 채팅 (2차 호출로 이어쓰기)
         if mode == 'long':
-            tokens = 2000   # 안정적인 값
-            extra  = 2
+            tokens = 2000
+            do_continuation = True
         elif mode == 'normal':
             tokens = 2000
-            extra  = 1
+            do_continuation = False
         elif mode == 'short':
-            tokens = 1500
-            extra  = 0
+            tokens = 1200
+            do_continuation = False
         else:
-            # 사주/운세/타로: max_tokens 그대로, 이어쓰기 없음
-            tokens = min(req_tokens, 8000)
-            extra  = 0
+            # 사주/운세: 이어쓰기 절대 없음
+            tokens = min(int(data.get('max_tokens', 8000)), 8000)
+            do_continuation = False
 
         gen_cfg = {'temperature': 0.85, 'max_output_tokens': tokens}
 
-        # 시스템 프롬프트 처리 — 너무 길면 잘라서 에러 방지
-        sys_short = sys_prompt[:4000] if len(sys_prompt) > 4000 else sys_prompt
+        # system_instruction 길이 제한 (안전)
+        sys_short = sys_prompt[:3500] if len(sys_prompt) > 3500 else sys_prompt
 
         try:
             model = GenerativeModel(
@@ -141,7 +120,7 @@ def saju_api():
                 system_instruction=sys_short if sys_short else None
             )
         except Exception as e:
-            print(f"[system_instruction 오류, 빈값으로 재시도] {e}")
+            print(f"[모델 생성 오류] {e}")
             model = GenerativeModel('gemini-2.5-flash')
 
         if not messages:
@@ -151,26 +130,24 @@ def saju_api():
         history_msgs = messages[:-1]
         t_start = time.time()
 
+        # 1차 생성
         if history_msgs:
             history = []
             for m in history_msgs:
                 role = 'model' if m.get('role') == 'assistant' else 'user'
                 history.append(Content(role=role, parts=[Part.from_text(m.get('content', ''))]))
-
             chat = model.start_chat(history=history)
             resp = chat.send_message(last_msg, generation_config=gen_cfg, safety_settings=SAFETY)
-            full_text = getattr(resp, 'text', '') or ''
-            print(f"[chat] {len(full_text)}자")
-
-            if extra > 0 and check_max_tokens(resp):
-                full_text = run_continuation(sys_short, full_text, gen_cfg, extra)
         else:
             resp = model.generate_content(last_msg, generation_config=gen_cfg, safety_settings=SAFETY)
-            full_text = getattr(resp, 'text', '') or ''
-            print(f"[direct] {len(full_text)}자")
 
-            if extra > 0 and check_max_tokens(resp):
-                full_text = run_continuation(sys_short, full_text, gen_cfg, extra)
+        full_text = getattr(resp, 'text', '') or ''
+        print(f"[1차] {len(full_text)}자, complete={looks_complete(full_text)}")
+
+        # 2차 호출: mode='long'이고 자연스럽게 끝나지 않은 경우
+        if do_continuation and not looks_complete(full_text):
+            print("[2차 호출 시작]")
+            full_text = smart_continuation(model, full_text, gen_cfg)
 
         elapsed = round(time.time() - t_start, 2)
         print(f"[DONE] {len(full_text)}자, {elapsed}s, mode='{mode or '기본'}'")

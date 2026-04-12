@@ -36,7 +36,6 @@ SAFETY = [
 ]
 
 def check_max_tokens(response):
-    """MAX_TOKENS로 잘렸는지 확인 — 확실할 때만 True"""
     try:
         fr = response.candidates[0].finish_reason
         if hasattr(fr, 'name'):
@@ -48,18 +47,21 @@ def check_max_tokens(response):
         print(f"[finish_reason] {fr} → cut={result}")
         return result
     except Exception as e:
-        print(f"[finish_reason 확인 실패, 이어쓰기 안 함] {e}")
-        return False  # 불확실하면 이어쓰기 안 함
+        print(f"[finish_reason 확인 실패] {e}")
+        return False
 
 
-def run_continuation(model, prev_text, sys_prompt, gen_cfg, max_extra=2):
-    """잘린 텍스트 이어쓰기 — system 유지로 캐릭터 반복 방지"""
-    cont_model = GenerativeModel(
-        'gemini-2.5-flash',
-        system_instruction=sys_prompt if sys_prompt else None
-    )
+def run_continuation(sys_prompt, prev_text, gen_cfg, max_extra=2):
+    """이어쓰기 — system_instruction 유지"""
+    try:
+        cont_model = GenerativeModel(
+            'gemini-2.5-flash',
+            system_instruction=sys_prompt if sys_prompt else None
+        )
+    except Exception:
+        cont_model = GenerativeModel('gemini-2.5-flash')
+
     full = prev_text
-
     for i in range(max_extra):
         last_ctx = full[-200:].strip()
         cont_prompt = (
@@ -69,14 +71,21 @@ def run_continuation(model, prev_text, sys_prompt, gen_cfg, max_extra=2):
             "인사말, 자기소개, 앞 내용 요약을 절대 반복하지 마세요.\n"
             "끊긴 부분 다음 내용만 이어서 마무리해주세요."
         )
-        print(f"[이어쓰기 {i+1}] 생성 중...")
-        resp = cont_model.generate_content(cont_prompt, generation_config=gen_cfg, safety_settings=SAFETY)
-        chunk = getattr(resp, 'text', '') or ''
-        print(f"[이어쓰기 {i+1}] {len(chunk)}자")
-        if not chunk:
-            break
-        full += "\n" + chunk
-        if not check_max_tokens(resp):
+        try:
+            resp = cont_model.generate_content(
+                cont_prompt,
+                generation_config=gen_cfg,
+                safety_settings=SAFETY
+            )
+            chunk = getattr(resp, 'text', '') or ''
+            print(f"[이어쓰기 {i+1}] {len(chunk)}자")
+            if not chunk:
+                break
+            full += "\n" + chunk
+            if not check_max_tokens(resp):
+                break
+        except Exception as e:
+            print(f"[이어쓰기 오류] {e}")
             break
 
     return full
@@ -99,33 +108,41 @@ def saju_api():
         if data.get('ping'):
             return jsonify({'content': [{'type': 'text', 'text': 'pong'}]})
 
-        sys_prompt = data.get('system', '')
-        messages   = data.get('messages', [])
-        mode       = data.get('mode', '')  # 빈 문자열 = 이어쓰기 안 함
+        sys_prompt   = data.get('system', '') or ''
+        messages     = data.get('messages', [])
+        mode         = data.get('mode', '')      # 빈 문자열 = 이어쓰기 안 함
+        req_tokens   = int(data.get('max_tokens', 8000))
 
-        # ★ 핵심: mode가 명시된 경우에만 이어쓰기
-        # mode 없음 → 사주/운세/타로 등 태그 응답 → 이어쓰기 안 함
-        # mode='long' → 페르소나 채팅 → 이어쓰기 최대 2회
-        MODES = {
-            'short':  {'tokens': 1500, 'extra': 0},
-            'normal': {'tokens': 3000, 'extra': 1},
-            'long':   {'tokens': 3000, 'extra': 2},
-        }
-        if mode in MODES:
-            cfg = MODES[mode]
+        # mode에 따라 설정
+        # mode 없음 → 사주/운세 (태그 파싱 필요, 이어쓰기 절대 안 함)
+        # mode='long' → 페르소나 채팅 (이어쓰기 O)
+        if mode == 'long':
+            tokens = 2000   # 안정적인 값
+            extra  = 2
+        elif mode == 'normal':
+            tokens = 2000
+            extra  = 1
+        elif mode == 'short':
+            tokens = 1500
+            extra  = 0
         else:
-            # mode 없음 = 기존 방식 (이어쓰기 없음, 토큰 최대)
-            cfg = {'tokens': int(data.get('max_tokens', 8000)), 'extra': 0}
+            # 사주/운세/타로: max_tokens 그대로, 이어쓰기 없음
+            tokens = min(req_tokens, 8000)
+            extra  = 0
 
-        gen_cfg = {
-            'temperature': 0.85,
-            'max_output_tokens': cfg['tokens'],
-        }
+        gen_cfg = {'temperature': 0.85, 'max_output_tokens': tokens}
 
-        model = GenerativeModel(
-            'gemini-2.5-flash',
-            system_instruction=sys_prompt or None
-        )
+        # 시스템 프롬프트 처리 — 너무 길면 잘라서 에러 방지
+        sys_short = sys_prompt[:4000] if len(sys_prompt) > 4000 else sys_prompt
+
+        try:
+            model = GenerativeModel(
+                'gemini-2.5-flash',
+                system_instruction=sys_short if sys_short else None
+            )
+        except Exception as e:
+            print(f"[system_instruction 오류, 빈값으로 재시도] {e}")
+            model = GenerativeModel('gemini-2.5-flash')
 
         if not messages:
             return jsonify({'content': [{'type': 'text', 'text': ''}]})
@@ -145,18 +162,18 @@ def saju_api():
             full_text = getattr(resp, 'text', '') or ''
             print(f"[chat] {len(full_text)}자")
 
-            if cfg['extra'] > 0 and check_max_tokens(resp):
-                full_text = run_continuation(model, full_text, sys_prompt, gen_cfg, cfg['extra'])
+            if extra > 0 and check_max_tokens(resp):
+                full_text = run_continuation(sys_short, full_text, gen_cfg, extra)
         else:
             resp = model.generate_content(last_msg, generation_config=gen_cfg, safety_settings=SAFETY)
             full_text = getattr(resp, 'text', '') or ''
             print(f"[direct] {len(full_text)}자")
 
-            if cfg['extra'] > 0 and check_max_tokens(resp):
-                full_text = run_continuation(model, full_text, sys_prompt, gen_cfg, cfg['extra'])
+            if extra > 0 and check_max_tokens(resp):
+                full_text = run_continuation(sys_short, full_text, gen_cfg, extra)
 
         elapsed = round(time.time() - t_start, 2)
-        print(f"[DONE] 총 {len(full_text)}자, {elapsed}s, mode={mode or '기본'}")
+        print(f"[DONE] {len(full_text)}자, {elapsed}s, mode='{mode or '기본'}'")
 
         return jsonify({'content': [{'type': 'text', 'text': full_text}]})
 

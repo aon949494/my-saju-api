@@ -3,16 +3,13 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import vertexai
 from vertexai.generative_models import (
-    GenerativeModel, SafetySetting, HarmCategory,
-    HarmBlockThreshold, Content, Part
+    GenerativeModel, GenerationConfig, SafetySetting,
+    HarmCategory, HarmBlockThreshold, Content, Part
 )
 from google.oauth2 import service_account
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s %(levelname)s %(message)s',
-    stream=sys.stdout, force=True
-)
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s',
+                    stream=sys.stdout, force=True)
 log = logging.getLogger(__name__)
 
 app = Flask(__name__)
@@ -46,17 +43,18 @@ SAFETY = [
 ENDINGS = ('다', '요', '야', '어', '네', '죠', '게', '.', '!', '?', '…')
 
 def make_model(sys_prompt):
-    # system_instruction은 페르소나 정의만 (사주 데이터 제외)
-    # 길이 제한 완화: 4000자
-    sys_short = (sys_prompt or '')[:4000]
+    # 자르지 않고 전체 전달 (Gemini 1M 컨텍스트 윈도우)
+    sys_clean = (sys_prompt or '').strip()
     try:
-        return GenerativeModel(
-            'gemini-2.5-flash',
-            system_instruction=sys_short if sys_short else None
-        )
+        if sys_clean:
+            return GenerativeModel('gemini-2.5-flash', system_instruction=sys_clean)
+        return GenerativeModel('gemini-2.5-flash')
     except Exception as e:
         log.warning(f"system_instruction 실패: {e}")
         return GenerativeModel('gemini-2.5-flash')
+
+def get_text(resp):
+    return (getattr(resp, 'text', '') or '').rstrip()
 
 @app.route('/')
 def index():
@@ -67,17 +65,15 @@ def index():
 def saju_api():
     if not is_ready:
         return jsonify({'error': init_msg}), 500
-
     try:
         data = request.json or {}
-
         if data.get('ping'):
             return jsonify({'content': [{'type': 'text', 'text': 'pong'}]})
 
-        sys_prompt   = (data.get('system', '') or '').strip()
-        messages     = data.get('messages', [])
-        mode         = data.get('mode', '')
-        req_tokens   = min(int(data.get('max_tokens', 8000)), 8000)
+        sys_prompt = (data.get('system', '') or '').strip()
+        messages   = data.get('messages', [])
+        mode       = data.get('mode', '')
+        req_tokens = min(int(data.get('max_tokens', 8000)), 8000)
 
         log.info(f"요청: mode='{mode}', msgs={len(messages)}, sys={len(sys_prompt)}자")
 
@@ -89,52 +85,47 @@ def saju_api():
         t_start = time.time()
         model = make_model(sys_prompt)
 
-        history = []
-        for m in history_msgs:
-            role = 'model' if m.get('role') == 'assistant' else 'user'
-            history.append(Content(role=role, parts=[Part.from_text(m.get('content', ''))]))
+        history = [
+            Content(role='model' if m.get('role') == 'assistant' else 'user',
+                    parts=[Part.from_text(m.get('content', ''))])
+            for m in history_msgs
+        ]
 
         # ══ 사주/운세: mode 없음 ══
         if not mode:
-            gen_cfg = {'temperature': 0.85, 'max_output_tokens': req_tokens}
+            cfg = GenerationConfig(temperature=0.85, max_output_tokens=req_tokens)
             if history:
                 chat = model.start_chat(history=history)
-                resp = chat.send_message(last_msg, generation_config=gen_cfg, safety_settings=SAFETY)
+                resp = chat.send_message(last_msg, generation_config=cfg, safety_settings=SAFETY)
             else:
-                resp = model.generate_content(last_msg, generation_config=gen_cfg, safety_settings=SAFETY)
-            text = (getattr(resp, 'text', '') or '').rstrip()
+                resp = model.generate_content(last_msg, generation_config=cfg, safety_settings=SAFETY)
+            text = get_text(resp)
             log.info(f"사주/운세: {len(text)}자, {round(time.time()-t_start,1)}s")
             return jsonify({'content': [{'type': 'text', 'text': text}]})
 
         # ══ 페르소나: mode 있음 ══
-        # 핵심: user 메시지 앞에 "길게 써라" 강제 지시 추가
-        LENGTH_DIRECTIVE = (
-            "[중요 지시: 이 답변은 반드시 500자 이상 상세하게 작성해야 합니다. "
-            "짧게 끊지 말고 사주 데이터를 충분히 활용해서 구체적으로 작성하세요.]\n\n"
-        )
-        enforced_msg = LENGTH_DIRECTIVE + last_msg
+        # GenerationConfig 객체 명시적 사용
+        cfg1 = GenerationConfig(temperature=0.9, max_output_tokens=4000)
+        cfg2 = GenerationConfig(temperature=0.9, max_output_tokens=2000)
 
-        gen_cfg_1 = {'temperature': 0.85, 'max_output_tokens': 3000}
-        gen_cfg_2 = {'temperature': 0.85, 'max_output_tokens': 2000}
-
-        # 1단계
+        log.info(f"1단계 시작 (max_output_tokens=4000)")
         if history:
             chat = model.start_chat(history=history)
-            resp1 = chat.send_message(enforced_msg, generation_config=gen_cfg_1, safety_settings=SAFETY)
+            resp1 = chat.send_message(last_msg, generation_config=cfg1, safety_settings=SAFETY)
         else:
-            resp1 = model.generate_content(enforced_msg, generation_config=gen_cfg_1, safety_settings=SAFETY)
+            resp1 = model.generate_content(last_msg, generation_config=cfg1, safety_settings=SAFETY)
 
-        text1 = (getattr(resp1, 'text', '') or '').rstrip()
+        text1 = get_text(resp1)
         log.info(f"1단계: {len(text1)}자, 끝='{text1[-20:] if text1 else ''}'")
 
-        is_done = any(text1.endswith(e) for e in ENDINGS)
-        log.info(f"완료 여부: {is_done}")
+        is_done     = any(text1.endswith(e) for e in ENDINGS)
+        is_long     = len(text1) >= 400
+        log.info(f"완료={is_done}, 충분={is_long}")
 
-        if is_done and len(text1) >= 300:
-            # 충분히 길고 자연스럽게 끝났으면 완료
+        if is_done and is_long:
             full_text = text1
         else:
-            # 짧거나 끊겼으면 2단계
+            log.info("2단계 시작")
             last_ctx = text1[-300:].strip()
             cont = (
                 f"앞서 작성한 답변의 마지막 부분:\n\"{last_ctx}\"\n\n"
@@ -143,7 +134,7 @@ def saju_api():
                 "끊긴 부분 다음 내용만 이어서 마무리해주세요."
             )
             try:
-                resp2 = model.generate_content(cont, generation_config=gen_cfg_2, safety_settings=SAFETY)
+                resp2 = model.generate_content(cont, generation_config=cfg2, safety_settings=SAFETY)
                 text2 = (getattr(resp2, 'text', '') or '').strip()
                 log.info(f"2단계: {len(text2)}자")
                 full_text = (text1 + "\n\n" + text2) if text2 else text1

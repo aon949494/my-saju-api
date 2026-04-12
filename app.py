@@ -36,11 +36,7 @@ SAFETY = [
 ]
 
 def check_max_tokens(response):
-    """
-    MAX_TOKENS로 잘렸는지 확인.
-    finish_reason이 명확히 MAX_TOKENS(2)일 때만 True.
-    불확실하면 False 반환 (반복 방지).
-    """
+    """MAX_TOKENS로 잘렸는지 확인 — 확실할 때만 True"""
     try:
         fr = response.candidates[0].finish_reason
         if hasattr(fr, 'name'):
@@ -49,7 +45,7 @@ def check_max_tokens(response):
             result = fr.value == 2
         else:
             result = int(fr) == 2
-        print(f"[finish_reason] {fr} → MAX_TOKENS={result}")
+        print(f"[finish_reason] {fr} → cut={result}")
         return result
     except Exception as e:
         print(f"[finish_reason 확인 실패, 이어쓰기 안 함] {e}")
@@ -57,45 +53,30 @@ def check_max_tokens(response):
 
 
 def run_continuation(model, prev_text, sys_prompt, gen_cfg, max_extra=2):
-    """
-    잘린 텍스트 이어쓰기.
-    system_instruction 유지하여 자기소개 반복 방지.
-    """
-    # system이 있는 모델 재사용 (자기소개 반복 방지)
+    """잘린 텍스트 이어쓰기 — system 유지로 캐릭터 반복 방지"""
     cont_model = GenerativeModel(
         'gemini-2.5-flash',
         system_instruction=sys_prompt if sys_prompt else None
     )
-
     full = prev_text
 
     for i in range(max_extra):
-        # 마지막 200자를 문맥으로 제공
         last_ctx = full[-200:].strip()
         cont_prompt = (
             "이전 답변이 글자 수 제한으로 중간에 끊겼습니다.\n"
             f"마지막으로 작성된 내용: \"{last_ctx}\"\n\n"
             "위 내용 바로 다음 문장부터 자연스럽게 이어서 작성해주세요.\n"
-            "절대 인사말, 자기소개, 앞 내용 요약을 반복하지 마세요.\n"
-            "오직 끊긴 부분 다음 내용만 이어서 마무리해주세요."
+            "인사말, 자기소개, 앞 내용 요약을 절대 반복하지 마세요.\n"
+            "끊긴 부분 다음 내용만 이어서 마무리해주세요."
         )
-
         print(f"[이어쓰기 {i+1}] 생성 중...")
-        resp = cont_model.generate_content(
-            cont_prompt,
-            generation_config=gen_cfg,
-            safety_settings=SAFETY
-        )
+        resp = cont_model.generate_content(cont_prompt, generation_config=gen_cfg, safety_settings=SAFETY)
         chunk = getattr(resp, 'text', '') or ''
         print(f"[이어쓰기 {i+1}] {len(chunk)}자")
-
         if not chunk:
             break
-
         full += "\n" + chunk
-
         if not check_max_tokens(resp):
-            print("[이어쓰기 완료] 정상 종료")
             break
 
     return full
@@ -120,15 +101,21 @@ def saju_api():
 
         sys_prompt = data.get('system', '')
         messages   = data.get('messages', [])
-        mode       = data.get('mode', 'normal')
+        mode       = data.get('mode', '')  # 빈 문자열 = 이어쓰기 안 함
 
-        # 모드별 per_segment 토큰 / 최대 이어쓰기 횟수
+        # ★ 핵심: mode가 명시된 경우에만 이어쓰기
+        # mode 없음 → 사주/운세/타로 등 태그 응답 → 이어쓰기 안 함
+        # mode='long' → 페르소나 채팅 → 이어쓰기 최대 2회
         MODES = {
             'short':  {'tokens': 1500, 'extra': 0},
             'normal': {'tokens': 3000, 'extra': 1},
             'long':   {'tokens': 3000, 'extra': 2},
         }
-        cfg = MODES.get(mode, MODES['normal'])
+        if mode in MODES:
+            cfg = MODES[mode]
+        else:
+            # mode 없음 = 기존 방식 (이어쓰기 없음, 토큰 최대)
+            cfg = {'tokens': int(data.get('max_tokens', 8000)), 'extra': 0}
 
         gen_cfg = {
             'temperature': 0.85,
@@ -158,20 +145,18 @@ def saju_api():
             full_text = getattr(resp, 'text', '') or ''
             print(f"[chat] {len(full_text)}자")
 
-            # 명확히 MAX_TOKENS로 잘린 경우만 이어쓰기
-            if check_max_tokens(resp) and cfg['extra'] > 0:
+            if cfg['extra'] > 0 and check_max_tokens(resp):
                 full_text = run_continuation(model, full_text, sys_prompt, gen_cfg, cfg['extra'])
         else:
-            # 히스토리 없음
             resp = model.generate_content(last_msg, generation_config=gen_cfg, safety_settings=SAFETY)
             full_text = getattr(resp, 'text', '') or ''
             print(f"[direct] {len(full_text)}자")
 
-            if check_max_tokens(resp) and cfg['extra'] > 0:
+            if cfg['extra'] > 0 and check_max_tokens(resp):
                 full_text = run_continuation(model, full_text, sys_prompt, gen_cfg, cfg['extra'])
 
         elapsed = round(time.time() - t_start, 2)
-        print(f"[DONE] 총 {len(full_text)}자, {elapsed}s")
+        print(f"[DONE] 총 {len(full_text)}자, {elapsed}s, mode={mode or '기본'}")
 
         return jsonify({'content': [{'type': 'text', 'text': full_text}]})
 

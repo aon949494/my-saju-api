@@ -40,7 +40,10 @@ SAFETY = [
     SafetySetting(category=HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold=HarmBlockThreshold.BLOCK_NONE),
 ]
 
-ENDINGS = ('다', '요', '야', '어', '네', '죠', '게', '.', '!', '?', '…')
+ENDINGS = ('다', '요', '야', '어', '네', '죠', '게', '.', '!', '?', '…',
+           # 마크다운 볼드로 끝나는 경우
+           '?**', '.**', '!**', '요**', '다**', '어**', '네**',
+           '?**"', '.**"')
 
 def make_model(sys_prompt):
     # 자르지 않고 전체 전달 (Gemini 1M 컨텍스트 윈도우)

@@ -11,8 +11,7 @@ from google.oauth2 import service_account
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s %(levelname)s %(message)s',
-    stream=sys.stdout,
-    force=True
+    stream=sys.stdout, force=True
 )
 log = logging.getLogger(__name__)
 
@@ -32,7 +31,6 @@ def init_vertex():
         log.info("Vertex AI 초기화 성공")
         return True, "OK"
     except Exception as e:
-        log.error(f"Vertex AI 초기화 실패: {e}")
         return False, str(e)
 
 is_ready, init_msg = init_vertex()
@@ -48,22 +46,17 @@ SAFETY = [
 ENDINGS = ('다', '요', '야', '어', '네', '죠', '게', '.', '!', '?', '…')
 
 def make_model(sys_prompt):
-    sys_short = (sys_prompt or '')[:3000]
+    # system_instruction은 페르소나 정의만 (사주 데이터 제외)
+    # 길이 제한 완화: 4000자
+    sys_short = (sys_prompt or '')[:4000]
     try:
         return GenerativeModel(
             'gemini-2.5-flash',
             system_instruction=sys_short if sys_short else None
         )
     except Exception as e:
-        log.warning(f"system_instruction 실패, 빈값 사용: {e}")
+        log.warning(f"system_instruction 실패: {e}")
         return GenerativeModel('gemini-2.5-flash')
-
-def generate(model, prompt_or_chat, gen_cfg, is_chat=False, last_msg=None):
-    if is_chat:
-        resp = prompt_or_chat.send_message(last_msg, generation_config=gen_cfg, safety_settings=SAFETY)
-    else:
-        resp = model.generate_content(prompt_or_chat, generation_config=gen_cfg, safety_settings=SAFETY)
-    return (getattr(resp, 'text', '') or '').rstrip()
 
 @app.route('/')
 def index():
@@ -96,55 +89,64 @@ def saju_api():
         t_start = time.time()
         model = make_model(sys_prompt)
 
-        # ── 히스토리 변환 ──
         history = []
         for m in history_msgs:
             role = 'model' if m.get('role') == 'assistant' else 'user'
             history.append(Content(role=role, parts=[Part.from_text(m.get('content', ''))]))
 
-        # ══ 사주/운세: mode 없음 → 단순 1회 호출 ══
+        # ══ 사주/운세: mode 없음 ══
         if not mode:
             gen_cfg = {'temperature': 0.85, 'max_output_tokens': req_tokens}
             if history:
                 chat = model.start_chat(history=history)
-                text = generate(model, chat, gen_cfg, is_chat=True, last_msg=last_msg)
+                resp = chat.send_message(last_msg, generation_config=gen_cfg, safety_settings=SAFETY)
             else:
-                text = generate(model, last_msg, gen_cfg)
-            log.info(f"사주/운세 완료: {len(text)}자, {round(time.time()-t_start,1)}s")
+                resp = model.generate_content(last_msg, generation_config=gen_cfg, safety_settings=SAFETY)
+            text = (getattr(resp, 'text', '') or '').rstrip()
+            log.info(f"사주/운세: {len(text)}자, {round(time.time()-t_start,1)}s")
             return jsonify({'content': [{'type': 'text', 'text': text}]})
 
-        # ══ 페르소나: mode 있음 → 2단계 생성 ══
-        gen_cfg_1 = {'temperature': 0.85, 'max_output_tokens': 2000}
-        gen_cfg_2 = {'temperature': 0.85, 'max_output_tokens': 1500}
+        # ══ 페르소나: mode 있음 ══
+        # 핵심: user 메시지 앞에 "길게 써라" 강제 지시 추가
+        LENGTH_DIRECTIVE = (
+            "[중요 지시: 이 답변은 반드시 500자 이상 상세하게 작성해야 합니다. "
+            "짧게 끊지 말고 사주 데이터를 충분히 활용해서 구체적으로 작성하세요.]\n\n"
+        )
+        enforced_msg = LENGTH_DIRECTIVE + last_msg
+
+        gen_cfg_1 = {'temperature': 0.85, 'max_output_tokens': 3000}
+        gen_cfg_2 = {'temperature': 0.85, 'max_output_tokens': 2000}
 
         # 1단계
         if history:
             chat = model.start_chat(history=history)
-            text1 = generate(model, chat, gen_cfg_1, is_chat=True, last_msg=last_msg)
+            resp1 = chat.send_message(enforced_msg, generation_config=gen_cfg_1, safety_settings=SAFETY)
         else:
-            text1 = generate(model, last_msg, gen_cfg_1)
+            resp1 = model.generate_content(enforced_msg, generation_config=gen_cfg_1, safety_settings=SAFETY)
 
-        log.info(f"1단계: {len(text1)}자, 끝='{text1[-15:] if text1 else ''}'")
+        text1 = (getattr(resp1, 'text', '') or '').rstrip()
+        log.info(f"1단계: {len(text1)}자, 끝='{text1[-20:] if text1 else ''}'")
 
-        # 완료 여부 확인
         is_done = any(text1.endswith(e) for e in ENDINGS)
         log.info(f"완료 여부: {is_done}")
 
-        if is_done or mode == 'short':
+        if is_done and len(text1) >= 300:
+            # 충분히 길고 자연스럽게 끝났으면 완료
             full_text = text1
         else:
-            # 2단계: 이어쓰기
-            last_ctx = text1[-250:].strip()
+            # 짧거나 끊겼으면 2단계
+            last_ctx = text1[-300:].strip()
             cont = (
                 f"앞서 작성한 답변의 마지막 부분:\n\"{last_ctx}\"\n\n"
-                "위 내용 바로 다음 문장부터 자연스럽게 이어서 작성해주세요.\n"
+                "위 내용 바로 다음 문장부터 이어서 작성해주세요.\n"
                 "앞 내용 반복, 자기소개, 인사말 절대 금지.\n"
                 "끊긴 부분 다음 내용만 이어서 마무리해주세요."
             )
             try:
-                text2 = generate(model, cont, gen_cfg_2)
+                resp2 = model.generate_content(cont, generation_config=gen_cfg_2, safety_settings=SAFETY)
+                text2 = (getattr(resp2, 'text', '') or '').strip()
                 log.info(f"2단계: {len(text2)}자")
-                full_text = text1 + "\n\n" + text2 if text2 else text1
+                full_text = (text1 + "\n\n" + text2) if text2 else text1
             except Exception as e:
                 log.error(f"2단계 오류: {e}")
                 full_text = text1

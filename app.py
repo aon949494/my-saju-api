@@ -44,18 +44,31 @@ def saju_api():
 
     try:
         payload = request.json
+
+        # 핑 요청 무시
+        if payload.get('ping'):
+            return jsonify({'content': [{'type': 'text', 'text': 'pong'}]})
+
         system_prompt = payload.get('system', '')
         messages = payload.get('messages', [])
-        max_tokens = payload.get('max_tokens', 8000)
+
+        # max_tokens: 프론트 요청값 우선, 최소 4000 보장
+        max_tokens = int(payload.get('max_tokens', 8000))
+        max_tokens = max(max_tokens, 4000)
 
         safety_settings = [
-            SafetySetting(category=HarmCategory.HARM_CATEGORY_HARASSMENT, threshold=HarmBlockThreshold.BLOCK_NONE),
-            SafetySetting(category=HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold=HarmBlockThreshold.BLOCK_NONE),
+            SafetySetting(category=HarmCategory.HARM_CATEGORY_HARASSMENT,       threshold=HarmBlockThreshold.BLOCK_NONE),
+            SafetySetting(category=HarmCategory.HARM_CATEGORY_HATE_SPEECH,       threshold=HarmBlockThreshold.BLOCK_NONE),
             SafetySetting(category=HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold=HarmBlockThreshold.BLOCK_NONE),
             SafetySetting(category=HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold=HarmBlockThreshold.BLOCK_NONE),
         ]
 
-        # system_instruction 지원 여부에 따라 분기
+        gen_config = {
+            "temperature": 0.85,
+            "max_output_tokens": max_tokens,
+        }
+
+        # system_instruction 지원
         if system_prompt:
             model = GenerativeModel(
                 "gemini-2.5-flash",
@@ -64,33 +77,32 @@ def saju_api():
         else:
             model = GenerativeModel("gemini-2.5-flash")
 
-        # messages 배열 → Vertex AI Content 형식으로 변환
-        # role: user/assistant → user/model
+        # messages 배열 처리
         if messages:
             history = []
-            for i, msg in enumerate(messages[:-1]):  # 마지막 제외한 히스토리
+            for msg in messages[:-1]:
                 role = "model" if msg.get("role") == "assistant" else "user"
                 history.append(Content(role=role, parts=[Part.from_text(msg.get("content", ""))]))
 
-            last_msg = messages[-1].get("content", "")
+            last_content = messages[-1].get("content", "")
 
             if history:
                 chat = model.start_chat(history=history)
                 response = chat.send_message(
-                    last_msg,
-                    generation_config={"temperature": 0.7, "max_output_tokens": max_tokens},
+                    last_content,
+                    generation_config=gen_config,
                     safety_settings=safety_settings
                 )
             else:
                 response = model.generate_content(
-                    last_msg,
-                    generation_config={"temperature": 0.7, "max_output_tokens": max_tokens},
+                    last_content,
+                    generation_config=gen_config,
                     safety_settings=safety_settings
                 )
         else:
             response = model.generate_content(
                 "안녕하세요",
-                generation_config={"temperature": 0.7, "max_output_tokens": max_tokens},
+                generation_config=gen_config,
                 safety_settings=safety_settings
             )
 

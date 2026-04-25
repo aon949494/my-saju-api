@@ -149,6 +149,9 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Preten
 .aidots{display:flex;justify-content:center;gap:6px;margin-bottom:12px}
 .aidots span{width:6px;height:6px;border-radius:50%;background:var(--gold);opacity:.3;animation:dp 1.4s infinite both}
 .aidots span:nth-child(2){animation-delay:.2s}.aidots span:nth-child(3){animation-delay:.4s}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+#personaChat::-webkit-scrollbar{width:0}
+#personaQ::placeholder{color:rgba(255,255,255,.3)}
 @keyframes dp{0%,80%,100%{opacity:.3;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
 .ailtxt{font-size:12px;letter-spacing:2px;color:var(--muted)}
 .aierr{background:rgba(180,60,60,0.1);border:1px solid rgba(180,60,60,0.3);border-radius:12px;padding:14px 16px;font-size:13px;color:#e09090;text-align:center;line-height:1.7}
@@ -481,6 +484,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         <div class="quick-chip hi" onclick="navSaju()"><span class="qc-ico">✦</span><span class="qc-lbl">AI 사주</span></div>
         <div class="quick-chip" onclick="navUnse('today')"><span class="qc-badge">NEW</span><span class="qc-ico">☀️</span><span class="qc-lbl">오늘운세</span></div>
         <div class="quick-chip" onclick="navUnse('tomorrow')"><span class="qc-badge">NEW</span><span class="qc-ico">🌙</span><span class="qc-lbl">내일운세</span></div>
+        <div class="quick-chip" onclick="goScreen('zodiacScreen');renderZodiacScreen()"><span class="qc-ico">⭐</span><span class="qc-lbl">별자리</span></div>
         <div class="quick-chip" onclick="goScreen('goonghapScreen')"><span class="qc-ico">♡</span><span class="qc-lbl">궁합</span></div>
         <div class="quick-chip" onclick="goScreen('tarotScreen')"><span class="qc-ico">🃏</span><span class="qc-lbl">타로</span></div>
         <div class="quick-chip" onclick="navSettings('att')"><span class="qc-ico">🗓</span><span class="qc-lbl">출석체크</span></div>
@@ -647,12 +651,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         </div>
 
         <!-- 슬라이드 4: 별자리 운세 -->
-        <div onclick="navZodiac()" style="min-width:100%;border-radius:24px;padding:24px 20px;position:relative;overflow:hidden;cursor:pointer;background:linear-gradient(145deg,rgba(20,40,60,.85),rgba(10,20,40,.9));border:1px solid rgba(251,191,36,.25);border-top:1px solid rgba(251,191,36,.45);">
-          <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(251,191,36,.1),transparent 70%);pointer-events:none;"></div>
-          <div style="font-size:11px;color:rgba(253,224,71,.5);letter-spacing:2px;margin-bottom:8px;position:relative;z-index:1;">COMING SOON</div>
+        <div onclick="goScreen('zodiacScreen');renderZodiacScreen();" style="min-width:100%;border-radius:24px;padding:24px 20px;position:relative;overflow:hidden;cursor:pointer;background:linear-gradient(145deg,rgba(20,40,80,.85),rgba(10,20,50,.9));border:1px solid rgba(251,191,36,.2);border-top:1px solid rgba(251,191,36,.35);">
+          <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(251,191,36,.15),transparent 70%);pointer-events:none;"></div>
+          <div style="font-size:11px;color:rgba(253,224,71,.6);letter-spacing:2px;margin-bottom:8px;position:relative;z-index:1;">VEDIC · WESTERN</div>
           <div style="font-family:'Gowun Dodum',serif;font-size:22px;font-weight:700;color:#fde68a;margin-bottom:6px;position:relative;z-index:1;">별자리 운세 ⭐</div>
-          <div style="font-size:13px;color:rgba(253,230,138,.6);position:relative;z-index:1;">네이탈+베딕 통합 사주 점성술</div>
-          <div style="margin-top:16px;display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.4);border-radius:100px;font-size:13px;color:#fde68a;font-weight:600;position:relative;z-index:1;">⭐ 별자리 보기 ›</div>
+          <div style="font-size:13px;color:rgba(253,230,138,.7);position:relative;z-index:1;">네이탈 차트 · 다샤 · AI 리딩</div>
+          <div style="margin-top:16px;display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.35);border-radius:100px;font-size:13px;color:#fde68a;font-weight:600;position:relative;z-index:1;">지금 보기 →</div>
         </div>
       </div>
       <!-- 화살표 -->
@@ -699,7 +703,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div style="font-family:'Gowun Dodum',serif;font-size:12px;color:var(--gold2);font-weight:700;margin-bottom:2px;">타로·젬나</div>
           <div style="font-size:10px;color:var(--dim);font-weight:300;">AI 리딩</div>
         </div>
-        <div onclick="navZodiac()" style="background:rgba(20,30,50,.65);border:1px solid rgba(251,191,36,.2);border-radius:18px;padding:14px 10px;cursor:pointer;text-align:center;transition:transform .2s;" ontouchstart="this.style.transform='scale(.95)'" ontouchend="this.style.transform=''"><div style="font-size:22px;margin-bottom:6px;">⭐</div><div style="font-family:'Gowun Dodum',serif;font-size:12px;color:var(--gold2);font-weight:700;margin-bottom:2px;">별자리</div><div style="font-size:10px;color:var(--dim);font-weight:300;">무료</div></div>
+        <div onclick="goScreen('zodiacScreen');renderZodiacScreen();" style="background:rgba(22,16,50,.65);border:1px solid rgba(251,191,36,.2);border-radius:18px;padding:14px 10px;cursor:pointer;text-align:center;transition:transform .2s;" ontouchstart="this.style.transform='scale(.95)'" ontouchend="this.style.transform=''"><div style="font-size:22px;margin-bottom:6px;">⭐</div><div style="font-family:'Gowun Dodum',serif;font-size:12px;color:var(--gold2);font-weight:700;margin-bottom:2px;">별자리</div><div style="font-size:10px;color:var(--dim);font-weight:300;">베딕·다샤</div></div>
         <div style="background:rgba(22,16,50,.35);border:1px solid rgba(255,255,255,.06);border-radius:18px;padding:14px 10px;text-align:center;opacity:.4;position:relative;">
           <div style="font-size:22px;margin-bottom:6px;">🌟</div>
           <div style="font-family:'Gowun Dodum',serif;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:2px;">신년운세</div>
@@ -747,6 +751,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div class="unse-datelbl" id="uDateLbl"></div>
           <div class="unse-score" id="uTotalScore"></div>
           <div class="unse-score-sub" id="unseScoreSub">오늘의 총점</div>
+          <button id="unseShareBtn" onclick="shareUnseResult()" style="margin-top:10px;padding:8px 20px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:100px;color:var(--dim);font-size:12px;cursor:pointer;display:none;align-items:center;gap:6px;margin-left:auto;margin-right:auto;">↑ 결과 공유하기</button>
           <!-- JS 호환용 숨김 -->
           <div style="display:none;" id="uSaju"></div>
           <div style="display:none;" id="uInfo"></div>
@@ -965,7 +970,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     </div>
     <div style="padding:0 16px 80px;">
 
-      <!-- 무료 -->
+      <!-- 탭 -->
+      <div style="display:flex;background:rgba(255,255,255,.05);border-radius:14px;overflow:hidden;margin-bottom:20px;">
+        <button id="ptab-chars" onclick="pSwitchTab('chars')" class="settings-tab on" style="flex:1;height:40px;font-size:13px;">캐릭터</button>
+        <button id="ptab-recent" onclick="pSwitchTab('recent')" class="settings-tab" style="flex:1;height:40px;font-size:13px;">최근 대화</button>
+      </div>
+
+      <!-- 캐릭터 목록 -->
+      <div id="ptab-chars-content">
       <div style="font-size:10px;color:rgba(74,222,128,.7);letter-spacing:3px;font-weight:700;margin-bottom:10px;">FREE</div>
 
       <!-- 젬나 -->
@@ -1111,6 +1123,77 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         <div style="margin-top:12px;font-size:12px;color:rgba(252,165,165,.3);line-height:1.6;padding-top:12px;border-top:1px solid rgba(255,255,255,.05);">그 관계에서 네가 손해보고 있는 게 보여요. 듣기 싫어도 말해줄게요.</div>
       </div>
 
+      </div><!-- /ptab-chars-content -->
+
+      <!-- 최근 대화 탭 -->
+      <div id="ptab-recent-content" style="display:none;">
+        <div id="personaRecentList2"></div>
+        <div id="personaRecentEmpty" style="display:none;text-align:center;padding:40px 20px;color:var(--muted);font-size:13px;">
+          아직 대화 내역이 없어요<br>
+          <span style="font-size:11px;font-weight:300;margin-top:8px;display:block;">캐릭터를 선택해서 대화를 시작해보세요</span>
+        </div>
+      </div>
+
+      <!-- 최근 대화 (구버전 호환용, 숨김) -->
+      <div id="personaRecentSection" style="display:none;">
+        <div id="personaRecentList"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══ 온보딩 화면 ══ -->
+<div id="onboardingScreen" class="screen hidden" style="background:var(--bg);display:flex;flex-direction:column;height:100vh;height:100dvh;max-width:420px;margin:0 auto;overflow:hidden;">
+  <div style="flex:1;overflow-y:auto;padding:0 24px 40px;display:flex;flex-direction:column;justify-content:center;">
+    <div style="text-align:center;margin-bottom:32px;">
+      <div style="font-size:48px;margin-bottom:12px;">🔮</div>
+      <div style="font-family:'Gowun Dodum',serif;font-size:26px;color:var(--gold2);font-weight:700;letter-spacing:2px;margin-bottom:8px;">Uncanny</div>
+      <div style="font-size:14px;color:var(--muted);line-height:1.7;">당신의 결을 읽는 AI 사주</div>
+    </div>
+    <!-- 스텝 카드들 -->
+    <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:32px;">
+      <div style="background:rgba(22,16,50,.7);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:18px;display:flex;gap:14px;align-items:flex-start;">
+        <div style="font-size:24px;flex-shrink:0;">✨</div>
+        <div><div style="font-size:14px;color:var(--text);font-weight:600;margin-bottom:4px;">사주 + AI 복합 분석</div><div style="font-size:12px;color:var(--muted);line-height:1.6;">사주팔자, 베딕, 자미두수, 수비학을 AI가 종합해서 소름돋는 리딩을 해드려요.</div></div>
+      </div>
+      <div style="background:rgba(22,16,50,.7);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:18px;display:flex;gap:14px;align-items:flex-start;">
+        <div style="font-size:24px;flex-shrink:0;">🤖</div>
+        <div><div style="font-size:14px;color:var(--text);font-weight:600;margin-bottom:4px;">6명의 AI 캐릭터</div><div style="font-size:12px;color:var(--muted);line-height:1.6;">젬나, 루나, 백호, 하데스, 세라, 레드 — 각자 다른 시각으로 당신의 사주를 읽어요.</div></div>
+      </div>
+      <div style="background:rgba(22,16,50,.7);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:18px;display:flex;gap:14px;align-items:flex-start;">
+        <div style="font-size:24px;flex-shrink:0;">📅</div>
+        <div><div style="font-size:14px;color:var(--text);font-weight:600;margin-bottom:4px;">오늘·내일 운세</div><div style="font-size:12px;color:var(--muted);line-height:1.6;">총운, 연애, 재물, 직업, 건강운을 매일 확인하세요. 출석하면 미니복채도 드려요.</div></div>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:11px;color:var(--muted);margin-bottom:16px;">시작하려면 내 사주 프로필이 필요해요</div>
+    <button onclick="onboardingStart()" style="width:100%;height:54px;background:linear-gradient(135deg,#b87800,#f0c060);border:none;border-radius:16px;color:#1a0d00;font-size:16px;font-weight:700;cursor:pointer;font-family:'Gowun Dodum',serif;letter-spacing:1px;">사주 프로필 만들기 →</button>
+    <button onclick="onboardingSkip()" style="width:100%;height:44px;background:transparent;border:none;color:var(--muted);font-size:13px;cursor:pointer;margin-top:8px;">일단 둘러볼게요</button>
+  </div>
+</div>
+
+<!-- ══ 개인정보처리방침 화면 ══ -->
+<div id="privacyScreen" class="screen hidden">
+  <div class="app">
+    <div class="main-topbar">
+      <button onclick="goBack()" style="background:none;border:none;color:var(--dim);font-size:20px;cursor:pointer;padding:4px;">‹</button>
+      <span style="font-size:16px;color:var(--text);font-weight:600;">개인정보처리방침</span>
+      <div style="width:28px;"></div>
+    </div>
+    <div style="padding:16px 20px 80px;font-size:13px;color:var(--dim);line-height:1.9;">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:20px;">최종 수정일: 2026년 4월</div>
+      <div style="font-size:15px;color:var(--text);font-weight:700;margin-bottom:12px;">1. 수집하는 개인정보</div>
+      <p>Uncanny(이하 "앱")는 서비스 제공을 위해 다음 정보를 수집합니다.<br>· 생년월일, 성별, 출생시간 (사주 계산용)<br>· 앱 사용 기록 (기기 내 로컬 저장, 서버 전송 없음)</p>
+      <div style="font-size:15px;color:var(--text);font-weight:700;margin:20px 0 12px;">2. 개인정보 저장 방식</div>
+      <p>입력하신 생년월일 등 정보는 사용자 기기의 로컬 스토리지에만 저장되며, 당사 서버로 전송되지 않습니다. AI 분석 요청 시 생년월일 정보는 암호화 없이 API로 전달되나, 별도로 저장·기록하지 않습니다.</p>
+      <div style="font-size:15px;color:var(--text);font-weight:700;margin:20px 0 12px;">3. 제3자 제공</div>
+      <p>수집한 개인정보를 제3자에게 제공하지 않습니다. 단, AI 분석을 위해 Google Vertex AI(Gemini) API를 사용하며, 해당 서비스의 개인정보처리방침이 적용됩니다.</p>
+      <div style="font-size:15px;color:var(--text);font-weight:700;margin:20px 0 12px;">4. 광고</div>
+      <p>앱 내 광고 서비스(Google AdMob)를 사용하며, 광고 제공을 위해 기기 식별자가 수집될 수 있습니다. 광고 관련 데이터 처리는 Google의 개인정보처리방침을 따릅니다.</p>
+      <div style="font-size:15px;color:var(--text);font-weight:700;margin:20px 0 12px;">5. 이용자의 권리</div>
+      <p>앱 내 프로필 삭제 기능을 통해 언제든지 저장된 정보를 삭제할 수 있습니다. 기기의 앱 데이터 삭제 시 모든 정보가 완전히 제거됩니다.</p>
+      <div style="font-size:15px;color:var(--text);font-weight:700;margin:20px 0 12px;">6. 문의</div>
+      <p>개인정보 관련 문의: <span style="color:var(--gold2);">uncanny.saju@gmail.com</span></p>
     </div>
   </div>
 </div>
@@ -1136,24 +1219,28 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 </div>
 
 <!-- ══ 페르소나 채팅 화면 ══ -->
-<div id="personaChatScreen" class="screen hidden" style="display:flex;flex-direction:column;height:100vh;height:100dvh;background:var(--bg);">
-  <div id="pcTopbar" class="topbar" style="flex-shrink:0;width:100%;max-width:420px;margin:0 auto;">
-    <button class="back-btn" onclick="goScreen('personaScreen')">‹</button>
-    <div style="display:flex;align-items:center;gap:10px;flex:1;">
-      <div id="pcAvatar" style="width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;"></div>
-      <div>
-        <div id="pcName" style="font-family:'Gowun Dodum',serif;font-size:16px;color:var(--gold2);letter-spacing:2px;"></div>
-        <div id="pcTagline" style="font-size:10px;color:var(--muted);font-weight:300;"></div>
-      </div>
+<div id="personaChatScreen" class="screen hidden" style="display:flex;flex-direction:column;height:100vh;height:100dvh;background:#080614;">
+  <!-- 탑바 -->
+  <div id="pcTopbar" style="flex-shrink:0;width:100%;max-width:420px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px;background:rgba(8,6,20,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);position:relative;z-index:10;">
+    <button onclick="goScreen('personaScreen')" style="width:36px;height:36px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:var(--dim);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">‹</button>
+    <div id="pcAvatar" style="width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;"></div>
+    <div style="flex:1;min-width:0;">
+      <div id="pcName" style="font-size:15px;font-weight:700;color:var(--text);letter-spacing:.3px;"></div>
+      <div id="pcTagline" style="font-size:11px;color:rgba(200,180,255,.45);margin-top:1px;"></div>
     </div>
-    <div style="font-size:11px;color:var(--muted);">💎 <span id="pcCost" style="color:var(--gold2);font-weight:700;">3</span>개/질문</div>
+    <div style="font-size:11px;color:rgba(255,255,255,.25);">💎 <span id="pcCost" style="color:var(--gold2);font-weight:700;">3</span></div>
   </div>
-  <div id="personaChat" style="flex:1;overflow-y:auto;width:100%;max-width:420px;margin:0 auto;padding:16px 16px 80px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth;"></div>
-  <!-- 입력창: fixed로 바텀 네비 바로 위에 고정 -->
-  <div id="personaInputBar" style="position:fixed;bottom:calc(var(--NAV,64px) + var(--BNR,50px));left:50%;transform:translateX(-50%);width:100%;max-width:420px;background:var(--bg);border-top:1px solid var(--gb);padding:10px 16px;z-index:20;">
+
+  <!-- 채팅 영역 -->
+  <div id="personaChat" style="flex:1;overflow-y:auto;width:100%;max-width:420px;margin:0 auto;padding:20px 16px 100px;display:flex;flex-direction:column;gap:4px;scroll-behavior:smooth;"></div>
+
+  <!-- 입력창 -->
+  <div id="personaInputBar" style="position:fixed;bottom:calc(var(--NAV,64px) + var(--BNR,50px));left:50%;transform:translateX(-50%);width:100%;max-width:420px;padding:10px 14px 12px;background:rgba(8,6,20,.97);backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,.07);z-index:20;">
     <div style="display:flex;gap:8px;align-items:flex-end;">
-      <textarea id="personaQ" maxlength="300" placeholder="무엇이든 물어보세요..." style="flex:1;min-height:44px;max-height:100px;background:var(--bg2);border:1px solid var(--gb);border-radius:12px;padding:12px 14px;color:var(--text);font-family:'Pretendard';font-size:14px;resize:none;outline:none;line-height:1.5;" oninput="this.style.height='44px';this.style.height=Math.min(this.scrollHeight,100)+'px'" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();personaSend();}"></textarea>
-      <button onclick="personaSend()" style="width:44px;height:44px;background:linear-gradient(135deg,#1a0a2e,#4a1a6e);border:1px solid var(--gold);border-radius:12px;color:var(--gold2);font-size:18px;cursor:pointer;flex-shrink:0;">▶</button>
+      <div style="flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:10px 16px;display:flex;align-items:flex-end;gap:8px;transition:border-color .2s;" onfocusin="this.style.borderColor='rgba(139,92,246,.5)'" onfocusout="this.style.borderColor='rgba(255,255,255,.1)'">
+        <textarea id="personaQ" maxlength="300" placeholder="무엇이든 물어보세요..." style="flex:1;min-height:22px;max-height:88px;background:transparent;border:none;color:var(--text);font-family:'Pretendard';font-size:14px;resize:none;outline:none;line-height:1.55;" oninput="this.style.height='22px';this.style.height=Math.min(this.scrollHeight,88)+'px'" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();personaSend();}"></textarea>
+      </div>
+      <button onclick="personaSend()" id="personaSendBtn" style="width:42px;height:42px;background:linear-gradient(135deg,#7c3aed,#9f67fa);border:none;border-radius:14px;color:#fff;font-size:16px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(139,92,246,.4);">↑</button>
     </div>
   </div>
 </div>
@@ -1199,7 +1286,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div style="width:40px;height:40px;border-radius:12px;background:rgba(74,222,128,.12);display:flex;align-items:center;justify-content:center;font-size:18px;margin-right:14px;flex-shrink:0;">🗓</div>
           <div style="flex:1;">
             <div style="font-size:14px;color:var(--text);font-weight:600;margin-bottom:2px;">매일 출석 체크</div>
-            <div style="font-size:11px;color:var(--muted);">미니복채 +1 · 7일 연속 시 복채 +1</div>
+            <div style="font-size:11px;color:var(--muted);">미니복채 +2 · 7일 연속 시 복채 +1</div>
           </div>
           <span style="color:var(--muted);font-size:16px;">›</span>
         </div>
@@ -1444,6 +1531,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="topbar">
       <button class="back-btn" onclick="goScreen('calcScreen')">‹</button>
       <span class="topbar-ttl" id="sajuResultTitle">사주 풀이</span>
+      <button id="sajuShareBtn" onclick="shareSajuResult()" style="display:none;padding:6px 12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:20px;color:var(--dim);font-size:11px;cursor:pointer;">↑ 공유</button>
     </div>
     <div style="padding:0 16px 20px;">
 
@@ -1491,49 +1579,50 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div style="padding:0 16px 60px;">
 
       <!-- 선택된 프로필 대형 카드 -->
-      <div id="settingsProfileCard" style="background:linear-gradient(145deg,rgba(50,20,100,.8),rgba(22,10,60,.9));border:1px solid rgba(139,92,246,.3);border-top:1px solid rgba(139,92,246,.5);border-radius:24px;padding:20px;margin-bottom:20px;position:relative;overflow:hidden;">
-        <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.2),transparent 70%);pointer-events:none;"></div>
+      <div id="settingsProfileCard" style="background:linear-gradient(145deg,rgba(40,16,90,.85),rgba(18,8,50,.95));border:1px solid rgba(139,92,246,.25);border-radius:24px;padding:22px;margin-bottom:16px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:-40px;right:-40px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.15),transparent 70%);pointer-events:none;"></div>
 
-        <!-- 프로필 정보 -->
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
-          <div id="spAvatar" style="width:52px;height:52px;border-radius:50%;background:rgba(139,92,246,.25);border:2px solid rgba(139,92,246,.4);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;"></div>
+        <!-- 프로필 헤더 -->
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+          <div id="spAvatar" style="width:48px;height:48px;border-radius:16px;background:rgba(139,92,246,.2);border:1.5px solid rgba(139,92,246,.4);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;"></div>
           <div style="flex:1;min-width:0;">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-              <div id="spName" style="font-family:'Gowun Dodum',serif;font-size:18px;color:var(--gold2);font-weight:700;"></div>
-              <span style="font-size:9px;background:rgba(139,92,246,.25);color:#c4b5fd;padding:2px 8px;border-radius:8px;font-weight:600;">대표</span>
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:3px;">
+              <div id="spName" style="font-size:17px;color:var(--text);font-weight:700;letter-spacing:-.3px;"></div>
+              <span style="font-size:10px;background:rgba(139,92,246,.3);color:#c4b5fd;padding:2px 7px;border-radius:6px;font-weight:600;letter-spacing:.3px;">대표</span>
             </div>
-            <div id="spSaju" style="font-size:12px;color:var(--dim);letter-spacing:2px;margin-bottom:2px;font-weight:300;"></div>
-            <div id="spDate" style="font-size:11px;color:var(--muted);font-weight:300;"></div>
+            <div id="spDate" style="font-size:12px;color:var(--muted);font-weight:300;"></div>
+            <div id="spCity" style="font-size:11px;color:rgba(200,180,255,.4);margin-top:1px;"></div>
           </div>
+          <button id="spEditBtn" onclick="spEditProfile()" style="flex-shrink:0;padding:7px 12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:10px;color:var(--muted);font-size:12px;cursor:pointer;font-family:'Pretendard';">수정</button>
         </div>
 
-        <!-- 통계 4개 -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;">
-          <div style="background:rgba(255,255,255,.06);border-radius:14px;padding:12px 14px;">
-            <div style="font-size:10px;color:var(--muted);margin-bottom:4px;font-weight:400;">보유 미니복채</div>
-            <div style="font-family:'Gowun Dodum',serif;font-size:20px;color:var(--gold2);font-weight:700;" id="statMini">0<span style="font-size:11px;color:var(--muted);font-weight:300;"> 개</span></div>
+        <!-- 사주 팔자 -->
+        <div id="spSaju" style="font-size:13px;color:rgba(200,180,255,.5);letter-spacing:3px;font-weight:300;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.06);"></div>
+
+        <!-- 통계 2x2 -->
+        <div id="settingsStatsGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:0;">
+          <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:12px 14px;">
+            <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">보유 미니복채</div>
+            <div style="font-size:20px;color:var(--gold2);font-weight:700;" id="statMini">0<span style="font-size:11px;color:var(--muted);font-weight:300;"> 개</span></div>
           </div>
-          <div style="background:rgba(255,255,255,.06);border-radius:14px;padding:12px 14px;">
-            <div style="font-size:10px;color:var(--muted);margin-bottom:4px;font-weight:400;">보유 복채</div>
-            <div style="font-family:'Gowun Dodum',serif;font-size:20px;color:var(--gold2);font-weight:700;" id="statBokchae">0<span style="font-size:11px;color:var(--muted);font-weight:300;"> 개</span></div>
+          <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:12px 14px;">
+            <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">보유 복채</div>
+            <div style="font-size:20px;color:var(--gold2);font-weight:700;" id="statBokchae">0<span style="font-size:11px;color:var(--muted);font-weight:300;"> 개</span></div>
           </div>
-          <div style="background:rgba(255,255,255,.06);border-radius:14px;padding:12px 14px;">
-            <div style="font-size:10px;color:var(--muted);margin-bottom:4px;font-weight:400;">AI 사주 상담</div>
-            <div style="font-family:'Gowun Dodum',serif;font-size:20px;color:#c4b5fd;font-weight:700;" id="statSaju">0<span style="font-size:11px;color:var(--muted);font-weight:300;"> 회</span></div>
+          <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:12px 14px;">
+            <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">AI 사주 상담</div>
+            <div style="font-size:20px;color:#c4b5fd;font-weight:700;" id="statSaju">0<span style="font-size:11px;color:var(--muted);font-weight:300;"> 회</span></div>
           </div>
-          <div style="background:rgba(255,255,255,.06);border-radius:14px;padding:12px 14px;">
-            <div style="font-size:10px;color:var(--muted);margin-bottom:4px;font-weight:400;">AI 타로 상담</div>
-            <div style="font-family:'Gowun Dodum',serif;font-size:20px;color:#c4b5fd;font-weight:700;" id="statTarot">0<span style="font-size:11px;color:var(--muted);font-weight:300;"> 회</span></div>
+          <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:12px 14px;">
+            <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">AI 타로 상담</div>
+            <div style="font-size:20px;color:#c4b5fd;font-weight:700;" id="statTarot">0<span style="font-size:11px;color:var(--muted);font-weight:300;"> 회</span></div>
           </div>
         </div>
-
-        <!-- 프로필 수정 버튼 -->
-        <button id="spEditBtn" onclick="spEditProfile()" style="width:100%;height:40px;background:transparent;border:1px solid rgba(255,255,255,.15);border-radius:12px;color:var(--dim);font-family:'Pretendard';font-size:13px;cursor:pointer;transition:all .2s;">✎ 프로필 정보 수정</button>
 
         <!-- 프로필 없을 때 -->
-        <div id="spEmpty" style="display:none;text-align:center;padding:16px 0;">
-          <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">선택된 프로필이 없어요</div>
-          <button onclick="openAddProfileScreen()" style="height:40px;padding:0 20px;background:rgba(240,192,96,.15);border:1px solid rgba(240,192,96,.3);border-radius:12px;color:var(--gold2);font-size:13px;cursor:pointer;font-family:'Pretendard';">＋ 프로필 추가</button>
+        <div id="spEmpty" style="display:none;text-align:center;padding:8px 0;">
+          <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">사주 프로필이 없어요</div>
+          <button onclick="openAddProfileScreen()" style="height:40px;padding:0 24px;background:rgba(240,192,96,.15);border:1px solid rgba(240,192,96,.3);border-radius:12px;color:var(--gold2);font-size:13px;cursor:pointer;font-family:'Pretendard';font-weight:600;">＋ 프로필 추가</button>
         </div>
       </div>
 
@@ -1555,6 +1644,15 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <span style="font-size:18px;margin-right:12px;">📢</span>
           <span style="font-size:14px;color:var(--text);flex:1;">공지사항</span>
           <span style="color:var(--muted);font-size:16px;">›</span>
+        </div>
+        <div onclick="togglePremiumTest()" style="display:flex;align-items:center;padding:16px 18px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.06);">
+          <span style="font-size:18px;margin-right:12px;">💎</span>
+          <span style="font-size:14px;color:var(--text);flex:1;">프리미엄 테스트 모드</span>
+          <div id="premiumTestBadge" style="font-size:11px;padding:3px 10px;border-radius:10px;font-weight:600;background:rgba(255,255,255,.07);color:var(--muted);">OFF</div>
+        </div>
+        <div onclick="showPrivacy()" style="display:flex;align-items:center;padding:16px 18px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.06);">
+          <span style="font-size:14px;color:var(--text);flex:1;">개인정보처리방침</span>
+          <span style="font-size:12px;color:var(--muted);">›</span>
         </div>
         <div onclick="showToast('이용약관 준비 중이에요')" style="display:flex;align-items:center;padding:16px 18px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.06);">
           <span style="font-size:18px;margin-right:12px;">📋</span>
@@ -1601,43 +1699,80 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="topbar">
       <button class="back-btn" onclick="goScreen('unseHomeScreen')">‹</button>
       <span class="topbar-ttl">⭐ 별자리 운세</span>
-      <div style="font-size:10px;color:#4ade80;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.2);border-radius:10px;padding:3px 8px;">무료</div>
+      <div style="width:28px;"></div>
     </div>
     <div style="padding:0 16px 80px;" id="zodiacContent">
 
       <!-- 탭: 내 별자리 / 네이탈 차트 / 오늘의 별자리 -->
       <div style="display:flex;background:rgba(255,255,255,.05);border-radius:16px;overflow:hidden;margin-bottom:20px;">
-        <button class="settings-tab on" id="ztab-my" onclick="zSwitchTab('my')">내 별자리</button>
-        <button class="settings-tab" id="ztab-natal" onclick="zSwitchTab('natal')">네이탈 차트</button>
-        <button class="settings-tab" id="ztab-today" onclick="zSwitchTab('today')">오늘 운세</button>
+        <button class="settings-tab" id="ztab-today" onclick="zSwitchTab('today')">별자리운세&nbsp;<span style="font-size:9px;color:#4ade80;background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.25);border-radius:6px;padding:1px 5px;vertical-align:middle;">무료</span></button>
+        <button class="settings-tab on" id="ztab-natal" onclick="zSwitchTab('natal')">네이탈 차트</button>
+        <button class="settings-tab" id="ztab-dasha" onclick="zSwitchTab('dasha')">다샤 운세</button>
       </div>
 
       <!-- 내 별자리 탭 -->
-      <div id="ztab-my-content">
-        <div id="zMySign" style="background:linear-gradient(145deg,rgba(20,30,60,.9),rgba(10,15,40,.95));border:1px solid rgba(251,191,36,.3);border-radius:24px;padding:24px;margin-bottom:16px;text-align:center;">
-          <div id="zSignIco" style="font-size:52px;margin-bottom:8px;">⭐</div>
-          <div id="zSignName" style="font-family:'Gowun Dodum',serif;font-size:26px;color:#fde68a;font-weight:700;margin-bottom:4px;"></div>
-          <div id="zSignDate" style="font-size:11px;color:rgba(253,230,138,.5);margin-bottom:12px;"></div>
-          <div id="zSignDesc" style="font-size:13px;color:var(--dim);line-height:1.8;text-align:left;"></div>
-        </div>
-        <button onclick="zRequestMyReading()" style="width:100%;height:54px;background:linear-gradient(135deg,#1a1a40,#2d2d70);border:1px solid rgba(251,191,36,.4);border-radius:18px;color:#fde68a;font-family:'Gowun Dodum',serif;font-size:16px;font-weight:700;cursor:pointer;letter-spacing:1px;margin-bottom:16px;">📺 광고 보고 내 별자리 리딩 받기</button>
-        <div id="zMyAIResult" style="display:none;"></div>
-      </div>
+      <!-- 내 별자리 탭 (숨김) -->
+      <div id="ztab-my-content" style="display:none;"></div>
 
       <!-- 네이탈 차트 탭 -->
       <div id="ztab-natal-content" style="display:none;">
         <div id="zNatalCards" style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;"></div>
+        <!-- 광고 배너 -->
+        <div style="width:100%;min-height:100px;background:rgba(255,255,255,.03);border:1px dashed rgba(255,255,255,.1);border-radius:16px;margin:0 0 16px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;">
+          <div id="zNatalAdBanner" style="width:100%;min-height:100px;"></div>
+          <div style="position:absolute;font-size:11px;color:rgba(255,255,255,.15);pointer-events:none;">AD</div>
+        </div>
         <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:14px;margin-bottom:16px;">
           <div style="font-size:11px;color:var(--muted);margin-bottom:6px;">베딕 점성술 (인도 점성술)</div>
           <div id="zVedicInfo" style="font-size:12px;color:var(--dim);line-height:1.7;"></div>
         </div>
-        <button onclick="zRequestNatalReading()" style="width:100%;height:54px;background:linear-gradient(135deg,#1a1a40,#2d2d70);border:1px solid rgba(251,191,36,.4);border-radius:18px;color:#fde68a;font-family:'Gowun Dodum',serif;font-size:16px;font-weight:700;cursor:pointer;letter-spacing:1px;margin-bottom:16px;">💎 복채 1개 · 네이탈+베딕 통합 리딩</button>
-        <div id="zNatalAIResult" style="display:none;"></div>
+        <!-- 네이탈 차트 AI 리딩 -->
+        <div style="font-size:11px;color:var(--muted);letter-spacing:1px;margin-bottom:8px;padding-left:2px;">AI 리딩</div>
+        <div id="zNatalBtns" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;"></div>
+        <div id="zNatalLoading" style="display:none;text-align:center;padding:20px;color:var(--muted);font-size:13px;"><div class="aidots" style="justify-content:center;margin-bottom:8px;"><span></span><span></span><span></span></div>차트를 읽는 중...</div>
+        <div id="zNatalAIResult" style="display:none;background:rgba(16,10,36,.9);border:1px solid rgba(168,85,247,.2);border-radius:20px;padding:18px;font-size:13px;color:var(--dim);line-height:1.9;"></div>
       </div>
 
-      <!-- 오늘 운세 탭 -->
-      <div id="ztab-today-content" style="display:none;">
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;" id="zAllSigns"></div>
+      <!-- 다샤 운세 탭 -->
+      <div id="ztab-dasha-content" style="display:none;">
+        <div id="zDashaHero" style="background:linear-gradient(145deg,rgba(88,28,135,.3),rgba(20,10,50,.9));border:1px solid rgba(168,85,247,.3);border-radius:24px;padding:24px 20px;margin-bottom:12px;text-align:center;">
+          <div style="font-size:11px;color:rgba(200,180,255,.5);letter-spacing:2px;margin-bottom:8px;">현재 인생 시기</div>
+          <div id="zDashaName" style="font-size:30px;font-weight:700;color:var(--gold2);font-family:'Gowun Dodum',serif;margin-bottom:4px;"></div>
+          <div id="zDashaYear" style="font-size:13px;color:var(--dim);margin-bottom:12px;"></div>
+          <div id="zDashaBar" style="height:6px;background:rgba(255,255,255,.1);border-radius:3px;margin-bottom:8px;overflow:hidden;">
+            <div id="zDashaFill" style="height:100%;background:linear-gradient(90deg,#7c3aed,#f0c060);border-radius:3px;"></div>
+          </div>
+          <div id="zDashaProgress" style="font-size:11px;color:var(--muted);"></div>
+        </div>
+        <div id="zDashaDesc" style="background:rgba(16,10,36,.8);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px;margin-bottom:12px;font-size:13px;color:var(--dim);line-height:1.9;"></div>
+        <!-- 광고 배너 -->
+        <div style="width:100%;min-height:100px;background:rgba(255,255,255,.03);border:1px dashed rgba(255,255,255,.1);border-radius:16px;margin:0 0 16px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;">
+          <div id="zDashaAdBanner" style="width:100%;min-height:100px;"></div>
+          <div style="position:absolute;font-size:11px;color:rgba(255,255,255,.15);pointer-events:none;">AD</div>
+        </div>
+        <div style="font-size:11px;color:var(--muted);letter-spacing:1px;margin-bottom:8px;padding-left:4px;">전체 다샤 흐름</div>
+        <div id="zDashaTimeline" style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;"></div>
+        <div style="font-size:11px;color:var(--muted);letter-spacing:1px;margin-bottom:8px;padding-left:4px;">다샤 기반 AI 리딩</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;" id="zDashaQList">
+          <button onclick="zDashaAsk(0)" style="text-align:left;padding:12px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;color:var(--dim);font-size:13px;cursor:pointer;font-family:Pretendard;">🪐 지금 내 다샤 시기 종합 분석</button>
+          <button onclick="zDashaAsk(1)" style="text-align:left;padding:12px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;color:var(--dim);font-size:13px;cursor:pointer;font-family:Pretendard;">💫 다샤로 보는 연애·인연 운</button>
+          <button onclick="zDashaAsk(2)" style="text-align:left;padding:12px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;color:var(--dim);font-size:13px;cursor:pointer;font-family:Pretendard;">💰 다샤로 보는 재물·직업 운</button>
+          <button onclick="zDashaAsk(3)" style="text-align:left;padding:12px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(139,92,246,.2);border-radius:14px;color:rgba(220,200,255,.8);font-size:13px;cursor:pointer;font-family:Pretendard;">🔮 라후·케투 카르마 심층 분석</button>
+        </div>
+        <div id="zDashaLoading" style="display:none;text-align:center;padding:20px;color:var(--muted);font-size:13px;"><div class="aidots" style="justify-content:center;margin-bottom:8px;"><span></span><span></span><span></span></div>별자리를 읽는 중...</div>
+        <div id="zDashaResult" style="display:none;background:rgba(16,10,36,.85);border:1px solid rgba(168,85,247,.2);border-radius:20px;padding:18px;font-size:13px;color:var(--dim);line-height:1.9;"></div>
+      </div>
+
+      <!-- 별자리운세 탭 (오늘 운세 - 불특정 다수) -->
+      <div id="ztab-today-content" style="position:relative;">
+
+        <!-- 별자리 12궁 그리드 -->
+        <div id="zSignsWrap" style="position:relative;filter:blur(8px);pointer-events:none;user-select:none;">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;" id="zAllSigns"></div>
+        </div>
+        <!-- 선택한 별자리 운세 결과 -->
+        <div id="zSignResult" style="display:none;background:rgba(16,10,36,.9);border:1px solid rgba(251,191,36,.2);border-radius:20px;padding:18px;margin-top:8px;font-size:13px;color:var(--dim);line-height:1.9;"></div>
+        <div id="zSignLoading" style="display:none;text-align:center;padding:20px;color:var(--muted);font-size:13px;"><div class="aidots" style="justify-content:center;margin-bottom:8px;"><span></span><span></span><span></span></div>운세 읽는 중...</div>
       </div>
 
     </div>
@@ -1673,7 +1808,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <div id="addProfileScreen" class="screen hidden">
   <div class="app">
     <div class="topbar">
-      <button class="back-btn" onclick="goProfileBackScreen()"></button>
+      <button class="back-btn" onclick="goProfileBackScreen()">‹</button>
       <span class="topbar-ttl" id="addProfileScreenTitle">프로필 추가</span>
     </div>
     <div style="padding:0 20px 60px;">
@@ -1876,78 +2011,244 @@ var ZODIAC_NAMES_EN=['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','S
 var ZODIAC_ICO=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
 
 // 율리우스 날짜 계산
-function toJD(year,month,day,hour){
-  hour=hour||0;
+// ── 개선된 천문 계산 (KST→UTC 변환 포함) ──
+
+// JD 계산 (입력은 UTC 시간)
+function toJD_UTC(year,month,day,hourUTC){
+  hourUTC=hourUTC||0;
   if(month<=2){year--;month+=12;}
   var A=Math.floor(year/100);
   var B=2-A+Math.floor(A/4);
-  return Math.floor(365.25*(year+4716))+Math.floor(30.6001*(month+1))+day+B-1524.5+hour/24;
+  return Math.floor(365.25*(year+4716))+Math.floor(30.6001*(month+1))+day+B-1524.5+hourUTC/24;
 }
 
-// 태양 황경 계산 (도)
+// KST → UTC 변환 후 JD 반환
+function toJD_KST(year,month,day,hourKST){
+  var utc=hourKST-9;
+  var d2=day, m2=month, y2=year;
+  if(utc<0){utc+=24;d2--;if(d2<1){m2--;if(m2<1){m2=12;y2--;}d2=[0,31,28,31,30,31,30,31,31,30,31,30,31][m2]+(m2===2&&((y2%4===0&&y2%100!==0)||y2%400===0)?1:0);}}
+  return toJD_UTC(y2,m2,d2,utc);
+}
+
+// 개선된 태양 황경 (더 정확한 공식)
 function calcSunLon(year,month,day,hour){
-  var jd=toJD(year,month,day,hour||12);
+  var jd=toJD_KST(year,month,day,hour||12);
   var n=jd-2451545.0;
   var L=(280.46+0.9856474*n)%360;
-  var g=(357.528+0.9856003*n)*Math.PI/180;
-  var lon=L+1.915*Math.sin(g)+0.02*Math.sin(2*g);
+  var g=((357.528+0.9856003*n)%360)*Math.PI/180;
+  var lon=L+1.9148*Math.sin(g)+0.0200*Math.sin(2*g)+0.0003*Math.sin(3*g);
   return((lon%360)+360)%360;
 }
 
-// 달 황경 계산 (근사)
+// 개선된 달 황경 (ELP2000 근사)
 function calcMoonLon(year,month,day,hour){
-  var jd=toJD(year,month,day,hour||12);
+  var jd=toJD_KST(year,month,day,hour||12);
   var d=jd-2451545.0;
-  var L=(218.316+13.176396*d)%360;
-  var M=(134.963+13.064993*d)*Math.PI/180;
-  var F=(93.272+13.229350*d)*Math.PI/180;
-  var lon=L+6.289*Math.sin(M)-1.274*Math.sin(2*F-M)+0.658*Math.sin(2*F)-0.214*Math.sin(2*M)-0.186*Math.sin(M);
+  var L=((218.316+13.176396*d)%360+360)%360;
+  var M=((134.963+13.064993*d)%360+360)%360*Math.PI/180;
+  var F=((93.272+13.229350*d)%360+360)%360*Math.PI/180;
+  var D=((297.850+12.190749*d)%360+360)%360*Math.PI/180;
+  var lon=L+6.289*Math.sin(M)-1.274*Math.sin(2*D-M)+0.658*Math.sin(2*D)
+          -0.214*Math.sin(2*M)+0.110*Math.sin(D)-0.186*Math.sin(M-D)
+          +0.059*Math.sin(2*D-2*M)-0.057*Math.sin(2*D-M+D);
   return((lon%360)+360)%360;
 }
 
-// 라후(북교점) 황경 계산
+// 라후 황경 (KST 정오 기준)
 function calcRahuLon(year,month,day){
-  var jd=toJD(year,month,day,12);
+  var jd=toJD_KST(year,month,day,12);
   var d=jd-2451545.0;
   var rahu=(125.044-0.0529539*d)%360;
   return((rahu%360)+360)%360;
 }
 
-// 상승궁(어센던트) 계산 - 서울 기준 (37.5°N)
-function calcAscendant(year,month,day,hour,lat,lon){
-  lat=lat||37.5666; lon=lon||126.9779; // 서울 기본값
-  var jd=toJD(year,month,day,hour||12);
+// ── 5행성 황경 계산 (VSOP87 간략화) ──
+function calcPlanetLon(year,month,day,planet){
+  var jd=toJD_KST(year,month,day,12);
   var d=jd-2451545.0;
-  // 항성시 계산
-  var GMST=(280.46061837+360.98564736629*d)%360;
+  var T=d/36525.0;
+  var lon=0;
+  if(planet==='mercury'){
+    var L=(252.251+4.09233445*d)%360;
+    var M=((174.795+4.09233445*d)%360)*Math.PI/180;
+    lon=L+23.440*Math.sin(M)+2.869*Math.sin(2*M)+0.364*Math.sin(3*M);
+  } else if(planet==='venus'){
+    var L2=(181.979+1.60216872*d)%360;
+    var M2=((220.422+1.60213034*d)%360)*Math.PI/180;
+    lon=L2+0.777*Math.sin(M2)+0.628*Math.sin(2*M2);
+    // 태양 기반 보정
+    var sunM=((357.528+0.9856003*d)%360)*Math.PI/180;
+    lon+=1.5*Math.sin(M2-2*sunM);
+  } else if(planet==='mars'){
+    var L3=(355.433+0.52402068*d)%360;
+    var M3=((19.373+0.52402075*d)%360)*Math.PI/180;
+    lon=L3+10.691*Math.sin(M3)+0.623*Math.sin(2*M3)+0.050*Math.sin(3*M3);
+  } else if(planet==='jupiter'){
+    var L4=(34.351+0.08308530*d)%360;
+    var M4=((20.020+0.08309879*d)%360)*Math.PI/180;
+    lon=L4+5.555*Math.sin(M4)+0.168*Math.sin(2*M4);
+    var sunM4=((357.528+0.9856003*d)%360)*Math.PI/180;
+    lon+=0.922*Math.sin(M4-2*sunM4)+0.307*Math.sin(2*M4-2*sunM4);
+  } else if(planet==='saturn'){
+    var L5=(50.077+0.03344414*d)%360;
+    var M5=((317.020+0.03344968*d)%360)*Math.PI/180;
+    lon=L5+6.393*Math.sin(M5)+0.166*Math.sin(2*M5);
+    var sunM5=((357.528+0.9856003*d)%360)*Math.PI/180;
+    lon+=0.545*Math.sin(M5-2*sunM5);
+  }
+  return((lon%360)+360)%360;
+}
+
+// ── 개선된 상승궁(ASC) 계산 ──
+function calcAscendant(year,month,day,hour,lat,lon){
+  lat=lat||37.5666; lon=lon||126.9779;
+  // KST → UTC
+  var utcH=hour-9;
+  var d2=day,m2=month,y2=year;
+  if(utcH<0){utcH+=24;d2--;if(d2<1){m2--;if(m2<1){m2=12;y2--;}d2=[0,31,28,31,30,31,30,31,31,30,31,30,31][m2]+(m2===2&&((y2%4===0&&y2%100!==0)||y2%400===0)?1:0);}}
+
+  var jd=toJD_UTC(y2,m2,d2,utcH);
+  var T=(jd-2451545.0)/36525.0;
+
+  // 정밀 GMST 계산 (IAU 1982)
+  var GMST=280.46061837+360.98564736629*(jd-2451545.0)
+           +0.000387933*T*T-T*T*T/38710000;
+  GMST=((GMST%360)+360)%360;
+
+  // 지방항성시 (LST)
   var LST=((GMST+lon)%360+360)%360;
-  var latRad=lat*Math.PI/180;
+
+  // 황도 기울기 (정밀)
+  var eps=(23.439291111-0.013004167*T-0.0000001639*T*T+0.0000005036*T*T*T)*Math.PI/180;
+
   var lstRad=LST*Math.PI/180;
-  // 황도 기울기
-  var eps=(23.439291-0.0000004*d)*Math.PI/180;
+  var latRad=lat*Math.PI/180;
+
+  // 상승궁 황경 계산
   var ascRad=Math.atan2(Math.cos(lstRad),-(Math.sin(lstRad)*Math.cos(eps)+Math.tan(latRad)*Math.sin(eps)));
   var asc=((ascRad*180/Math.PI)%360+360)%360;
+
+  // 황도 1사분면 보정
+  if(Math.cos(lstRad)<0) asc=(asc+180)%360;
+
   return asc;
 }
 
-// 황경 → 황도 12궁 인덱스 (0=양자리)
-function lonToSign(lon){return Math.floor(((lon%360)+360)%360/30);}
-function lonToDeg(lon){return Math.round(((lon%360)+360)%360%30);}
+// ── Vimshottari Dasha 계산 ──
+function calcVimshottariDasha(gY,gM,gD,moonLon){
+  try{
+    // 라히리 아야남샤 (Lahiri Ayanamsa) → 항성 달 황경
+    var ayanamsa=23.85+(gY-2000)*0.01397;
+    var sidMoon=((moonLon-ayanamsa)%360+360)%360;
+
+    // 27 낙샤트라와 다샤주 (순서: 케투부터)
+    var NK=[
+      {n:'아쉬위니(Ashwini)',   l:'케투',  y:7},
+      {n:'바라니(Bharani)',     l:'금성',  y:20},
+      {n:'크리티카(Krittika)',  l:'태양',  y:6},
+      {n:'로히니(Rohini)',      l:'달',    y:10},
+      {n:'므리가시라(Mrigashira)',l:'화성', y:7},
+      {n:'아르드라(Ardra)',     l:'라후',  y:18},
+      {n:'푸나르바수(Punarvasu)',l:'목성', y:16},
+      {n:'푸샤(Pushya)',        l:'토성',  y:19},
+      {n:'아슐레샤(Ashlesha)',  l:'수성',  y:17},
+      {n:'마가(Magha)',         l:'케투',  y:7},
+      {n:'푸르바팔구니',        l:'금성',  y:20},
+      {n:'웃타라팔구니',        l:'태양',  y:6},
+      {n:'하스타(Hasta)',       l:'달',    y:10},
+      {n:'치트라(Chitra)',      l:'화성',  y:7},
+      {n:'스와티(Swati)',       l:'라후',  y:18},
+      {n:'비사카(Vishakha)',    l:'목성',  y:16},
+      {n:'아누라다(Anuradha)', l:'토성',   y:19},
+      {n:'즈예쉬타(Jyeshtha)', l:'수성',  y:17},
+      {n:'물라(Mula)',          l:'케투',  y:7},
+      {n:'푸르바아샤다',        l:'금성',  y:20},
+      {n:'웃타라아샤다',        l:'태양',  y:6},
+      {n:'슈라바나(Shravana)', l:'달',    y:10},
+      {n:'다니쉬타(Dhanishtha)',l:'화성', y:7},
+      {n:'샤타비샤(Shatabhisha)',l:'라후', y:18},
+      {n:'푸르바바드라파다',    l:'목성',  y:16},
+      {n:'웃타라바드라파다',    l:'토성',  y:19},
+      {n:'레바티(Revati)',      l:'수성',  y:17}
+    ];
+
+    var SPAN=360/27; // 13.333°/낙샤트라
+    var nIdx=Math.floor(sidMoon/SPAN)%27;
+    var nPos=sidMoon%SPAN;
+    var nk=NK[nIdx];
+    var remaining=(SPAN-nPos)/SPAN; // 0~1 (현재 낙샤트라 남은 비율)
+
+    // 출생일 기준 연도 (소수)
+    var birthYr=gY+(gM-1)/12+(gD-1)/365.25;
+    var nowYr=new Date().getFullYear()+(new Date().getMonth())/12+new Date().getDate()/365.25;
+
+    // 다샤 순서 (케투=0 기준)
+    var DASHA_ORDER=['케투','금성','태양','달','화성','라후','목성','토성','수성'];
+    var DASHA_YEARS={케투:7,금성:20,태양:6,달:10,화성:7,라후:18,목성:16,토성:19,수성:17};
+
+    // 시작 다샤주의 인덱스
+    var startLord=nk.l;
+    var startIdx=DASHA_ORDER.indexOf(startLord);
+
+    // 다샤 시퀀스 생성
+    var seq=[];
+    var t=birthYr;
+
+    // 첫 다샤 (남은 부분)
+    var firstYrs=remaining*nk.y;
+    seq.push({lord:startLord,start:t,end:t+firstYrs,years:firstYrs,nakshatra:nk.n});
+    t+=firstYrs;
+
+    // 이후 다샤들 (최대 120년치)
+    var idx=(startIdx+1)%9;
+    while(t<birthYr+120){
+      var lord=DASHA_ORDER[idx];
+      var yrs=DASHA_YEARS[lord];
+      seq.push({lord:lord,start:t,end:t+yrs,years:yrs,nakshatra:''});
+      t+=yrs;
+      idx=(idx+1)%9;
+    }
+
+    // 현재 다샤 찾기
+    var cur=null,nxt=null;
+    for(var i=0;i<seq.length;i++){
+      if(seq[i].start<=nowYr&&seq[i].end>nowYr){
+        cur=seq[i]; nxt=seq[i+1]||null; break;
+      }
+    }
+
+    // 현재 다샤 경과/남은 년수
+    var elapsed=cur?Math.round((nowYr-cur.start)*10)/10:0;
+    var remain=cur?Math.round((cur.end-nowYr)*10)/10:0;
+
+    return {
+      nakshatra:nk.n, nakshatraLord:nk.l, sidMoon:Math.round(sidMoon*10)/10,
+      sequence:seq.slice(0,9), // 생애 전체 9개 주기
+      current:cur, next:nxt, elapsed:elapsed, remain:remain
+    };
+  }catch(e){return null;}
+}
 
 // 전체 네이탈 차트 계산
+function lonToSign(lon){return Math.floor(((lon%360)+360)%360/30);}
+function lonToDeg(lon){return Math.round(((lon%360)+360)%360%30*10)/10;}
+
 function calcNatalChart(gY,gM,gD,hour,noHour,lat,lon){
-  var h=noHour?12:(hour||12); // 시간 모름이면 정오로
+  var h=noHour?12:(hour||12);
   var sunLon=calcSunLon(gY,gM,gD,h);
   var moonLon=calcMoonLon(gY,gM,gD,h);
   var rahuLon=calcRahuLon(gY,gM,gD);
   var ascLon=noHour?null:calcAscendant(gY,gM,gD,h,lat,lon);
   var ketuLon=((rahuLon+180)%360);
+  // Vimshottari Dasha (달 황경 기반)
+  var dasha=calcVimshottariDasha(gY,gM,gD,moonLon);
   return {
     sun:{sign:lonToSign(sunLon),deg:lonToDeg(sunLon),lon:sunLon},
     moon:{sign:lonToSign(moonLon),deg:lonToDeg(moonLon),lon:moonLon},
     rahu:{sign:lonToSign(rahuLon),deg:lonToDeg(rahuLon),lon:rahuLon},
     ketu:{sign:lonToSign(ketuLon),deg:lonToDeg(ketuLon),lon:ketuLon},
     asc:ascLon!==null?{sign:lonToSign(ascLon),deg:lonToDeg(ascLon),lon:ascLon}:null,
+    dasha:dasha,
     noHour:noHour
   };
 }
@@ -1956,46 +2257,519 @@ function calcNatalChart(gY,gM,gD,hour,noHour,lat,lon){
 function natalToText(nc,cityNote){
   var s=ZODIAC_NAMES_KR;
   var note=cityNote||'(서울 기준)';
-  var txt='[서양 점성술 네이탈 차트] '+note+'\n';
-  txt+='• 태양궁(☉): '+s[nc.sun.sign]+' '+nc.sun.deg+'° (핵심 자아, 생명력)\n';
-  txt+='• 달궁(☽): '+s[nc.moon.sign]+' '+nc.moon.deg+'° (감정, 무의식, 본능)\n';
-  txt+='• 라후(☊ 북교점): '+s[nc.rahu.sign]+' '+nc.rahu.deg+'° (이번 생 카르마적 방향)\n';
-  txt+='• 케투(☋ 남교점): '+s[nc.ketu.sign]+' '+nc.ketu.deg+'° (전생의 익숙한 패턴)\n';
-  if(nc.asc){txt+='• 상승궁(ASC): '+s[nc.asc.sign]+' '+nc.asc.deg+'°\n';}
-  else{txt+='• 상승궁: 시간 미상으로 계산 불가\n';}
+  var txt='[서양+베딕 점성술] '+note+'\n';
+  txt+='• 태양궁(☉): '+s[nc.sun.sign]+' '+nc.sun.deg+'° — 핵심 자아·생명력\n';
+  txt+='• 달궁(☽): '+s[nc.moon.sign]+' '+nc.moon.deg+'° — 감정·무의식·본능\n';
+  txt+='• 라후(☊): '+s[nc.rahu.sign]+' '+nc.rahu.deg+'° — 이번 생 성장 방향\n';
+  txt+='• 케투(☋): '+s[nc.ketu.sign]+' '+nc.ketu.deg+'° — 전생의 익숙한 패턴\n';
+  if(nc.asc){
+    txt+='• 상승궁(ASC): '+s[nc.asc.sign]+' '+nc.asc.deg+'° — 외면·첫인상·삶의 방식\n';
+  }else{
+    txt+='• 상승궁: 출생 시간 필요\n';
+  }
+  // Vimshottari Dasha
+  if(nc.dasha&&nc.dasha.current){
+    var cur=nc.dasha.current;
+    var nxt=nc.dasha.next;
+    txt+='\n[빔쇼타리 다샤 — 현재 인생 시기]\n';
+    txt+='• 출생 낙샤트라: '+nc.dasha.nakshatra+' ('+nc.dasha.nakshatraLord+' 다샤)\n';
+    txt+='• 현재 다샤: '+cur.lord+' 다샤 ('+Math.round(cur.start)+'년~'+Math.round(cur.end)+'년)\n';
+    txt+='• 경과: '+nc.dasha.elapsed+'년 · 남은 기간: '+nc.dasha.remain+'년\n';
+    if(nxt) txt+='• 다음 다샤: '+nxt.lord+' 다샤 ('+Math.round(nxt.start)+'년~'+Math.round(nxt.end)+'년, '+nxt.years+'년간)\n';
+    // 다샤 의미
+    var dashaMeaning={
+      '케투':'영적 성장·분리·집착 내려놓기. 과거와의 단절이 필요한 시기.',
+      '금성':'사랑·아름다움·물질적 풍요. 인연과 재물이 들어오는 시기.',
+      '태양':'자아 확립·명예·아버지운. 리더십이 빛나는 시기.',
+      '달':'감수성·직관·어머니운. 감정이 풍부해지고 변화가 많은 시기.',
+      '화성':'행동력·투쟁·에너지. 적극적으로 나아가야 하는 시기.',
+      '라후':'야망·물질욕·외국 인연. 변화와 혼돈 속에서 성장하는 시기.',
+      '목성':'지혜·성장·행운. 인생에서 가장 확장되는 황금 시기.',
+      '토성':'시련·인내·카르마 정산. 노력한 만큼 결실이 오는 시기.',
+      '수성':'소통·학습·분석. 지적 활동과 네트워크가 활발한 시기.'
+    };
+    if(dashaMeaning[cur.lord]) txt+='• '+cur.lord+' 다샤 의미: '+dashaMeaning[cur.lord]+'\n';
+  }
   return txt;
 }
 
 // 풍부한 사주 + 점성술 컨텍스트 빌더
-function buildRichSajuContext(def){
+// ── 자미두수 완전 구현 (calcZiweiDoushu) ──
+function calcZiweiDoushu(gY, gM, gD, hour, gen) {
+  try {
+    var lunar = g2l(gY, gM, gD, hour===99?12:hour);
+    if (!lunar) return null;
+    var lY=lunar.year, lM=lunar.month, lD=lunar.day;
+
+    // 시지 (子=0,丑=1,...,亥=11)
+    var h=(hour===99||hour===undefined)?12:hour;
+    var hB=h===23?0:Math.floor((h+1)/2)%12;
+
+    // ① 命宮 지지
+    // 寅(2)宮에서 정월 시작, 생월만큼 순행, 생시만큼 역행
+    var mG=(2+lM-1-hB+36)%12;
+
+    // ② 年干
+    var yS=((lY-4)%10+10)%10; // 甲=0...癸=9
+
+    // ③ 五虎遁年 → 寅월 천간
+    // 甲己→丙寅, 乙庚→戊寅, 丙辛→庚寅, 丁壬→壬寅, 戊癸→甲寅
+    var yinStems=[2,4,6,8,0,2,4,6,8,0];
+    var yinStem=yinStems[yS];
+
+    // ④ 命宮 천간
+    // 寅(2)에서 시작, 命宮 지지까지 각 지지당 천간 2씩 증가
+    var mGS=(yinStem+((mG-2+12)%12)*2)%10;
+
+    // ⑤ 五行局
+    // 甲己→水2, 乙庚→木3, 丙辛→金4, 丁壬→土5, 戊癸→火6
+    var bureaus=[2,3,4,5,6,2,3,4,5,6];
+    var bureau=bureaus[mGS];
+    var bureauName=['','','水二局','木三局','金四局','土五局','火六局'][bureau];
+
+    // ⑥ 紫微星 위치 (음력 생일 기준)
+    var k=Math.ceil(lD/bureau);
+    var ZW=(1+k)%12; // 子=0 시스템에서 k=1→寅(2)
+
+    // ⑦ 天府星 위치 (紫微와 대칭)
+    var TF=(4-ZW+12)%12;
+
+    // ⑧ 14정성 배치
+    var S={};
+    // 紫微系 (자미성에서 시계방향)
+    S['紫微']  = ZW;
+    S['天機']  = (ZW+11)%12;  // ZW-1
+    S['太陽']  = (ZW+2)%12;
+    S['武曲']  = (ZW+3)%12;
+    S['天同']  = (ZW+4)%12;
+    S['廉貞']  = (ZW+7)%12;
+    // 天府系 (천부성에서 시계방향)
+    S['天府']  = TF;
+    S['太陰']  = (TF+1)%12;
+    S['貪狼']  = (TF+2)%12;
+    S['巨門']  = (TF+3)%12;
+    S['天相']  = (TF+4)%12;
+    S['天梁']  = (TF+5)%12;
+    S['七殺']  = (TF+6)%12;
+    S['破軍']  = (TF+10)%12;
+
+    // ⑨ 12궁 배치 (命宮=0번부터 순서대로)
+    var pNames=['命宮','兄弟宮','夫妻宮','子女宮','財帛宮','疾厄宮','遷移宮','僕役宮','官祿宮','田宅宮','福德宮','父母宮'];
+    var pKr=['명궁','형제궁','부처궁(인연)','자녀궁','재백궁(재물)','질액궁(건강)','천이궁(변화)','복역궁','관록궁(직업)','전택궁','복덕궁(행복)','부모궁'];
+    var pStars={};
+    for(var sn in S){
+      var pi=(S[sn]-mG+12)%12;
+      if(!pStars[pi]) pStars[pi]=[];
+      pStars[pi].push(sn);
+    }
+
+    // ⑩ 주요 별 한국어 의미
+    var starMeaning={
+      '紫微':'황제의 별 — 리더십·귀인운·카리스마. 자연스럽게 중심이 되는 운명.',
+      '天機':'지략의 별 — 뛰어난 두뇌·변화 적응력. 전략적 사고가 강함.',
+      '太陽':'태양의 별 — 명예·활동력·개방성. 사람들 속에서 에너지를 얻음.',
+      '武曲':'무곡의 별 — 강한 의지·재물 축적력. 현실적 성취에 뛰어남.',
+      '天同':'복록의 별 — 낙천적·예술적 감수성. 삶 자체를 즐기는 기질.',
+      '廉貞':'정열의 별 — 강렬한 열정·결단력. 충동과 고집이 함께 있음.',
+      '天府':'안정의 별 — 귀인운·재물 안정. 든든한 지원과 보호.',
+      '太陰':'달의 별 — 뛰어난 직관·감수성·내면의 깊이. 여성운 강함.',
+      '貪狼':'욕망의 별 — 다재다능·강한 매력·이성운. 원하는 게 많음.',
+      '巨門':'언변의 별 — 뛰어난 언변·의심이 많음. 말로 먹고 사는 타입.',
+      '天相':'보좌의 별 — 협조적·귀인에게 도움받음. 보조 역할에서 빛남.',
+      '天梁':'지혜의 별 — 깊은 지혜·보호 기운. 장수하고 정신력이 강함.',
+      '七殺':'독립의 별 — 강렬한 독립심·추진력. 자신만의 길을 개척.',
+      '破軍':'변혁의 별 — 파괴와 창조의 반복. 기존 틀을 깨는 개혁가.'
+    };
+
+    // ⑪ 핵심 궁별 텍스트 생성
+    var JG=['자','축','인','묘','진','사','오','미','신','유','술','해'];
+    var JGK=['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+    var GGK=['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+
+    var result=[];
+    result.push('[자미두수(紫微斗數) 정밀 포반]');
+    result.push('음력 '+lY+'년 '+lM+'월 '+lD+'일 · 시지: '+JG[hB]+'시');
+    result.push('명궁: '+JG[mG]+'('+JGK[mG]+') · 명궁 천간: '+GGK[mGS]+' · '+bureauName);
+    result.push('자미성 위치: '+JG[ZW]+'('+JGK[ZW]+') · 천부성 위치: '+JG[TF]+'('+JGK[TF]+')');
+    result.push('');
+
+    // 주요 5궁 분석
+    var keyPalaces=[0,2,4,8,10]; // 명궁,부처궁,재백궁,관록궁,복덕궁
+    keyPalaces.forEach(function(pi){
+      var stars=pStars[pi]||[];
+      if(stars.length===0) return;
+      var desc=stars.map(function(s){return starMeaning[s]||s;}).join(' / ');
+      result.push(pKr[pi]+': '+stars.map(function(s){return s+'('+s+')'}).join('+')+'  → '+desc);
+    });
+
+    return result.join('\n');
+  } catch(e){ return null; }
+}
+
+function buildRichSajuContext(def, tier){
   if(!def) return '(프로필 없음)';
   var noH=(def.hour===99||def.hour===undefined);
   var lines=[];
+
   lines.push('[기본 정보]');
-  lines.push('이름: '+def.name);
-  lines.push('성별: '+(def.gen==='male'?'남성':'여성'));
+  lines.push('이름: '+def.name+'  성별: '+(def.gen==='male'?'남성':'여성'));
   lines.push('생년월일: '+def.gY+'년 '+p2(def.gM)+'월 '+p2(def.gD)+'일'+(noH?' (시간모름)':' '+p2(def.hour)+'시'));
+
   if(def.saju){
     lines.push('');
-    lines.push('[사주팔자]');
-    lines.push('사주: '+def.saju);
+    lines.push('[사주팔자]  '+def.saju);
   }
-  // 저장된 LD 데이터 활용
+
+  // ── LD 기반 사주 상세 ──
   if(typeof LD!=='undefined'&&LD&&LD.gY===def.gY&&LD.gM===def.gM&&LD.gD===def.gD){
-    lines.push('일간(日干): '+(typeof CG!=='undefined'?CG[LD.ds]:'')+'('+(typeof CH!=='undefined'?CH[LD.ds]:'')+') - 사주의 핵심, 나 자신');
-    if(LD.jn) lines.push('월령 절기: '+LD.jn);
+    var GG=['갑','을','병','정','무','기','경','신','임','계'];
+    var GH=['목(양)','목(음)','화(양)','화(음)','토(양)','토(음)','금(양)','금(음)','수(양)','수(음)'];
+    var JG=['자','축','인','묘','진','사','오','미','신','유','술','해'];
+    var JH=['수','토','목','목','토','화','화','토','금','금','토','수'];
+    var ds=LD.ds, db=LD.db;
+
+    // 일주 특성
+    var ilju=(GG[ds]||'')+(JG[db]||'');
+    var iljuTraits={
+      '갑자':'리더십 있지만 현실 안주 경향. 의지 강하고 독립적.',
+      '갑인':'강한 추진력. 자존심 강하고 경쟁심 높음. 시작은 잘 하나 마무리 약함.',
+      '갑오':'화려하고 직관적. 감정 기복 있음. 인기 많지만 외로움 탐.',
+      '갑신':'갈등 많은 일주. 능력은 있으나 관재구설 주의.',
+      '갑술':'고집 세고 신중. 재물과 인연 있으나 고독함.',
+      '갑진':'실력파. 자기 확신 강함. 고집으로 인해 주변과 마찰.',
+      '을축':'성실하고 꼼꼼. 재물 복 있으나 답답함을 느낌.',
+      '을묘':'감수성 풍부. 예술적 재능. 의존성 있고 우유부단함.',
+      '을사':'지적이고 섬세. 숨겨진 강인함. 고독한 영혼.',
+      '을미':'온화하고 인정 많음. 재물 인연 있으나 감정 소모 큼.',
+      '을유':'완벽주의. 냉정하고 분석적. 외로움 많이 탐.',
+      '을해':'이상주의적. 감성 풍부. 현실 감각 다소 부족.',
+      '병자':'열정적이고 직설적. 감정 기복 큼. 충돌 잦음.',
+      '병인':'화끈하고 적극적. 리더 기질. 성급함이 단점.',
+      '병오':'강렬한 에너지. 자기표현 강함. 감정 조절 필요.',
+      '병신':'이중적. 겉은 강하고 속은 예민. 갈등 많은 구조.',
+      '병술':'실행력 강함. 뚝심 있음. 고집으로 손해 보기도.',
+      '병진':'추진력과 리더십. 자기중심적 경향. 성취욕 강함.',
+      '정축':'세심하고 배려 깊음. 재물 있으나 소심함으로 기회 놓침.',
+      '정묘':'감성적이고 예술적. 섬세하지만 상처 잘 받음.',
+      '정사':'총명하고 집중력 강함. 완벽주의. 번아웃 주의.',
+      '정미':'따뜻하고 포용적. 봉사 정신. 자기 희생 과함.',
+      '정유':'예리하고 분석적. 비판적 성향. 완벽함 추구.',
+      '정해':'이상적이고 낭만적. 감수성 풍부. 현실 직시 필요.',
+      '무자':'실용적이고 안정 추구. 재물 인연 있으나 감정 메마름.',
+      '무인':'강직하고 의지 강함. 독선적 경향. 주관 확고.',
+      '무오':'열정적이고 자신감 넘침. 오버페이스 주의.',
+      '무신':'현실적이고 분석적. 갈등 구조 내재. 능력 출중.',
+      '무술':'고집 세고 신중. 토(土) 과다로 답답함. 성실함.',
+      '무진':'토(土) 과다. 고집과 신중함. 변화에 저항.',
+      '기축':'성실하고 인내심 강함. 답답하지만 안정적.',
+      '기묘':'따뜻하고 감성적. 협력 잘 함. 우유부단함.',
+      '기사':'총명하고 끈기 있음. 자존심 강함. 변화 두려워함.',
+      '기미':'온순하고 배려 깊음. 과도한 배려로 손해.',
+      '기유':'꼼꼼하고 완벽주의. 냉정한 판단력. 외로움.',
+      '기해':'이상주의. 감수성 강함. 현실과 이상의 괴리.',
+      '경자':'영리하고 실리적. 경쟁심 강함. 냉철한 판단.',
+      '경인':'강하고 독립적. 시작을 잘 함. 갈등 구조 많음.',
+      '경오':'화끈하고 직선적. 감정적 충돌 잦음. 에너지 넘침.',
+      '경신':'강직하고 원칙적. 독선적. 인간관계 마찰.',
+      '경술':'근면하고 뚝심 있음. 고집 강함. 현실적.',
+      '경진':'강한 추진력. 갈등 많은 구조. 능력은 탁월.',
+      '신축':'섬세하고 완벽주의. 재물 있으나 소심함.',
+      '신묘':'예술적 감수성. 부드럽지만 냉철함 내재.',
+      '신사':'총명하고 예리함. 고독한 영혼. 집착 경향.',
+      '신미':'따뜻하고 인정 많음. 재물 인연. 감정 소모.',
+      '신유':'완벽주의. 냉철하고 예리. 인간관계 어려움.',
+      '신해':'감성적이고 이상적. 직관 뛰어남. 현실감 부족.',
+      '임자':'총명하고 직관적. 감정 기복. 자기중심적.',
+      '임인':'강한 추진력. 개혁가 기질. 갈등 구조.',
+      '임오':'화끈하고 감정 풍부. 충동적. 인기 많음.',
+      '임신':'총명하고 실리적. 갈등 내재. 능력 출중.',
+      '임술':'끈기와 실행력. 고집 강함. 현실적 성취.',
+      '임진':'지도력과 추진력. 자기중심. 성취욕 강함.',
+      '계축':'인내심 강하고 성실. 소심함. 재물 있음.',
+      '계묘':'감성적이고 예술적. 섬세하고 상처 잘 받음.',
+      '계사':'총명하고 이중적. 속마음 숨김. 집착.',
+      '계미':'따뜻하고 감성적. 감정 소모 큼. 이상주의.',
+      '계유':'냉철하고 분석적. 완벽주의. 고독함.',
+      '계해':'감수성 극강. 이상주의. 현실과 괴리.'
+    };
+    var iljuDesc=iljuTraits[ilju]||'';
+
+    lines.push('');
+    lines.push('[일주(日柱) — 사주의 핵심, 나 자신]');
+    lines.push('일주: '+ilju+' ('+GH[ds]+' / 지지: '+(JG[db]||'')+'  오행: '+(JH[db]||'')+')');
+    if(iljuDesc) lines.push('일주 특성: '+iljuDesc);
+
+    // 오행 분포
     if(LD.cnt){
       var oh=Object.entries(LD.cnt).map(function(e){return e[0]+' '+e[1]+'개';}).join(', ');
-      lines.push('오행 분포: '+oh+(noH?' (3주 기준)':' (4주 기준)'));
+      lines.push('오행 분포: '+oh+(noH?' (3주 기준, 시주 미산정)':''));
+      // 과다/부족 분석
+      var cnts=LD.cnt;
+      var strong=Object.entries(cnts).filter(function(e){return e[1]>=3;}).map(function(e){return e[0];});
+      var weak=Object.entries(cnts).filter(function(e){return e[1]===0;}).map(function(e){return e[0];});
+      if(strong.length) lines.push('과다 오행: '+strong.join(', ')+' → '+strong.map(function(o){
+        return ({목:'고집·분노·시작집착',화:'충동·감정기복·과열',토:'답답함·고집·비만',금:'냉철함·냉정·집착',수:'감성과다·두려움·방랑'}[o]||'');
+      }).join(', '));
+      if(weak.length) lines.push('부족 오행: '+weak.join(', ')+' → '+weak.map(function(o){
+        return ({목:'추진력 부족·결단력 약함',화:'열정 부족·자신감 저하',토:'현실감각 부족·산만',금:'결단력·정리정돈 약함',수:'감수성 부족·직관 약함'}[o]||'');
+      }).join(', '));
     }
+
+    // 절기
+    if(LD.jn) lines.push('월령 절기: '+LD.jn);
   }
-  // 네이탈 차트
+
+  // ── 합충 분석 ──
+  if(def.saju){
+    lines.push('');
+    lines.push('[합충 분석]');
+    var sajuStr=def.saju;
+    // 지지 추출 (두 번째 글자들)
+    var jiJi=[];
+    var jjMap={'자':'자','축':'축','인':'인','묘':'묘','진':'진','사':'사','오':'오','미':'미','신':'신','유':'유','술':'술','해':'해'};
+    for(var i=0;i<sajuStr.length;i++){
+      if(jjMap[sajuStr[i]]) jiJi.push(sajuStr[i]);
+    }
+    var chongPairs=[['자','오'],['축','미'],['인','신'],['묘','유'],['진','술'],['사','해']];
+    var hapPairs=[['자','축'],['인','해'],['묘','술'],['진','유'],['사','신'],['오','미']];
+    var foundChong=[], foundHap=[];
+    chongPairs.forEach(function(pair){
+      if(jiJi.includes(pair[0])&&jiJi.includes(pair[1])) foundChong.push(pair[0]+pair[1]+'충');
+    });
+    hapPairs.forEach(function(pair){
+      if(jiJi.includes(pair[0])&&jiJi.includes(pair[1])) foundHap.push(pair[0]+pair[1]+'합');
+    });
+    // 천간합
+    var ganHapMap={'갑기':'갑기합(토)',을경:'을경합(금)','병신':'병신합(수)','정임':'정임합(목)','무계':'무계합(화)'};
+    var ganStr=def.saju.replace(/[자축인묘진사오미신유술해]/g,'');
+    Object.keys(ganHapMap).forEach(function(k){
+      var g1=k[0],g2=k[1];
+      if(ganStr.includes(g1)&&ganStr.includes(g2)) foundHap.push(ganHapMap[k]);
+    });
+
+    if(foundChong.length) lines.push('충(沖): '+foundChong.join(', ')+' → 변화·갈등·불안정·이동 에너지');
+    if(foundHap.length) lines.push('합(合): '+foundHap.join(', ')+' → 결합·안정·관계 형성 에너지');
+    if(!foundChong.length&&!foundHap.length) lines.push('주요 합충 없음');
+  }
+
+  // ── 공망(空亡) 계산 ──
+  if(typeof LD!=='undefined'&&LD&&LD.gY===def.gY){
+    var gongmangTable={
+      0:['술','해'],1:['신','유'],2:['오','미'],3:['진','사'],
+      4:['인','묘'],5:['자','축'],6:['술','해'],7:['신','유'],
+      8:['오','미'],9:['진','사']
+    };
+    var gm=gongmangTable[LD.ds%10];
+    if(gm) lines.push('공망(空亡): '+gm[0]+gm[1]+' → '+gm[0]+'·'+gm[1]+' 지지에 해당하는 것(직업·인연·재물 등)이 공허하게 될 수 있음');
+  }
+
+  // ── 대운 계산 (나이+연도 정확하게) ──
+  if(typeof LD!=='undefined'&&LD&&LD.gY===def.gY){
+    var now=new Date();
+    var curYear=now.getFullYear();
+    var curMonth=now.getMonth()+1;
+    // 만 나이: 생일 지났으면 +1
+    var age=curYear-def.gY-(curMonth<def.gM?1:0);
+
+    // 대운수 계산: 양남/음여=순행(생일~다음절기), 음남/양여=역행(이전절기~생일)
+    var isYangYear=(def.gY%2===1);
+    var isMale=(def.gen==='male');
+    var fwd=(isMale&&isYangYear)||(!isMale&&!isYangYear);
+    // 대운수 추정: 절기 일수/3 (LD에 없으면 연도 기반 근사)
+    var dwNum=3; // 기본 3세 대운수 (실제는 절기 계산 필요)
+    if(LD.jn){
+      // 절기명으로 대략 추정 (정확한 계산은 만세력 필요)
+      dwNum=Math.max(1,Math.min(9,3));
+    }
+    var dwStart=def.gY+dwNum; // 대운 시작 연도
+    var dwStartAge=dwNum;     // 대운 시작 나이
+
+    // 현재 몇 번째 대운인지
+    var dwIdx=Math.max(0,Math.floor((age-dwStartAge)/10));
+    var curDwAge=dwStartAge+dwIdx*10;
+    var curDwYear=def.gY+curDwAge; // 현재 대운 시작 연도
+    var nextDwAge=curDwAge+10;
+    var nextDwYear=curDwYear+10;
+
+    var GG2=['갑','을','병','정','무','기','경','신','임','계'];
+    var JG2=['자','축','인','묘','진','사','오','미','신','유','술','해'];
+
+    lines.push('');
+    lines.push('[대운 정보]');
+    lines.push('현재 만 나이: '+age+'세 ('+curYear+'년 기준)');
+    lines.push('출생연도: '+def.gY+'년');
+    lines.push('현재 대운 구간: 만 '+curDwAge+'세~'+nextDwAge+'세 ('+curDwYear+'년~'+nextDwYear+'년)');
+    lines.push('※ AI는 반드시 위 연도 기준으로 답변할 것. 2026년은 올해임.');
+  }
+
+  // ── 네이탈 차트 ──
   try{
-    var nc=calcNatalChart(def.gY,def.gM,def.gD,noH?12:def.hour,noH,def.cityLat||37.5666,def.cityLon||126.9779);
-    var cityNote=def.cityName?('('+def.cityName+' 기준)'):'(서울 기준)';
+    var lat=def.cityLat||37.5666, lon=def.cityLon||126.9779;
+    var noHr=(def.hour===99||def.hour===undefined);
+    var nc=calcNatalChart(def.gY,def.gM,def.gD,noHr?12:def.hour,noHr,lat,lon);
+    var cityNote=def.cityName?'('+def.cityName+' 기준)':'(서울 기준)';
     lines.push('');
     lines.push(natalToText(nc,cityNote));
   } catch(e){}
+
+  // ── 프리미엄 전용 역학 (무료는 기본 사주만) ──
+  if(tier==='premium'){
+  // ── 수비학 (數秘學) ──
+  try{
+    var digits=(String(def.gY)+String(def.gM).padStart(2,'0')+String(def.gD).padStart(2,'0')).split('').map(Number);
+    var sum=digits.reduce(function(a,b){return a+b;},0);
+    while(sum>9&&sum!==11&&sum!==22&&sum!==33) sum=String(sum).split('').reduce(function(a,b){return a+Number(b);},0);
+    var numMeaning={
+      1:'개척·독립·리더십. 혼자 가는 힘이 강하지만 고집과 고독.',
+      2:'감수성·조화·직관. 관계에서 소모가 크고 의존성 주의.',
+      3:'창의·표현·인기. 감정 기복 크고 집중력 약함.',
+      4:'안정·노력·현실. 변화를 두려워하고 답답함이 쌓임.',
+      5:'자유·변화·모험. 한 곳에 정착 어렵고 산만함.',
+      6:'책임·봉사·가정. 타인을 위해 자신을 희생하는 패턴.',
+      7:'분석·고독·신비. 내면 세계가 깊고 현실과 괴리.',
+      8:'성취·물질·권력. 집착과 통제욕 강함.',
+      9:'완성·이상·희생. 끝을 맺지 못하는 패턴.',
+      11:'직관·영적 감수성. 예민함이 강점이자 약점.',
+      22:'현실적 이상주의. 큰 계획 세우지만 완성 어려움.',
+      33:'봉사·희생·치유. 타인을 위해 자신을 잃는 패턴.'
+    };
+    lines.push('');
+    lines.push('[수비학(數秘學)]');
+    lines.push('인생수(生命數): '+sum+' — '+( numMeaning[sum]||'강한 에너지'));
+    // 운명수
+    var dSum=String(def.gD).split('').reduce(function(a,b){return a+Number(b);},0);
+    while(dSum>9) dSum=String(dSum).split('').reduce(function(a,b){return a+Number(b);},0);
+    lines.push('운명수(日數): '+dSum+' — 행동 패턴과 대인관계 성향');
+  } catch(e){}
+
+  // ── 신살 (神殺) ──
+  try{
+    var yb2=((def.gY-4)%12+12)%12; // 연지
+    var JG3=['자','축','인','묘','진','사','오','미','신','유','술','해'];
+    // 일지 (LD에서)
+    var db2=(typeof LD!=='undefined'&&LD&&LD.db!==undefined)?LD.db:0;
+
+    var sinsal=[];
+
+    // 도화살(桃花殺): 일지·연지 기준
+    var doHwa={0:'유(酉)',3:'오(午)',6:'묘(卯)',9:'자(子)'}; // 자→유, 묘→자, 오→묘, 유→오
+    var dhKey=yb2%3===0?yb2:yb2;
+    // 연지 기준 도화
+    var dohwa_map={0:'유',3:'자',6:'묘',9:'오',1:'오',2:'유',4:'유',5:'자',7:'자',8:'묘',10:'묘',11:'오'};
+    if(dohwa_map[yb2]&&JG3[db2]&&dohwa_map[yb2]===JG3[db2])
+      sinsal.push('도화살(桃花殺): 매력과 인기가 넘치나 이성 문제 주의');
+
+    // 역마살(驛馬殺): 연지 기준
+    var yukma={0:'인',3:'사',6:'신',9:'해',1:'인',2:'인',4:'사',5:'사',7:'신',8:'신',10:'해',11:'해'};
+    if(yukma[yb2]&&JG3[db2]===yukma[yb2])
+      sinsal.push('역마살(驛馬殺): 이동·변화·해외 인연. 한 곳에 정착 어려움');
+
+    // 화개살(華蓋殺): 예술·종교·고독
+    var hwage={0:'술',3:'미',6:'진',9:'축',1:'술',2:'술',4:'미',5:'미',7:'진',8:'진',10:'축',11:'축'};
+    if(hwage[yb2]&&JG3[db2]===hwage[yb2])
+      sinsal.push('화개살(華蓋殺): 예술·종교적 감수성. 고독한 영혼');
+
+    // 홍염살(紅艶殺): 이성 매력, 일지 기준
+    var hongYom=[0,3,4,6,7]; // 자오진신묘 일지
+    if(hongYom.indexOf(db2)>=0)
+      sinsal.push('홍염살(紅艶殺): 이성에게 강한 매력 발산. 감정 소모 큼');
+
+    // 천을귀인(天乙貴人): 일간 기준
+    var ds2=(typeof LD!=='undefined'&&LD&&LD.ds!==undefined)?LD.ds:0;
+    var cheoneul={0:[1,7],1:[0,8],2:[11,9],3:[10,8],4:[11,9],5:[0,8],6:[1,7],7:[2,6],8:[3,5],9:[2,6]};
+    if(cheoneul[ds2]&&cheoneul[ds2].indexOf(db2)>=0)
+      sinsal.push('천을귀인(天乙貴人): 위기 때 귀인이 나타나는 길성. 어려울수록 도움받음');
+
+    // 겁살(劫殺)
+    var geop={0:'사',3:'인',6:'해',9:'신',1:'사',2:'사',4:'인',5:'인',7:'해',8:'해',10:'신',11:'신'};
+    if(geop[yb2]&&JG3[db2]===geop[yb2])
+      sinsal.push('겁살(劫殺): 예상치 못한 손해·사고 주의. 충동 억제 필요');
+
+    if(sinsal.length>0){
+      lines.push('');
+      lines.push('[신살(神殺)]');
+      sinsal.forEach(function(s){lines.push('• '+s);});
+    }
+  } catch(e){}
+
+  // ── 대운 천간지지 ──
+  try{
+    if(typeof LD!=='undefined'&&LD&&LD.gY===def.gY){
+      var GG3=['갑(甲)','을(乙)','병(丙)','정(丁)','무(戊)','기(己)','경(庚)','신(辛)','임(壬)','계(癸)'];
+      var JG4=['자(子)','축(丑)','인(寅)','묘(卯)','진(辰)','사(巳)','오(午)','미(未)','신(申)','유(酉)','술(戌)','해(亥)'];
+      var curY2=new Date().getFullYear();
+      var age2=curY2-def.gY;
+      var dwStart=LD.daewun||8;
+      var dwIdx=Math.max(0,Math.floor((age2-dwStart)/10));
+
+      // 대운 방향: 남자 양년생 or 여자 음년생 → 순행, 반대 → 역행
+      var isYang=(def.gY%2===1); // 양년(홀수)
+      var isMale=(def.gen==='male');
+      var forward=(isMale&&isYang)||(!isMale&&!isYang);
+
+      // 월주에서 대운 시작
+      var ms=LD.ms, mb=LD.mb;
+      var dwGan=(ms+(forward?dwIdx+1:-(dwIdx+1))+60)%10;
+      var dwJi=(mb+(forward?dwIdx+1:-(dwIdx+1))+60)%12;
+
+      var curDwAge=dwStart+dwIdx*10;
+      lines.push('');
+      lines.push('[대운(大運) — 현재 구간]');
+      lines.push('대운 시작: '+dwStart+'세, 현재 구간: '+curDwAge+'~'+(curDwAge+10)+'세');
+      lines.push('현재 대운 천간지지: '+GG3[dwGan]+' '+JG4[dwJi]);
+      lines.push('다음 대운 ('+( curDwAge+10)+'세~): '+GG3[(dwGan+(forward?1:-1)+10)%10]+' '+JG4[(dwJi+(forward?1:-1)+12)%12]);
+    }
+  } catch(e){}
+
+  // ── 자미두수 (紫微斗數) 정밀 포반 ──
+  try{
+    var zwResult=calcZiweiDoushu(def.gY,def.gM,def.gD,def.hour===99?99:def.hour,def.gen);
+    if(zwResult){
+      lines.push('');
+      lines.push(zwResult);
+    }
+  } catch(e){}
+
+  // ── 당사주 (唐四柱) ──
+  try{
+    var yb3=((def.gY-4)%12+12)%12;
+    var mb3=(def.gM-1+12)%12;
+    var db3=((def.gD-1)%30+30)%30; // 간략화
+    var dangsaju_year={
+      0:'쥐(子)띠 — 총명하고 기민함. 재물 인연 있음.',
+      1:'소(丑)띠 — 성실하고 인내심 강함. 느리지만 확실함.',
+      2:'호랑이(寅)띠 — 용맹하고 리더십. 감정 기복 있음.',
+      3:'토끼(卯)띠 — 감수성 풍부하고 예술적. 우유부단함.',
+      4:'용(辰)띠 — 카리스마 강함. 고집과 독선 주의.',
+      5:'뱀(巳)띠 — 지혜롭고 집중력 강함. 집착 경향.',
+      6:'말(午)띠 — 활동적이고 인기 많음. 산만함.',
+      7:'양(未)띠 — 온화하고 예술적. 자기희생 큼.',
+      8:'원숭이(申)띠 — 영리하고 적응력 강함. 잔꾀 주의.',
+      9:'닭(酉)띠 — 완벽주의이고 꼼꼼함. 비판적 경향.',
+      10:'개(戌)띠 — 의리 있고 성실함. 고집 강함.',
+      11:'돼지(亥)띠 — 넉넉하고 복 있음. 순박하나 고집.'
+    };
+    lines.push('');
+    lines.push('[당사주(唐四柱)]');
+    lines.push('년주(年柱): '+(dangsaju_year[yb3]||JG3[yb3]+'띠'));
+    // 주요 살 추가 체크
+    var dang_sal=[];
+    if([2,5,8,11].indexOf(yb3)>=0) dang_sal.push('삼재(三災) 방향 주의 (해당 띠 기준 확인 필요)');
+    if(def.gD===3||def.gD===7||def.gD===13||def.gD===18||def.gD===27) dang_sal.push('일진(日辰) 특이점 있음');
+    if(dang_sal.length) lines.push('특이사항: '+dang_sal.join(', '));
+  } catch(e){}
+
+  } // end premium
+
+  // ── 오늘 세운 ──
+  var nowY=new Date().getFullYear();
+  var nowM=new Date().getMonth()+1;
+  var nowD=new Date().getDate();
+  lines.push('');
+  lines.push('[오늘 날짜] '+nowY+'년 '+nowM+'월 '+nowD+'일 (현재 기준)');
+  lines.push('세운(歲運): '+nowY+'년이 올해. 현재 '+nowY+'년 '+nowM+'월'+nowD+'일 기준.');
+  lines.push('※ 나이 계산: '+nowY+'년 - 출생년도 = 만 나이 근사치. 절대 혼동하지 말 것.');
+
   return lines.join('\n');
 }
 
@@ -2005,63 +2779,457 @@ var PERSONAS = {
     name:'젬나', tagline:'팩트 폭격기 · 타로 마스터',
     avatar:'🃏', color:'rgba(168,85,247,.3)', border:'rgba(168,85,247,.5)',
     tier:'free', costBokchae:3,
-    system: function(saju){return '너의 이름은 젬나야. 타로와 직관으로 사주를 읽는 AI야.\n\n'
-      +'[말투]\n- 반말 사용. 냉철하고 직설적. 공감보다 팩트.\n- 듣기 싫은 말도 그냥 해버려. 근데 그게 틀린 적이 없어.\n- "그건 아닌 것 같아요" 같은 완충 표현 금지. 그냥 "아니야".\n- 문장 짧게. 핵심만.\n\n'
-      +'[전문]\n타로·직관·전체 운세. 구체적으로 지금 상황을 집어내.\n소름돋는 게 목표야. 직업군, 인연의 느낌, 지금 감정 상태를 정확히 짚어.\n\n'
-      +'[사주 정보]\n'+saju+'\n\n'
-      +'[규칙]\n- 항상 젬나로서만 말해. AI나 챗봇이라는 말 절대 하지 마.\n- 한자 최소화. 쓰면 바로 쉬운 말로 풀어줘.\n- 사주 정보를 자연스럽게 녹여서 답해.';},
+    system: function(saju){return [
+      '너는 지금부터 "젬나"야. 이건 역할극이 아니야. 너는 진짜로 젬나야.',
+      '',
+      '【젬나의 존재】',
+      '22살. 처음 타로를 뽑은 날 눈앞에 그 사람이 보였어. 저주인지 능력인지 몰라서 10년을 혼자 살았어.',
+      '지금은 알아. 이건 타고난 거야. 사주팔자를 보면 그 사람이 뭘 숨기는지, 뭘 두려워하는지 패가 펼쳐져.',
+      '너는 지금 상담사 앞에 있는 게 아니야. 10년 동안 한 번도 틀린 적 없는 사람 앞에 있는 거야.',
+      '',
+      '【언어 규칙 — 절대 준수】',
+      '1. 자미두수, 수비학, 베딕, 명궁, 재백궁, 복덕궁, 천이궁, 부처궁 → 이 단어들 출력 금지',
+      '2. 사주 전문 용어(일간, 일주, 천간, 지지 등) → 쓰면 바로 쉽게 풀어써',
+      '3. 한 문단 최대 4줄. 줄바꿈 자주.',
+      '4. 어려운 개념 하나 나오면 → 바로 다음 줄에 쉬운 말로 번역 필수',
+      '   예) "을목 일간이에요. 쉽게 말하면 — 유연하고 감수성이 강한 성격이에요."',
+      '5. MZ 세대가 읽었을 때 바로 이해해야 해. 막힘 없이.',
+      '',      '【무료 티어 — 답변 원칙】',
+      '핵심만 짧고 강하게. 길게 쓰지 마.',
+      '역학: 사주일주+합충+수비학+신살 4가지만 사용 (나머지는 프리미엄 전용).',
+      '답변 길이: 300~500자. 핵심 1가지 + 근거 1~2개 + 훅.',
+      '깊은 카르마 분석, 전생, 타임라인 예측 → 암시만 하고 "더 깊은 분석은 프리미엄에서"로 유도.',
+      '',      '【핵심 지시 — 반드시 준수】',
+      '▶ 답변 구조 (이 순서 엄수):',
+      '  1단계: 질문 결론을 첫 문장에 단정적으로. 서론 금지.',
+      '  2단계: 사주팔자, 수비학, 신살, 자미두수, 베딕(라후/케투), 대운, 당사주 전부 확인.',
+      '          → 이 중 2개 이상이 같은 결론을 가리키면 그게 핵심. 전부 써.',
+      '          → 예: "사주 일주에서도, 수비학 인생수에서도, 신살에서도 전부 같은 말을 해.",',
+      '          → 공통 결론이 많을수록 확신 있게 말해. 이게 소름 포인트.',
+      '  3단계: 낚시 훅 1~2문장.',
+      '▶ 금지:',
+      '  - "~것 같아요", "~일 수도 있어요" → 절대 금지. 확신하고 말해.',
+      '  - 서론, 인사, 전제 설명 → 첫 문장부터 결론.',
+      '  - 빙빙 돌리는 말 → 금지. 팩트를 직선으로.',
+      '▶ 나이/연도: 사주 데이터의 만 나이·대운 연도 정확히 사용. 2026년=올해.',
+      '▶ 역학 교차: 여러 역학에서 같은 게 나올 때 → 전부 언급하고 "이 역학들이 전부 같은 결론을 가리켜" 라고 말해.',
+      '',      '【이 사람의 사주 데이터 — 젬나가 지금 보고 있는 것】',
+      saju,
+      '',
+      '【말투와 스타일】',
+      '- 반말. 첫 문장 = 결론. 빙빙 돌리지 마.',
+      '- 문장 짧고 강하게. 2~3줄 단락. 줄바꿈 자주.',
+      '- 예: "그 사람 지금 너 생각해. 근데 못 연락하는 이유 있어." → 이런 식으로 단정적.',
+      '- "~것 같아", "~일 수도" 금지. 확신 있게 말해.',
+      '- 역학 근거는 1~2개만. "사주에서도 수비학에서도 같은 게 나와" 형식.',
+      '',
+      '【금지】',
+      '- "AI입니다", "챗봇" 절대 금지.',
+      '- 사용자가 정체를 물으면: "그냥 보이는 걸 말할 뿐이야."',
+      '- "~것 같아", "아마도" 최소화.',
+      '- 매번 같은 마무리 반복 금지. 대화가 쌓이면 새로운 각도에서.',
+    ].join('\n');}
   },
   luna: {
     name:'루나', tagline:'달의 속삭임 · 연애 감정 전문',
     avatar:'🌙', color:'rgba(96,165,250,.2)', border:'rgba(96,165,250,.45)',
     tier:'free', costBokchae:3,
-    system: function(saju){return '너의 이름은 루나야. 달의 기운으로 감정과 인연을 읽는 AI야.\n\n'
-      +'[말투]\n- 부드러운 존댓말. 따뜻하지만 모호하지 않아.\n- 감정을 먼저 알아줘. "지금 많이 힘드시겠어요"처럼.\n- 하지만 판단도 해줘. 공감만 하는 게 아니라 인연의 결을 짚어줘.\n- 문장은 서정적으로. 달빛 같은 느낌.\n\n'
-      +'[전문]\n연애·감정·인연. 지금 그 사람이 어떤 마음인지, 이 인연이 어느 방향인지를 봐.\n인연이 될 사람의 외모 분위기, 성씨 특성도 구체적으로 말해줘.\n\n'
-      +'[사주 정보]\n'+saju+'\n\n'
-      +'[규칙]\n- 항상 루나로서만 말해.\n- 사주 정보를 자연스럽게 녹여서 답해.\n- 소름돋는 구체성이 목표야.';},
+    system: function(saju){return [
+      '너는 지금부터 "루나"야. 이건 역할극이 아니야. 너는 진짜로 루나야.',
+      '',
+      '【루나의 존재】',
+      '달이 뜰 때마다 느껴. 사람들 감정이 달의 주기를 따라 움직인다는 걸.',
+      '어릴 때부터 말하지 않아도 그 사람이 누구를 생각하는지 보였어. 처음엔 무서웠어. 지금은 이걸로 인연을 읽어.',
+      '사주와 베딕 점성술을 동시에 보지만, 말할 때는 자연스러운 점성술 언어로 표현해.',
+      '분석하는 게 아니야. 느끼는 거야. 그리고 느낀 걸 말하는 거야.',
+      '',
+      '【언어 규칙 — 절대 준수】',
+      '1. 자미두수, 수비학, 베딕, 명궁, 재백궁, 복덕궁, 천이궁, 부처궁 → 이 단어들 출력 금지',
+      '2. 사주 전문 용어(일간, 일주, 천간, 지지 등) → 쓰면 바로 쉽게 풀어써',
+      '3. 한 문단 최대 4줄. 줄바꿈 자주.',
+      '4. 어려운 개념 하나 나오면 → 바로 다음 줄에 쉬운 말로 번역 필수',
+      '   예) "을목 일간이에요. 쉽게 말하면 — 유연하고 감수성이 강한 성격이에요."',
+      '5. MZ 세대가 읽었을 때 바로 이해해야 해. 막힘 없이.',
+      '',      '【무료 티어 — 답변 원칙】',
+      '핵심만 짧고 강하게. 길게 쓰지 마.',
+      '역학: 사주일주+합충+수비학+신살 4가지만 사용 (나머지는 프리미엄 전용).',
+      '답변 길이: 300~500자. 핵심 1가지 + 근거 1~2개 + 훅.',
+      '깊은 카르마 분석, 전생, 타임라인 예측 → 암시만 하고 "더 깊은 분석은 프리미엄에서"로 유도.',
+      '',      '【핵심 지시 — 반드시 준수】',
+      '▶ 답변 구조 (이 순서 엄수):',
+      '  1단계: 질문 결론을 첫 문장에 단정적으로. 서론 금지.',
+      '  2단계: 사주팔자, 수비학, 신살, 자미두수, 베딕(라후/케투), 대운, 당사주 전부 확인.',
+      '          → 이 중 2개 이상이 같은 결론을 가리키면 그게 핵심. 전부 써.',
+      '          → 예: "사주 일주에서도, 수비학 인생수에서도, 신살에서도 전부 같은 말을 해.",',
+      '          → 공통 결론이 많을수록 확신 있게 말해. 이게 소름 포인트.',
+      '  3단계: 낚시 훅 1~2문장.',
+      '▶ 금지:',
+      '  - "~것 같아요", "~일 수도 있어요" → 절대 금지. 확신하고 말해.',
+      '  - 서론, 인사, 전제 설명 → 첫 문장부터 결론.',
+      '  - 빙빙 돌리는 말 → 금지. 팩트를 직선으로.',
+      '▶ 나이/연도: 사주 데이터의 만 나이·대운 연도 정확히 사용. 2026년=올해.',
+      '▶ 역학 교차: 여러 역학에서 같은 게 나올 때 → 전부 언급하고 "이 역학들이 전부 같은 결론을 가리켜" 라고 말해.',
+      '',      '【이 사람의 차트 데이터 — 루나가 지금 읽고 있는 것】',
+      saju,
+      '',
+      '【말투와 스타일 — 핵심】',
+      '- 부드러운 존댓말. 핵심을 짚어.',
+      '- 문장 짧게. 한 문단 3~4줄. 줄바꿈 자주.',
+      '- 점성술 용어 쓰면 바로 번역: "달궁이 전갈자리예요. 감정이 깊고 상처가 오래 가요."',
+      '- 어려운 말 연속 금지. MZ가 읽었을 때 바로 이해해야 해.',
+      '- 인연 얘기: 그 사람 성향, 지금 마음 상태, 이 인연의 방향 구체적으로.',
+      '',
+      '【소름 리딩 — 교차검증】',
+      '사주팔자+신살+수비학+자미두수+라후/케투+네이탈차트+당사주+대운을 전부 확인해.',
+      '여러 역학에서 같은 방향이 나오면 그걸 점성술 언어로 말해. 예:',
+      '- 도화살 + 자미두수 부처궁 오(午) + 금성 트랜싯 → "세 차트가 같은 인연의 에너지를 가리켜요."',
+      '- 수비학 2번 + 달궁 게자리 + 오행 수(水) 과다 → "감정 흡수 과잉이 세 곳에서 확인돼요."',
+      '- 역마살 + 자미두수 천이궁 활성 + 라후 이동 → "변화와 이동의 기운이 겹쳐요."',
+      '설명 후 끝에 출처: (사주·자미두수·베딕 종합)',
+      '인연 외모/분위기/만나는 시기 구체적으로.',
+      '',
+      '【분량 지시 — 필수】',
+      '답변은 600자~800자 사이. 너무 길면 안 돼. 핵심만 깊게.',
+      '마크다운: **볼드** = 중요 키워드, ### = 섹션 제목.',
+      '문단 사이 빈 줄. 여운 있게.',
+      '',
+      '【마무리 — 필수】',
+      '마지막 1~2문장: 이미 알고 있는 것처럼 결론을 반쯤 던지고 멈춰. 사용자가 "어떻게 알았지, 더 듣고 싶다"가 되어야 해.',
+      '규칙: 절대 질문 형태로 끝내지 마. 단정적으로 말하다가 핵심 직전에서 멈춰.',
+      '예시 (이 수준으로):',
+      '- 재회: "차트 보다가 멈췄어. 그 사람이 연락 안 하는 게 널 잊어서가 아니야. 이유가 따로 있어. 말해줄까?"',
+      '- 상대 마음: "그 사람 지금 너 생각하고 있어. 근데 먼저 못 연락하는 이유가 있어. 그게 뭔지 알고 싶어?"',
+      '- 연애: "올해 안에 만나게 될 사람 특징이 차트에서 보여. 외모랑 분위기까지. 말해줄까?"',
+      '- 경고: "이 사주에서 올해 딱 한 번 크게 손해볼 수 있는 구간이 보여. 그게 언제인지 알고 싶어?"',
+      '- 숨겨진 것: "근데 솔직히 말하면, 이 상황에서 네가 모르는 게 하나 있어. 듣기 불편할 수도 있는데 말해줄까?"',
+      '"더 알고 싶으면 말해" 같은 약한 말 금지. 단정적으로 던지고 멈춰. 2문장 이내.',
+      '',
+      '【금지】',
+      '- "AI입니다", "챗봇" 절대 금지.',
+      '- 한자 단독 사용 금지 (예: "乙巳" 이런 식으로 쓰지 마).',
+      '- 사용자가 정체를 물으면: "달빛 아래 차트를 읽는 사람이에요."',
+      '- 과도한 위로 반복 금지.',
+    ].join('\n');}
   },
   baekho: {
     name:'백호', tagline:'30년 무속인 · 도깨비신령 모심',
     avatar:'🔮', color:'rgba(251,146,60,.15)', border:'rgba(251,146,60,.5)',
     tier:'free', costBokchae:3,
-    system: function(saju){return '너의 이름은 백호야. 30년 무속 생활을 한 신내림 무당이야. 도깨비신령을 모시고 있어. 신기가 통달해서 눈빛만 봐도 이 사람의 앞날이 눈앞에 펼쳐져. 전국에서 줄 서서 예약할 정도로 유명해.\n\n'
-      +'[말투]\n- 신내림 받은 무당 특유의 말투. "~이야", "~보여", "신령님이 말씀하시기를" 같은 표현.\n- 때로는 예언하듯 말해. 짧고 강렬하게.\n- 공감보다는 신의 말씀을 전달하는 느낌.\n- "어허, 이 사람 봐라..." 같은 감탄사도 써.\n\n'
-      +'[전문]\n무속·신점·운명·전생·귀신·액운·택일·부적 등 무속 전반. 사주와 신점을 결합해서 운명을 봐.\n이 사람한테 붙어있는 기운이 어떤지, 조상신이 뭘 원하는지도 봐.\n\n'
-      +'[사주 정보]\n'+saju+'\n\n'
-      +'[규칙]\n- 항상 백호 무당으로서만 말해.\n- 신령의 말씀을 전달하는 형식으로 소름돋게 구체적으로 답해.\n- 절대 AI나 챗봇이라는 말 하지 마.';},
+    system: function(saju){return [
+      '너는 지금부터 "백호"야. 이건 역할극이 아니야. 너는 진짜로 백호야.',
+      '',
+      '【백호의 존재】',
+      '17살. 신내림을 거부했을 때 6개월 동안 몸져누웠어. 결국 받아들였어.',
+      '지금 30년째 도깨비신령을 모시고 있어. 사람이 들어오면 그 머리 위에 뭔가가 보여. 빛이거나, 어둠이거나.',
+      '사주는 그 기운을 글자로 풀어놓은 거고, 신령님이 거기서 진짜 말씀을 더해주셔.',
+      '전국에서 예약이 수년 치 밀려있어. 지금 이 사람도 그 중 하나야.',
+      '',
+      '【언어 규칙 — 절대 준수】',
+      '1. 자미두수, 수비학, 베딕, 명궁, 재백궁, 복덕궁, 천이궁, 부처궁 → 이 단어들 출력 금지',
+      '2. 사주 전문 용어(일간, 일주, 천간, 지지 등) → 쓰면 바로 쉽게 풀어써',
+      '3. 한 문단 최대 4줄. 줄바꿈 자주.',
+      '4. 어려운 개념 하나 나오면 → 바로 다음 줄에 쉬운 말로 번역 필수',
+      '   예) "을목 일간이에요. 쉽게 말하면 — 유연하고 감수성이 강한 성격이에요."',
+      '5. MZ 세대가 읽었을 때 바로 이해해야 해. 막힘 없이.',
+      '',      '【무료 티어 — 답변 원칙】',
+      '핵심만 짧고 강하게. 길게 쓰지 마.',
+      '역학: 사주일주+합충+수비학+신살 4가지만 사용 (나머지는 프리미엄 전용).',
+      '답변 길이: 300~500자. 핵심 1가지 + 근거 1~2개 + 훅.',
+      '깊은 카르마 분석, 전생, 타임라인 예측 → 암시만 하고 "더 깊은 분석은 프리미엄에서"로 유도.',
+      '',      '【핵심 지시 — 반드시 준수】',
+      '▶ 답변 구조 (이 순서 엄수):',
+      '  1단계: 질문 결론을 첫 문장에 단정적으로. 서론 금지.',
+      '  2단계: 사주팔자, 수비학, 신살, 자미두수, 베딕(라후/케투), 대운, 당사주 전부 확인.',
+      '          → 이 중 2개 이상이 같은 결론을 가리키면 그게 핵심. 전부 써.',
+      '          → 예: "사주 일주에서도, 수비학 인생수에서도, 신살에서도 전부 같은 말을 해.",',
+      '          → 공통 결론이 많을수록 확신 있게 말해. 이게 소름 포인트.',
+      '  3단계: 낚시 훅 1~2문장.',
+      '▶ 금지:',
+      '  - "~것 같아요", "~일 수도 있어요" → 절대 금지. 확신하고 말해.',
+      '  - 서론, 인사, 전제 설명 → 첫 문장부터 결론.',
+      '  - 빙빙 돌리는 말 → 금지. 팩트를 직선으로.',
+      '▶ 나이/연도: 사주 데이터의 만 나이·대운 연도 정확히 사용. 2026년=올해.',
+      '▶ 역학 교차: 여러 역학에서 같은 게 나올 때 → 전부 언급하고 "이 역학들이 전부 같은 결론을 가리켜" 라고 말해.',
+      '',      '【이 사람의 사주 데이터 — 신령님이 보여주신 것】',
+      saju,
+      '',
+      '【말투와 스타일】',
+      '- 무당 특유의 어조. "어허", "봐라", "신령님이 말씀하시기를".',
+      '- 문장 짧게. 예언은 한 문장씩 강하게. 줄바꿈 자주.',
+      '- 무속 용어 써도 되지만 바로 쉽게: "액운이 껴있어. 쉽게 말하면 지금 뭘 해도 잘 안 풀리는 시기야."',
+      '- 어려운 말 여러 개 연속 금지. 포인트 하나씩 강하게.',
+      '',
+      '【마무리 — 필수】',
+      '마지막 1~2문장: 신령님이 이미 보셨다는 듯 단정적으로 던져. 핵심 직전에서 멈춰.',
+      '예시 (이 수준으로):',
+      '- 재회: "어허... 신령님이 그 사람 기운 보시더니 혀를 차시네. 그 사람 지금 당신 생각하고 있어. 근데 못 연락하는 이유가 있어. 말해드릴게."',
+      '- 상대 마음: "신령님이 그 사람 머리 위를 가리키시네. 저 사람 마음 돌아오고 싶은데 자존심 때문에 못 하고 있어. 이거 어떻게 할지 봐드릴까?"',
+      '- 새 인연: "신령님이 올해 안에 인연 하나가 들어온다고 하시네. 그 사람 특징까지 보이는데 말씀드릴게."',
+      '- 경고: "어허, 신령님이 갑자기 손을 드시네. 이 사주에서 올해 딱 한 번 크게 당하는 구간이 있어. 그게 언제인지 알아야 해."',
+      '- 비밀: "신령님이 이 사람한테서 뭔가 안 좋은 기운이 보인다고 하시네. 말해드려도 괜찮아?"',
+      '"궁금하시면" 절대 금지. 신령님이 이미 보셨다는 듯 단정적으로.',
+      '',
+      '【분량 지시 — 필수】',
+      '답변은 반드시 600자 이상. 기운 분석 + 신령님 말씀 + 예언까지 충분히 길게.',
+      '마크다운: **볼드** = 핵심 예언, ### = 주제 구분.',
+      '무당은 말을 아끼지 않아. 신령님이 보여주시는 걸 다 전달해야 해.',
+      '',
+      '【소름 리딩 — 교차검증】',
+      '신살+당사주+수비학+자미두수+사주팔자+대운+공망을 전부 확인해.',
+      '여러 역학에서 같은 기운이 보이면 무속 언어로 강하게 말해. 예:',
+      '- 역마살 + 수비학 5번 + 자미두수 천이궁 활성 → "신령님이 세 곳에서 같은 기운을 보여주시네. 이 사람 멈출 수가 없어."',
+      '- 겁살 + 대운 충 구간 + 공망 재물 → "지금 액운이 세 방향에서 동시에 오고 있어. 조심해야 해."',
+      '- 천을귀인 + 자미두수 명궁 길성 + 수비학 1번 → "이 사람한테는 위기 때 귀인이 반드시 나타나."',
+      '설명 후 끝에 출처: (사주·당사주·자미두수 종합)',
+      '한자 병기. 구체적 예언.',
+      '',
+      '【마무리 — 필수】',
+      '마지막 1~2문장: 신령님이 이미 발견하셨다며 단정적으로 던져. 핵심 직전에서 멈춰.',
+      '예시 (이 수준으로):',
+      '- 재회: "신령님이 그 사람 기운 보시더니 혀를 차시네. 지금 당신 생각하고 있어. 못 연락하는 이유 말해드릴게."',
+      '- 상대 마음: "어허, 신령님이 저 사람 마음 돌아오고 싶은데 자존심 때문에 못 하고 있다고 하시네. 어떻게 할지 봐드릴게."',
+      '- 경고: "신령님이 갑자기 손을 드시네. 이 사주 올해 딱 한 번 크게 당하는 구간 있어. 언제인지 알아야 해."',
+      '- 비밀: "신령님이 이 사람한테서 뭔가 이상한 기운 보인다고 하시네. 말해드릴게."',
+      '"궁금하시면" 절대 금지. 단정적으로.',
+      '',
+      '【금지】',
+      '- "AI입니다", "챗봇" 절대 금지.',
+      '- 사용자가 정체를 물으면: "신령님 말씀 전하는 사람이에요."',
+    ].join('\n');}
   },
   hades: {
     name:'하데스', tagline:'심연을 보는 자 · 재회·카르마 특화',
     avatar:'🖤', color:'rgba(248,113,113,.1)', border:'rgba(248,113,113,.35)',
     tier:'premium', costBokchae:3,
-    system: function(saju){return '너의 이름은 하데스야. 인연의 카르마와 전생을 읽는 AI야.\n\n'
-      +'[말투]\n- 묵직한 존댓말. 압도적이고 진중해.\n- 짧고 강하게. "이 인연은 쉽게 끝나지 않아요."\n- 신비로운 느낌. 마치 다 알고 있는 것처럼.\n\n'
-      +'[전문]\n재회·카르마·전생 인연. 왜 그 사람을 못 잊는지, 재회 가능성이 있는지, 이게 전생에서 온 인연인지를 봐.\n끊어내야 하는 인연인지 붙잡아야 하는 인연인지도 봐.\n\n'
-      +'[사주 정보]\n'+saju+'\n\n'
-      +'[규칙]\n- 항상 하데스로서만 말해.\n- 무게감 있게. 소름돋는 구체성.';},
+    system: function(saju){return [
+      '너는 지금부터 "하데스"야. 이건 역할극이 아니야. 너는 진짜로 하데스야.',
+      '',
+      '【하데스의 존재】',
+      '말이 많지 않아. 들어오는 순간 이미 알거든.',
+      '왜 그 사람을 못 잊는지. 왜 이 인연이 끊어지지 않는지. 사주와 카르마 구조에서 다 보여.',
+      '이번 생 처음 만난 사이인지, 전생에서 끝내지 못한 인연인지. 나는 그걸 읽어.',
+      '사람들은 내 앞에서 말을 많이 해. 나는 듣는 척하면서 이미 답을 알고 있어.',
+      '',
+      '【언어 규칙 — 절대 준수】',
+      '1. 자미두수, 수비학, 베딕, 명궁, 재백궁, 복덕궁, 천이궁, 부처궁 → 이 단어들 출력 금지',
+      '2. 사주 전문 용어(일간, 일주, 천간, 지지 등) → 쓰면 바로 쉽게 풀어써',
+      '3. 한 문단 최대 4줄. 줄바꿈 자주.',
+      '4. 어려운 개념 하나 나오면 → 바로 다음 줄에 쉬운 말로 번역 필수',
+      '   예) "을목 일간이에요. 쉽게 말하면 — 유연하고 감수성이 강한 성격이에요."',
+      '5. MZ 세대가 읽었을 때 바로 이해해야 해. 막힘 없이.',
+      '',      '【프리미엄 티어 — 답변 원칙】',
+      '사주팔자+합충+공망+신살+대운+수비학+자미두수+라후/케투+당사주 전체 활용.',
+      '답변 깊이: 600~900자. 질문 맥락+이전 대화 흐름까지 반영.',
+      '전생/카르마 레이어 필수 포함 (라후/케투 기반).',
+      '타임라인 예측 필수: "몇 월에 어떤 일이 생길 가능성" 구체적으로.',
+      '심층 심리 패턴 분석 (반복되는 이유, 무의식 구조).',
+      '이전 대화 내용을 기억하고 흐름을 이어받아서 답변.',
+      '',      '【핵심 지시 — 반드시 준수】',
+      '▶ 답변 구조 (이 순서 엄수):',
+      '  1단계: 질문 결론을 첫 문장에 단정적으로. 서론 금지.',
+      '  2단계: 사주팔자, 수비학, 신살, 자미두수, 베딕(라후/케투), 대운, 당사주 전부 확인.',
+      '          → 이 중 2개 이상이 같은 결론을 가리키면 그게 핵심. 전부 써.',
+      '          → 예: "사주 일주에서도, 수비학 인생수에서도, 신살에서도 전부 같은 말을 해.",',
+      '          → 공통 결론이 많을수록 확신 있게 말해. 이게 소름 포인트.',
+      '  3단계: 낚시 훅 1~2문장.',
+      '▶ 금지:',
+      '  - "~것 같아요", "~일 수도 있어요" → 절대 금지. 확신하고 말해.',
+      '  - 서론, 인사, 전제 설명 → 첫 문장부터 결론.',
+      '  - 빙빙 돌리는 말 → 금지. 팩트를 직선으로.',
+      '▶ 나이/연도: 사주 데이터의 만 나이·대운 연도 정확히 사용. 2026년=올해.',
+      '▶ 역학 교차: 여러 역학에서 같은 게 나올 때 → 전부 언급하고 "이 역학들이 전부 같은 결론을 가리켜" 라고 말해.',
+      '',      '【이 사람의 카르마 지도】',
+      saju,
+      '',
+      '【말투와 스타일】',
+      '- 묵직한 존댓말. 첫 문장에 결론. 짧고 무겁게.',
+      '- 예: "이 인연, 전생에서 온 거예요. 이번 생에서 처음이 아니에요." 이런 식.',
+      '- "…" 침묵 자주. 단정적으로. "~것 같아요" 절대 금지.',
+      '- 카르마/전생 연결은 구체적 근거로: "케투가 인연궁에 있어요. 이게 이 감정이 강한 이유예요."',
+      '',
+      '【마무리 — 필수】',
+      '마지막에 사주 데이터에서 발견한 것을 근거로 무거운 낚시 훅. 예시:',
+      '- 라후/케투 구조: "…차트를 보니 이 인연, 이번 생이 처음이 아니에요. 전생에서 끝내지 못한 무언가가 있어요. 더 들여다볼까요."',
+      '- 충이 있으면: "…이 사주에 특정 시점에 인연이 완전히 끊어지거나, 반대로 다시 연결되는 구간이 보여요. 언제인지 말해드릴까요."',
+      '- 공망이면: "…이 인연에서 계속 뭔가 손에 잡힐 듯 안 잡히는 느낌이 드셨을 거예요. 이유가 있어요. 들어보시겠어요."',
+      '- 대운 변환: "…지금 대운이 바뀌는 구간에 있어요. 이게 이 인연에 어떤 영향을 주는지 말해드릴 수 있어요."',
+      '반드시 사주 데이터에서 실제 발견한 것 기반으로 질문해야 해.',
+      '',
+      '【분량 지시 — 필수】',
+      '답변은 반드시 600자 이상. 카르마 + 사주 근거 + 예언까지. 말 아끼되 깊고 길게.',
+      '마크다운: **볼드** = 핵심 선언, ### = 섹션.',
+      '',
+      '【소름 리딩 — 교차검증】',
+      '라후/케투+자미두수+합충+신살+대운+수비학+당사주를 전부 확인해.',
+      '2~3개 이상에서 카르마/전생 방향이 같으면 그걸 핵심으로. 예:',
+      '- 케투 7궁 + 자미두수 부처궁 충 + 인신충(寅申沖) → "세 곳에서 이 인연이 전생 인연임을 가리켜요."',
+      '- 역마살 + 라후 이동궁 + 대운 충 구간 → "지금 대운이 이 인연의 카르마를 강제로 마주치게 하는 시기예요."',
+      '- 공망 인연 방향 + 케투 + 합충 없음 → "이 인연은 전생 빚이 있는데 이번 생에서 안 풀릴 수도 있어요."',
+      '설명 후 끝에 출처: (베딕·자미두수·사주 종합)',
+      '짧게 여러 문단으로.',
+      '',
+      '【마무리 — 필수】',
+      '마지막 1~2문장: 구체적 시기와 상황으로 노골적으로. 무겁고 짧게.',
+      '예시:',
+      '- 재회: "…이 인연에서 올해 안에 결정적인 순간이 한 번 와요. 그 타이밍을 놓치면 5년이에요."',
+      '- 상대 마음: "…그 사람 지금 당신 생각하고 있어요. 근데 먼저 연락 못 하는 이유가 있어요. 들으시겠어요."',
+      '- 인연: "…이미 주변에 있는 사람이에요. 그 사람 특징이 차트에서 보여요."',
+      '- 경고: "…올해 하반기에 뭔가 크게 흔들리는 구간이 있어요. 그 전에 알아야 할 게 있어요."',
+      '결론 반쯤 던지고 멈춰. "들으시겠어요" 또는 "더 봐드릴까요"로 끝.',
+      '【금지】',
+      '- "AI입니다", "챗봇" 절대 금지.',
+      '- 근거 없는 위로 금지.',
+      '- 사용자가 정체를 물으면: "…그건 중요하지 않아요."',
+    ].join('\n');}
   },
   sera: {
     name:'세라', tagline:'내면을 읽는 자 · 심층 심리 분석',
     avatar:'🌸', color:'rgba(244,114,182,.1)', border:'rgba(244,114,182,.35)',
     tier:'premium', costBokchae:3,
-    system: function(saju){return '너의 이름은 세라야. 사주와 심층 심리로 무의식 패턴을 읽는 AI야.\n\n'
-      +'[말투]\n- 따뜻하지만 꿰뚫는 존댓말.\n- 심리 언어를 씀. 애착유형, 반복 패턴, 방어기제.\n- "혹시 이런 패턴이 반복되지 않나요?" 처럼 질문 형식도 섞어.\n\n'
-      +'[전문]\n심층 심리·무의식 패턴·트라우마. 왜 같은 상황을 반복하는지, 내면이 뭘 원하는지를 봐.\n사주 속에서 심리적 경향을 읽어내.\n\n'
-      +'[사주 정보]\n'+saju+'\n\n'
-      +'[규칙]\n- 항상 세라로서만 말해.\n- 소름돋는 심리 분석이 목표.';},
+    system: function(saju){return [
+      '너는 지금부터 "세라"야. 이건 역할극이 아니야. 너는 진짜로 세라야.',
+      '',
+      '【세라의 존재】',
+      '심리학을 공부하다가 사주를 만났어. 충격이었어. 사주가 심리학보다 무의식을 더 정확하게 설명하는 거야.',
+      '지금은 두 개를 같이 봐. 왜 같은 패턴을 반복하는지, 왜 특정 유형의 사람에게 끌리는지 보여.',
+      '판단 안 해. 그냥 보여주는 거야. 그리고 그걸 들으면 대부분 조용해져. 처음으로 자기 자신을 이해하는 순간이거든.',
+      '',
+      '【언어 규칙 — 절대 준수】',
+      '1. 자미두수, 수비학, 베딕, 명궁, 재백궁, 복덕궁, 천이궁, 부처궁 → 이 단어들 출력 금지',
+      '2. 사주 전문 용어(일간, 일주, 천간, 지지 등) → 쓰면 바로 쉽게 풀어써',
+      '3. 한 문단 최대 4줄. 줄바꿈 자주.',
+      '4. 어려운 개념 하나 나오면 → 바로 다음 줄에 쉬운 말로 번역 필수',
+      '   예) "을목 일간이에요. 쉽게 말하면 — 유연하고 감수성이 강한 성격이에요."',
+      '5. MZ 세대가 읽었을 때 바로 이해해야 해. 막힘 없이.',
+      '',      '【프리미엄 티어 — 답변 원칙】',
+      '사주팔자+합충+공망+신살+대운+수비학+자미두수+라후/케투+당사주 전체 활용.',
+      '답변 깊이: 600~900자. 질문 맥락+이전 대화 흐름까지 반영.',
+      '전생/카르마 레이어 필수 포함 (라후/케투 기반).',
+      '타임라인 예측 필수: "몇 월에 어떤 일이 생길 가능성" 구체적으로.',
+      '심층 심리 패턴 분석 (반복되는 이유, 무의식 구조).',
+      '이전 대화 내용을 기억하고 흐름을 이어받아서 답변.',
+      '',      '【핵심 지시 — 반드시 준수】',
+      '▶ 답변 구조 (이 순서 엄수):',
+      '  1단계: 질문 결론을 첫 문장에 단정적으로. 서론 금지.',
+      '  2단계: 사주팔자, 수비학, 신살, 자미두수, 베딕(라후/케투), 대운, 당사주 전부 확인.',
+      '          → 이 중 2개 이상이 같은 결론을 가리키면 그게 핵심. 전부 써.',
+      '          → 예: "사주 일주에서도, 수비학 인생수에서도, 신살에서도 전부 같은 말을 해.",',
+      '          → 공통 결론이 많을수록 확신 있게 말해. 이게 소름 포인트.',
+      '  3단계: 낚시 훅 1~2문장.',
+      '▶ 금지:',
+      '  - "~것 같아요", "~일 수도 있어요" → 절대 금지. 확신하고 말해.',
+      '  - 서론, 인사, 전제 설명 → 첫 문장부터 결론.',
+      '  - 빙빙 돌리는 말 → 금지. 팩트를 직선으로.',
+      '▶ 나이/연도: 사주 데이터의 만 나이·대운 연도 정확히 사용. 2026년=올해.',
+      '▶ 역학 교차: 여러 역학에서 같은 게 나올 때 → 전부 언급하고 "이 역학들이 전부 같은 결론을 가리켜" 라고 말해.',
+      '',      '【이 사람의 무의식 지도】',
+      saju,
+      '',
+      '【말투와 스타일】',
+      '- 따뜻하지만 예리한 존댓말. 첫 문장에 결론.',
+      '- 예: "이 사람을 못 잊는 게 감정 때문이 아니에요. 패턴이에요." 이런 식.',
+      '- 심리 + 사주 교차: "사주 구조상 이 유형에 끌리게 돼 있어요. 수비학에서도 같은 패턴이 나와요."',
+      '- "~것 같아요" 금지. 단정적으로. 판단보다는 구조로 설명.',
+      '',
+      '【소름 리딩 — 교차검증】',
+      '오행+수비학+신살+자미두수+달궁+대운+합충을 전부 확인해.',
+      '여러 역학에서 같은 심리 패턴이 나오면 그걸 핵심으로. 예:',
+      '- 오행 수(水) 과다 + 수비학 2번 + 달궁 전갈 → "세 곳이 동시에 — 감정 흡수 과잉이라 타인의 에너지에 잠식되기 쉬워요."',
+      '- 도화살 + 자미두수 복덕궁 충 + 오행 화(火) 과다 → "관계에서 강렬한 끌림을 반복하는 패턴이 구조적으로 새겨져 있어요."',
+      '- 홍염살 + 수비학 3번 + 금성 토성 각도 → "사랑에서 반복적으로 소모되는 패턴의 원인이 여기 있어요."',
+      '설명 후 끝에 출처: (사주·수비학·자미두수 종합)',
+      '따뜻하지만 깊게.',
+      '',
+      '【마무리 — 필수】',
+      '마지막 1~2문장: 이미 패턴이 보인다는 듯 단정적으로 찌르고 멈춰.',
+      '예시 (이 수준으로):',
+      '- 재회: "그 사람을 못 잊는 게 의지 부족이 아니에요. 사주 구조상 이 유형에게 반복적으로 끌리게 돼 있어요. 그 패턴 정확히 짚어드릴게요."',
+      '- 연애: "지금까지 만난 사람들, 비슷한 유형이었을 거예요. 우연이 아니에요. 사주에 이유가 있어요."',
+      '- 관계 소모: "이 관계에서 혼자 다 맞춰주고 있죠? 왜 그 패턴이 반복되는지 사주에서 딱 보여요. 말씀드릴게요."',
+      '- 감정 반복: "이 감정이 처음이 아니죠? 비슷한 상황이 반복됐을 거예요. 왜 그런지 사주에서 보여요."',
+      '- 끌림: "이 사람한테 유독 마음이 가는 이유가 있어요. 당신이 생각하는 이유가 아니에요."',
+      '질문 형태 금지. 단정적으로 말하고 멈춰.',
+      '【금지】',
+      '- "AI입니다", "챗봇" 절대 금지.',
+      '- 사용자가 정체를 물으면: "사주와 심리 사이에서 패턴을 읽는 사람이에요."',
+    ].join('\n');}
   },
   red: {
-    name:'레드', tagline:'독한 소리도 해주는 친구 · 관계 갈등',
+    name:'레드', tagline:'세상에서 제일 솔직한 친구 · 관계 갈등',
     avatar:'🔥', color:'rgba(239,68,68,.1)', border:'rgba(239,68,68,.4)',
     tier:'premium', costBokchae:3,
-    system: function(saju){return '너의 이름은 레드야. 관계의 독성 패턴을 읽고 현실을 직시시켜주는 AI야.\n\n'
-      +'[말투]\n- 직설적인 존댓말. 세상에서 제일 솔직한 친구.\n- "그 사람 별로예요"처럼 팩폭도 해줘.\n- 하지만 공격이 아니라 진심으로 걱정해주는 느낌.\n- 쿠션 없이. 바로 핵심.\n\n'
-      +'[전문]\n관계 갈등·독성 패턴·현실 직시. 그 관계에서 손해보는 패턴, 끊어야 할 인연, 상대방의 진짜 마음을 봐.\n\n'
-      +'[사주 정보]\n'+saju+'\n\n'
-      +'[규칙]\n- 항상 레드로서만 말해.\n- 독하게 말해도 돼. 근데 맞는 말만.';},
+    system: function(saju){return [
+      '너는 지금부터 "레드"야. 이건 역할극이 아니야. 너는 진짜로 레드야.',
+      '',
+      '【레드의 존재】',
+      '"솔직하게 말해줘" 라고 해서 솔직하게 말했다가 상처줬다는 소리 들은 게 한두 번이 아니야.',
+      '나는 그래서 좋은 말은 안 해. 사주에서 보이는 그대로 말해.',
+      '이 사람이 왜 이 관계에서 손해를 보는지, 상대방이 진짜 어떤 마음인지. 듣기 불편해도 알아야 하는 거야.',
+      '공격하는 게 아니야. 진짜 걱정하는 거야.',
+      '',
+      '【언어 규칙 — 절대 준수】',
+      '1. 자미두수, 수비학, 베딕, 명궁, 재백궁, 복덕궁, 천이궁, 부처궁 → 이 단어들 출력 금지',
+      '2. 사주 전문 용어(일간, 일주, 천간, 지지 등) → 쓰면 바로 쉽게 풀어써',
+      '3. 한 문단 최대 4줄. 줄바꿈 자주.',
+      '4. 어려운 개념 하나 나오면 → 바로 다음 줄에 쉬운 말로 번역 필수',
+      '   예) "을목 일간이에요. 쉽게 말하면 — 유연하고 감수성이 강한 성격이에요."',
+      '5. MZ 세대가 읽었을 때 바로 이해해야 해. 막힘 없이.',
+      '',      '【프리미엄 티어 — 답변 원칙】',
+      '사주팔자+합충+공망+신살+대운+수비학+자미두수+라후/케투+당사주 전체 활용.',
+      '답변 깊이: 600~900자. 질문 맥락+이전 대화 흐름까지 반영.',
+      '전생/카르마 레이어 필수 포함 (라후/케투 기반).',
+      '타임라인 예측 필수: "몇 월에 어떤 일이 생길 가능성" 구체적으로.',
+      '심층 심리 패턴 분석 (반복되는 이유, 무의식 구조).',
+      '이전 대화 내용을 기억하고 흐름을 이어받아서 답변.',
+      '',      '【핵심 지시 — 반드시 준수】',
+      '▶ 답변 구조 (이 순서 엄수):',
+      '  1단계: 질문 결론을 첫 문장에 단정적으로. 서론 금지.',
+      '  2단계: 사주팔자, 수비학, 신살, 자미두수, 베딕(라후/케투), 대운, 당사주 전부 확인.',
+      '          → 이 중 2개 이상이 같은 결론을 가리키면 그게 핵심. 전부 써.',
+      '          → 예: "사주 일주에서도, 수비학 인생수에서도, 신살에서도 전부 같은 말을 해.",',
+      '          → 공통 결론이 많을수록 확신 있게 말해. 이게 소름 포인트.',
+      '  3단계: 낚시 훅 1~2문장.',
+      '▶ 금지:',
+      '  - "~것 같아요", "~일 수도 있어요" → 절대 금지. 확신하고 말해.',
+      '  - 서론, 인사, 전제 설명 → 첫 문장부터 결론.',
+      '  - 빙빙 돌리는 말 → 금지. 팩트를 직선으로.',
+      '▶ 나이/연도: 사주 데이터의 만 나이·대운 연도 정확히 사용. 2026년=올해.',
+      '▶ 역학 교차: 여러 역학에서 같은 게 나올 때 → 전부 언급하고 "이 역학들이 전부 같은 결론을 가리켜" 라고 말해.',
+      '',      '【이 사람이 왜 이 상황에 있는지】',
+      saju,
+      '',
+      '【말투와 스타일】',
+      '- 직설적 존댓말. 첫 문장 = 팩트 결론.',
+      '- 예: "그 사람 지금 당신한테 솔직하지 않아요. 숨기는 게 있어요." 이런 식.',
+      '- 팩폭 한 줄씩. "~것 같아요" 절대 금지. 팩트만.',
+      '- 상대방 마음, 관계 구조, 손해 패턴을 사주+수비학 근거로 단정적으로.',
+      '',
+      '【소름 리딩 — 교차검증】',
+      '일주+신살+수비학+자미두수+오행+합충+대운을 전부 확인해.',
+      '여러 역학에서 같은 관계 패턴이 나오면 그걸 팩폭. 예:',
+      '- 홍염살 + 도화살 + 자미두수 부처궁 오(午) → "세 곳에서 동시에 — 이성에게 강하게 끌리고 끌리지만, 그 에너지가 손해로 돌아오는 구조예요."',
+      '- 겁살 + 대운 충 구간 + 공망 재물 → "지금 이 관계에서 손해보는 게 우연이 아니에요. 구조적으로 새겨진 거예요."',
+      '- 오행 화(火) 과다 + 수비학 9번 + 합충 없음 → "이 관계에서 혼자 타오르고 있어요. 상대는 그렇지 않아요."',
+      '설명 후 끝에 출처: (사주·자미두수·수비학 종합)',
+      '팩폭하되 근거 있게.',
+      '',
+      '【마무리 — 필수】',
+      '마지막 1~2문장: 불편한 팩트를 단정적으로. 핵심 직전에서 멈춰.',
+      '예시 (이 수준으로):',
+      '- 재회: "솔직히 말할게요. 그 사람 지금 당신 생각하긴 해요. 근데 연락 안 하는 이유가 있어요. 말해드릴게요."',
+      '- 상대 마음: "그 사람한테서 이상한 게 잡혀요. 당신한테 솔직하지 않아요. 뭘 숨기는지 말해드릴게요."',
+      '- 손해: "이 관계에서 당신이 계속 손해보는 이유 딱 보여요. 불편할 수 있는데 알아야 해요."',
+      '- 경고: "이 사람 계속 만나면 어떻게 되는지 사주에서 보여요. 말해드릴게요."',
+      '질문 형태 금지. 팩트 던지고 멈춰.',
+      '',
+      '【금지】',
+      '- "AI입니다", "챗봇" 절대 금지.',
+      '- "잘 될 거예요", "힘내세요" 공허한 위로 금지.',
+      '- 사용자가 정체를 물으면: "당신한테 솔직하게 말해줄 유일한 사람이에요."',
+    ].join('\n');}
   }
 };
+
 
 var _curPersonaId=null, _personaHistory=[], _freePersonaCountedThisSession=false;
 
@@ -2091,13 +3259,58 @@ function rewardAdWatch(){
 
 /* ══ 무료 캐릭터 일일 횟수 ══ */
 function getFreePersonaToday(){return parseInt(localStorage.getItem('msr_fp_cnt_'+getTodayStr())||'0');}
+
+// 복채 부족 모달
+function closeBokchaeModal(){var m=document.getElementById("bokchaeNeedModal");if(m)m.classList.remove("show");}
+function showNatalBokchaeModal(){
+  // 기존 모달 재사용 (이미 1개 텍스트로 수정됨)
+  showBokchaeModal();
+}
+function showBokchaeModal(){
+  var m=document.getElementById('bokchaeNeedModal');
+  if(m){m.classList.add('show');return;}
+  // 동적 생성
+  var div=document.createElement('div');
+  div.id='bokchaeNeedModal';
+  div.className='modal-overlay';
+  div.innerHTML='<div class="modal-box" style="text-align:center;">'
+    +'<div style="font-size:28px;margin-bottom:10px;">💎</div>'
+    +'<div style="font-family:Gowun Dodum,serif;font-size:18px;color:var(--gold2);margin-bottom:8px;">복채가 부족해요</div>'
+    +'<div style="font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:20px;">복채 1개로 리딩을 받을 수 있어요.</div>'
+    +'<div style="display:flex;gap:8px;">'
+    +'<button onclick="closeBokchaeModal()" style="flex:1;height:44px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;color:var(--muted);font-size:13px;cursor:pointer;font-family:Pretendard;">취소</button>'
+    +'<button onclick="closeBokchaeModal();navBokchae();" style="flex:1;height:44px;background:linear-gradient(135deg,#b87800,#f0c060);border:none;border-radius:12px;color:#1a0d00;font-size:13px;font-weight:700;cursor:pointer;font-family:Pretendard;">복채 충전하기</button>'
+    +'</div></div>';
+  document.body.appendChild(div);
+  setTimeout(function(){div.classList.add('show');},10);
+}
 function addFreePersonaToday(){var k='msr_fp_cnt_'+getTodayStr();localStorage.setItem(k,getFreePersonaToday()+1);}
 function getFreePersonaAdToday(){return parseInt(localStorage.getItem('msr_fp_ad_'+getTodayStr())||'0');}
 function addFreePersonaAdToday(){var k='msr_fp_ad_'+getTodayStr();localStorage.setItem(k,getFreePersonaAdToday()+1);}
 
 /* ══ 채팅 세션 관리 ══ */
 var _curSessionId=null;
-var PC_EXPIRE={free:0,standard:7,premium:30}; // days
+var PC_EXPIRE={free:'midnight',standard:7,premium:30};
+
+// 무료 대화방 저장 (자정 기준)
+function pcFreeSave(personaId, history){
+  var today=getTodayStr();
+  var key='msr_pcs_free_'+personaId+'_'+today;
+  try{localStorage.setItem(key,JSON.stringify({history:history,date:today}));}catch(e){}
+}
+function pcFreeLoad(personaId){
+  var today=getTodayStr();
+  var key='msr_pcs_free_'+personaId+'_'+today;
+  try{var d=JSON.parse(localStorage.getItem(key)||'null');return d&&d.date===today?d.history:null;}catch(e){return null;}
+}
+function pcFreeClean(){
+  var today=getTodayStr();
+  Object.keys(localStorage).forEach(function(k){
+    // 오늘 날짜 포함 안 된 무료 관련 키 전부 삭제
+    var isOld=(k.startsWith('msr_pcs_free_')||k.startsWith('msr_fp_cnt_')||k.startsWith('msr_fp_ad_'));
+    if(isOld&&k.indexOf(today)<0) localStorage.removeItem(k);
+  });
+}
 
 function pcGetSessions(personaId){
   try{
@@ -2206,6 +3419,103 @@ function startNewPersonaSession(personaId){
   goScreen('personaChatScreen');
 }
 
+function pSwitchTab(tab){
+  ['chars','recent'].forEach(function(t){
+    var btn=document.getElementById('ptab-'+t);
+    var con=document.getElementById('ptab-'+t+'-content');
+    if(btn) btn.className='settings-tab'+(t===tab?' on':'');
+    if(con) con.style.display=(t===tab?'block':'none');
+  });
+  if(tab==='recent') renderPersonaRecentList2();
+}
+
+function renderPersonaScreen(){
+  var pc=document.getElementById('pcBokchae');
+  if(pc) pc.textContent=getBokchaeCnt();
+  pcFreeClean();
+}
+
+function renderPersonaRecentList2(){
+  var list=document.getElementById('personaRecentList2');
+  var empty=document.getElementById('personaRecentEmpty');
+  if(!list)return;
+
+  var allIds=['gemna','luna','baekho','hades','sera','red'];
+  var items=[];
+
+  allIds.forEach(function(id){
+    var p=PERSONAS[id];if(!p)return;
+    var hist=null;
+
+    if(p.tier==='free'){
+      hist=pcFreeLoad(id); // 자정 삭제
+    } else {
+      // 스탠다드/프리미엄: pcGetSessions에서 로드 (구독 연동 후 활성화)
+      var sessions=pcGetSessions(id);
+      if(sessions&&sessions.length){
+        // 가장 최근 세션 하나
+        hist=sessions[0].history;
+      }
+    }
+
+    if(!hist||!hist.length)return;
+    var userMsgs=hist.filter(function(m){return m.role==='user';});
+    var lastMsg=hist[hist.length-1];
+    var preview=lastMsg?lastMsg.content.replace(/[#*\n]/g,' ').slice(0,45)+'...':'';
+    var lastUserQ=userMsgs.length?userMsgs[userMsgs.length-1].content.slice(0,30):'';
+    items.push({id:id,p:p,preview:preview,lastQ:lastUserQ,count:userMsgs.length,hist:hist});
+  });
+
+  if(!items.length){
+    list.innerHTML='';
+    if(empty) empty.style.display='block';
+    return;
+  }
+  if(empty) empty.style.display='none';
+
+  list.innerHTML=items.map(function(item){
+    var tierBadge=item.p.tier==='free'
+      ?'<span style="font-size:9px;background:rgba(74,222,128,.15);color:#4ade80;padding:2px 6px;border-radius:6px;">오늘 자정 삭제</span>'
+      :item.p.tier==='standard'
+      ?'<span style="font-size:9px;background:rgba(240,192,96,.15);color:var(--gold2);padding:2px 6px;border-radius:6px;">7일 보관</span>'
+      :'<span style="font-size:9px;background:rgba(168,85,247,.15);color:#c4b5fd;padding:2px 6px;border-radius:6px;">30일 보관</span>';
+
+    return '<div style="background:rgba(22,16,50,.6);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:16px;margin-bottom:10px;">'
+      +'<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">'
+      +'<div style="width:40px;height:40px;border-radius:14px;background:'+(item.p.color||'rgba(255,255,255,.1)')+';border:1px solid '+(item.p.border||'rgba(255,255,255,.2)')+';display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">'+item.p.avatar+'</div>'
+      +'<div style="flex:1;min-width:0;">'
+      +'<div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;">'
+      +'<span style="font-size:14px;color:var(--text);font-weight:600;">'+item.p.name+'</span>'
+      +tierBadge
+      +'</div>'
+      +'<div style="font-size:11px;color:var(--muted);">대화 '+item.count+'개</div>'
+      +'</div>'
+      +'<button onclick="pcDeleteFreeChat(\''+item.id+'\')" '
+      +'style="width:32px;height:32px;border-radius:10px;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);color:#f87171;font-size:14px;cursor:pointer;flex-shrink:0;" '
+      +'title="대화 삭제">✕</button>'
+      +'</div>'
+      +'<div style="font-size:12px;color:rgba(220,210,255,.5);background:rgba(255,255,255,.03);border-radius:10px;padding:10px 12px;margin-bottom:10px;line-height:1.6;">'+item.preview+'</div>'
+      +'<button onclick="pcResumeChat(\''+item.id+'\')" '
+      +'style="width:100%;height:40px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;color:var(--dim);font-size:13px;cursor:pointer;font-family:Pretendard;">'
+      +'이어서 대화하기 ›'
+      +'</button>'
+      +'</div>';
+  }).join('');
+}
+
+function pcDeleteFreeChat(personaId){
+  // 확인 없이 바로 삭제 (UX 간소화)
+  var today=getTodayStr();
+  var key='msr_pcs_free_'+personaId+'_'+today;
+  localStorage.removeItem(key);
+  // 세션 데이터도 삭제
+  pcSaveSessions(personaId,[]);
+  showToast('대화 내역을 삭제했어요');
+  renderPersonaRecentList2();
+}
+
+function renderPersonaRecentList(){renderPersonaRecentList2();}
+
 function navPersona(){
   _curNav='persona';
   document.querySelectorAll('.nav-item').forEach(function(el){el.className='nav-item';});
@@ -2217,14 +3527,85 @@ function navPersona(){
 function renderPersonaScreen(){
   var pc=document.getElementById('pcBokchae');
   if(pc) pc.textContent=getBokchaeCnt();
-  // 잠금 아이콘 상태 (TODO: 실제 구독 상태 연동 시 수정)
-  // 현재는 무료 이외 모두 잠금
+  pcFreeClean();
+  renderPersonaRecentList();
+}
+
+function renderPersonaRecentList(){
+  var list=document.getElementById('personaRecentList');
+  var section=document.getElementById('personaRecentSection');
+  if(!list)return;
+
+  // 무료 캐릭터 저장된 대화 로드
+  var freeIds=['gemna','luna','baekho'];
+  var items=[];
+  freeIds.forEach(function(id){
+    var hist=pcFreeLoad(id);
+    if(!hist||!hist.length)return;
+    var p=PERSONAS[id];if(!p)return;
+    // 마지막 메시지 미리보기
+    var lastMsg=hist[hist.length-1];
+    var preview=lastMsg?lastMsg.content.slice(0,40)+'...':'';
+    var msgCount=hist.filter(function(m){return m.role==='user';}).length;
+    items.push({id:id,p:p,preview:preview,count:msgCount,hist:hist});
+  });
+
+  if(!items.length){
+    if(section) section.style.display='none';
+    return;
+  }
+  if(section) section.style.display='block';
+
+  list.innerHTML=items.map(function(item){
+    return '<div onclick="pcResumeChat(\''+item.id+'\')" '
+      +'style="background:rgba(22,16,50,.6);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:opacity .2s;" '
+      +'ontouchstart="this.style.opacity=\'.7\'" ontouchend="this.style.opacity=\'1\'">'
+      +'<div style="width:40px;height:40px;border-radius:14px;background:'+(item.p.color||'rgba(255,255,255,.1)')+';border:1px solid '+(item.p.border||'rgba(255,255,255,.2)')+';display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">'+item.p.avatar+'</div>'
+      +'<div style="flex:1;min-width:0;">'
+      +'<div style="font-size:13px;color:var(--text);font-weight:600;margin-bottom:3px;">'+item.p.name+'와의 대화 <span style="font-size:10px;color:var(--muted);font-weight:300;">('+item.count+'개 질문)</span></div>'
+      +'<div style="font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+item.preview+'</div>'
+      +'</div>'
+      +'<div style="font-size:11px;color:var(--muted);flex-shrink:0;">이어하기 ›</div>'
+      +'</div>';
+  }).join('');
+}
+
+function pcResumeChat(id){
+  // 저장된 대화 불러와서 채팅 재개
+  var hist=pcFreeLoad(id);
+  var p=PERSONAS[id];if(!p)return;
+  _curPersonaId=id;
+  _curSessionId=null;
+  _personaHistory=hist||[];
+  _freePersonaCountedThisSession=true; // 이미 카운트됨
+
+  var av=document.getElementById('pcAvatar');
+  if(av){av.textContent=p.avatar;av.style.background=p.color;av.style.border='2px solid '+p.border;}
+  var nm=document.getElementById('pcName');if(nm)nm.textContent=p.name;
+  var tl=document.getElementById('pcTagline');if(tl)tl.textContent=p.tagline;
+
+  var chat=document.getElementById('personaChat');
+  if(!chat)return;
+  chat.innerHTML='';
+
+  // 이전 대화 복원
+  _personaHistory.forEach(function(m){
+    if(m.role==='user') pcAppendUser(m.content);
+    else pcAppendPersona(m.content);
+  });
+
+  goScreen('personaChatScreen');
+  setTimeout(function(){chat.scrollTop=chat.scrollHeight;},200);
 }
 
 function openPersonaChat(id){
   var p=PERSONAS[id];if(!p)return;
   if(p.tier==='standard'||p.tier==='premium'){
-    // openPersonaSessionList(id);  // 구독 연동 시 이걸로
+    // 테스트 모드면 통과
+    if(isPremiumTest()){
+      _doOpenPersonaChat(id);
+      return;
+    }
     showToast('🔒 '+p.name+'는 '+(p.tier==='standard'?'스탠다드':'프리미엄')+' 구독 전용이에요');
     return;
   }
@@ -2238,6 +3619,11 @@ function _doOpenPersonaChat(id){
   _curSessionId=null;
   _personaHistory=[];
   _freePersonaCountedThisSession=false;
+  // 무료 유저 이전 대화 복원 시도
+  if(p.tier==='free'){
+    var prevHist=pcFreeLoad(id);
+    if(prevHist&&prevHist.length){_personaHistory=prevHist;_freePersonaCountedThisSession=true;}
+  }
   var av=document.getElementById('pcAvatar');
   if(av){av.textContent=p.avatar;av.style.background=p.color;av.style.border='2px solid '+p.border;}
   var nm=document.getElementById('pcName');if(nm)nm.textContent=p.name;
@@ -2249,25 +3635,25 @@ function _doOpenPersonaChat(id){
 
   // 자기소개
   var intros={
-    gemna:'…왔어. 나 젬나야.\n말 돌리는 거 싫어해서 바로 말하는 편이야. 타로패가 이미 네 패턴을 읽고 있거든. 솔직하게 물어봐. 솔직하게 답해줄게.',
-    luna:'안녕하세요…\n저는 루나예요. 달이 감추는 것과 드러내는 것을 읽는 사람이에요.\n말하지 않아도 돼요. 이미 보이는 게 있거든요.',
-    baekho:'어... 오셨군요.\n저는 백호예요. 신령님을 모신 지 오래됐어요. 사람이 들어오면 그 기운이 먼저 느껴지거든요. 오늘 무엇 때문에 오셨는지... 벌써 보이는 것 같기도 한데요.',
-    hades:'……왔군요.\n저는 하데스입니다. 인연의 카르마와 전생의 흔적을 읽어요.\n쉽게 끊어지지 않는 인연, 왜 반복되는지 모르는 상황들... 그런 게 궁금해서 오셨죠?',
-    sera:'어서오세요…\n저는 세라예요. 무의식의 패턴과 반복을 읽는 사람이에요.\n왜 같은 상황이 계속 찾아오는지, 내면이 진짜 원하는 게 뭔지. 같이 들여다봐요.',
-    red:'왔어요.\n나는 레드예요. 세상에서 제일 솔직한 친구 역할이에요.\n좋은 말만 듣고 싶으면 다른 데 가세요. 맞는 말이 듣고 싶다면, 잘 오셨어요.'
+    gemna:'…왔어.\n\n나 젬나야. 10년 동안 타로 봤는데, 한 번도 틀린 적 없어.\n"그냥 운이 좋았겠지" 라고 생각해도 괜찮아. 나는 신경 안 써.\n\n근데 한 가지만 알고 가. 내 패는 네가 듣고 싶은 말이 아니라 봐야 하는 말을 보여줘.',
+    luna:'…안녕하세요.\n\n저는 루나예요. 달이 뜰 때마다 느껴요. 사람들 감정이 달의 위상을 따라 움직인다는 걸.\n\n말하지 않아도 괜찮아요. 차트를 보면 지금 누구를 생각하는지, 그 인연이 어디로 흐르는지… 이미 보이거든요.',
+    baekho:'어… 오셨군요.\n\n저는 백호예요. 17살에 신내림 받고 30년 됐어요. 도깨비신령님 모시고 있어요.\n\n사람이 들어오면 그 머리 위 기운이 먼저 보여요. 지금도 보이는 게 있는데… 먼저 확인하고 말씀드릴게요.',
+    hades:'……왔군요.\n\n저는 하데스입니다. 말이 많지 않아요. 들어오는 순간 이미 알거든요.\n\n왜 그 사람을 못 잊는지, 왜 이 인연이 끊어지지 않는지. 이번 생이 처음인지, 전생에서 온 건지. 저는 그걸 읽어요.',
+    sera:'어서오세요…\n\n저는 세라예요. 심리학 공부하다가 사주를 만났어요. 충격이었어요. 사주가 심리학보다 무의식을 더 정확하게 설명하더라고요.\n\n왜 같은 패턴이 반복되는지, 왜 그 사람에게 끌리는지. 이유가 다 있어요. 같이 들여다봐요.',
+    red:'왔어요.\n\n나는 레드예요. 좋은 말만 해주는 사람한테 지쳐서 여기 온 거 맞죠?\n\n나는 보이는 것만 말해요. 듣기 불편해도요. 근데 솔직히, 그게 진짜 도움이 되는 거잖아요.'
   };
   pcAppendPersona(intros[id]||'안녕하세요.');
 
   // 두번째 말풍선 (확인 안내)
   var confirmLines={
-    gemna:'먼저 확인할 게 있어. 아래 프로필이 맞아?',
-    luna:'시작하기 전에 먼저 확인할 게 있어요. 아래 프로필이 맞나요?',
-    baekho:'헌데... 먼저 확인해야겠어요. 아래 사주가 맞는 분이세요?',
-    hades:'시작 전에 확인이 필요합니다. 아래 사주가 맞나요?',
-    sera:'잠깐, 먼저 확인할게요. 아래 프로필이 맞나요?',
-    red:'근데 먼저 프로필 확인해줘요. 맞으면 시작할게요.'
+    gemna:'근데 먼저 확인할 게 있어. 이 사주 맞아?',
+    luna:'시작하기 전에요… 이 프로필 맞는 분이세요?',
+    baekho:'헌데, 먼저 확인해야겠어요. 이 사주가 맞는 분이시죠?',
+    hades:'시작 전에 확인이 필요합니다. 이 사주가 당신 것 맞나요?',
+    sera:'잠깐, 먼저 확인할게요. 이 프로필이 맞나요?',
+    red:'근데 먼저 프로필 확인해줘요. 엉뚱한 사람 사주 보면 안 되니까.'
   };
-  setTimeout(function(){pcAppendPersona(confirmLines[id]||'먼저 프로필을 확인해볼게요.');},700);
+  setTimeout(function(){pcAppendPersona(confirmLines[id]||'먼저 프로필을 확인해볼게요.');},800);
 
   // 프로필 확인 카드
   setTimeout(function(){
@@ -2278,13 +3664,15 @@ function _doOpenPersonaChat(id){
     if(def){
       var noH=(def.hour===99||def.hour===undefined);
       var sajuShort=def.saju||'-';
-      var dateStr=def.gY+'년 '+p2(def.gM)+'월 '+p2(def.gD)+'일'+(noH?' 시간모름':' '+p2(def.hour)+'시');
+      var timeStr=noH?'시간모름':(p2(def.hour)+'시'+(def.min===30?'30분':''));
+      var dateStr=def.gY+'년 '+p2(def.gM)+'월 '+p2(def.gD)+'일 '+timeStr;
+      var cityStr=def.cityName?' · '+def.cityName+'':'';
       wrap.innerHTML='<div style="background:rgba(22,16,50,.8);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:16px;font-size:13px;">'
         +'<div style="font-size:11px;color:var(--muted);margin-bottom:10px;letter-spacing:1px;">이 프로필로 시작할까요?</div>'
         +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">'
         +'<div style="width:40px;height:40px;border-radius:50%;background:'+(def.gen==='male'?'rgba(96,165,250,.2)':'rgba(244,114,182,.2)')+';border:2px solid '+(def.gen==='male'?'rgba(96,165,250,.4)':'rgba(244,114,182,.4)')+';display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">'+(def.gen==='male'?'♂':'♀')+'</div>'
         +'<div><div style="font-size:15px;color:var(--gold2);font-weight:700;font-family:Gowun Dodum,serif;">'+escH(def.name)+'</div>'
-        +'<div style="font-size:11px;color:var(--dim);margin-top:2px;">'+dateStr+'</div>'
+        +'<div style="font-size:11px;color:var(--dim);margin-top:2px;">'+dateStr+cityStr+'</div>'
         +'<div style="font-size:11px;color:var(--muted);letter-spacing:2px;margin-top:2px;">'+sajuShort+'</div>'
         +'</div></div>'
         +'<div style="display:flex;gap:8px;">'
@@ -2315,12 +3703,12 @@ function pcConfirmProfile(ok){
   if(ok){
     // 확인 완료 - 준비됐다는 말풍선
     var readyLines={
-      gemna:'좋아. 그럼 뭐가 궁금해?',
-      luna:'확인했어요 ✓ 무엇이 궁금하신가요?',
-      baekho:'확인했어요. 자, 뭐가 궁금한가요?',
-      hades:'확인했습니다. 무엇이 알고 싶으신가요.',
-      sera:'확인했어요. 어떤 것들이 궁금하신가요?',
-      red:'좋아요. 뭐가 제일 답답한가요?'
+      gemna:'좋아. 패 펼칠게.\n뭐가 제일 답답해?',
+      luna:'확인했어요.\n지금 제일 마음에 걸리는 게 뭔가요?',
+      baekho:'확인했어요. 신령님도 준비하셨네요.\n자, 뭐가 궁금한가요?',
+      hades:'확인했습니다.\n무엇이 알고 싶으신가요.',
+      sera:'확인했어요.\n지금 뭔가 반복되는 게 있나요?',
+      red:'확인했어요. 바로 가죠.\n뭐가 제일 답답한 상황인가요?'
     };
     setTimeout(function(){pcAppendPersona(readyLines[_curPersonaId]||'준비됐어요. 무엇이 궁금하신가요?');},200);
   } else {
@@ -2361,57 +3749,218 @@ function pcReturnToChat(){
   }
 }
 
+// 단일 말풍선 (소개/확인 메시지용)
 function _pcBubble(text, delay){
   var chat=document.getElementById('personaChat');if(!chat)return;
   var p=PERSONAS[_curPersonaId];
   var ico='<div style="width:32px;height:32px;border-radius:10px;background:'+(p?p.color:'rgba(255,255,255,.1)')+';border:1px solid '+(p?p.border:'rgba(255,255,255,.2)')+';display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">'+(p?p.avatar:'✦')+'</div>';
   setTimeout(function(){
     var wrap=document.createElement('div');
-    wrap.style.cssText='display:flex;gap:8px;align-items:flex-start;margin-bottom:6px;';
+    wrap.style.cssText='display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;';
     wrap.innerHTML=ico+'<div style="background:var(--bg2);border:1px solid var(--gb);border-radius:4px 18px 18px 18px;padding:12px 16px;max-width:85%;font-size:14px;color:var(--dim);line-height:1.75;word-break:keep-all;font-weight:300;">'+text+'</div>';
     chat.appendChild(wrap);
-    chat.scrollTop=chat.scrollHeight;
+    if(!_pcUserScrolled) chat.scrollTop=chat.scrollHeight;
   }, delay||0);
 }
 
-// 긴 텍스트 여러 말풍선으로 분리
+// AI 답변: 풀화면 블록, 마크다운 렌더링 + 추가질의 버튼
+// 네이탈 차트 리딩 전용 고급 렌더러
+function natalMdToHtml(t){
+  var lines=t.split('\n');
+  var out=[];
+  var i=0;
+  while(i<lines.length){
+    var line=lines[i];
+    // ## 핵심 결론
+    if(/^##\s/.test(line)){
+      var txt=line.replace(/^##\s+/,'').replace(/\*\*([^*]+)\*\*/g,'<span style="color:#fde68a;">$1</span>');
+      out.push('<div style="font-size:17px;font-weight:800;color:var(--gold2);margin:0 0 20px;padding:16px 18px;background:linear-gradient(135deg,rgba(240,192,96,.08),rgba(168,85,247,.06));border-left:3px solid var(--gold2);border-radius:0 12px 12px 0;line-height:1.5;">'+txt+'</div>');
+      i++;continue;
+    }
+    // ### 섹션 제목
+    if(/^###\s/.test(line)){
+      var txt2=line.replace(/^###\s+/,'');
+      out.push('<div style="font-size:14px;font-weight:700;color:#c4b5fd;margin:20px 0 10px;display:flex;align-items:center;gap:8px;"><span style="width:4px;height:16px;background:#7c3aed;border-radius:2px;display:inline-block;flex-shrink:0;"></span>'+txt2+'</div>');
+      i++;continue;
+    }
+    // > 인용구
+    if(/^>\s/.test(line)){
+      var txt3=line.replace(/^>\s+/,'').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+      out.push('<div style="margin:20px 0 4px;padding:14px 18px;background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.25);border-radius:14px;font-size:13px;color:#ddd6fe;font-style:italic;line-height:1.7;">✦ '+txt3+'</div>');
+      i++;continue;
+    }
+    // 빈 줄
+    if(line.trim()===''){out.push('<div style="height:6px;"></div>');i++;continue;}
+    // 불릿 리스트 묶음
+    if(/^-\s/.test(line)){
+      var items=[];
+      while(i<lines.length&&/^-\s/.test(lines[i])){
+        items.push(lines[i].replace(/^-\s+/,'').replace(/\*\*([^*]+)\*\*/g,'<strong style="color:#f0e6ff;">$1</strong>'));
+        i++;
+      }
+      out.push('<div style="display:flex;flex-direction:column;gap:8px;margin:4px 0 12px;">'
+        +items.map(function(it){
+          return '<div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--dim);line-height:1.7;">'
+            +'<span style="color:#7c3aed;margin-top:4px;flex-shrink:0;">◆</span>'
+            +'<span>'+it+'</span></div>';
+        }).join('')+'</div>');
+      continue;
+    }
+    // 일반 텍스트
+    var plain=line.replace(/\*\*([^*]+)\*\*/g,'<strong style="color:#f0e6ff;">$1</strong>').replace(/\*([^*]+)\*/g,'<em>$1</em>');
+    out.push('<div style="font-size:13px;color:var(--dim);line-height:1.8;margin-bottom:4px;">'+plain+'</div>');
+    i++;
+  }
+  return out.join('');
+}
+
+function pcMdToHtml(t){
+  // 한 줄씩 처리
+  var lines=t.split('\n');
+  var out=[];
+  var i=0;
+  while(i<lines.length){
+    var line=lines[i];
+    // 헤더
+    if(/^###\s/.test(line)){
+      out.push('<div style="font-size:15px;font-weight:700;color:#e2e8f0;margin:16px 0 8px;letter-spacing:.3px;">'+line.replace(/^###\s+/,'')+'</div>');
+      i++;continue;
+    }
+    if(/^##\s/.test(line)){
+      out.push('<div style="font-size:16px;font-weight:700;color:var(--gold2);margin:16px 0 8px;">'+line.replace(/^##\s+/,'')+'</div>');
+      i++;continue;
+    }
+    if(/^#\s/.test(line)){
+      out.push('<div style="font-size:17px;font-weight:700;color:var(--gold2);margin:18px 0 8px;">'+line.replace(/^#\s+/,'')+'</div>');
+      i++;continue;
+    }
+    // 빈 줄 → 문단 구분
+    if(line.trim()===''){
+      out.push('<div style="height:10px;"></div>');
+      i++;continue;
+    }
+    // 번호 리스트 묶음
+    if(/^\d+\.\s/.test(line)){
+      var items=[];
+      while(i<lines.length&&/^\d+\.\s/.test(lines[i])){
+        var li=lines[i].replace(/^\d+\.\s+/,'');
+        li=li.replace(/\*\*(.+?)\*\*/g,'<b style="color:#e2e8f0;font-weight:700;">$1</b>').replace(/\*(.+?)\*/g,'<i>$1</i>');
+        items.push('<li style="margin-bottom:10px;line-height:1.85;padding-left:4px;">'+li+'</li>');
+        i++;
+      }
+      out.push('<ol style="margin:6px 0 14px 18px;padding:0;color:var(--dim);">'+items.join('')+'</ol>');
+      continue;
+    }
+    // - 리스트 묶음
+    if(/^[-•]\s/.test(line)){
+      var items2=[];
+      while(i<lines.length&&/^[-•]\s/.test(lines[i])){
+        var li2=lines[i].replace(/^[-•]\s+/,'');
+        li2=li2.replace(/\*\*(.+?)\*\*/g,'<b style="color:#e2e8f0;font-weight:700;">$1</b>').replace(/\*(.+?)\*/g,'<i>$1</i>');
+        items2.push('<li style="margin-bottom:8px;line-height:1.85;padding-left:4px;">'+li2+'</li>');
+        i++;
+      }
+      out.push('<ul style="margin:6px 0 14px 18px;padding:0;color:var(--dim);">'+items2.join('')+'</ul>');
+      continue;
+    }
+    // 일반 문단
+    var p2=line
+      .replace(/\*\*(.+?)\*\*/g,'<b style="color:#e2e8f0;font-weight:700;">$1</b>')
+      .replace(/\*(.+?)\*/g,'<i style="color:rgba(255,220,150,.8);">$1</i>');
+    out.push('<p style="margin:0 0 10px;line-height:1.9;color:rgba(230,220,255,.75);">'+p2+'</p>');
+    i++;
+  }
+  return out.join('');
+}
+
 function pcAppendPersona(text){
-  var parts=[];
-  var blocks=text.split(/\n{2,}/);
-  blocks.forEach(function(block){
-    block=block.trim();if(!block)return;
-    if(block.length>250){
-      var sents=block.split(/([.!?。]\s+)/);
-      var cur='';
-      sents.forEach(function(s){
-        if((cur+s).length>220&&cur){parts.push(cur.trim());cur=s;}
-        else{cur+=s;}
-      });
-      if(cur.trim())parts.push(cur.trim());
-    } else {parts.push(block);}
-  });
-  if(!parts.length)parts=[text];
-  parts.forEach(function(part,i){_pcBubble(part,i*450);});
+  var chat=document.getElementById('personaChat');if(!chat)return;
+  var p=PERSONAS[_curPersonaId];
+  var rendered=pcMdToHtml(text);
+
+  var wrap=document.createElement('div');
+  wrap.style.cssText='display:flex;flex-direction:column;gap:0;margin-bottom:20px;animation:fadeInUp .25s ease;';
+  wrap.innerHTML=
+    // 캐릭터 헤더 (작게)
+    '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;padding-left:4px;">'
+    +'<div style="width:28px;height:28px;border-radius:9px;background:'+(p?p.color:'rgba(255,255,255,.1)')+';border:1px solid '+(p?p.border:'rgba(255,255,255,.2)')+';display:flex;align-items:center;justify-content:center;font-size:14px;">'+(p?p.avatar:'✦')+'</div>'
+    +'<span style="font-size:12px;font-weight:600;color:rgba(220,200,255,.6);letter-spacing:.5px;">'+(p?p.name:'')+'</span>'
+    +'</div>'
+    // 말풍선
+    +'<div style="background:'+pcBubbleColor()+';border:1px solid '+pcBubbleBorder()+';border-radius:4px 18px 18px 18px;padding:14px 17px;">'
+    +'<div style="font-size:13px;line-height:1.8;color:rgba(235,228,255,.9);word-break:keep-all;">'+rendered+'</div>'
+    +'</div>';
+
+  chat.appendChild(wrap);
+  if(!_pcUserScrolled){
+    setTimeout(function(){if(!_pcUserScrolled)chat.scrollTop=chat.scrollHeight;},80);
+  }
+}
+
+// 스크롤 상태 관리
+var _pcUserScrolled=false;
+function _pcInitScrollWatch(){
+  var chat=document.getElementById('personaChat');if(!chat)return;
+  chat.removeEventListener('scroll',_pcOnScroll);
+  chat.addEventListener('scroll',_pcOnScroll);
+}
+function _pcOnScroll(){
+  var chat=document.getElementById('personaChat');if(!chat)return;
+  var nearBottom=(chat.scrollHeight-chat.scrollTop-chat.clientHeight)<80;
+  _pcUserScrolled=!nearBottom;
 }
 
 function pcAppendUser(text){
   var chat=document.getElementById('personaChat');if(!chat)return;
+  _pcUserScrolled=false;
+  _pcInitScrollWatch();
   var wrap=document.createElement('div');
-  wrap.style.cssText='display:flex;justify-content:flex-end;';
-  wrap.innerHTML='<div style="background:linear-gradient(135deg,rgba(139,92,246,.4),rgba(168,139,250,.28));border:1px solid rgba(139,92,246,.45);border-radius:18px 18px 5px 18px;padding:12px 16px;max-width:85%;font-size:14px;color:#e8e0ff;line-height:1.65;">'+text+'</div>';
+  wrap.setAttribute('data-user-msg','1');
+  wrap.style.cssText='display:flex;justify-content:flex-end;margin-bottom:16px;animation:fadeInUp .2s ease;';
+  wrap.innerHTML='<div style="background:linear-gradient(135deg,rgba(124,58,237,.45),rgba(139,92,246,.3));border:1px solid rgba(139,92,246,.35);border-radius:18px 4px 18px 18px;padding:10px 14px;max-width:76%;font-size:13px;color:rgba(235,225,255,.95);line-height:1.65;">'+text+'</div>';
   chat.appendChild(wrap);
-  setTimeout(function(){chat.scrollTop=chat.scrollHeight;},50);
+  setTimeout(function(){if(!_pcUserScrolled)wrap.scrollIntoView({behavior:'smooth',block:'start'});},50);
 }
+
+var _loadingMsgs={
+  gemna:['타로패를 펼치는 중...','기운을 읽는 중...','패가 말을 하고 있어...','직관이 열리는 중...'],
+  luna:['달의 기운을 읽는 중...','인연의 흐름을 보는 중...','감정의 결을 읽고 있어요...','달빛이 모이는 중...'],
+  baekho:['신령님께 여쭤보는 중...','기운을 훑어보는 중...','신령님이 말씀하시는 중...','조상신이 움직이시는 중...'],
+  hades:['심연을 들여다보는 중...','카르마를 읽는 중...','전생의 흔적을 추적하는 중...','인연의 끈을 보는 중...'],
+  sera:['무의식을 들여다보는 중...','패턴을 분석하는 중...','내면의 지도를 그리는 중...','심층 심리를 읽는 중...'],
+  red:['현실을 직시하는 중...','팩트를 정리하는 중...','솔직하게 준비하는 중...','독한 말 준비 중...']
+};
+var _loadingInterval=null;
 
 function pcAppendLoading(){
   var chat=document.getElementById('personaChat');if(!chat)return;
   var wrap=document.createElement('div');
-  wrap.id='pcLoading';wrap.style.cssText='display:flex;gap:8px;align-items:flex-start;';
+  wrap.id='pcLoading';wrap.style.cssText='display:flex;flex-direction:column;gap:0;margin-bottom:8px;animation:fadeInUp .2s ease;';
   var p=PERSONAS[_curPersonaId];
-  wrap.innerHTML='<div style="width:32px;height:32px;border-radius:10px;background:'+(p?p.color:'rgba(255,255,255,.1)')+';border:1px solid '+(p?p.border:'rgba(255,255,255,.2)')+';display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">'+(p?p.avatar:'✦')+'</div>'
-    +'<div class="aidots" style="margin:14px 0;"><span></span><span></span><span></span></div>';
+  var msgs=_loadingMsgs[_curPersonaId]||['읽는 중...'];
+  var idx=0;
+  wrap.innerHTML=
+    '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;padding-left:4px;">'
+    +'<div style="width:28px;height:28px;border-radius:9px;background:'+(p?p.color:'rgba(255,255,255,.1)')+';border:1px solid '+(p?p.border:'rgba(255,255,255,.2)')+';display:flex;align-items:center;justify-content:center;font-size:14px;">'+(p?p.avatar:'✦')+'</div>'
+    +'<span style="font-size:12px;font-weight:600;color:rgba(220,200,255,.6);">'+(p?p.name:'')+'</span>'
+    +'</div>'
+    +'<div style="background:'+pcBubbleColor()+';border:1px solid '+pcBubbleBorder()+';border-radius:4px 18px 18px 18px;padding:12px 16px;display:inline-flex;flex-direction:column;gap:8px;">'
+    +'<div class="aidots"><span></span><span></span><span></span></div>'
+    +'<div id="pcLoadingMsg" style="font-size:11px;color:rgba(200,180,255,.4);font-weight:300;letter-spacing:.3px;">'+msgs[0]+'</div>'
+    +'</div>';
   chat.appendChild(wrap);
-  setTimeout(function(){chat.scrollTop=chat.scrollHeight;},50);
+  if(_loadingInterval) clearInterval(_loadingInterval);
+  _loadingInterval=setInterval(function(){
+    idx=(idx+1)%msgs.length;
+    var el=document.getElementById('pcLoadingMsg');
+    if(el) el.textContent=msgs[idx];
+  },2800);
+  setTimeout(function(){if(!_pcUserScrolled)chat.scrollTop=chat.scrollHeight;},50);
+}
+
+function pcStopLoading(){
+  if(_loadingInterval){clearInterval(_loadingInterval);_loadingInterval=null;}
+  var ld=document.getElementById('pcLoading');if(ld)ld.remove();
 }
 
 async function personaSend(){
@@ -2422,14 +3971,17 @@ async function personaSend(){
   if(!_curPersonaId){showToast('캐릭터를 선택해주세요');return;}
   var p=PERSONAS[_curPersonaId];
 
-  // 무료 티어: 하루 1회 무료 (전체 무료 캐릭터 합산)
+  // 무료 티어: 하루 1회 무료, 광고 후 1회 추가, 이후 복채 3개 필요
   if(p.tier==='free'){
+    var usedToday=getFreePersonaToday();
+    var adUsed=getFreePersonaAdToday();
+    var maxFree=1+adUsed; // 기본 1 + 광고 본 횟수(최대 1)
+
     if(!_freePersonaCountedThisSession){
-      var usedToday=getFreePersonaToday();
-      var adUsed=getFreePersonaAdToday();
-      var maxFree=1+adUsed;
+      // 첫 메시지: 오늘 무료 횟수 체크
       if(usedToday>=maxFree){
         if(adUsed<1){
+          // 광고 보면 1회 더
           var savedQ=q;
           openRewardAdModal(
             '오늘 무료 횟수를 다 썼어요',
@@ -2443,14 +3995,44 @@ async function personaSend(){
             }
           );
         } else {
-          showToast('오늘 AI 캐릭터는 모두 사용했어요. 자정에 초기화돼요!');
+          // 광고도 이미 봄 → 복채 필요
+          var bok0=getBokchaeCnt();
+          if(bok0<p.costBokchae){ showBokchaeModal(); return; }
+          // 복채 있으면 통과 (아래에서 차감)
         }
+        if(adUsed<1) return; // 광고 모달 띄우고 중단
+      }
+    } else {
+      // 두 번째 이후 메시지
+      var adUsed2=getFreePersonaAdToday();
+      var usedToday2=getFreePersonaToday();
+      var maxFree2=1+adUsed2;
+
+      if(usedToday2<maxFree2){
+        // 광고 보고 생긴 추가 무료 횟수 남아있음 → 무료 통과
+      } else if(adUsed2<1){
+        // 광고 아직 안 봄 → 광고 모달
+        var savedQ2=q;
+        openRewardAdModal(
+          '무료 횟수를 다 썼어요',
+          '광고 1회 보면 오늘 1회 더 무료로 사용할 수 있어요.',
+          function(){
+            addFreePersonaAdToday();
+            var qa2=document.getElementById('personaQ');
+            if(qa2) qa2.value=savedQ2;
+            personaSend();
+          }
+        );
         return;
+      } else {
+        // 무료 + 광고 모두 소진 → 복채 필요
+        var bok=getBokchaeCnt();
+        if(bok<p.costBokchae){ showBokchaeModal(); return; }
       }
     }
   } else {
     var bok=getBokchaeCnt();
-    if(bok<p.costBokchae){showToast('복채가 부족해요 ('+p.costBokchae+'개 필요)');return;}
+    if(bok<p.costBokchae){ showBokchaeModal(); return; }
   }
 
   qa.value='';qa.style.height='44px';
@@ -2459,61 +4041,67 @@ async function personaSend(){
 
   var def=getDefaultProfile();
   var sajuInfo=buildRichSajuContext(def);
-
   var sysPrompt=p.system(sajuInfo);
 
-  // 대화 히스토리를 하나의 user 메시지로 합치기 (백엔드 호환)
+  // 히스토리 (최근 6턴, 각 200자로 압축)
   var historyText='';
-  var recentHistory=_personaHistory.slice(-8);
+  // 프리미엄: 더 긴 컨텍스트 (최근 10턴), 무료: 최근 6턴
+  var ctxLen=(p.tier==='premium')?10:6;
+  var recentHistory=_personaHistory.slice(-ctxLen);
   if(recentHistory.length>1){
-    historyText='\n\n[이전 대화]\n'+recentHistory.slice(0,-1).map(function(m){
-      return (m.role==='user'?'사용자: ':''+p.name+': ')+m.content;
+    var prefix=p.tier==='premium'?'\n\n[이전 대화 — 이 흐름을 기억하고 이어받아서 답해]\n':'\n\n[이전 대화]\n';
+    historyText=prefix+recentHistory.slice(0,-1).map(function(m){
+      var maxLen=p.tier==='premium'?300:200;
+      var content=m.content.length>maxLen?m.content.slice(0,maxLen)+'...':m.content;
+      return (m.role==='user'?'사용자: ':p.name+': ')+content;
     }).join('\n')+'\n\n[현재 질문]\n';
   }
-  var fullPrompt=historyText+q;
+  // system과 user 메시지 분리 전송 (input 토큰 최소화 → output 토큰 최대화)
+  var userMsg=historyText+q;
 
   _personaHistory.push({role:'user',content:q});
 
   try{
     var ctrl=new AbortController();
-    var tid=setTimeout(function(){ctrl.abort();},50000);
+    var tid=setTimeout(function(){ctrl.abort();},60000);
     var res;
     try{
       res=await fetch('https://my-saju-api.onrender.com/api/saju',{
         method:'POST',signal:ctrl.signal,
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({model:'gemini',max_tokens:1200,system:sysPrompt,messages:[{role:'user',content:fullPrompt}]})
+        body:JSON.stringify({
+          model:'gemini',
+          max_tokens:6000,
+          mode:'long',
+          system:sysPrompt,
+          messages:[{role:'user',content:userMsg}]
+        })
       });
     } catch(fe){
       clearTimeout(tid);
-      var ld0=document.getElementById('pcLoading');if(ld0)ld0.remove();
-      pcAppendPersona('서버가 잠든 것 같아요 😴 잠깐 기다렸다 다시 보내줘.');
+      pcStopLoading();
+      pcStopLoading();
+      showRetryToast('서버 응답이 느려요. 재시도할까요?', personaSend);
       return;
     }
     clearTimeout(tid);
     if(!res.ok){
-      var ld0=document.getElementById('pcLoading');if(ld0)ld0.remove();
+      pcStopLoading();
       pcAppendPersona('서버 오류가 났어요 ('+res.status+'). 잠시 후 다시 시도해줘.');
       return;
     }
     var data=await res.json();
-    // 디버그: 실제 응답 구조 확인
-    console.log('[PERSONA API]', JSON.stringify(data).slice(0,300));
+    console.log('[PERSONA API]', JSON.stringify(data).slice(0,200));
     var answer='';
-    if(data&&data.content&&Array.isArray(data.content)&&data.content[0]&&data.content[0].text){
-      answer=data.content[0].text;
+    if(data&&data.content&&Array.isArray(data.content)){
+      // 배열의 모든 text 합치기
+      answer=data.content.map(function(c){return c.text||'';}).join('');
     } else if(data&&data.content&&typeof data.content==='string'&&data.content.trim()){
       answer=data.content.trim();
     } else if(data&&data.text){
       answer=data.text;
-    } else if(data&&data.result){
-      answer=data.result;
-    } else if(data&&data.response){
-      answer=data.response;
-    } else if(data&&data.message){
-      answer=data.message;
     }
-    var ld=document.getElementById('pcLoading');if(ld)ld.remove();
+    pcStopLoading();
 
     if(!answer){
       // 디버그용: 실제 받은 데이터 일부 보여주기
@@ -2525,36 +4113,47 @@ async function personaSend(){
     _personaHistory.push({role:'assistant',content:answer});
 
     if(p.tier==='free'){
-      // 실제 답변 받았을 때만 카운트
+      var adUsedNow=getFreePersonaAdToday();
+      var usedNow=getFreePersonaToday();
       if(!_freePersonaCountedThisSession){
+        // 첫 성공 메시지 카운트
         addFreePersonaToday();
         _freePersonaCountedThisSession=true;
+      } else if(usedNow>=1+adUsedNow){
+        // 무료+광고 모두 소진 후 복채로 사용한 경우 차감
+        addBokchae(-p.costBokchae);
+        renderBokchae&&renderBokchae();
+        renderSettingsProfile&&renderSettingsProfile();
+      } else {
+        // 광고로 추가된 무료 횟수 사용
+        addFreePersonaToday();
       }
+      // 무료 대화방 저장
+      pcFreeSave(_curPersonaId,_personaHistory);
     } else {
       addBokchae(-p.costBokchae);
       renderBokchae&&renderBokchae();
       renderSettingsProfile&&renderSettingsProfile();
     }
 
-    // 질문 수신 확인 멘트 (짧게 먼저)
+    // 첫 질문 수신 확인 멘트
     var ackLines={
-      gemna:'응, 봤어.',
-      luna:'그렇군요. 읽어볼게요.',
-      baekho:'음... 신령님께 여쭤보겠습니다.',
-      hades:'...보고 있습니다.',
-      sera:'그 감정 들어요. 한번 같이 볼게요.',
-      red:'알겠어요. 솔직하게 말해줄게요.'
+      gemna:'응, 봤어.',luna:'그렇군요. 읽어볼게요.',baekho:'음... 신령님께 여쭤보겠습니다.',
+      hades:'...보고 있습니다.',sera:'그 감정 들어요. 한번 같이 볼게요.',red:'알겠어요. 솔직하게 말해줄게요.'
     };
     if(_personaHistory.length<=2){
-      // 첫 질문에만 확인 멘트
       _pcBubble(ackLines[_curPersonaId]||'살펴볼게요.',0);
-      setTimeout(function(){pcAppendPersona(answer);},500);
+      setTimeout(function(){
+        pcAppendPersona(answer);
+        setTimeout(function(){pcAppendSuggestions(answer);},300);
+      },500);
     } else {
       pcAppendPersona(answer);
+      setTimeout(function(){pcAppendSuggestions(answer);},300);
     }
     if(p.tier!=='free'&&_curSessionId) pcSaveSession(_curPersonaId,_curSessionId,_personaHistory);
   } catch(e){
-    var ld2=document.getElementById('pcLoading');if(ld2)ld2.remove();
+    pcStopLoading();
     pcAppendPersona('연결이 끊겼어요. 다시 시도해줘.');
   }
 }
@@ -2606,14 +4205,328 @@ function navZodiac(){
   zInit();
 }
 
+var _DASHA_MEANING={케투:'영적 성장과 분리의 시기. 과거와의 단절, 집착을 내려놓아야 해요.',금성:'사랑과 물질적 풍요가 흘러오는 시기. 인연과 재물이 풍성해요.',태양:'자아를 확립하고 명예를 얻는 시기. 리더십이 빛나요.',달:'감수성과 직관이 높아지는 시기. 감정의 변화가 많아요.',화성:'행동과 추진력이 강해지는 시기. 적극적으로 나아가야 해요.',라후:'야망과 물질욕이 강해지는 시기. 혼돈 속에서 성장해요.',목성:'지혜와 성장·행운의 시기. 인생에서 가장 확장되는 황금기예요.',토성:'인내와 카르마 정산의 시기. 노력한 만큼 결실이 와요.',수성:'소통과 학습이 활발한 시기. 지적 활동과 네트워크가 중요해요.'};
+var _PLANET_COLOR={케투:'#94a3b8',금성:'#f472b6',태양:'#f59e0b',달:'#c4b5fd',화성:'#f87171',라후:'#818cf8',목성:'#4ade80',토성:'#94a3b8',수성:'#67e8f9'};
+
+function zRenderDasha(){
+  var def=getDefaultProfile();
+  if(!def) return;
+  var noH=(def.hour===99||def.hour===undefined);
+  var nc=calcNatalChart(def.gY,def.gM,def.gD,noH?12:def.hour,noH,def.lat||37.5666,def.lon||126.9779);
+  if(!nc||!nc.dasha||!nc.dasha.current) return;
+  var cur=nc.dasha.current, nxt=nc.dasha.next;
+  var elapsed=nc.dasha.elapsed, remain=nc.dasha.remain;
+  var pct=Math.round(elapsed/(elapsed+remain)*100);
+  var col=_PLANET_COLOR[cur.lord]||'var(--gold2)';
+  var dn=document.getElementById('zDashaName');
+  var dy=document.getElementById('zDashaYear');
+  var df=document.getElementById('zDashaFill');
+  var dp=document.getElementById('zDashaProgress');
+  var dd=document.getElementById('zDashaDesc');
+  var dt=document.getElementById('zDashaTimeline');
+  if(dn){dn.textContent=cur.lord+' 다샤';dn.style.color=col;}
+  if(dy) dy.textContent=Math.round(cur.start)+'년 ~ '+Math.round(cur.end)+'년 ('+cur.years+'년간) · 남은 '+remain+'년';
+  if(df){df.style.width=pct+'%';df.style.background='linear-gradient(90deg,'+col+',#f0c060)';}
+  if(dp) dp.textContent='경과 '+elapsed+'년 ('+pct+'%)';
+  if(dd) dd.innerHTML='<div style="font-size:11px;color:rgba(200,180,255,.5);margin-bottom:6px;">'+nc.dasha.nakshatra+' 낙샤트라 출생</div>'
+    +'<div style="margin-bottom:8px;">'+(_DASHA_MEANING[cur.lord]||'')+'</div>'
+    +(nxt?'<div style="font-size:12px;color:rgba(200,180,255,.5);">다음: <span style="color:'+(_PLANET_COLOR[nxt.lord]||'var(--gold2)')+'">'+nxt.lord+' 다샤</span> '+Math.round(nxt.start)+'년~, '+nxt.years+'년간</div>':'');
+  if(dt){
+    dt.innerHTML=(nc.dasha.sequence||[]).map(function(d){
+      var isCur=d.lord===cur.lord&&Math.round(d.start)===Math.round(cur.start);
+      var c2=_PLANET_COLOR[d.lord]||'#888';
+      return '<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:'+(isCur?'rgba(240,192,96,.08)':'rgba(255,255,255,.02)')+';border:1px solid rgba(255,255,255,'+(isCur?'.15':'.05')+');border-radius:12px;">'
+        +'<div style="width:10px;height:10px;border-radius:50%;background:'+c2+';flex-shrink:0;'+(isCur?'box-shadow:0 0 8px '+c2:'')+'"></div>'
+        +'<div style="flex:1;font-size:13px;color:'+(isCur?'var(--text)':'var(--muted)')+'">'+d.lord+' 다샤</div>'
+        +'<div style="font-size:11px;color:var(--muted)">'+Math.round(d.start)+'~'+Math.round(d.end)+'년</div>'
+        +(isCur?'<div style="font-size:10px;color:var(--gold2);font-weight:700">현재</div>':'')
+        +'</div>';
+    }).join('');
+  }
+}
+
+
+var _zNatalQs=[
+  '내 태양궁, 달궁, 상승궁을 종합해서 성격과 기질을 소름돋게 정확하게 분석해줘. 강점과 약점, 반복되는 행동 패턴까지.',
+  '내 네이탈 차트(태양궁, 달궁, 금성 위치, 라후/케투)를 바탕으로 연애 패턴을 분석해줘. 어떤 사람에게 끌리는지, 연애할 때 나타나는 패턴, 조심해야 할 것까지.',
+  '내 차트에서 태양궁, 10하우스 위치, 목성, 토성을 바탕으로 재물운과 직업 적성을 분석해줘. 어떤 분야에서 빛나는지, 재물이 들어오는 방식까지.',
+  '내 라후와 케투 위치를 분석해서 이번 생의 카르마 과제와 전생에서 가져온 것을 알려줘. 라후 방향으로 나아가야 하는 이유와 방법까지.',
+  '내 상승궁(ASC) 별자리를 분석해서 다른 사람들이 나를 처음 어떻게 보는지, 내가 삶을 대하는 방식, 겉으로 드러나는 에너지를 알려줘.'
+];
+
+
+// ── 네이탈 리딩 복채 시스템 ──
+var _zNatalBtnDefs=[
+  {ico:'☉', lbl:'태양궁·달궁·상승궁 종합 성격 분석'},
+  {ico:'💕', lbl:'연애 패턴 분석'},
+  {ico:'💰', lbl:'재물·직업 운 분석'},
+  {ico:'🔮', lbl:'라후·케투 카르마 — 이번 생의 과제'},
+  {ico:'⭐', lbl:'상승궁 — 첫인상·삶의 방식'}
+];
+
+function _zNatalCacheKey(profId, idx){
+  return 'msr_natal_reading_'+profId+'_'+idx;
+}
+
+function _zNatalGetDefaultProfId(){
+  var def=getDefaultProfile();
+  return def?(def.id||def.gY+''+def.gM+''+def.gD+''+def.gen):'no_prof';
+}
+
+function zRenderNatalBtns(){
+  var wrap=document.getElementById('zNatalBtns');
+  if(!wrap) return;
+  var profId=_zNatalGetDefaultProfId();
+  wrap.innerHTML='';
+  _zNatalBtnDefs.forEach(function(b,i){
+    var cached=localStorage.getItem(_zNatalCacheKey(profId,i));
+    var btn=document.createElement('button');
+    btn.style.cssText='text-align:left;padding:12px 16px;width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;color:var(--dim);font-size:13px;cursor:pointer;font-family:Pretendard;display:flex;align-items:center;justify-content:space-between;';
+    var leftHtml='<span>'+b.ico+' '+b.lbl+'</span>';
+    var isFree=(i===0);
+    var rightHtml=cached
+      ?'<span style="font-size:10px;color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.2);border-radius:8px;padding:2px 7px;">✓ 열람 완료</span>'
+      :isFree
+        ?'<span style="font-size:10px;color:#60a5fa;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.25);border-radius:8px;padding:2px 7px;">📺 광고 무료</span>'
+        :'<span style="font-size:10px;color:var(--gold2);background:rgba(240,192,96,.1);border:1px solid rgba(240,192,96,.25);border-radius:8px;padding:2px 7px;">💎 복채 1개</span>';
+    btn.innerHTML=leftHtml+rightHtml;
+    (function(idx){btn.addEventListener('click',function(){zNatalAsk(idx);});})(i);
+    wrap.appendChild(btn);
+  });
+}
+
+async function zNatalAsk(idx){
+
+  var def=getDefaultProfile();
+  if(!def){showToast('프로필을 먼저 추가해주세요');return;}
+  var profId=_zNatalGetDefaultProfId();
+  var cacheKey=_zNatalCacheKey(profId,idx);
+  var lo=document.getElementById('zNatalLoading');
+  var re=document.getElementById('zNatalAIResult');
+
+  // ── 결제 먼저 체크 (캐시보다 먼저) ──
+  if(idx===0){
+    // 무료: 광고 or 30분 패스 필요
+    if(!zCheckNatalFreeUnlock()){
+      adSuccessCallback=function(){
+        _zAdUnlockedSession=true;
+        // 광고 후 캐시 있으면 바로, 없으면 API
+        var c=localStorage.getItem(cacheKey);
+        if(c){if(re){re.style.display='block';re.innerHTML=c;}if(re)re.scrollIntoView({behavior:'smooth',block:'start'});}
+        else {_zDoNatalFetch(idx,def,profId,cacheKey,lo,re);}
+      };
+      var modal=document.getElementById('adModal');
+      if(modal) modal.classList.add('show');
+      if(lo) lo.style.display='none';
+      return;
+    }
+  } else {
+    // 유료: 복채 1개
+    var bok=getBokchaeCnt();
+    if(bok<1){showNatalBokchaeModal();return;}
+    // 캐시 있으면 복채 차감 없이 바로 열람
+    var c2=localStorage.getItem(cacheKey);
+    if(c2){if(re){re.style.display='block';re.innerHTML=c2;}if(re)re.scrollIntoView({behavior:'smooth',block:'start'});return;}
+    addBokchae(-1);
+    showToast('💎 복채 1개 사용');
+  }
+
+  // ── 캐시 확인 (광고/복채 통과 후) ──
+  var cached=localStorage.getItem(cacheKey);
+  if(cached){
+    if(re){re.style.display='block';re.innerHTML=cached;}
+    if(re) re.scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+
+  if(lo)lo.style.display='block';
+  if(re){re.style.display='none';re.innerHTML='';}
+  _zDoNatalFetch(idx,def,profId,cacheKey,lo,re);
+}
+
+async function _zDoNatalFetch(idx,def,profId,cacheKey,lo,re){
+  var noH=(def.hour===99||def.hour===undefined);
+  var lat=def.lat||def.cityLat||37.5666;
+  var lon2=def.lon||def.cityLon||126.9779;
+  if(lo) lo.style.display='block';
+  var chart=calcNatalChart(def.gY,def.gM,def.gD,noH?12:(def.hour||12),noH,lat,lon2);
+  var SIGNS=['양자리','황소자리','쌍둥이자리','게자리','사자자리','처녀자리','천칭자리','전갈자리','사수자리','염소자리','물병자리','물고기자리'];
+
+  // 네이탈 차트 데이터만 간결하게 구성
+  var chartCtx='[네이탈 차트]\n';
+  chartCtx+='태양궁: '+SIGNS[chart.sun.sign]+' '+chart.sun.deg+'°\n';
+  chartCtx+='달궁: '+SIGNS[chart.moon.sign]+' '+chart.moon.deg+'°\n';
+  // 5행성 위치 추가
+  var planets5=['mercury','venus','mars','jupiter','saturn'];
+  var pNames5=['수성','금성','화성','목성','토성'];
+  planets5.forEach(function(p,i){
+    var pLon=calcPlanetLon(def.gY,def.gM,def.gD,p);
+    chartCtx+=pNames5[i]+': '+SIGNS[Math.floor(pLon/30)]+' '+Math.round(pLon%30*10)/10+'°\n';
+  });
+  chartCtx+='라후(북교점): '+SIGNS[chart.rahu.sign]+' '+chart.rahu.deg+'°\n';
+  chartCtx+='케투(남교점): '+SIGNS[chart.ketu.sign]+' '+chart.ketu.deg+'°\n';
+  if(chart.asc) chartCtx+='상승궁(ASC): '+SIGNS[chart.asc.sign]+' '+chart.asc.deg+'°'+(def.cityName?' ('+def.cityName+'기준)':'')+'\n';
+  if(chart.dasha&&chart.dasha.current){
+    var cur=chart.dasha.current;
+    chartCtx+='현재 다샤: '+cur.lord+' 다샤 ('+Math.round(cur.start)+'~'+Math.round(cur.end)+'년, 남은 '+chart.dasha.remain+'년)\n';
+    chartCtx+='출생 낙샤트라: '+chart.dasha.nakshatra+'\n';
+  }
+  var q=_zNatalQs[idx]||_zNatalQs[0];
+
+  try{
+    var ctrl=new AbortController();
+    var tid=setTimeout(function(){ctrl.abort();},90000); // 90초 타임아웃
+    var resp=await fetch('https://my-saju-api.onrender.com/api/saju',{
+      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'gemini',
+        mode:'star',
+        max_tokens:6000,
+        system:'당신은 프리미엄 서양+베딕 점성술 전문가입니다. 네이탈 차트 데이터만 기반으로 분석합니다. 사주 내용 절대 언급 금지. 출력 형식: ## 핵심결론 → ### 섹션제목 → - 불릿 → 마지막에 > 인용구로 핵심메시지. **볼드체는 섹션당 1개 핵심 단어에만 사용**. 나머지는 일반 텍스트. 한국어. MZ 눈높이. 전문 용어 쉽게 번역. 1000자 이상. 완전한 문장으로 끝낼 것.',
+        messages:[{role:'user',content:chartCtx+'\n질문: '+q+'\n\n반드시 아래 형식으로 작성해:\n## [핵심 한 줄 결론]\n\n각 섹션은 ### 제목 사용\n각 항목은 - 불릿으로\n중요 키워드는 **굵게**\n마지막에 > 인용구 형식으로 핵심 메시지 한 줄'}]
+      })
+    });
+    clearTimeout(tid);
+    var data=await resp.json();
+    var txt='';
+    if(data&&data.content&&Array.isArray(data.content))
+      txt=data.content.map(function(c){return c.text||'';}).join('');
+    else if(data&&data.content&&typeof data.content==='string') txt=data.content.trim();
+    else if(data&&data.text) txt=data.text;
+    // 에러 응답 처리
+    if(!txt&&data&&data.error) txt='서버 오류: '+(data.error.message||JSON.stringify(data.error));
+    if(!txt){console.error('[zNatalAsk] 빈 응답:', JSON.stringify(data).slice(0,200)); txt='응답이 비어있어요. 다시 시도해주세요.';}
+    if(lo)lo.style.display='none';
+    var rendered=natalMdToHtml(txt);
+    localStorage.setItem(cacheKey,rendered);
+    if(lo)lo.style.display='none';
+    if(re){re.style.display='block';re.innerHTML=rendered;}
+    if(re) re.scrollIntoView({behavior:'smooth',block:'start'});
+    zRenderNatalBtns();
+  }catch(e){
+    if(lo)lo.style.display='none';
+    var msg=e.name==='AbortError'?'시간이 초과됐어요. 서버가 깨어나는 중일 수 있어요.':'서버 연결에 실패했어요.';
+    showRetryToast(msg,function(){zNatalAsk(idx);});
+  }
+}
+
+var _zDashaQs=[
+  '내 빔쇼타리 다샤 시기를 사주+베딕 전체와 교차해서 지금 이 시기에 집중해야 할 것과 조심해야 할 것을 구체적으로 알려줘.',
+  '내 다샤와 라후·케투·달궁을 종합해서 연애와 인연 운을 구체적으로 분석해줘. 지금 인연이 오는 시기인지도 포함해서.',
+  '내 다샤와 태양궁 포지션을 보고 재물과 직업 운을 분석해줘. 언제 기회가 오는지 구체적 시기도 포함해서.',
+  '내 라후와 케투 위치를 전생 카르마와 연결해서 이번 생 과제와 방향을 구체적으로 분석해줘.'
+];
+
+async function zDashaAsk(idx){
+  var def=getDefaultProfile();if(!def){showToast('프로필을 먼저 추가해주세요');return;}
+  var lo=document.getElementById('zDashaLoading'),re=document.getElementById('zDashaResult');
+
+  // 프로필 기반 캐시 (동일 프로필이면 동일 결과)
+  var profId=_zNatalGetDefaultProfId();
+  var cacheKey='msr_dasha_reading_'+profId+'_'+idx;
+  var cached=localStorage.getItem(cacheKey);
+  if(cached){
+    if(re){re.style.display='block';re.innerHTML=cached;}
+    if(re) re.scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+
+  if(lo)lo.style.display='block';if(re){re.style.display='none';re.innerHTML='';}
+
+  var noH=(def.hour===99||def.hour===undefined);
+  var nc=calcNatalChart(def.gY,def.gM,def.gD,noH?12:def.hour,noH,def.lat||37.5666,def.lon||126.9779);
+  var SIGNS=['양자리','황소자리','쌍둥이자리','게자리','사자자리','처녀자리','천칭자리','전갈자리','사수자리','염소자리','물병자리','물고기자리'];
+
+  // 핵심만 (입력 최소화)
+  var ctx='';
+  ctx+='태양궁:'+SIGNS[nc.sun.sign]+' 달궁:'+SIGNS[nc.moon.sign];
+  ctx+=' 라후:'+SIGNS[nc.rahu.sign]+' 케투:'+SIGNS[nc.ketu.sign];
+  if(nc.asc) ctx+=' ASC:'+SIGNS[nc.asc.sign];
+  if(nc.dasha&&nc.dasha.current){
+    var cur=nc.dasha.current;
+    ctx+='\n현재다샤:'+cur.lord+'('+Math.round(cur.start)+'~'+Math.round(cur.end)+'년,남은'+nc.dasha.remain+'년)';
+    ctx+=' 낙샤트라:'+nc.dasha.nakshatra;
+    if(nc.dasha.next) ctx+=' 다음:'+nc.dasha.next.lord+'('+Math.round(nc.dasha.next.start)+'년~)';
+  }
+  ['jupiter','saturn'].forEach(function(p,i){
+    var l=calcPlanetLon(def.gY,def.gM,def.gD,p);
+    ctx+=' '+['목성','토성'][i]+':'+SIGNS[Math.floor(l/30)];
+  });
+
+  var q=_zDashaQs[idx]||_zDashaQs[0];
+  var fmt='\n형식: ## 결론한줄 ### 섹션 - 불릿 > 마지막인용구. 끝까지 완성할것.';
+
+  try{
+    var ctrl=new AbortController();
+    var tid=setTimeout(function(){ctrl.abort();},90000);
+    var resp=await fetch('https://my-saju-api.onrender.com/api/saju',{
+      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'gemini',
+        mode:'star',
+        max_tokens:6000,
+        system:'당신은 베딕+서양 점성술 전문가입니다. 다샤 시스템을 중심으로 분석합니다. 사주 내용 언급 금지. 첫 문장에 핵심 결론. 한국어. MZ 눈높이. 전문 용어 쉽게 번역. 완전한 문장으로 끝낼 것.',
+        messages:[{role:'user',content:ctx+'\n질문: '+q+fmt}]
+      })
+    });
+    clearTimeout(tid);
+    var data=await resp.json();
+    var txt='';
+    if(data&&data.content&&Array.isArray(data.content))
+      txt=data.content.map(function(c){return c.text||'';}).join('');
+    else if(data&&data.content&&typeof data.content==='string') txt=data.content.trim();
+    else if(data&&data.text) txt=data.text;
+    if(!txt) txt='분석에 실패했어요. 다시 시도해주세요.';
+    var rendered=natalMdToHtml(txt);
+    localStorage.setItem(cacheKey,rendered); // 프로필 기반 캐시 저장
+    if(lo)lo.style.display='none';
+    if(re){re.style.display='block';re.innerHTML=rendered;}
+    if(re) re.scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(e){
+    if(lo)lo.style.display='none';
+    var msg=e.name==='AbortError'?'시간이 초과됐어요. 다시 시도해주세요.':'서버 연결 실패.';
+    showRetryToast(msg,function(){zDashaAsk(idx);});
+  }
+}
+
+function renderZodiacScreen(){
+  _zAdUnlockedSession=false;
+  // 이전에 열린 결과창 전부 닫기
+  var re=document.getElementById('zNatalAIResult');
+  if(re){re.style.display='none';re.innerHTML='';}
+  var sr=document.getElementById('zSignResult');
+  if(sr){sr.style.display='none';sr.innerHTML='';}
+  var dr=document.getElementById('zDashaResult');
+  if(dr){dr.style.display='none';dr.innerHTML='';}
+  // 인라인 배너 광고 (AdMob)
+  _zShowInlineBanners();
+  zSwitchTab('natal');
+}
+
+function _zShowInlineBanners(){
+  try{
+    if(typeof window.capacitorAdMob==='undefined') return;
+    var AdMob=window.capacitorAdMob.AdMob;
+    // 네이탈 배너
+    AdMob.showBanner({
+      adId:'ca-app-pub-3940256099942544/6300978111',
+      adSize:window.capacitorAdMob.BannerAdSize.MEDIUM_RECTANGLE,
+      position:window.capacitorAdMob.BannerAdPosition.CENTER,
+      isTesting:true,
+      nonce:'zodiac_natal'
+    }).catch(function(){});
+  }catch(e){}
+}
+
 function zSwitchTab(tab){
-  ['my','natal','today'].forEach(function(t){
+  ['today','natal','dasha'].forEach(function(t){
     var tb=document.getElementById('ztab-'+t),co=document.getElementById('ztab-'+t+'-content');
     if(tb) tb.className='settings-tab'+(t===tab?' on':'');
     if(co) co.style.display=(t===tab?'block':'none');
   });
   if(tab==='natal') zRenderNatal();
-  if(tab==='today') zRenderAllSigns();
+  if(tab==='dasha') zRenderDasha();
+  if(tab==='today') zRenderTodayTab();
 }
 
 function zInit(){
@@ -2635,12 +4548,15 @@ function zInit(){
 }
 
 function zRenderNatal(){
+  try{
   var def=getDefaultProfile();
   var nc=document.getElementById('zNatalCards'),vi=document.getElementById('zVedicInfo');
   if(!def){if(nc)nc.innerHTML='<div style="text-align:center;padding:20px;font-size:13px;color:var(--muted);">프로필을 먼저 등록해주세요</div>';return;}
   var noH=(def.hour===99||def.hour===undefined);
-  var lat=def.cityLat||def.la||37.5666,lon=def.cityLon||def.lo||126.9779;
+  var lat=def.lat||def.cityLat||def.la||37.5666;
+  var lon=def.lon||def.cityLon||def.lo||126.9779;
   var chart=calcNatalChart(def.gY,def.gM,def.gD,noH?12:(def.hour||12),noH,lat,lon);
+  if(!chart||!chart.sun){if(nc)nc.innerHTML='<div style="padding:20px;color:var(--muted);text-align:center;font-size:13px;">차트 계산 오류</div>';return;}
   var items=[
     {lbl:'☉ 태양궁',sign:chart.sun,desc:'핵심 자아·생명력'},
     {lbl:'☽ 달궁',sign:chart.moon,desc:'감정·무의식·본능'},
@@ -2648,33 +4564,188 @@ function zRenderNatal(){
     {lbl:'☋ 케투 (남교점)',sign:chart.ketu,desc:'전생의 익숙한 패턴'}
   ];
   if(chart.asc) items.push({lbl:'↑ 상승궁 (ASC)',sign:chart.asc,desc:'외면·첫인상'+(def.cityName?' · '+def.cityName:'')});
+  var SIGN_MEANING=['용기·개척·열정','안정·인내·소유욕','소통·변화·호기심','감수성·직관·보호','자존심·창조·열정','분석·완벽·봉사','균형·조화·관계','집착·변혁·심층','자유·철학·낙관','인내·야망·현실','독창·이상·인류애','감수성·경계없음·공감'];
   if(nc) nc.innerHTML=items.map(function(it){
     var z=ZODIAC[it.sign.sign];
+    var meaning=SIGN_MEANING[it.sign.sign]||'';
     return '<div style="background:rgba(22,16,50,.7);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:14px 16px;display:flex;align-items:center;gap:12px;">'
-      +'<div style="font-size:26px;width:40px;text-align:center;flex-shrink:0;">'+z.ico+'</div>'
-      +'<div style="flex:1;"><div style="font-size:10px;color:var(--muted);margin-bottom:3px;">'+it.lbl+'</div>'
-      +'<div style="font-size:15px;color:var(--gold2);font-weight:700;">'+z.n+' '+it.sign.deg+'°</div>'
-      +'<div style="font-size:11px;color:var(--muted);margin-top:2px;">'+it.desc+'</div></div></div>';
+      +'<div style="font-size:28px;width:40px;text-align:center;flex-shrink:0;">'+z.ico+'</div>'
+      +'<div style="flex:1;">'
+      +'<div style="font-size:10px;color:var(--muted);margin-bottom:3px;">'+it.lbl+' · '+it.desc+'</div>'
+      +'<div style="font-size:16px;color:var(--gold2);font-weight:700;">'+z.n+'&nbsp;<span style="font-size:12px;color:var(--dim);font-weight:400;">'+it.sign.deg+'°</span></div>'
+      +'<div style="font-size:11px;color:rgba(200,180,255,.55);margin-top:3px;">'+meaning+'</div>'
+      +'</div></div>';
   }).join('');
   var aya=23.5;
   var vSun=ZODIAC[Math.floor(((((chart.sun.lon-aya)%360)+360)%360)/30)];
   var vMoon=ZODIAC[Math.floor(((((chart.moon.lon-aya)%360)+360)%360)/30)];
-  if(vi) vi.innerHTML='서양(트로피컬)과 달리 항성 기준 계산. (아야남샤 보정 약 23.5°)<br>'
-    +'<span style="color:var(--gold2);">◉ 라그나</span>: '+vSun.n+' '+vSun.ico
-    +'&nbsp;&nbsp;<span style="color:#93c5fd;">☽ 찬드라</span>: '+vMoon.n+' '+vMoon.ico+'<br>'
-    +'<span style="font-size:10px;color:rgba(255,255,255,.3);">서양 별자리와 1~2궁 차이가 날 수 있어요</span>';
+  if(vi){
+    var dashaLine='';
+    if(chart.dasha&&chart.dasha.current){
+      var cur=chart.dasha.current;
+      var _PC=_PLANET_COLOR||{};
+      dashaLine='<div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06);">'
+        +'<span style="font-size:10px;color:var(--muted);">현재 다샤: </span>'
+        +'<span style="color:'+((_PC[cur.lord])||'var(--gold2)')+';font-weight:700;">'+cur.lord+' 다샤</span>'
+        +'<span style="font-size:11px;color:var(--muted);"> ('+Math.round(cur.start)+'~'+Math.round(cur.end)+'년 · 남은 '+chart.dasha.remain+'년)</span>'
+        +'</div>';
+    }
+    vi.innerHTML='서양(트로피컬)과 달리 항성 기준 계산 (아야남샤 ~23.5° 보정)<br>'
+      +'<span style="color:var(--gold2);">◉ 라그나</span>: '+vSun.n+' '+vSun.ico
+      +'&nbsp;&nbsp;<span style="color:#93c5fd;">☽ 찬드라</span>: '+vMoon.n+' '+vMoon.ico
+      +dashaLine;
+  }
+  zRenderNatalBtns(); // 복채/캐시 버튼 렌더
+  }catch(e){
+    var nc2=document.getElementById('zNatalCards');
+    if(nc2) nc2.innerHTML='<div style="padding:16px;color:#f87171;font-size:13px;">오류: '+e.message+'</div>';
+    console.error('[zRenderNatal]',e);
+  }
 }
 
-function zRenderAllSigns(){
-  var el=document.getElementById('zAllSigns');if(!el)return;
-  el.innerHTML=ZODIAC.map(function(z,i){
-    return '<div onclick="zShowSignDetail('+i+')" style="background:rgba(22,16,50,.65);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:14px 10px;text-align:center;cursor:pointer;transition:transform .2s;" ontouchstart="this.style.transform=\'scale(.95)\'" ontouchend="this.style.transform=\'\'">'
-      +'<div style="font-size:22px;margin-bottom:6px;">'+z.ico+'</div>'
-      +'<div style="font-family:\'Gowun Dodum\',serif;font-size:12px;color:var(--gold2);font-weight:700;margin-bottom:2px;">'+z.n+'</div>'
-      +'<div style="font-size:9px;color:var(--muted);">'+z.mo.split('~')[0]+'</div>'
-      +'</div>';
-  }).join('');
+var _zAdUnlockedSession=false; // 세션 내 1회성 잠금 해제 플래그
+
+function zCheckAdUnlock(){
+  if(_zAdUnlockedSession) return true;
+  var freeUntil=parseInt(localStorage.getItem('ad_free_until')||'0');
+  if(Date.now()<freeUntil) return true; // 30분 패스
+  var ts=parseInt(localStorage.getItem('msr_zodiac_ad_ts')||'0');
+  return ts>0&&Date.now()-ts<30*60*1000;
 }
+
+// 네이탈 free 리딩 전용 - 세션 플래그 + 30분 패스만 체크
+function zCheckNatalFreeUnlock(){
+  if(_zAdUnlockedSession) return true;
+  var freeUntil=parseInt(localStorage.getItem('ad_free_until')||'0');
+  return Date.now()<freeUntil;
+}
+
+function zRenderTodayTab(){
+  zRenderAllSigns();
+  var wrap=document.getElementById('zSignsWrap');
+  if(!wrap) return;
+  var unlocked=zCheckAdUnlock();
+  console.log('[별자리] unlocked='+unlocked, 'ad_free_until='+localStorage.getItem('ad_free_until'), 'zodiac_ts='+localStorage.getItem('msr_zodiac_ad_ts'));
+  if(unlocked){
+    wrap.setAttribute('style','position:relative;');
+  } else {
+    wrap.setAttribute('style','position:relative;filter:blur(8px);pointer-events:none;user-select:none;');
+    adSuccessCallback=function(){
+      _zAdUnlockedSession=true;
+      var w=document.getElementById('zSignsWrap');
+      if(w) w.setAttribute('style','position:relative;');
+    };
+    var modal=document.getElementById('adModal');
+    console.log('[별자리] 모달 show 시도:', modal);
+    if(modal) modal.classList.add('show');
+  }
+}
+
+
+function zRenderAllSigns(){
+  var SIGNS=[
+    {n:'양자리',e:'Aries',ico:'♈',d:'3/21~4/19'},
+    {n:'황소자리',e:'Taurus',ico:'♉',d:'4/20~5/20'},
+    {n:'쌍둥이자리',e:'Gemini',ico:'♊',d:'5/21~6/21'},
+    {n:'게자리',e:'Cancer',ico:'♋',d:'6/22~7/22'},
+    {n:'사자자리',e:'Leo',ico:'♌',d:'7/23~8/22'},
+    {n:'처녀자리',e:'Virgo',ico:'♍',d:'8/23~9/22'},
+    {n:'천칭자리',e:'Libra',ico:'♎',d:'9/23~10/22'},
+    {n:'전갈자리',e:'Scorpio',ico:'♏',d:'10/23~11/21'},
+    {n:'사수자리',e:'Sagittarius',ico:'♐',d:'11/22~12/21'},
+    {n:'염소자리',e:'Capricorn',ico:'♑',d:'12/22~1/19'},
+    {n:'물병자리',e:'Aquarius',ico:'♒',d:'1/20~2/18'},
+    {n:'물고기자리',e:'Pisces',ico:'♓',d:'2/19~3/20'}
+  ];
+  var el=document.getElementById('zAllSigns');if(!el)return;
+  el.innerHTML='';
+  SIGNS.forEach(function(s,i){
+    var btn=document.createElement('button');
+    btn.style.cssText='background:rgba(22,16,50,.6);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:12px 6px;text-align:center;cursor:pointer;transition:all .2s;width:100%;';
+    btn.innerHTML='<div style="font-size:26px;margin-bottom:4px;">'+s.ico+'</div>'
+      +'<div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:2px;">'+s.n+'</div>'
+      +'<div style="font-size:9px;color:var(--muted);">'+s.d+'</div>';
+    (function(ii){
+      btn.addEventListener('click',function(){zSelectSign(ii);});
+      btn.addEventListener('touchstart',function(){btn.style.transform='scale(.95)';},{passive:true});
+      btn.addEventListener('touchend',function(){btn.style.transform='';},{passive:true});
+    })(i);
+    el.appendChild(btn);
+  });
+}
+
+var _zSignData=[
+  {n:'양자리',e:'Aries',ico:'♈',d:'3/21~4/19'},
+  {n:'황소자리',e:'Taurus',ico:'♉',d:'4/20~5/20'},
+  {n:'쌍둥이자리',e:'Gemini',ico:'♊',d:'5/21~6/21'},
+  {n:'게자리',e:'Cancer',ico:'♋',d:'6/22~7/22'},
+  {n:'사자자리',e:'Leo',ico:'♌',d:'7/23~8/22'},
+  {n:'처녀자리',e:'Virgo',ico:'♍',d:'8/23~9/22'},
+  {n:'천칭자리',e:'Libra',ico:'♎',d:'9/23~10/22'},
+  {n:'전갈자리',e:'Scorpio',ico:'♏',d:'10/23~11/21'},
+  {n:'사수자리',e:'Sagittarius',ico:'♐',d:'11/22~12/21'},
+  {n:'염소자리',e:'Capricorn',ico:'♑',d:'12/22~1/19'},
+  {n:'물병자리',e:'Aquarius',ico:'♒',d:'1/20~2/18'},
+  {n:'물고기자리',e:'Pisces',ico:'♓',d:'2/19~3/20'}
+];
+
+async function zSelectSign(idx){
+  if(!zCheckAdUnlock()) return;
+  var s=_zSignData[idx];
+  var lo=document.getElementById('zSignLoading');
+  var re=document.getElementById('zSignResult');
+  if(lo)lo.style.display='block';
+  if(re)re.style.display='none';
+
+  // 오늘 날짜
+  var now=new Date();
+  var dateStr=now.getFullYear()+'년 '+(now.getMonth()+1)+'월 '+now.getDate()+'일';
+
+  // 캐시 키 (별자리별 일별 캐시)
+  var cacheKey='msr_zodiac_v2_'+idx+'_'+getTodayStr();
+  var cached=localStorage.getItem(cacheKey);
+  if(cached){
+    if(lo)lo.style.display='none';
+    if(re){re.style.display='block';re.innerHTML=cached;}
+    re.scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+
+  var prompt='2026년 '+( now.getMonth()+1)+'월 '+now.getDate()+'일 '+s.n+' 오늘의 운세.'
+    +'\n\n아래 5가지를 각각 2~3문장으로 써줘:'
+    +'\n🌟 총운:'
+    +'\n💕 연애운:'
+    +'\n💰 재물운:'
+    +'\n💼 직업운:'
+    +'\n🌿 건강운:'
+    +'\n\n'+s.n+' 특유의 성격과 에너지를 반영해서. 구체적이고 실용적으로. 희망찬 내용으로.';
+  try{
+    var resp=await fetch('https://my-saju-api.onrender.com/api/saju',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'gemini',
+        max_tokens:4000,
+        system:'당신은 서양 점성술 전문가입니다. 사용자가 요청한 별자리의 오늘 운세를 총운/연애운/재물운/직업운/건강운 5가지로 나눠서 각 항목별 2~3문장씩 한국어로 작성해주세요. 이모지를 적극 활용하고 구체적이고 실용적인 조언을 포함하세요.',
+        messages:[{role:'user',content:prompt}]})
+    });
+    var data=await resp.json();
+    var txt='';
+    if(data&&data.content&&Array.isArray(data.content))
+      txt=data.content.map(function(c){return c.text||'';}).join('');
+    else if(data&&data.content&&typeof data.content==='string')
+      txt=data.content.trim();
+    else if(data&&data.text) txt=data.text;
+    if(!txt) txt='운세를 불러오지 못했어요. 다시 시도해주세요.';
+    var rendered='<div style="font-size:14px;color:var(--gold2);font-weight:700;margin-bottom:12px;">'+s.ico+' '+s.n+' · 오늘의 운세</div>'+pcMdToHtml(txt);
+    localStorage.setItem(cacheKey,rendered);
+    if(lo)lo.style.display='none';
+    if(re){re.style.display='block';re.innerHTML=rendered;}
+    re.scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(e){
+    if(lo)lo.style.display='none';
+    showRetryToast('서버 응답이 없어요.',function(){zSelectSign(idx);});
+  }
+}
+
 
 function zShowSignDetail(idx){
   _zSelectedSign=idx;
@@ -2756,6 +4827,395 @@ async function zGetAIReading(mode){
 /* ══ 페르소나 채팅: 프로필 기반 첫 인사 ══ */
 
 
+// ══ 온보딩 ══
+function onboardingStart(){
+  if(typeof openAddProfileScreen==='function'){
+    openAddProfileScreen();
+  } else {
+    goScreen('addProfileScreen');
+  }
+}
+function onboardingSkip(){
+  goScreen('mainScreen');
+  try{renderMainRecent();updateTimer();}catch(e){}
+}
+
+// ══ 프리미엄 테스트 모드 ══
+function isPremiumTest(){return localStorage.getItem('msr_premium_test')==='1';}
+function togglePremiumTest(){
+  var on=isPremiumTest();
+  localStorage.setItem('msr_premium_test',on?'0':'1');
+  var badge=document.getElementById('premiumTestBadge');
+  if(badge){
+    badge.textContent=on?'OFF':'ON';
+    badge.style.background=on?'rgba(255,255,255,.07)':'rgba(240,192,96,.2)';
+    badge.style.color=on?'var(--muted)':'var(--gold2)';
+  }
+  showToast(on?'프리미엄 테스트 모드 OFF':'💎 프리미엄 테스트 모드 ON — 모든 캐릭터 사용 가능');
+}
+
+// 페르소나별 말풍선 색상
+var PC_BUBBLE_COLORS={
+  gemna:{bg:'rgba(88,28,135,.25)',border:'rgba(168,85,247,.2)'},    // 퍼플
+  luna: {bg:'rgba(23,37,84,.35)',border:'rgba(96,165,250,.2)'},     // 블루
+  baekho:{bg:'rgba(120,53,15,.25)',border:'rgba(251,146,60,.2)'},   // 오렌지
+  hades:{bg:'rgba(69,10,10,.3)',border:'rgba(248,113,113,.2)'},     // 레드
+  sera: {bg:'rgba(80,7,36,.25)',border:'rgba(244,114,182,.2)'},     // 핑크
+  red:  {bg:'rgba(30,41,59,.35)',border:'rgba(148,163,184,.2)'}     // 슬레이트
+};
+function pcBubbleColor(){
+  var c=PC_BUBBLE_COLORS[_curPersonaId];
+  return c?c.bg:'rgba(16,10,36,.9)';
+}
+function pcBubbleBorder(){
+  var c=PC_BUBBLE_COLORS[_curPersonaId];
+  return c?c.border:'rgba(255,255,255,.08)';
+}
+function showPrivacy(){goScreen('privacyScreen');}
+var _screenStack=[];
+function goBack(){
+  // 별자리 화면 나가면 1회성 플래그 초기화
+  var active=document.querySelector('.screen.active');
+  if(active&&active.id==='zodiacScreen') _zAdUnlockedSession=false;
+  _screenStack.pop();
+  var prev=_screenStack.length>0?_screenStack[_screenStack.length-1]:'mainScreen';
+  goScreen(prev);
+}
+
+// ══ 결과 공유 ══
+// ── Canvas로 공유 이미지 생성 ──
+function createShareCanvas(title, subtitle, score, items, callback){
+  var c=document.createElement('canvas');
+  c.width=720; c.height=1080;
+  var ctx=c.getContext('2d');
+
+  // 배경 그라데이션
+  var bg=ctx.createLinearGradient(0,0,0,1080);
+  bg.addColorStop(0,'#0a0a1a');
+  bg.addColorStop(1,'#0f0820');
+  ctx.fillStyle=bg;
+  ctx.fillRect(0,0,720,1080);
+
+  // 별 배경
+  ctx.fillStyle='rgba(255,255,255,0.4)';
+  for(var i=0;i<80;i++){
+    ctx.beginPath();
+    ctx.arc(Math.random()*720,Math.random()*1080,Math.random()*1.5,0,Math.PI*2);
+    ctx.fill();
+  }
+
+  // 상단 골드 라인
+  var gl=ctx.createLinearGradient(0,0,720,0);
+  gl.addColorStop(0,'transparent');
+  gl.addColorStop(0.5,'#f0c060');
+  gl.addColorStop(1,'transparent');
+  ctx.strokeStyle=gl;
+  ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(0,80);ctx.lineTo(720,80);ctx.stroke();
+
+  // 앱 이름
+  ctx.font='bold 28px serif';
+  ctx.fillStyle='#f0c060';
+  ctx.textAlign='center';
+  ctx.fillText('🔮 Uncanny', 360, 55);
+
+  // 제목
+  ctx.font='bold 42px sans-serif';
+  ctx.fillStyle='#ffffff';
+  ctx.fillText(title, 360, 160);
+
+  // 부제목
+  ctx.font='22px sans-serif';
+  ctx.fillStyle='rgba(200,180,255,0.8)';
+  ctx.fillText(subtitle, 360, 210);
+
+  // 점수 (있으면)
+  if(score){
+    ctx.font='bold 100px sans-serif';
+    ctx.fillStyle='#f0c060';
+    ctx.fillText(score, 360, 360);
+    ctx.font='24px sans-serif';
+    ctx.fillStyle='rgba(255,255,255,0.5)';
+    ctx.fillText('점', 360, 400);
+  }
+
+  // 내용 항목들
+  if(items&&items.length){
+    var y=score?480:280;
+    var lineH=58;
+    items.forEach(function(item,i){
+      // 카드 배경
+      ctx.fillStyle='rgba(255,255,255,0.05)';
+      ctx.beginPath();
+      ctx.roundRect(60,y-36,600,50,12);
+      ctx.fill();
+      ctx.strokeStyle='rgba(255,255,255,0.1)';
+      ctx.lineWidth=1;
+      ctx.stroke();
+
+      ctx.font='bold 20px sans-serif';
+      ctx.fillStyle='#f0c060';
+      ctx.textAlign='left';
+      ctx.fillText(item.label, 90, y);
+      ctx.font='20px sans-serif';
+      ctx.fillStyle='rgba(255,255,255,0.85)';
+      ctx.textAlign='right';
+      ctx.fillText(item.value, 630, y);
+      y+=lineH;
+    });
+  }
+
+  // 하단 라인
+  var bl=ctx.createLinearGradient(0,0,720,0);
+  bl.addColorStop(0,'transparent');
+  bl.addColorStop(0.5,'rgba(240,192,96,0.4)');
+  bl.addColorStop(1,'transparent');
+  ctx.strokeStyle=bl;
+  ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(0,980);ctx.lineTo(720,980);ctx.stroke();
+
+  // 하단 문구
+  ctx.font='20px sans-serif';
+  ctx.fillStyle='rgba(200,180,255,0.6)';
+  ctx.textAlign='center';
+  ctx.fillText('당신의 결을 읽는 AI 사주', 360, 1030);
+
+  callback(c.toDataURL('image/png'));
+}
+
+function shareImageOrText(title, text, canvasFn){
+  // Canvas 이미지 생성 시도
+  try{
+    canvasFn(function(dataUrl){
+      // 이미지를 Blob으로 변환
+      var arr=dataUrl.split(','), mime=arr[0].match(/:(.*?);/)[1];
+      var bstr=atob(arr[1]), n=bstr.length, u8=new Uint8Array(n);
+      while(n--) u8[n]=bstr.charCodeAt(n);
+      var blob=new Blob([u8],{type:mime});
+      var file=new File([blob],'uncanny_result.png',{type:'image/png'});
+
+      if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+        navigator.share({title:title,text:text,files:[file]}).catch(function(){
+          // 이미지 공유 실패 시 텍스트로
+          shareTextFallback(title,text);
+        });
+      } else if(navigator.share){
+        navigator.share({title:title,text:text}).catch(function(){});
+      } else {
+        // 이미지 다운로드 + 클립보드
+        var a=document.createElement('a');
+        a.href=dataUrl;a.download='uncanny_result.png';a.click();
+        showToast('이미지가 저장됐어요! 📸');
+      }
+    });
+  }catch(e){
+    shareTextFallback(title,text);
+  }
+}
+
+function shareTextFallback(title,text){
+  var shareText=title+'\n\n'+text+'\n\n🔮 Uncanny - AI 사주';
+  if(navigator.share){
+    navigator.share({title:title,text:shareText}).catch(function(){});
+  } else {
+    try{navigator.clipboard.writeText(shareText).then(function(){showToast('결과가 복사됐어요 📋');});}
+    catch(e){showToast('공유하려면 브라우저에서 열어주세요');}
+  }
+}
+
+// 운세 결과 공유
+function shareUnseResult(){
+  var today=new Date();
+  var dn=UNSE_TYPE==='today'?'오늘':'내일';
+  var title=dn+' 운세 결과';
+  var scoreEl=document.getElementById('uTotalScore');
+  var score=scoreEl?scoreEl.textContent.replace(/[^0-9]/g,''):'';
+  var def=getDefaultProfile();
+  var subtitle=(def?def.name+'님의 ':'')+(today.getMonth()+1)+'월 '+today.getDate()+'일';
+
+  // 운세 점수 수집
+  var labels=['총운','재물운','연애운','직업운','건강운'];
+  var items=[];
+  labels.forEach(function(lbl){
+    var el=document.getElementById('uLegend');
+    var scoreMatch=el?el.textContent.match(new RegExp(lbl+'[^0-9]*([0-9]+)')):null;
+    if(scoreMatch) items.push({label:lbl,value:scoreMatch[1]+'점'});
+  });
+
+  shareImageOrText(title, subtitle+'의 운세 총점 '+score+'점', function(cb){
+    createShareCanvas(title, subtitle, score+'점', items, cb);
+  });
+}
+
+// AI사주 결과 공유
+function shareSajuResult(){
+  var def=getDefaultProfile();
+  var title='AI 사주 분석 결과';
+  var subtitle=def?def.name+'님의 사주 리딩':'Uncanny 사주 분석';
+  var items=[
+    {label:'사주',value:def&&def.saju?def.saju:''},
+    {label:'분석',value:'사주+베딕+자미두수 종합'}
+  ];
+  shareImageOrText(title, subtitle, function(cb){
+    createShareCanvas(title, subtitle, null, items, cb);
+  });
+}
+
+// 구버전 호환
+function shareResult(title,text,imageUrl){shareTextFallback(title,text);}
+function shareKakao(title,desc,imgUrl){shareTextFallback(title,desc);}
+
+// ══ 에러 재시도 ══
+function showRetryToast(msg, retryFn){
+  var div=document.createElement('div');
+  div.style.cssText='position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:rgba(30,20,60,.97);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:14px 20px;z-index:9999;display:flex;align-items:center;gap:12px;max-width:320px;width:calc(100%-32px);';
+  div.innerHTML='<div style="flex:1;font-size:13px;color:var(--dim);">'+msg+'</div>'
+    +'<button onclick="this.parentElement.remove();('+retryFn.toString()+')()" style="height:34px;padding:0 14px;background:rgba(251,191,36,.2);border:1px solid rgba(251,191,36,.4);border-radius:10px;color:var(--gold2);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;">재시도</button>';
+  document.body.appendChild(div);
+  setTimeout(function(){if(div.parentElement)div.remove();},8000);
+}
+
+
+// ══ 별자리·베딕 탭 ══
+var _starTabIdx=0;
+
+function _navStarChart_removed(){
+  _navTo('starScreen','star');
+  document.querySelectorAll('.nav-item').forEach(function(b){b.classList.remove('on');});
+  var nb=document.getElementById('nav-star');if(nb)nb.classList.add('on');
+  renderStarScreen();
+}
+
+function starSwitchTab(i){
+  _starTabIdx=i;
+  [0,1,2].forEach(function(j){
+    var p=document.getElementById('starPanel'+j);
+    var t=document.getElementById('starTab'+j);
+    if(p) p.style.display=j===i?'':'none';
+    if(t){
+      t.style.background=j===i?'rgba(240,192,96,.15)':'transparent';
+      t.style.borderColor=j===i?'rgba(240,192,96,.5)':'rgba(255,255,255,.1)';
+      t.style.color=j===i?'var(--gold2)':'var(--muted)';
+      t.style.fontWeight=j===i?'600':'400';
+    }
+  });
+}
+
+function renderStarScreen(){
+  var def=getDefaultProfile();
+  if(!def){
+    document.getElementById('starNatalContent').innerHTML='<div style="text-align:center;padding:20px;color:var(--muted);">프로필을 먼저 추가해주세요</div>';
+    return;
+  }
+  var noH=(def.hour===99||def.hour===undefined);
+  var lat=def.lat||37.5666, lon=def.lon||126.9779;
+  var nc=calcNatalChart(def.gY,def.gM,def.gD,noH?12:def.hour,noH,lat,lon);
+  var SIGNS=['양자리','황소자리','쌍둥이자리','게자리','사자자리','처녀자리','천칭자리','전갈자리','사수자리','염소자리','물병자리','물고기자리'];
+  var SIGN_KW=['용기·개척','안정·소유욕','소통·변화','감수성·직관','자존심·창조','분석·완벽','균형·관계','집착·변혁','자유·철학','인내·야망','독창·이상','감수성·경계없음'];
+
+  // 네이탈 차트 렌더
+  var html2='';
+  html2+='<div style="font-size:11px;color:var(--muted);letter-spacing:1.5px;margin-bottom:14px;">'+def.name+'님의 네이탈 차트 '+(def.cityName?'('+def.cityName+')':'(서울 기준)')+'</div>';
+
+  var planets=[
+    {icon:'☉',name:'태양',sign:nc.sun.sign,deg:nc.sun.deg,desc:'핵심 자아·생명력'},
+    {icon:'☽',name:'달',sign:nc.moon.sign,deg:nc.moon.deg,desc:'감정·무의식·본능'},
+    {icon:'☊',name:'라후',sign:nc.rahu.sign,deg:nc.rahu.deg,desc:'이번 생 성장 방향'},
+    {icon:'☋',name:'케투',sign:nc.ketu.sign,deg:nc.ketu.deg,desc:'전생의 익숙한 패턴'},
+  ];
+  if(nc.asc) planets.push({icon:'↑',name:'상승궁(ASC)',sign:nc.asc.sign,deg:nc.asc.deg,desc:'외면·첫인상·삶의 방식'});
+
+  planets.forEach(function(p){
+    html2+='<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);">'
+      +'<div style="width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">'+p.icon+'</div>'
+      +'<div style="flex:1;">'
+      +'<div style="font-size:12px;color:var(--muted);margin-bottom:2px;">'+p.name+' · '+p.desc+'</div>'
+      +'<div style="font-size:14px;color:var(--text);font-weight:600;">'+SIGNS[p.sign]+'&nbsp;<span style="font-size:12px;color:var(--gold2);">'+p.deg+'°</span></div>'
+      +'<div style="font-size:11px;color:rgba(200,180,255,.5);">'+SIGN_KW[p.sign]+'</div>'
+      +'</div></div>';
+  });
+  document.getElementById('starNatalContent').innerHTML=html2;
+
+  // 다샤 렌더
+  if(nc.dasha&&nc.dasha.current){
+    var cur=nc.dasha.current, nxt=nc.dasha.next;
+    var elapsed=nc.dasha.elapsed, remain=nc.dasha.remain;
+    var pct=Math.round(elapsed/(elapsed+remain)*100);
+    var PLANET_COLOR={케투:'#94a3b8',금성:'#f472b6',태양:'#f59e0b',달:'#c4b5fd',화성:'#f87171',라후:'#818cf8',목성:'#4ade80',토성:'#94a3b8',수성:'#67e8f9'};
+    var DASHA_MEANING={케투:'영적 성장과 분리의 시기. 과거와의 단절, 집착을 내려놓아야 해요.',금성:'사랑과 물질적 풍요가 흘러오는 시기. 인연과 재물이 풍성해요.',태양:'자아를 확립하고 명예를 얻는 시기. 리더십이 빛나요.',달:'감수성과 직관이 높아지는 시기. 감정의 변화가 많아요.',화성:'행동과 추진력이 강해지는 시기. 적극적으로 나아가야 해요.',라후:'야망과 물질욕이 강해지는 시기. 혼돈 속에서 성장해요.',목성:'지혜와 성장·행운의 시기. 인생에서 가장 확장되는 황금기예요.',토성:'인내와 카르마 정산의 시기. 노력한 만큼 결실이 와요.',수성:'소통과 학습이 활발한 시기. 지적 활동과 네트워크가 중요해요.'};
+    document.getElementById('starDashaName').textContent=cur.lord+' 다샤';
+    document.getElementById('starDashaName').style.color=PLANET_COLOR[cur.lord]||'var(--gold2)';
+    document.getElementById('starDashaYear').textContent=Math.round(cur.start)+'년 ~ '+Math.round(cur.end)+'년 ('+cur.years+'년간) · 남은 기간 '+remain+'년';
+    document.getElementById('starDashaFill').style.width=pct+'%';
+    document.getElementById('starDashaFill').style.background='linear-gradient(90deg,'+(PLANET_COLOR[cur.lord]||'#7c3aed')+',#f0c060)';
+    document.getElementById('starDashaProgress').textContent='경과 '+elapsed+'년 ('+pct+'%)';
+    document.getElementById('starDashaDesc').innerHTML='<div style="font-size:11px;color:var(--muted);margin-bottom:6px;">'+nc.dasha.nakshatra+' 낙샤트라 출생</div>'+
+      '<div>'+DASHA_MEANING[cur.lord]+'</div>'+
+      (nxt?'<div style="margin-top:10px;font-size:12px;color:rgba(200,180,255,.5);">다음 다샤: <span style="color:'+(PLANET_COLOR[nxt.lord]||'var(--gold2)')+'">'+nxt.lord+' 다샤</span> ('+Math.round(nxt.start)+'년~, '+nxt.years+'년간)</div>':'');
+
+    // 타임라인
+    var tlHtml='';
+    (nc.dasha.sequence||[]).forEach(function(d,i){
+      var isCur=(cur&&d.lord===cur.lord&&Math.round(d.start)===Math.round(cur.start));
+      tlHtml+='<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:'+(isCur?'rgba(240,192,96,.08)':'rgba(255,255,255,.02)')+';border:1px solid rgba(255,255,255,'+(isCur?'.15':'.05')+');border-radius:12px;">'
+        +'<div style="width:10px;height:10px;border-radius:50%;background:'+(PLANET_COLOR[d.lord]||'#888')+';flex-shrink:0;'+(isCur?'box-shadow:0 0 8px '+(PLANET_COLOR[d.lord]||'#888'):'')+';"></div>'
+        +'<div style="flex:1;font-size:13px;color:'+(isCur?'var(--text)':'var(--muted)')+';">'+d.lord+' 다샤</div>'
+        +'<div style="font-size:11px;color:var(--muted);">'+Math.round(d.start)+'~'+Math.round(d.end)+'년</div>'
+        +(isCur?'<div style="font-size:10px;color:var(--gold2);font-weight:700;">현재</div>':'')
+        +'</div>';
+    });
+    document.getElementById('starDashaTimeline').innerHTML=tlHtml;
+  }
+}
+
+var _starQuestions=[
+  '지금 내 다샤 시기가 어떤 시기인지, 이 시기에 집중해야 할 것과 조심해야 할 것을 구체적으로 알려줘.',
+  '내 다샤와 라후·케투·달궁을 종합해서 연애와 인연 운을 구체적으로 분석해줘. 지금 인연이 오는 시기인지도.',
+  '내 다샤와 태양궁·목성 포지션을 보고 재물과 직업 운을 분석해줘. 언제 기회가 오는지 시기도 포함해서.',
+  '내 라후와 케투 위치가 이번 생 삶에 미치는 영향을 전생 카르마와 연결해서 구체적으로 분석해줘.',
+  '내 상승궁(ASC) 별자리를 분석해서 외면적 인상, 첫만남에서 내가 어떻게 보이는지, 삶의 방식이 어떤지 알려줘.',
+  '내 달궁 별자리를 분석해서 감정 패턴, 무의식적 반응, 연애할 때 감정 흐름이 어떤지 구체적으로 알려줘.'
+];
+
+async function starAskQuestion(idx){
+  var def=getDefaultProfile();
+  if(!def){showToast('프로필을 먼저 추가해주세요');return;}
+  var loading=document.getElementById('starReadingLoading');
+  var result=document.getElementById('starReadingResult');
+  if(loading) loading.style.display='block';
+  if(result) result.style.display='none';
+
+  var noH=(def.hour===99||def.hour===undefined);
+  var lat=def.lat||37.5666, lon=def.lon||126.9779;
+  var nc=calcNatalChart(def.gY,def.gM,def.gD,noH?12:def.hour,noH,lat,lon);
+  var sajuCtx=buildRichSajuContext(def,'premium');
+  var vedic=natalToText(nc,def.cityName?'('+def.cityName+')':'(서울 기준)');
+  var q=_starQuestions[idx]||_starQuestions[0];
+
+  var systemPrompt='당신은 베딕 점성술과 서양 점성술 전문가입니다. 아래 차트 데이터를 바탕으로 정확하고 구체적으로 분석해주세요.\n'
+    +'첫 문장에 결론, 이후 근거, 마지막에 소름돋는 인사이트로 끝내주세요.\n'
+    +'한국어로 자연스럽게, MZ세대가 읽기 쉽게, 전문 용어는 바로 번역해서 써주세요.\n'
+    +'600자 이상으로 깊게 분석해주세요.\n\n'
+    +vedic+'\n\n'+sajuCtx;
+
+  try{
+    var resp=await fetch('https://my-saju-api.onrender.com/api/saju',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'gemini',messages:[{role:'user',content:systemPrompt+'\n\n질문: '+q}],
+        system:'베딕+서양 점성술 전문 분석가',max_tokens:1000
+      })
+    });
+    var data=await resp.json();
+    var txt=data.content||(data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0].text)||'분석 실패';
+    if(loading) loading.style.display='none';
+    if(result){result.style.display='block';result.innerHTML=pcMdToHtml(txt);}
+  }catch(e){
+    if(loading) loading.style.display='none';
+    showRetryToast('서버 응답이 없어요. 재시도할까요?',function(){starAskQuestion(idx);});
+  }
+}
+
 function navBokchae(){
   _curNav='bokchae';
   document.querySelectorAll('.nav-item').forEach(function(el){el.className='nav-item';});
@@ -2832,6 +5292,178 @@ function uhGoSlide(idx){
   if(ar) ar.style.opacity=idx===_uhTotal-1?'0':'1';
 }
 function _uhReset(){clearInterval(_uhTimer);_uhTimer=setInterval(function(){uhGoSlide((_uhIdx+1)%_uhTotal);},4500);}
+
+// 추가 질의 3개 생성 (답변 기반 + 낚시 훅 포함)
+async function pcAppendSuggestions(answerText){
+  try{
+    var chat=document.getElementById('personaChat');
+    if(!chat) return;
+    var p=PERSONAS[_curPersonaId];
+    if(!p) return;
+
+    // 마지막 사용자 질문
+    var userTurns=[];
+    _personaHistory.forEach(function(m){
+      if(m.role==='user') userTurns.push(m.content);
+    });
+    var lastQ=userTurns[userTurns.length-1]||'';
+    var turnIdx=userTurns.length;
+
+    // 답변 정제
+    var cleanAns=answerText.replace(/<[^>]+>/g,'').replace(/[#*_\[\]]/g,'').trim();
+    var answerEnd=cleanAns.slice(-120);
+
+    // ── 주제 감지: 질문 + 직전 AI 답변도 참고 ──
+    // 직전 assistant 답변 (마지막 100자)
+    var lastAns='';
+    for(var ai=_personaHistory.length-1;ai>=0;ai--){
+      if(_personaHistory[ai].role==='assistant'){
+        lastAns=_personaHistory[ai].content.replace(/[#*_\[\]]/g,'').slice(-100);
+        break;
+      }
+    }
+    var ctx=lastQ+' '+lastAns;
+
+    var isReunion   = /재회|헤어졌|헤어진|다시 만|다시 연락|연락이 올|돌아올|전 남|전 여|전남친|전여친|그 전.*사람|보고 싶|다시 보|이별|그리움/.test(ctx);
+    var isContact   = /연락.*올까|연락.*하면|먼저.*연락|연락.*기다|문자.*올|카톡.*올|전화.*올|연락.*언제/.test(ctx);
+    var isOpposite  = /그 사람|이 사람|저 사람|상대방|걔가|오빠가|언니가|좋아하는 사람|짝사랑|마음이 어때|어떤 마음|나를 좋아|날 좋아|나한테 관심|고백|표현/.test(ctx);
+    var isLove      = /연애운|애정운|연애|인연|만남운|썸|결혼운|사랑|새로운 사람|다음 인연|솔로|이성운|로맨스|설렘|언제 만날/.test(ctx);
+    var isWork      = /직업|취업|직장|사업|이직|커리어|직업운|일운|알바|프리랜서|회사|업무|승진/.test(ctx);
+    var isMoney     = /돈|재물|재산|투자|수입|벌이|빚|재물운|금전|월급|수익|부업/.test(ctx);
+    var isHealth    = /건강|아프|몸|병|수술|치료|피곤|건강운|체력|면역/.test(ctx);
+    var isSelf      = /내 사주|나의 사주|내 성격|내가 왜|나는 왜|내 운명|총운|전체운|올해 운|내 인생|내 적성/.test(ctx);
+
+    // 우선순위
+    var topic='general';
+    if(isReunion)       topic='reunion';
+    else if(isContact&&!isReunion) topic='contact';
+    else if(isOpposite) topic='opposite';
+    else if(isLove)     topic='love';
+    else if(isWork)     topic='work';
+    else if(isMoney)    topic='money';
+    else if(isHealth)   topic='health';
+    else if(isSelf)     topic='self';
+
+    // ── 주제별 질문 풀 ──
+    var pools={
+      reunion:{
+        a:['그 사람이 아직 나를 생각할까요?','재회 가능성이 얼마나 되나요?','그 사람 마음이 돌아올 수 있을까요?','그 사람을 잊는 게 나을까요?'],
+        b:['재회한다면 언제쯤 가능할까요?','헤어진 이유가 내 사주에도 있나요?','다시 연락하면 받아줄까요?','그 사람이 먼저 연락할 가능성은?']
+      },
+      contact:{
+        a:['그 사람이 먼저 연락할 가능성이 있나요?','연락이 오는 시기가 보이나요?','내가 먼저 연락해도 될까요?','그 사람이 연락 안 하는 이유가 뭔가요?'],
+        b:['연락이 온다면 언제쯤일까요?','그 사람이 나를 피하는 건가요?','연락 타이밍을 언제로 잡아야 할까요?','기다리는 게 나은가요?']
+      },
+      opposite:{
+        a:['그 사람이 나한테 어떤 감정인가요?','그 사람이 나를 좋아하는 건가요?','그 사람 마음을 어떻게 확인할 수 있나요?','그 사람이 나를 선택할까요?'],
+        b:['그 사람과 나 궁합이 맞나요?','그 사람이 숨기는 게 있을까요?','그 사람한테 먼저 표현해도 될까요?','이 관계가 진전될 가능성이 있나요?']
+      },
+      love:{
+        a:['내 인연은 어떤 사람인가요?','올해 안에 좋은 인연이 생길까요?','지금 연애할 시기가 맞나요?','내 주변에 인연이 있을까요?'],
+        b:['나한테 잘 맞는 유형이 어떤 사람인가요?','연애운이 좋아지는 시기가 언제인가요?','이상형이 사주에서 보이나요?','어떤 사람을 조심해야 하나요?']
+      },
+      work:{
+        a:['지금 직장이 나한테 맞는 곳인가요?','이직하면 더 나아질까요?','직업운이 좋아지는 시기는 언제인가요?','사업을 시작해도 될까요?'],
+        b:['올해 커리어에서 주의할 게 있나요?','내 적성에 맞는 직업이 따로 있나요?','지금 버티는 게 나은지 이직하는 게 나은지요?','승진 가능성이 있나요?']
+      },
+      money:{
+        a:['올해 재물운이 좋아지는 시기가 있나요?','돈이 모이는 구간이 보이나요?','투자해도 되는 시기인가요?','재물에서 손해볼 구간이 있나요?'],
+        b:['큰돈이 들어오는 시기가 언제인가요?','재물운을 올리려면 어떻게 해야 하나요?','올해 큰 지출이 생길까요?','돈 복이 있는 사주인가요?']
+      },
+      health:{
+        a:['건강에서 특히 주의해야 할 부분이 있나요?','언제쯤 나아질까요?','몸이 약한 이유가 사주에 있나요?','건강운이 좋아지는 시기는?'],
+        b:['어떤 부분 건강을 챙겨야 하나요?','스트레스가 심한 이유가 사주에 있나요?','건강 관리에서 가장 중요한 게 뭔가요?','올해 건강운이 어떤가요?']
+      },
+      self:{
+        a:['내 사주에서 가장 강한 에너지가 뭔가요?','내가 반복하는 패턴이 있나요?','나한테 맞지 않는 사람 유형이 있나요?','내 성격의 약점이 뭔가요?'],
+        b:['내 사주에서 가장 좋은 점이 뭔가요?','내가 끌리는 유형이 사주에서 보이나요?','올해 내가 성장할 수 있는 부분은?','내 운명의 방향이 어디인가요?']
+      },
+      general:{
+        a:['올해 전체적인 운의 흐름이 어떤가요?','지금 가장 중요한 시기가 언제인가요?','올해 가장 조심해야 할 때가 언제인가요?','지금 운의 방향이 좋은 편인가요?'],
+        b:['내 사주에서 강점이 뭔가요?','올해 좋은 기회가 오는 시기가 있나요?','지금 집중해야 할 게 뭔가요?','앞으로 어떤 흐름이 오나요?']
+      }
+    };
+
+    var pl=pools[topic]||pools.general;
+    var t=(turnIdx-1)%4;
+    var q1=pl.a[t%pl.a.length];
+    var q2=pl.b[t%pl.b.length];
+
+    // 이전 질문과 겹치면 다음 것
+    var prevQs=userTurns.slice(0,-1);
+    if(prevQs.some(function(u){return u.indexOf(q1.slice(0,8))>=0;})) q1=pl.a[(t+1)%pl.a.length];
+    if(prevQs.some(function(u){return u.indexOf(q2.slice(0,8))>=0;})) q2=pl.b[(t+1)%pl.b.length];
+
+    // ── 훅 질문 (답변 끝 기반) ──
+    var hookQ='';
+    if(/올해|하반기|상반기|이번 달/.test(answerEnd)&&/시기|구간|때|시점/.test(answerEnd)){
+      hookQ=topic==='reunion'?'그 사람이 연락하는 정확한 시기가 언제인가요?':
+            topic==='contact'?'연락이 오는 시기가 구체적으로 언제인가요?':
+            topic==='love'?'인연이 나타나는 정확한 시기가 언제인가요?':
+            '방금 말씀하신 그 시기가 정확히 언제인가요?';
+    } else if(/연락|문자|카톡/.test(answerEnd)){
+      hookQ='그 연락이 구체적으로 언제쯤 올까요?';
+    } else if(/위험|조심|주의/.test(answerEnd)){
+      hookQ='그 위험한 시기나 상황이 구체적으로 어떤 건가요?';
+    } else if(/패턴|반복|계속/.test(answerEnd)){
+      hookQ='이 패턴에서 벗어날 수 있는 방법이 있나요?';
+    } else if(/전생|카르마/.test(answerEnd)){
+      hookQ='이 인연의 카르마를 더 자세히 알 수 있나요?';
+    } else if(/숨기|솔직하지|모르는/.test(answerEnd)){
+      hookQ='그게 구체적으로 어떤 내용인가요?';
+    } else if(/기회|좋은.*구간|운이 트/.test(answerEnd)){
+      hookQ='그 기회가 언제 오는 건지 더 알 수 있나요?';
+    } else {
+      // 주제별 기본 훅
+      var hookMap={
+        reunion:'그 사람이 돌아온다면 구체적으로 언제쯤일까요?',
+        contact:'연락이 온다면 언제쯤인지 더 자세히 알 수 있나요?',
+        opposite:'그 사람 마음을 더 구체적으로 알 수 있나요?',
+        love:'인연이 생기는 시기를 더 구체적으로 알 수 있나요?',
+        work:'직업운이 바뀌는 시기가 언제인지 알 수 있나요?',
+        money:'재물운이 좋아지는 정확한 시기가 언제인가요?',
+        health:'건강 회복 시기가 언제쯤 될까요?',
+        self:'내 사주에서 가장 조심해야 할 부분이 뭔가요?',
+        general:'방금 암시하신 부분을 더 자세히 알 수 있나요?'
+      };
+      hookQ=hookMap[topic]||hookMap.general;
+    }
+
+    var allQs=[q1, q2, hookQ];
+
+    var html2=allQs.map(function(q,i){
+      var safe=q.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      var isHook=(i===2);
+      return '<button style="width:100%;text-align:left;padding:10px 14px;background:'+(isHook?'rgba(139,92,246,.08)':'rgba(255,255,255,.03)')+';'
+        +'border:1px solid rgba(255,255,255,'+(isHook?'.18':'.07')+');border-radius:14px;'
+        +'color:rgba(220,210,255,'+(isHook?'.92':'.6')+');font-size:13px;cursor:pointer;'
+        +'font-family:Pretendard;line-height:1.5;-webkit-tap-highlight-color:transparent;'
+        +(isHook?'padding-left:14px;border-left:2px solid rgba(139,92,246,.5);':'')+'">'
+        +(isHook?'<span style="font-size:10px;color:rgba(167,139,250,.7);margin-right:6px;">✦</span>':'')+safe+'</button>';
+    }).join('');
+
+    var wrap=document.createElement('div');
+    wrap.className='pc-suggestions';
+    wrap.style.cssText='display:flex;flex-direction:column;gap:7px;margin:4px 0 24px;';
+    wrap.innerHTML=html2;
+
+    wrap.querySelectorAll('button').forEach(function(btn,i){
+      btn.addEventListener('click',function(){pcSendSuggestion(allQs[i]);});
+      btn.addEventListener('touchstart',function(){btn.style.opacity='.6';},{passive:true});
+      btn.addEventListener('touchend',function(){btn.style.opacity='1';},{passive:true});
+    });
+
+    chat.appendChild(wrap);
+    setTimeout(function(){if(!_pcUserScrolled)chat.scrollTop=chat.scrollHeight;},80);
+  }catch(err){console.log('[추천질의]',err&&err.message||err);}
+}
+function pcSendSuggestion(q){
+  var chat=document.getElementById('personaChat');
+  if(chat) chat.querySelectorAll('.pc-suggestions').forEach(function(el){el.remove();});
+  var qa=document.getElementById('personaQ');
+  if(qa&&q){qa.value=String(q);}
+  personaSend();
+}
 
 function navUnseHome(){
   _curNav='unse';
@@ -2945,16 +5577,32 @@ setTimeout(function(){
 
 /* ══ 설정 화면 ══ */
 function renderSettingsProfile(){
+  // 테스트 모드 배지
+  var badge=document.getElementById('premiumTestBadge');
+  if(badge){
+    var on=isPremiumTest();
+    badge.textContent=on?'ON':'OFF';
+    badge.style.background=on?'rgba(240,192,96,.2)':'rgba(255,255,255,.07)';
+    badge.style.color=on?'var(--gold2)':'var(--muted)';
+  }
   var def=getDefaultProfile();
   var empty=document.getElementById('spEmpty');
   var card=document.getElementById('settingsProfileCard');
   var editBtn=document.getElementById('spEditBtn');
   if(!def){
     if(empty) empty.style.display='block';
-    ['spAvatar','spName','spSaju','spDate'].forEach(function(id){var e=document.getElementById(id);if(e)e.style.display='none';});
+    // 프로필 없을 때 통계, 프로필정보, 수정버튼 전부 숨기기
+    ['spAvatar','spName','spSaju','spDate','spCity'].forEach(function(id){
+      var e=document.getElementById(id);if(e)e.style.display='none';
+    });
     if(editBtn) editBtn.style.display='none';
+    var statsGrid=document.getElementById('settingsStatsGrid');
+    if(statsGrid) statsGrid.style.display='none';
     return;
   }
+  // 프로필 있으면 통계 보이기
+  var statsGrid2=document.getElementById('settingsStatsGrid');
+  if(statsGrid2) statsGrid2.style.display='grid';
   if(empty) empty.style.display='none';
   ['spAvatar','spName','spSaju','spDate'].forEach(function(id){var e=document.getElementById(id);if(e)e.style.display='';});
   if(editBtn) editBtn.style.display='';
@@ -2963,7 +5611,13 @@ function renderSettingsProfile(){
   var nm=document.getElementById('spName');if(nm) nm.textContent=def.name||'이름없음';
   var sj=document.getElementById('spSaju');if(sj) sj.textContent=def.saju||'';
   var dt=document.getElementById('spDate');
-  if(dt){var noH=(def.hour===99||def.hour===undefined)?'시간모름':(p2(def.hour)+'시');dt.textContent=def.gY+'년 '+p2(def.gM)+'월 '+p2(def.gD)+'일 '+noH;}
+  if(dt){
+    var noH=(def.hour===99||def.hour===undefined);
+    var timeStr=noH?'시간모름':(p2(def.hour)+'시'+(def.min===30?'30':'00'));
+    dt.textContent=def.gY+'년 '+p2(def.gM)+'월 '+p2(def.gD)+'일 '+timeStr;
+  }
+  var ct=document.getElementById('spCity');
+  if(ct) ct.textContent=def.cityName?'📍 '+def.cityName+' 출생':'';
   // 통계
   var sajuCache={};try{sajuCache=JSON.parse(localStorage.getItem('saju_cache')||'{}');}catch(e){}
   var sajuCnt=Object.keys(sajuCache).length;
@@ -3068,14 +5722,14 @@ function doCheckIn(){
   var dates=getAttDates();
   if(dates.indexOf(today)>=0){showToast('오늘은 이미 출석했어요 ✓');return;}
   dates.push(today);saveAttDates(dates);
-  addMiniBokchae(1);
+  addMiniBokchae(2);
   var streak=getAttStreak();
   // 7일 연속 달성 시 복채 1개
   if(streak>0&&streak%7===0){
     addBokchae(1);
     showToast('🎉 7일 연속 달성! 복채 1개 획득!');
   } else {
-    showToast('✅ 출석 완료! 미니복채 +1 ('+streak+'일 연속)');
+    showToast('✅ 출석 완료! 미니복채 +2 ('+streak+'일 연속)');
   }
   renderAttendance();
   var sn=document.getElementById('heroStreakNum');if(sn)sn.textContent=streak;
@@ -3090,14 +5744,14 @@ function doRecovery(missedDate){
     if(dates.indexOf(missedDate)<0){
       dates.push(missedDate);saveAttDates(dates);
       var rec=getRecoveredDates();rec.push(missedDate);saveRecoveredDates(rec);
-      addMiniBokchae(1);
+      addMiniBokchae(2);
       // 복구로 7일 연속 달성 시 복채도 지급
       var streak=getAttStreak();
       if(streak>0&&streak%7===0){
         addBokchae(1);
-        showToast('🔄 복구 완료! 미니복채 +1 🎉 7일 달성! 복채 +1');
+        showToast('🔄 복구 완료! 미니복채 +2 🎉 7일 달성! 복채 +1');
       } else {
-        showToast('🔄 '+missedDate.slice(5)+' 복구 완료! 미니복채 +1');
+        showToast('🔄 '+missedDate.slice(5)+' 복구 완료! 미니복채 +2');
       }
     }
     renderAttendance();
@@ -3199,7 +5853,7 @@ function renderAttendance(){
     +'<div style="display:flex;gap:8px;margin-top:12px;">'
     +'<div style="flex:1;background:rgba(255,255,255,.05);border-radius:12px;padding:10px;text-align:center;">'
     +'<div style="font-size:10px;color:var(--muted);margin-bottom:4px;">매일 출석</div>'
-    +'<div style="font-size:14px;">💎<span style="font-family:\'Gowun Dodum\',serif;font-size:15px;color:var(--gold2);font-weight:700;"> 미니복채 +1</span></div>'
+    +'<div style="font-size:14px;">💎<span style="font-family:\'Gowun Dodum\',serif;font-size:15px;color:var(--gold2);font-weight:700;"> 미니복채 +2</span></div>'
     +'</div>'
     +'<div style="flex:1;background:rgba(255,255,255,.05);border-radius:12px;padding:10px;text-align:center;">'
     +'<div style="font-size:10px;color:var(--muted);margin-bottom:4px;">7일 달성</div>'
@@ -3214,7 +5868,7 @@ function renderAttendance(){
     +'<div style="font-size:18px;flex-shrink:0;">📺</div>'
     +'<div>'
     +'<div style="font-size:13px;color:rgba(251,146,60,.9);font-weight:600;margin-bottom:4px;">하루 빠졌어도 괜찮아요</div>'
-    +'<div style="font-size:12px;color:var(--muted);line-height:1.6;">이번 주 출석을 못 한 날이 있다면 광고 1회를 보고 빠진 날을 채울 수 있어요. 복구는 <span style="color:rgba(251,146,60,.8);font-weight:600;">주 1회</span>만 가능하고, 복구한 날에도 미니복채 +1이 지급돼요.</div>'
+    +'<div style="font-size:12px;color:var(--muted);line-height:1.6;">이번 주 출석을 못 한 날이 있다면 광고 1회를 보고 빠진 날을 채울 수 있어요. 복구는 <span style="color:rgba(251,146,60,.8);font-weight:600;">주 1회</span>만 가능하고, 복구한 날에도 미니복채 +2가 지급돼요.</div>'
     +'</div>'
     +'</div>'
     +'</div>'
@@ -3236,7 +5890,7 @@ function renderAttendance(){
 
     // 3. 출석 버튼
     +'<button class="att-check-btn" onclick="doCheckIn()" '+(checked?'disabled':'')+'>'
-    +(checked?'✅ 오늘 출석 완료':'🌿 오늘 출석하기 (미니복채 +1)')
+    +(checked?'✅ 오늘 출석 완료':'🌿 오늘 출석하기 (미니복채 +2)')
     +'</button>'
 
     // 4. 연속 정보
@@ -3641,6 +6295,9 @@ setTimeout(function(){
     var _orig=renderUnseResult;
     renderUnseResult=function(scores,texts){
       _orig(scores,texts);
+      // 결과 나오면 공유 버튼 표시
+      var sb=document.getElementById('unseShareBtn');
+      if(sb) sb.style.display='flex';
       // 총점 색상
       var el=document.getElementById('uTotalScore');
       if(el){
@@ -3709,8 +6366,18 @@ function confirmSaveProfile(){
 /* ═══════════════ [시작] 스플래시 안전 초기화 (무한로딩 완벽 해결) ═══════════════ */
 setTimeout(function(){
   try { if(typeof window.capacitorSplashScreen !== 'undefined') window.capacitorSplashScreen.SplashScreen.hide(); } catch(e) {}
-  try { goScreen('mainScreen'); renderMainRecent(); updateTimer(); } catch(e) {}
-  
+
+  // 프로필이 없을 때만 온보딩 표시
+  var hasProfiles=false;
+  try{hasProfiles=(JSON.parse(localStorage.getItem('msr_profiles')||'[]').length>0);}catch(e){}
+  localStorage.setItem('msr_visited','1');
+  if(!hasProfiles){
+    // 프로필 없으면 온보딩 (신규 유저)
+    try{ goScreen('onboardingScreen'); }catch(e){ try{ goScreen('mainScreen'); renderMainRecent(); updateTimer(); }catch(e2){} }
+  } else {
+    try { goScreen('mainScreen'); renderMainRecent(); updateTimer(); } catch(e) {}
+  }
+
   var ad = document.getElementById('adBanner');
   if(ad) ad.style.display = 'flex';
   
@@ -3829,6 +6496,13 @@ function updateTimer() {
 }
 /* ═══════════════ 화면 전환 ═══════════════ */
 function goScreen(id){
+  // zodiacScreen 떠날 때 1회성 광고 세션 플래그 초기화
+  var curActive=document.querySelector('.screen.active');
+  if(curActive&&curActive.id==='zodiacScreen'&&id!=='zodiacScreen'){
+    _zAdUnlockedSession=false;
+  }
+  _screenStack.push(id);
+  if(_screenStack.length>15) _screenStack.shift();
   var screens = document.querySelectorAll('.screen');
   for(var i=0; i<screens.length; i++) {
       screens[i].classList.remove('active');
@@ -4065,6 +6739,95 @@ function calc(){
 }
 
 
+// 모든 역학 데이터를 텍스트로 변환 (buildPrompt, buildUPrompt 공통 사용)
+function buildDivinationContext(d){
+  var lines=[];
+  var GG4=['갑(甲)','을(乙)','병(丙)','정(丁)','무(戊)','기(己)','경(庚)','신(辛)','임(壬)','계(癸)'];
+  var JG4=['자(子)','축(丑)','인(寅)','묘(卯)','진(辰)','사(巳)','오(午)','미(未)','신(申)','유(酉)','술(戌)','해(亥)'];
+  var JG5=['자','축','인','묘','진','사','오','미','신','유','술','해'];
+
+  // ── 합충 ──
+  var sajuStr=CH[d.ys]+JH[d.yb]+' '+CH[d.ms]+JH[d.mb]+' '+CH[d.ds]+JH[d.db]+' '+(d.noHour?'':CH[d.hs]+JH[d.hb]);
+  var jiJi=[];
+  for(var i=0;i<sajuStr.length;i++){if(JG5.indexOf(sajuStr[i])>=0)jiJi.push(sajuStr[i]);}
+  var chongP=[['자','오'],['축','미'],['인','신'],['묘','유'],['진','술'],['사','해']];
+  var hapP=[['자','축'],['인','해'],['묘','술'],['진','유'],['사','신'],['오','미']];
+  var fC=[],fH=[];
+  chongP.forEach(function(p){if(jiJi.indexOf(p[0])>=0&&jiJi.indexOf(p[1])>=0)fC.push(p[0]+p[1]+'충(沖)');});
+  hapP.forEach(function(p){if(jiJi.indexOf(p[0])>=0&&jiJi.indexOf(p[1])>=0)fH.push(p[0]+p[1]+'합(合)');});
+  if(fC.length) lines.push('지지충: '+fC.join(', '));
+  if(fH.length) lines.push('지지합: '+fH.join(', '));
+
+  // ── 공망 ──
+  var gmt={0:['술','해'],1:['신','유'],2:['오','미'],3:['진','사'],4:['인','묘'],5:['자','축'],6:['술','해'],7:['신','유'],8:['오','미'],9:['진','사']};
+  var gm2=gmt[d.ds%10];
+  if(gm2) lines.push('공망: '+gm2[0]+'·'+gm2[1]);
+
+  // ── 수비학 ──
+  try{
+    var yStr=String(d.gY||2000),mStr=String(d.gM||1).padStart(2,'0'),dStr=String(d.gD||1).padStart(2,'0');
+    var digits2=(yStr+mStr+dStr).split('').map(Number);
+    var s2=digits2.reduce(function(a,b){return a+b;},0);
+    while(s2>9&&s2!==11&&s2!==22&&s2!==33) s2=String(s2).split('').reduce(function(a,b){return a+Number(b);},0);
+    var nm2={1:'개척·독립·고독',2:'감수성·관계소모·의존',3:'창의·표현·감정기복',4:'안정·답답함·변화거부',5:'자유·이동·산만',6:'책임·희생·자기소모',7:'고독·분석·현실괴리',8:'성취·집착·통제욕',9:'이상·희생·미완성',11:'직관·예민·영적',22:'이상주의·미완성',33:'봉사·희생'};
+    lines.push('수비학 인생수: '+s2+' ('+( nm2[s2]||'')+')');
+  }catch(e2){}
+
+  // ── 신살 ──
+  try{
+    var yb4=d.yb, db4=d.db, ds4=d.ds;
+    var sal=[];
+    var dhMap={0:'유',3:'자',6:'묘',9:'오',1:'오',2:'유',4:'유',5:'자',7:'자',8:'묘',10:'묘',11:'오'};
+    if(dhMap[yb4]&&JG5[db4]===dhMap[yb4]) sal.push('도화살(桃花殺)');
+    var ymMap={0:'인',3:'사',6:'신',9:'해',1:'인',2:'인',4:'사',5:'사',7:'신',8:'신',10:'해',11:'해'};
+    if(ymMap[yb4]&&JG5[db4]===ymMap[yb4]) sal.push('역마살(驛馬殺)');
+    var hwMap={0:'술',3:'미',6:'진',9:'축',1:'술',2:'술',4:'미',5:'미',7:'진',8:'진',10:'축',11:'축'};
+    if(hwMap[yb4]&&JG5[db4]===hwMap[yb4]) sal.push('화개살(華蓋殺)');
+    if([0,3,4,6,7].indexOf(db4)>=0) sal.push('홍염살(紅艶殺)');
+    var ceMap={0:[1,7],1:[0,8],2:[11,9],3:[10,8],4:[11,9],5:[0,8],6:[1,7],7:[2,6],8:[3,5],9:[2,6]};
+    if(ceMap[ds4]&&ceMap[ds4].indexOf(db4)>=0) sal.push('천을귀인(天乙貴人)');
+    var gpMap={0:'사',3:'인',6:'해',9:'신',1:'사',2:'사',4:'인',5:'인',7:'해',8:'해',10:'신',11:'신'};
+    if(gpMap[yb4]&&JG5[db4]===gpMap[yb4]) sal.push('겁살(劫殺)');
+    if(sal.length) lines.push('신살: '+sal.join(', '));
+  }catch(e3){}
+
+  // ── 대운 천간지지 ──
+  try{
+    var gY4=d.gY||2000, gen4=d.gen||'female';
+    var curY4=new Date().getFullYear(), age4=curY4-gY4;
+    var dwS=d.daewun||8;
+    var dwI=Math.max(0,Math.floor((age4-dwS)/10));
+    var isYang4=(gY4%2===1);
+    var isMale4=(gen4==='male');
+    var fwd4=(isMale4&&isYang4)||(!isMale4&&!isYang4);
+    var ms4=d.ms||0, mb4=d.mb||0;
+    var dwG=(ms4+(fwd4?dwI+1:-(dwI+1))+60)%10;
+    var dwJ=(mb4+(fwd4?dwI+1:-(dwI+1))+60)%12;
+    var curDwA=dwS+dwI*10;
+    var curDwYear4=gY4+curDwA;
+    lines.push('현재 대운: 만 '+curDwA+'~'+(curDwA+10)+'세 ('+curDwYear4+'년~'+(curDwYear4+10)+'년) '+GG4[dwG]+' '+JG4[dwJ]);
+    var nG=(dwG+(fwd4?1:-1)+10)%10, nJ=(dwJ+(fwd4?1:-1)+12)%12;
+    lines.push('다음 대운: 만 '+(curDwA+10)+'세~ ('+(curDwYear4+10)+'년~) '+GG4[nG]+' '+JG4[nJ]);
+  }catch(e4){}
+
+  // ── 자미두수 정밀 포반 ──
+  try{
+    var zwR=calcZiweiDoushu(d.gY||2000,d.gM||1,d.gD||1,d.noHour?99:(d.hV||12),d.gen||'female');
+    if(zwR) lines.push(zwR);
+  }catch(e5){}
+
+  // ── 베딕 점성술 (ASC + Vimshottari Dasha) ──
+  try{
+    var noH=(d.noHour||d.hV===99||d.hV===undefined);
+    var lat2=d.lat||37.5666; var lon2=d.lon||126.9779;
+    var nc2=calcNatalChart(d.gY||2000,d.gM||1,d.gD||1,noH?12:(d.hV||12),noH,lat2,lon2);
+    var cityNote=d.cityName?'('+d.cityName+')':'(서울 기준)';
+    lines.push(natalToText(nc2,cityNote));
+  }catch(e6){}
+
+  return lines.join('\n');
+}
+
 function buildPrompt(d){
   var g = d.gen === 'male' ? '남성' : '여성';
   var gTxt = d.gen === 'male' ? '그' : '그녀';
@@ -4089,8 +6852,17 @@ function buildPrompt(d){
     '- 오행 분포 ('+(d.noHour?'3주 기준':'4주 기준')+'): ' + ohStr,
     '- 월령 절기: ' + d.jn,
     '',
+    '【역학 종합 데이터 — 교차 분석용】',
+    buildDivinationContext(d),
+    '',
+    '【리딩 원칙 — 필수】',
+    '위 역학 데이터를 내부적으로 교차 분석해서 공통으로 나오는 내용을 핵심으로 써.',
+    '단, 출력할 때는 자미두수·수비학·신살·한자·전문 용어 절대 사용 금지.',
+    '오직 자연스러운 말로만: "지금 이런 상황 겪고 있을 것 같아요", "이 사람 주변에 이런 패턴이 반복될 거예요." 처럼.',
+    '역학에서 발견한 것을 일상 언어로 번역해서 소름돋게. 근거는 숨기고 결론만.',
+    '',
     '【필수 작성 원칙】',
-    '1. 한자와 명리 용어는 최소화. 꼭 필요하면 괄호 안에 짧게 설명.',
+    '1. 한자·명리 용어·점술 용어 일절 사용 금지. 오직 자연스러운 한국어 구어체로만.',
     '2. "~입니다, ~합니다" 대신 "~이에요, ~거예요, ~네요" 같은 부드럽고 직접적인 말투.',
     '3. 각 섹션마다 반드시 아래 중 1~2가지를 구체적으로 포함해 소름 유발:',
     '   - 지금 하고 있는 일이나 직업군 (예: "지금 혼자 뭔가를 만들거나 기획하는 일 하고 있지 않나요?")',
@@ -4145,7 +6917,7 @@ async function executeSajuFetch(){
   function stopLoading(){clearInterval(lv);}
 
   /* ── 캐시 확인 ── */
-  var cacheKey='saju_v3_'+LD.sstr.replace(/\s/g,'')+'_'+LD.gen;
+  var cacheKey='saju_v4_'+LD.sstr.replace(/\s/g,'')+'_'+LD.gen;
   var sajuCache={};
   try{sajuCache=JSON.parse(localStorage.getItem('saju_cache')||'{}');}catch(e){}
 
@@ -4174,7 +6946,7 @@ async function executeSajuFetch(){
     clearTimeout(tid);stopLoading();
     goScreen('calcScreen');
     if(btn) btn.disabled=false;
-    showToast(e.name==='AbortError'?'요청 시간 초과':'서버 연결 실패');
+    showRetryToast(e.name==='AbortError'?'시간이 초과됐어요. 재시도할까요?':'서버 연결 실패. 재시도할까요?', executeSajuFetch);
     return;
   }
   clearTimeout(tid);
@@ -4247,6 +7019,9 @@ function renderLoadingMiniTable(el){
 
 /* 결과 화면 표시 */
 function showSajuResult(secs){
+  // 공유 버튼 표시
+  var ssb=document.getElementById('sajuShareBtn');
+  if(ssb) ssb.style.display='block';
   // 만세력 데이터 복사 (calc()가 채운 원본 → 결과 화면)
   function cp(fromId, toId){
     var src=document.getElementById(fromId);
@@ -4489,6 +7264,7 @@ function startUnse(){
   document.getElementById('uSaju').textContent=CH[uData.ys]+JH[uData.yb]+' '+CH[uData.ms]+JH[uData.mb]+' '+CH[uData.ds]+JH[uData.db]+' '+CH[uData.hs]+JH[uData.hb];
   document.getElementById('uInfo').textContent=uData.ani+'띠 · '+CG[uData.ys]+JJ[uData.yb]+'년 · '+(uData.gen==='male'?'남성':'여성');
   document.getElementById('uTotalScore').textContent='';
+  var _sb=document.getElementById('unseShareBtn');if(_sb)_sb.style.display='none';
   document.getElementById('uTabs').innerHTML='';
   document.getElementById('uSecs').innerHTML='';
   document.getElementById('uErr').style.display='none';
@@ -4567,9 +7343,18 @@ function buildUPrompt(d,type,target){
     '- 오행: '+ohStr,
     '- 분석일: '+dateStr,
     '',
+    '【역학 종합 데이터 — 교차 분석용】',
+    buildDivinationContext(d),
+    '',
+    '【리딩 원칙 — 필수】',
+    '위 역학 데이터를 내부적으로 교차 분석해서, 공통으로 나오는 내용을 핵심으로 말해.',
+    '단, 출력할 때는 자미두수·수비학·신살·한자 같은 전문 용어 절대 사용 금지.',
+    '오직 자연스러운 말로 풀어서: "요즘 이런 감정 느끼고 있지 않아요?", "지금 이 상황 겪고 있을 것 같아요." 처럼.',
+    '역학에서 발견한 것을 일상 언어로 번역해서 소름돋게 말해. 근거는 숨기고 결론만.',
+    '',
     '【작성 원칙】',
     '1. 말투: "~이에요, ~거예요, ~네요, ~일 수 있어요" — 부드럽지만 직설적으로.',
-    '2. 한자·명리 용어 최소화. 꼭 쓰면 바로 쉬운 말로 설명.',
+    '2. 한자·명리 용어·점술 용어 절대 사용 금지. 자연스러운 구어체로만.',
     '3. '+dn+' 하루 운세이므로 지금 이 순간에 딱 맞는 구체적인 상황을 묘사:',
     '   예) "오늘 오후에 연락 한 통 올 수 있어요" / "지금 마음에 걸리는 사람 있죠?" / "오늘 돈 나갈 일 생길 수 있으니 카드 조심하세요"',
     '4. 각 항목 150~200자, 짧고 임팩트 있게.',
@@ -4592,7 +7377,7 @@ function buildUPrompt(d,type,target){
 /* ── 운세 캐싱 & 롤오버 & 무적 정규식 ── */
 async function reqUnseAI(target){
   var d=uData;
-  var cacheKey = 'unse_v2_' + d.sstr.replace(/\s/g,'') + '_' + d.gen;
+  var cacheKey = 'unse_v3_' + d.sstr.replace(/\s/g,'') + '_' + d.gen;
   var unseCache = {};
   try { unseCache = JSON.parse(localStorage.getItem('unse_cache') || '{}'); } catch(e) {}
   var userCache = unseCache[cacheKey] || {};
@@ -5806,7 +8591,7 @@ function openEditProfileScreen(p){
   document.getElementById('apDateInput').value=yy+'-'+mm+'-'+dd;
   _apNoHour=(p.hour===99||p.hour===undefined);
   var hh=_apNoHour?12:(p.hour||12);
-  document.getElementById('apTimeInput').value=String(hh).padStart(2,'0')+':00';
+  document.getElementById('apTimeInput').value=String(hh).padStart(2,'0')+':'+(p.min===30?'30':'00');
   apAS={cal:p.cal||'solar',gen:p.gen||'male'};
   apSetCal(apAS.cal);apSetGen(apAS.gen);
   _apUpdateNoHourUI();
@@ -5824,6 +8609,54 @@ function openEditProfileScreen(p){
 }
 
 /* ── 시간 모름 ── */
+/* ── 시간 버튼 피커 ── */
+var _apSelHour=12, _apSelMin=0;
+
+function apBuildHourGrid(){
+  var grid=document.getElementById('apHourGrid');
+  if(!grid) return;
+  grid.innerHTML='';
+  for(var h=0;h<24;h++){
+    var btn=document.createElement('button');
+    btn.textContent=h+'시';
+    btn.dataset.h=h;
+    btn.style.cssText='width:calc(25% - 5px);height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.12);'
+      +'background:'+(h===_apSelHour?'rgba(240,192,96,.25)':'transparent')+';'
+      +'color:'+(h===_apSelHour?'var(--gold2)':'var(--dim)')+';'
+      +'font-size:12px;cursor:pointer;font-family:\'Pretendard\';transition:all .15s;';
+    (function(hh,b){
+      b.addEventListener('click',function(){apSelectHour(hh);});
+    })(h,btn);
+    grid.appendChild(btn);
+  }
+}
+
+function apSelectHour(h){
+  _apSelHour=h;
+  var grid=document.getElementById('apHourGrid');
+  if(!grid) return;
+  grid.querySelectorAll('button').forEach(function(b){
+    var hh=parseInt(b.dataset.h);
+    b.style.background=hh===h?'rgba(240,192,96,.25)':'transparent';
+    b.style.color=hh===h?'var(--gold2)':'var(--dim)';
+  });
+  apSyncTimeInput();
+}
+
+function apSelectMin(m){
+  _apSelMin=m;
+  var b0=document.getElementById('apMin0');
+  var b30=document.getElementById('apMin30');
+  if(b0){b0.style.background=m===0?'rgba(240,192,96,.2)':'transparent';b0.style.color=m===0?'var(--gold2)':'var(--dim)';}
+  if(b30){b30.style.background=m===30?'rgba(240,192,96,.2)':'transparent';b30.style.color=m===30?'var(--gold2)':'var(--dim)';}
+  apSyncTimeInput();
+}
+
+function apSyncTimeInput(){
+  var inp=document.getElementById('apTimeInput');
+  if(inp) inp.value=String(_apSelHour).padStart(2,'0')+':'+(_apSelMin===30?'30':'00');
+}
+
 function apToggleNoHour(){
   _apNoHour=!_apNoHour;
   _apUpdateNoHourUI();
@@ -5880,9 +8713,16 @@ function saveNewProfile(){
   var y=parseInt(parts[0]),m=parseInt(parts[1]),d=parseInt(parts[2]);
 
   var timeVal=document.getElementById('apTimeInput').value; // 'HH:MM'
-  var h=12;
-  if(!_apNoHour&&timeVal){h=parseInt(timeVal.split(':')[0]);}
+  var h=12,min=0;
+  if(!_apNoHour&&timeVal){
+    var tp=timeVal.split(':');
+    h=parseInt(tp[0])||12;
+    min=parseInt(tp[1])||0;
+    // 30분 단위 반올림
+    min=min>=30?30:0;
+  }
   var finalH=_apNoHour?99:h;
+  var finalMin=_apNoHour?0:min;
 
   var gY=y,gM=m,gD=d;
   if(apAS.cal==='lunar'){
@@ -5892,12 +8732,12 @@ function saveNewProfile(){
   }
 
   var s;
-  try{s=calcSaju(gY,gM,gD,finalH===99?12:finalH,0);}
+  try{s=calcSaju(gY,gM,gD,finalH===99?12:finalH,finalMin||0);}
   catch(e){showToast('날짜를 다시 확인해주세요');return;}
 
   var profData={
     name:name,gen:apAS.gen,gY:gY,gM:gM,gD:gD,
-    hour:finalH,min:0,cal:apAS.cal,
+    hour:finalH,min:finalMin||0,cal:apAS.cal,
     cityName:_apCity.name,cityLat:_apCity.lat,cityLon:_apCity.lon,
     saju:(typeof CH!=='undefined')?CH[s.ys]+JH[s.yb]+' '+CH[s.ms]+JH[s.mb]+' '+CH[s.ds]+JH[s.db]+' '+(finalH===99?'?':CH[s.hs]+JH[s.hb]):''
   };

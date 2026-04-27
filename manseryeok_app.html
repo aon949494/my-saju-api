@@ -30,8 +30,8 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Preten
 
 /* ═══════════════ 각 화면별 디자인 ═══════════════ */
 #splash{display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);z-index:100}
-.sp-sym{font-size:44px;letter-spacing:10px;color:var(--gold);font-family:'Gowun Dodum',serif;font-weight:300;animation:fadeUp 1s ease forwards;opacity:0}
-.sp-ttl{font-family:'Gowun Dodum',serif;font-size:30px;font-weight:700;color:var(--gold2);letter-spacing:6px;margin-top:10px;animation:fadeUp 1s .3s ease forwards;opacity:0}
+.sp-sym{font-size:44px;letter-spacing:10px;color:var(--gold);font-family:Gowun Dodum,serif;font-weight:300;animation:fadeUp 1s ease forwards;opacity:0}
+.sp-ttl{font-family:Gowun Dodum,serif;font-size:30px;font-weight:700;color:var(--gold2);letter-spacing:6px;margin-top:10px;animation:fadeUp 1s .3s ease forwards;opacity:0}
 .sp-sub{font-size:11px;color:var(--muted);letter-spacing:3px;margin-top:8px;animation:fadeUp 1s .6s ease forwards;opacity:0}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
@@ -39,8 +39,8 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Preten
 #mainScreen{z-index:10}
 .main-hdr{text-align:center;padding:52px 24px 24px}
 .main-hdr::after{content:'';display:block;width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:16px auto 0}
-.main-sym{font-size:20px;letter-spacing:6px;color:var(--gold);font-family:'Gowun Dodum',serif;opacity:.7;margin-bottom:8px}
-.main-ttl{font-family:'Gowun Dodum',serif;font-size:28px;font-weight:700;color:var(--gold2);letter-spacing:5px}
+.main-sym{font-size:20px;letter-spacing:6px;color:var(--gold);font-family:Gowun Dodum,serif;opacity:.7;margin-bottom:8px}
+.main-ttl{font-family:Gowun Dodum,serif;font-size:28px;font-weight:700;color:var(--gold2);letter-spacing:5px}
 .main-sub{font-size:11px;color:var(--muted);letter-spacing:2px;margin-top:6px}
 .msec{padding:0 16px;margin-bottom:20px}
 .msec-lbl{font-size:10px;color:var(--muted);letter-spacing:3px;margin-bottom:10px;padding-left:2px}
@@ -51,13 +51,13 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Preten
 .mc-badge{position:absolute;top:10px;right:10px;font-size:9px;background:rgba(200,169,110,.2);color:var(--gold);padding:2px 7px;border-radius:8px;letter-spacing:1px}
 .mc-ico{font-size:26px;margin-bottom:8px;display:block}
 .mc-ico-lg{font-size:34px;flex-shrink:0}
-.mc-ttl{font-family:'Gowun Dodum',serif;font-size:15px;font-weight:600;color:var(--gold2);letter-spacing:1px;margin-bottom:3px}
-.mc-ttl-lg{font-family:'Gowun Dodum',serif;font-size:17px;font-weight:700;color:var(--gold2);letter-spacing:2px;margin-bottom:4px}
+.mc-ttl{font-family:Gowun Dodum,serif;font-size:15px;font-weight:600;color:var(--gold2);letter-spacing:1px;margin-bottom:3px}
+.mc-ttl-lg{font-family:Gowun Dodum,serif;font-size:17px;font-weight:700;color:var(--gold2);letter-spacing:2px;margin-bottom:4px}
 .mc-desc{font-size:11px;color:var(--dim);line-height:1.6}
 .mc-arr{position:absolute;right:14px;bottom:14px;font-size:16px;color:var(--muted)}
 .rec-card{background:var(--bg2);border:1px solid var(--gb);border-radius:12px;padding:12px 16px;margin-bottom:8px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .2s}
 .rec-card:active{background:var(--bg3)}
-.rec-saju{font-family:'Gowun Dodum',serif;font-size:15px;color:var(--gold2);letter-spacing:4px;margin-bottom:3px}
+.rec-saju{font-family:Gowun Dodum,serif;font-size:15px;color:var(--gold2);letter-spacing:4px;margin-bottom:3px}
 .rec-date{font-size:11px;color:var(--dim)}
 .rec-gen{font-size:11px;padding:3px 8px;border-radius:10px}
 .rec-gen.m{background:rgba(74,126,200,.2);color:#7ab0f0}
@@ -65,7 +65,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Preten
 
 /* 만세력 기본 UI */
 .hdr{text-align:center;padding:32px 24px 16px}
-.hdr-ttl{font-family:'Gowun Dodum',serif;font-size:22px;font-weight:600;color:var(--gold2);letter-spacing:4px}
+.hdr-ttl{font-family:Gowun Dodum,serif;font-size:22px;font-weight:600;color:var(--gold2);letter-spacing:4px}
 .card{margin:0 16px 14px;background:var(--bg2);border:1px solid var(--gb);border-radius:16px;overflow:hidden}
 .srow{display:flex;justify-content:space-between;padding:14px 16px 8px;gap:10px}
 .tg{display:flex;background:var(--bg3);border:1px solid var(--gb);border-radius:10px;overflow:hidden;flex:1}
@@ -85,11 +85,11 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Preten
 .cc{flex:1;width:100%;overflow:hidden;cursor:grab;touch-action:none}
 .cc:active{cursor:grabbing}
 .ci{will-change:transform}
-.citem{height:var(--ih);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--dim);font-family:'Gowun Dodum',serif;font-weight:300;user-select:none;transition:color .15s,font-size .15s}
+.citem{height:var(--ih);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--dim);font-family:Gowun Dodum,serif;font-weight:300;user-select:none;transition:color .15s,font-size .15s}
 .citem.sel{color:var(--gold2);font-size:17px;font-weight:600}
 .citem.nr{color:rgba(240,234,216,0.7)}
 .bw{padding:2px 16px 14px}
-.bcalc{width:100%;height:52px;background:linear-gradient(135deg,#8b7340,#c8a96e,#8b7340);border:none;border-radius:12px;color:#1a1208;font-family:'Gowun Dodum',serif;font-size:16px;font-weight:700;letter-spacing:4px;cursor:pointer;transition:transform .1s}
+.bcalc{width:100%;height:52px;background:linear-gradient(135deg,#8b7340,#c8a96e,#8b7340);border:none;border-radius:12px;color:#1a1208;font-family:Gowun Dodum,serif;font-size:16px;font-weight:700;letter-spacing:4px;cursor:pointer;transition:transform .1s}
 .bcalc:active{transform:scale(.98)}
 .result{display:none;margin:0 16px 16px}
 .result.show{display:block;animation:fu .5s ease}
@@ -106,7 +106,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Preten
 .sg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
 .sc{background:var(--bg3);border:1px solid var(--gb);border-radius:12px;padding:10px 4px;text-align:center}
 .scl{font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:6px}
-.shj{font-family:'Gowun Dodum',serif;font-size:20px;color:var(--text);line-height:1.3;margin-bottom:4px}
+.shj{font-family:Gowun Dodum,serif;font-size:20px;color:var(--text);line-height:1.3;margin-bottom:4px}
 .shg{font-size:11px;color:var(--dim);letter-spacing:1px}
 .soh{font-size:10px;margin-top:7px;display:flex;flex-direction:column;gap:3px;align-items:center}
 .tag{display:inline-block;padding:2px 5px;border-radius:4px;font-size:10px}
@@ -114,7 +114,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Preten
 .twd{background:rgba(60,160,80,.2);color:#80d090}.tfi{background:rgba(220,80,60,.2);color:#f09080}
 .tea{background:rgba(180,140,60,.2);color:#d4b870}.tme{background:rgba(180,180,200,.2);color:#c8c8e0}
 .twa{background:rgba(60,120,200,.2);color:#80a8e8}
-.s1l{text-align:center;padding:12px;background:var(--bg3);border:1px solid var(--gb);border-radius:12px;font-family:'Gowun Dodum',serif;font-size:19px;letter-spacing:6px;color:var(--gold2)}
+.s1l{text-align:center;padding:12px;background:var(--bg3);border:1px solid var(--gb);border-radius:12px;font-family:Gowun Dodum,serif;font-size:19px;letter-spacing:6px;color:var(--gold2)}
 .s1l span{font-size:11px;color:var(--muted);display:block;letter-spacing:8px;margin-top:5px}
 .ohw{background:var(--bg3);border:1px solid var(--gb);border-radius:12px;padding:12px 16px;margin-bottom:14px}
 .oht{font-size:11px;color:var(--gold);letter-spacing:2px;margin-bottom:10px}
@@ -124,7 +124,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Preten
 .ohbg{flex:1;height:6px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden}
 .ohf{height:100%;border-radius:3px;transition:width .6s ease}
 .ohc{font-size:11px;color:var(--muted);width:16px;text-align:right}
-.bai{width:100%;height:48px;background:transparent;border:1px solid var(--gb);border-radius:12px;color:var(--gold);font-family:'Gowun Dodum',serif;font-size:14px;font-weight:600;letter-spacing:3px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.bai{width:100%;height:48px;background:transparent;border:1px solid var(--gb);border-radius:12px;color:var(--gold);font-family:Gowun Dodum,serif;font-size:14px;font-weight:600;letter-spacing:3px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
 .bai:hover{background:rgba(200,169,110,0.08);border-color:var(--gold)}
 .bai:active{transform:scale(.98)}
 .bai:disabled{opacity:.5;cursor:not-allowed}
@@ -136,7 +136,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Preten
 .aitab.on{background:rgba(200,169,110,0.15);color:var(--gold2);border-color:var(--gold)}
 .aisec{display:none;background:var(--bg3);border:1px solid var(--gb);border-radius:14px;padding:18px 16px}
 .aisec.show{display:block;animation:fu .3s ease}
-.aist{font-family:'Gowun Dodum',serif;font-size:14px;color:var(--gold);letter-spacing:2px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(200,169,110,0.15)}
+.aist{font-family:Gowun Dodum,serif;font-size:14px;color:var(--gold);letter-spacing:2px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(200,169,110,0.15)}
 .aitxt{font-size:14px;line-height:1.9;color:var(--dim);word-break:keep-all;white-space:pre-wrap}
 /* ── 신년운세 ── */
 .calctab-wrap{display:flex;background:var(--bg3);border:1px solid var(--gb);border-radius:10px;overflow:hidden;margin:0 16px 10px}
@@ -162,7 +162,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Preten
 .hcl{flex:1;min-width:0}
 .hcd{font-size:12px;color:var(--dim);margin-bottom:3px}
 .hclu{font-size:11px;color:rgba(200,169,110,.6);margin-bottom:3px}
-.hcs{font-family:'Gowun Dodum',serif;font-size:15px;color:var(--gold2);letter-spacing:4px}
+.hcs{font-family:Gowun Dodum,serif;font-size:15px;color:var(--gold2);letter-spacing:4px}
 .hcb{font-size:11px;padding:3px 8px;border-radius:10px;flex-shrink:0}
 .hcb.m{background:rgba(74,126,200,.2);color:#7ab0f0}
 .hcb.f{background:rgba(200,74,126,.2);color:#f07ab0}
@@ -174,7 +174,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Preten
 .topbar{display:flex;align-items:center;padding:16px 16px 8px;gap:12px;max-width:420px;margin:0 auto}
 .back-btn{width:36px;height:36px;background:transparent;border:1px solid var(--gb);border-radius:10px;color:var(--gold);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1}
 .back-btn:active{background:var(--bg3)}
-.topbar-ttl{font-family:'Gowun Dodum',serif;font-size:16px;color:var(--gold2);letter-spacing:3px}
+.topbar-ttl{font-family:Gowun Dodum,serif;font-size:16px;color:var(--gold2);letter-spacing:3px}
 
 /* 운세 탭 및 레이더 */
 .unse-tab-wrap{display:flex;background:var(--bg3);border:1px solid var(--gb);border-radius:10px;overflow:hidden}
@@ -183,38 +183,46 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Preten
 .sl-item{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--dim)}
 .sl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
+
+/* ── 타로 스텝 페이지 ── */
+.t-step-page{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.t-step-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);transition:all .3s;}
+.t-step-dot.on{background:var(--gold2);width:16px;border-radius:3px;}
 /* ── 타로 카드 ── */
-.t-card-wrap{flex-shrink:0;cursor:pointer;perspective:600px;width:64px}
-.t-card-inner{width:64px;height:96px;position:relative;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.t-card-wrap{flex-shrink:0;display:inline-block;cursor:pointer;perspective:1000px;width:80px;height:130px;transition:transform .25s ease;position:relative;margin-left:-46px;vertical-align:bottom}.t-card-wrap:first-child{margin-left:0!important}
+.t-card-wrap:active{transform:scale(.93)}
+.t-card-inner{width:80px;height:130px;position:relative;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.25,.8,.25,1);display:block}
 .t-card-wrap.flipped .t-card-inner{transform:rotateY(180deg)}
-.t-card-back,.t-card-front{position:absolute;inset:0;border-radius:10px;backface-visibility:hidden;display:flex;align-items:center;justify-content:center}
-.t-card-back{background:linear-gradient(135deg,#1a0a2e,#2a1050);border:1px solid rgba(200,169,110,0.4)}
-.t-card-back-pattern{font-size:20px;opacity:.7}
-.t-card-front{background:var(--bg2);border:1px solid var(--gb);transform:rotateY(180deg);flex-direction:column;padding:4px 2px;text-align:center}
-.t-card-front.selected-card{border-color:var(--gold);background:rgba(200,169,110,0.12)}
-.t-card-front.reversed{transform:rotateY(180deg)}.t-card-front.reversed svg{transform:rotate(180deg)}
-.t-card-num{font-size:9px;color:var(--muted);margin-bottom:2px}
-.t-card-ico{font-size:16px;margin-bottom:2px}
-.t-card-name{font-size:8px;color:var(--gold2);line-height:1.3;font-family:'Gowun Dodum',serif;word-break:keep-all}
-.t-card-rev{font-size:8px;color:#e09090;margin-top:2px}
-.t-card-wrap.selected .t-card-back{border-color:var(--gold);box-shadow:0 0 12px rgba(200,169,110,0.5)}
-.t-selected-card{text-align:center;background:var(--bg2);border:1px solid var(--gold);border-radius:12px;padding:10px 8px;min-width:72px;flex:1;max-width:100px}
+.t-card-wrap.selected .t-card-inner{transform:rotateY(180deg) translateY(-8px)}
+.t-card-back,.t-card-front{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden}
+.t-card-back{background:linear-gradient(145deg,#120530,#1e0845,#120530);border:1.5px solid rgba(200,169,110,0.5);box-shadow:0 4px 20px rgba(0,0,0,.5),inset 0 0 20px rgba(139,92,246,.1);display:flex;align-items:center;justify-content:center}
+.t-card-back::before{content:'';position:absolute;inset:4px;border:1px solid rgba(200,169,110,.2);border-radius:10px;pointer-events:none}
+.t-card-back-pattern{font-size:28px;opacity:.8;filter:drop-shadow(0 0 8px rgba(168,85,247,.6))}
+.t-card-front{background:linear-gradient(145deg,rgba(18,12,40,.95),rgba(10,6,25,.98));border:1.5px solid rgba(200,169,110,0.5);transform:rotateY(180deg);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.5)}
+.t-card-front.selected-card{border-color:var(--gold);background:linear-gradient(145deg,rgba(40,25,5,.9),rgba(20,10,0,.95));box-shadow:0 0 20px rgba(240,192,96,.25)}
+.t-card-front.reversed img{transform:rotate(180deg)}.t-card-front.reversed svg{transform:rotate(180deg)}
+.t-card-num{font-size:9px;color:rgba(240,192,96,.5);margin-bottom:3px;letter-spacing:1px}
+.t-card-ico{font-size:22px;margin-bottom:3px;filter:drop-shadow(0 0 4px rgba(240,192,96,.4))}
+.t-card-name{font-size:9px;color:var(--gold2);line-height:1.4;font-family:Gowun Dodum,serif;word-break:keep-all;letter-spacing:.3px}
+.t-card-rev{font-size:8px;color:#e09090;margin-top:3px}
+.t-card-wrap.selected .t-card-back{border-color:var(--gold);box-shadow:0 0 20px rgba(200,169,110,.6),0 0 40px rgba(168,85,247,.3)}
+.t-selected-card{text-align:center;background:linear-gradient(145deg,rgba(18,12,40,.9),rgba(10,6,25,.95));border:1.5px solid var(--gold);border-radius:16px;padding:14px 10px;min-width:90px;flex:1;max-width:120px;box-shadow:0 0 16px rgba(240,192,96,.2)}
 
 
 /* ── 타로 채팅 ── */
 .tc-bubble{animation:fu .4s ease}
 .tc-user{display:flex;justify-content:flex-end;margin:10px 0 4px}
 .tc-user-msg{background:linear-gradient(135deg,#1a0a2e,#2a1050);border:1px solid var(--gold);border-radius:16px 16px 4px 16px;padding:12px 16px;max-width:85%;font-size:14px;color:var(--gold2);line-height:1.6}
-.tc-gemna{display:flex;align-items:flex-start;gap:8px;margin:4px 0 10px}
+.tc-gemna{display:flex;align-items:flex-start;gap:8px;margin:2px 0 4px}
 .tc-gemna-ico{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#1a0a2e,#4a1a6e);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;margin-top:2px}
 .tc-gemna-msg{background:var(--bg2);border:1px solid var(--gb);border-radius:4px 16px 16px 16px;padding:12px 16px;max-width:90%;font-size:14px;color:var(--dim);line-height:1.7;word-break:keep-all}
-.tc-deck-wrap{margin:8px 0 4px}
+.tc-deck-wrap{margin:8px 0 4px;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .tc-deck-label{font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:8px}
-.tc-deck-scroll{display:flex;gap:10px;overflow-x:auto;padding:8px 0 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tc-deck-scroll{display:none}.tc-deck-inner{display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;padding:20px 8px 12px;min-height:170px;width:max-content}
 .tc-deck-scroll::-webkit-scrollbar{display:none}
 .tc-selected-row{display:flex;gap:8px;justify-content:flex-start;flex-wrap:wrap;margin:8px 0 4px}
 .tc-count{font-size:11px;color:var(--gold);letter-spacing:1px;margin-top:6px}
-.tc-read-btn{width:100%;height:46px;background:linear-gradient(135deg,#1a0a2e,#4a1a6e,#1a0a2e);border:1px solid var(--gold);border-radius:12px;color:var(--gold2);font-family:'Gowun Dodum',serif;font-size:14px;font-weight:700;letter-spacing:2px;cursor:pointer;margin-top:8px;transition:all .3s}
+.tc-read-btn{width:100%;height:46px;background:linear-gradient(135deg,#1a0a2e,#4a1a6e,#1a0a2e);border:1px solid var(--gold);border-radius:12px;color:var(--gold2);font-family:Gowun Dodum,serif;font-size:14px;font-weight:700;letter-spacing:2px;cursor:pointer;margin-top:8px;transition:all .3s}
 .tc-read-btn:disabled{background:var(--bg3);border-color:var(--gb);color:var(--muted);cursor:not-allowed}
 .tc-reading-wrap{background:var(--bg2);border:1px solid var(--gb);border-radius:4px 16px 16px 16px;padding:14px 16px;max-width:90%}
 .tc-tabs{display:flex;gap:6px;margin-bottom:10px;overflow-x:auto;padding-bottom:2px}
@@ -238,11 +246,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
 /* 메인 */
 .main-topbar{display:flex;align-items:center;justify-content:space-between;padding:20px 20px 10px;max-width:420px;margin:0 auto;}
-.main-brand{font-family:'Gowun Dodum',serif;font-size:22px;font-weight:700;background:linear-gradient(135deg,var(--gold2),#fffbf0,var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:4px;}
+.main-brand{font-family:Gowun Dodum,serif;font-size:22px;font-weight:700;background:linear-gradient(135deg,var(--gold2),#fffbf0,var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:4px;}
 .hero-card{margin:0 16px 20px;border-radius:26px;padding:26px 22px;position:relative;overflow:hidden;cursor:pointer;background:linear-gradient(145deg,rgba(60,30,120,.85),rgba(22,10,60,.9));border:1px solid rgba(255,255,255,.12);border-top:1px solid rgba(255,255,255,.22);box-shadow:0 8px 40px rgba(139,92,246,.2);}
 .hero-card::before{content:'';position:absolute;top:-50px;right:-50px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(240,192,96,.18),transparent 70%);pointer-events:none;}
 .hero-date{font-size:11px;color:rgba(255,255,255,.45);letter-spacing:2px;margin-bottom:10px;position:relative;z-index:1;}
-.hero-title{font-family:'Gowun Dodum',serif;font-size:24px;font-weight:700;color:#fff;line-height:1.35;margin-bottom:8px;position:relative;z-index:1;}
+.hero-title{font-family:Gowun Dodum,serif;font-size:24px;font-weight:700;color:#fff;line-height:1.35;margin-bottom:8px;position:relative;z-index:1;}
 .hero-sub{font-size:13px;color:rgba(255,255,255,.55);line-height:1.65;position:relative;z-index:1;font-weight:300;}
 .hero-btn{margin-top:18px;display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);border-radius:100px;font-size:13px;color:#fff;font-weight:600;position:relative;z-index:1;}
 .quick-scroll-wrap{padding:0 20px;margin-bottom:20px;}
@@ -265,7 +273,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .feat-card.purple{border-color:rgba(139,92,246,.3);background:rgba(50,20,100,.5);}
 .feat-card.gold{border-color:rgba(240,192,96,.3);background:rgba(60,40,10,.45);}
 .fc-ico{font-size:28px;margin-bottom:10px;display:block;}
-.fc-ttl{font-family:'Gowun Dodum',serif;font-size:15px;font-weight:700;color:var(--gold2);letter-spacing:1px;margin-bottom:5px;}
+.fc-ttl{font-family:Gowun Dodum,serif;font-size:15px;font-weight:700;color:var(--gold2);letter-spacing:1px;margin-bottom:5px;}
 .fc-desc{font-size:12px;color:var(--dim);line-height:1.7;font-weight:300;}
 
 /* 공통 */
@@ -276,7 +284,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .topbar{display:flex;align-items:center;padding:14px 20px 8px;gap:12px;max-width:420px;margin:0 auto;position:sticky;top:0;z-index:10;background:rgba(7,7,26,.8);backdrop-filter:blur(16px);}
 .back-btn{width:40px;height:40px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;color:var(--gold);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .back-btn:active{background:rgba(255,255,255,.12);}
-.topbar-ttl{font-family:'Gowun Dodum',serif;font-size:17px;color:var(--gold2);letter-spacing:3px;}
+.topbar-ttl{font-family:Gowun Dodum,serif;font-size:17px;color:var(--gold2);letter-spacing:3px;}
 #calcScreen,#unseScreen,#goonghapScreen,#sajuResultScreen,#sajuLoadingScreen,#attendanceScreen,#profileManageScreen,#unseHomeScreen{z-index:5;}
 .card{margin:0 16px 12px;background:rgba(22,16,50,.6);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.09);border-top:1px solid rgba(255,255,255,.16);border-radius:22px;overflow:hidden;}
 .tg{display:flex;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:12px;overflow:hidden;flex:1;}
@@ -286,14 +294,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .tb.fon{background:rgba(244,114,182,.18);color:#f9a8d4;font-weight:700;}
 .pft{position:absolute;top:0;left:8px;right:8px;height:88px;background:linear-gradient(to bottom,rgba(15,10,40,.98),transparent);pointer-events:none;z-index:9;}
 .pfb{position:absolute;bottom:0;left:8px;right:8px;height:88px;background:linear-gradient(to top,rgba(15,10,40,.98),transparent);pointer-events:none;z-index:9;}
-.citem{height:var(--ih);display:flex;align-items:center;justify-content:center;font-size:16px;color:rgba(242,237,228,.25);font-family:'Gowun Dodum',serif;font-weight:300;user-select:none;transition:color .15s,font-size .15s;}
+.citem{height:var(--ih);display:flex;align-items:center;justify-content:center;font-size:16px;color:rgba(242,237,228,.25);font-family:Gowun Dodum,serif;font-weight:300;user-select:none;transition:color .15s,font-size .15s;}
 .citem.sel{color:var(--gold2);font-size:18px;font-weight:700;text-shadow:0 0 20px rgba(240,192,96,.5);}
 .citem.nr{color:rgba(242,237,228,.5);}
 .bw{padding:4px 16px 14px;}
-.bcalc{width:100%;height:54px;background:linear-gradient(135deg,#b87800,#f0c060,#ffd97a,#f0c060,#b87800);background-size:200% auto;border:none;border-radius:18px;color:#1a0d00;font-family:'Gowun Dodum',serif;font-size:17px;font-weight:700;letter-spacing:3px;cursor:pointer;transition:all .2s;box-shadow:0 6px 28px rgba(240,192,96,.3);position:relative;overflow:hidden;}
+.bcalc{width:100%;height:54px;background:linear-gradient(135deg,#b87800,#f0c060,#ffd97a,#f0c060,#b87800);background-size:200% auto;border:none;border-radius:18px;color:#1a0d00;font-family:Gowun Dodum,serif;font-size:17px;font-weight:700;letter-spacing:3px;cursor:pointer;transition:all .2s;box-shadow:0 6px 28px rgba(240,192,96,.3);position:relative;overflow:hidden;}
 .bcalc::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.18) 50%,transparent 60%);background-size:200% auto;animation:shimmer 3.5s linear infinite;}
 .bcalc:active{transform:scale(.97);}
-.bai{width:100%;height:52px;background:linear-gradient(135deg,rgba(139,92,246,.25),rgba(168,139,250,.15));border:1px solid rgba(139,92,246,.45);border-radius:16px;color:var(--p2);font-family:'Gowun Dodum',serif;font-size:14px;font-weight:700;letter-spacing:1.5px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.bai{width:100%;height:52px;background:linear-gradient(135deg,rgba(139,92,246,.25),rgba(168,139,250,.15));border:1px solid rgba(139,92,246,.45);border-radius:16px;color:var(--p2);font-family:Gowun Dodum,serif;font-size:14px;font-weight:700;letter-spacing:1.5px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
 .bai:active{transform:scale(.97);}
 .bai:disabled{opacity:.4;cursor:not-allowed;}
 .aip{display:none;margin-top:14px;}
@@ -304,13 +312,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .aitab.on{background:rgba(240,192,96,.18);color:var(--gold2);border-color:rgba(240,192,96,.45);font-weight:700;}
 .aisec{display:none;background:rgba(22,16,50,.6);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:18px 16px;}
 .aisec.show{display:block;animation:fu .3s ease;}
-.aist{font-family:'Gowun Dodum',serif;font-size:14px;color:var(--gold);letter-spacing:1.5px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(240,192,96,.1);}
+.aist{font-family:Gowun Dodum,serif;font-size:14px;color:var(--gold);letter-spacing:1.5px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(240,192,96,.1);}
 .aitxt{font-size:14px;line-height:2;color:var(--dim);word-break:keep-all;white-space:pre-wrap;font-weight:300;}
 .sc{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:10px 4px;text-align:center;}
 .scl{font-size:10px;color:var(--gold);letter-spacing:.5px;margin-bottom:6px;font-weight:500;}
-.shj{font-family:'Gowun Dodum',serif;font-size:20px;color:var(--text);line-height:1.3;margin-bottom:4px;}
+.shj{font-family:Gowun Dodum,serif;font-size:20px;color:var(--text);line-height:1.3;margin-bottom:4px;}
 .shg{font-size:11px;color:var(--dim);font-weight:300;}
-.s1l{text-align:center;padding:14px;background:rgba(22,16,50,.5);border:1px solid rgba(255,255,255,.09);border-radius:16px;font-family:'Gowun Dodum',serif;font-size:19px;letter-spacing:6px;color:var(--gold2);}
+.s1l{text-align:center;padding:14px;background:rgba(22,16,50,.5);border:1px solid rgba(255,255,255,.09);border-radius:16px;font-family:Gowun Dodum,serif;font-size:19px;letter-spacing:6px;color:var(--gold2);}
 .s1l span{font-size:11px;color:var(--muted);display:block;letter-spacing:6px;margin-top:5px;font-weight:300;}
 .ohw{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px 16px;margin-bottom:14px;}
 .oht{font-size:11px;color:var(--gold);letter-spacing:1.5px;margin-bottom:10px;font-weight:500;}
@@ -321,12 +329,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .t-card-back{background:linear-gradient(145deg,#1a0a3e,#2d1060);border:1px solid rgba(139,92,246,.5);}
 .tc-user-msg{background:linear-gradient(135deg,rgba(139,92,246,.4),rgba(168,139,250,.28));border:1px solid rgba(139,92,246,.45);border-radius:18px 18px 5px 18px;padding:12px 16px;max-width:85%;font-size:14px;color:#e8e0ff;line-height:1.65;}
 .tc-gemna-ico{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#1a0a3e,#4a1a72);border:1px solid rgba(139,92,246,.5);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:2px;}
-.tc-gemna-msg{background:rgba(22,16,50,.65);border:1px solid rgba(255,255,255,.1);border-radius:5px 18px 18px 18px;padding:12px 16px;max-width:90%;font-size:14px;color:var(--dim);line-height:1.75;word-break:keep-all;font-weight:300;}
-.tc-read-btn{width:100%;height:50px;background:linear-gradient(135deg,rgba(139,92,246,.45),rgba(168,139,250,.32));border:1px solid rgba(139,92,246,.5);border-radius:16px;color:var(--p2);font-family:'Gowun Dodum',serif;font-size:14px;font-weight:700;letter-spacing:1.5px;cursor:pointer;margin-top:8px;}
+.tc-gemna-msg{background:rgba(22,16,50,.65);border:1px solid rgba(255,255,255,.1);border-radius:5px 18px 18px 18px;padding:10px 14px;max-width:90%;font-size:14px;color:var(--dim);line-height:1.65;word-break:keep-all;font-weight:300;}
+.tc-read-btn{width:100%;height:50px;background:linear-gradient(135deg,rgba(139,92,246,.45),rgba(168,139,250,.32));border:1px solid rgba(139,92,246,.5);border-radius:16px;color:var(--p2);font-family:Gowun Dodum,serif;font-size:14px;font-weight:700;letter-spacing:1.5px;cursor:pointer;margin-top:8px;}
 .tc-read-btn:disabled{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08);color:var(--muted);cursor:not-allowed;}
 .tc-reading-wrap{background:rgba(22,16,50,.6);border:1px solid rgba(255,255,255,.09);border-radius:5px 18px 18px 18px;padding:14px 16px;max-width:90%;}
 .hcard{background:rgba(22,16,50,.5);border:1px solid rgba(255,255,255,.09);border-radius:18px;padding:13px 16px;margin-bottom:8px;display:flex;align-items:center;gap:10px;cursor:pointer;}
-.hcs{font-family:'Gowun Dodum',serif;font-size:15px;color:var(--gold2);letter-spacing:4px;}
+.hcs{font-family:Gowun Dodum,serif;font-size:15px;color:var(--gold2);letter-spacing:4px;}
 .hcb.m{background:rgba(96,165,250,.15);color:#93c5fd;}
 .hcb.f{background:rgba(244,114,182,.15);color:#f9a8d4;}
 
@@ -337,7 +345,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .prof-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
 .prof-avatar.m{background:rgba(96,165,250,.18);}.prof-avatar.f{background:rgba(244,114,182,.18);}
 .prof-info{flex:1;min-width:0;}
-.prof-name{font-family:'Gowun Dodum',serif;font-size:15px;color:var(--gold2);margin-bottom:3px;display:flex;align-items:center;gap:6px;}
+.prof-name{font-family:Gowun Dodum,serif;font-size:15px;color:var(--gold2);margin-bottom:3px;display:flex;align-items:center;gap:6px;}
 .prof-badge{font-size:9px;background:rgba(240,192,96,.2);color:var(--gold);padding:2px 7px;border-radius:8px;font-weight:600;}
 .prof-saju{font-size:12px;color:var(--dim);letter-spacing:2px;margin-bottom:2px;font-weight:300;}
 .prof-date{font-size:10px;color:var(--muted);font-weight:300;}
@@ -351,9 +359,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 /* 운세 결과 */
 .unse-hero{background:rgba(22,16,50,.7);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:28px 20px;margin-bottom:14px;text-align:center;position:relative;overflow:hidden;}
 .unse-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(240,192,96,.12),transparent 70%);pointer-events:none;}
-.unse-nick{font-family:'Gowun Dodum',serif;font-size:16px;color:var(--gold2);margin-bottom:4px;}
+.unse-nick{font-family:Gowun Dodum,serif;font-size:16px;color:var(--gold2);margin-bottom:4px;}
 .unse-datelbl{font-size:11px;color:var(--muted);letter-spacing:2px;margin-bottom:18px;font-weight:300;}
-.unse-score{font-family:'Gowun Dodum',serif;font-size:72px;font-weight:700;line-height:1;margin-bottom:4px;}
+.unse-score{font-family:Gowun Dodum,serif;font-size:72px;font-weight:700;line-height:1;margin-bottom:4px;}
 .unse-score-sub{font-size:12px;color:var(--muted);font-weight:300;letter-spacing:1px;}
 
 /* 인라인 광고 슬롯 */
@@ -387,7 +395,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 /* ── 출석 체크 ── */
 .att-calendar{background:rgba(22,16,50,.6);border:1px solid rgba(255,255,255,.09);border-radius:22px;padding:18px 16px;margin-bottom:16px;}
 .att-cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
-.att-cal-title{font-family:'Gowun Dodum',serif;font-size:17px;color:var(--gold2);letter-spacing:2px;}
+.att-cal-title{font-family:Gowun Dodum,serif;font-size:17px;color:var(--gold2);letter-spacing:2px;}
 .att-cal-nav{width:34px;height:34px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:var(--gold);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .att-days-row{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px;}
 .att-day-lbl{text-align:center;font-size:10px;color:var(--muted);padding-bottom:4px;font-weight:500;}
@@ -400,11 +408,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .att-cell.today{border:2px solid var(--gold);color:var(--gold2);font-weight:700;}
 .att-cell.today.checked{background:rgba(240,192,96,.2);border-color:var(--gold);}
 .att-cell.future{color:rgba(255,255,255,.15);cursor:default;}
-.att-check-btn{width:100%;height:54px;background:linear-gradient(135deg,#0a3c20,#15803d,#22c55e,#15803d,#0a3c20);border:none;border-radius:18px;color:#fff;font-family:'Gowun Dodum',serif;font-size:16px;font-weight:700;letter-spacing:2px;cursor:pointer;box-shadow:0 4px 20px rgba(34,197,94,.25);transition:all .2s;margin-bottom:16px;}
+.att-check-btn{width:100%;height:54px;background:linear-gradient(135deg,#0a3c20,#15803d,#22c55e,#15803d,#0a3c20);border:none;border-radius:18px;color:#fff;font-family:Gowun Dodum,serif;font-size:16px;font-weight:700;letter-spacing:2px;cursor:pointer;box-shadow:0 4px 20px rgba(34,197,94,.25);transition:all .2s;margin-bottom:16px;}
 .att-check-btn:disabled{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--muted);box-shadow:none;cursor:default;}
 .att-streak{background:rgba(240,192,96,.08);border:1px solid rgba(240,192,96,.2);border-radius:16px;padding:14px 18px;display:flex;align-items:center;gap:12px;}
 .att-streak-ico{font-size:28px;}
-.att-streak-num{font-family:'Gowun Dodum',serif;font-size:26px;font-weight:700;color:var(--gold2);line-height:1;}
+.att-streak-num{font-family:Gowun Dodum,serif;font-size:26px;font-weight:700;color:var(--gold2);line-height:1;}
 .att-streak-lbl{font-size:11px;color:var(--muted);font-weight:300;}
 
 </style>
@@ -424,22 +432,19 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div id="passTimerDisplay" style="display:none;background:rgba(240,192,96,.14);border:1px solid rgba(240,192,96,.32);border-radius:20px;padding:5px 12px;font-size:12px;color:var(--gold2);font-weight:700;">🎁 <span id="passTimerText">00:00</span></div>
     </div>
 
-    <!-- 오늘의 운세 미니 카드 -->
-    <div id="mainTodayCard" onclick="navUnse('today')"
-      style="margin:0 16px 14px;background:rgba(22,16,50,.7);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:14px 18px;cursor:pointer;display:flex;align-items:center;gap:14px;position:relative;overflow:hidden;transition:all .2s;-webkit-tap-highlight-color:transparent;">
-      <!-- 배경 글로우 -->
-      <div style="position:absolute;right:-20px;top:-20px;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,rgba(240,192,96,.1),transparent 70%);pointer-events:none;"></div>
-      <!-- 점수 원 -->
-      <div id="mainTodayScore"
-        style="width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.12);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s;">
-        <div style="font-size:8px;color:var(--muted);letter-spacing:1px;line-height:1;">오늘</div>
-        <div id="mainTodayScoreNum" style="font-family:'Gowun Dodum',serif;font-size:20px;font-weight:700;color:var(--muted);line-height:1.1;">-</div>
-      </div>
-      <!-- 텍스트 -->
+    <!-- 출석체크 유도 카드 -->
+    <div onclick="navSettings('att')"
+      style="margin:0 16px 14px;background:linear-gradient(135deg,rgba(10,60,40,.85),rgba(5,30,20,.9));border:1px solid rgba(74,222,128,.2);border-radius:20px;padding:14px 18px;cursor:pointer;display:flex;align-items:center;gap:14px;position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent;">
+      <div style="position:absolute;right:-10px;top:-10px;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,rgba(74,222,128,.12),transparent 70%);pointer-events:none;"></div>
+      <div style="width:48px;height:48px;border-radius:16px;background:rgba(74,222,128,.15);border:1.5px solid rgba(74,222,128,.3);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;">🗓</div>
       <div style="flex:1;min-width:0;">
-        <div id="mainTodayNick" style="font-size:12px;color:var(--muted);margin-bottom:3px;font-weight:300;"></div>
-        <div id="mainTodayDesc" style="font-size:14px;color:var(--text);font-weight:600;line-height:1.4;">오늘의 운세를 알아보세요</div>
-        <div id="mainTodaySub" style="font-size:11px;color:var(--muted);margin-top:3px;font-weight:300;">터치해서 오늘 운세 확인하기 →</div>
+        <div style="font-size:11px;color:rgba(74,222,128,.6);letter-spacing:1px;margin-bottom:3px;">매일 출석 체크</div>
+        <div style="font-size:14px;color:#fff;font-weight:700;line-height:1.4;">오늘 출석 체크 하셨나요?</div>
+        <div style="font-size:11px;color:rgba(74,222,128,.55);margin-top:3px;">체크인하고 미니복채 받아가세요 →</div>
+      </div>
+      <div style="text-align:center;flex-shrink:0;">
+        <div id="mainStreakNum" style="font-family:Gowun Dodum,serif;font-size:22px;font-weight:700;color:#4ade80;line-height:1;">0</div>
+        <div style="font-size:9px;color:rgba(74,222,128,.5);">연속일</div>
       </div>
     </div>
     <!-- 히어로 캐러셀 -->
@@ -449,26 +454,31 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         <div class="hero-slide s1" onclick="navSaju()">
           <div class="hero-date" id="heroDate"></div>
           <div class="hero-title">당신의 사주를<br>AI가 분석해드립니다</div>
-          <div class="hero-sub">프로필 저장 한 번으로<br>매일 운세도 자동으로</div>
+          <div class="hero-sub">사주·자미두수·베딕·수비학<br>모든 역학을 한 번에</div>
           <div class="hero-btn">✦ 지금 분석하기 ›</div>
         </div>
-        <!-- 슬라이드 2: 출석 체크 -->
-        <div class="hero-slide s2" onclick="navSettings('att')">
-          <div style="font-size:11px;color:rgba(74,222,128,.6);letter-spacing:2px;margin-bottom:10px;position:relative;z-index:1;">매일 출석 체크</div>
-          <div class="hero-title" style="color:#fff;">오늘 출석 체크<br>하셨나요? 🌿</div>
-          <div class="hero-sub">매일 체크인하고<br>연속 출석 기록을 쌓아봐요</div>
-          <div class="hero-btn" style="background:rgba(74,222,128,.18);border-color:rgba(74,222,128,.35);">🗓 출석 체크하기 ›</div>
-          <div id="heroStreak" style="position:absolute;top:20px;right:20px;text-align:center;z-index:1;">
-            <div style="font-family:'Gowun Dodum',serif;font-size:28px;font-weight:700;color:#4ade80;line-height:1;" id="heroStreakNum">0</div>
-            <div style="font-size:9px;color:rgba(74,222,128,.6);letter-spacing:1px;">연속일</div>
-          </div>
+        <!-- 슬라이드 2: 별자리 운세 -->
+        <div class="hero-slide" onclick="goScreen('zodiacScreen');renderZodiacScreen();"
+          style="background:linear-gradient(145deg,rgba(20,40,80,.85),rgba(10,20,50,.9));border:1px solid rgba(251,191,36,.2);border-top:1px solid rgba(251,191,36,.3);">
+          <div style="font-size:11px;color:rgba(253,224,71,.6);letter-spacing:2px;margin-bottom:10px;position:relative;z-index:1;">VEDIC · WESTERN</div>
+          <div class="hero-title" style="color:#fde68a;">별자리 & 베딕<br>점성술 운세 ⭐</div>
+          <div class="hero-sub" style="color:rgba(253,230,138,.7);">네이탈 차트 · 다샤 · AI 리딩<br>지금 무료로 확인하기</div>
+          <div class="hero-btn" style="background:rgba(251,191,36,.15);border-color:rgba(251,191,36,.4);color:#fde68a;">⭐ 별자리 보러가기 ›</div>
+        </div>
+        <!-- 슬라이드 3: AI 캐릭터 -->
+        <div class="hero-slide" onclick="navPersona();"
+          style="background:linear-gradient(145deg,rgba(60,10,90,.85),rgba(25,5,50,.9));border:1px solid rgba(168,85,247,.3);border-top:1px solid rgba(168,85,247,.45);">
+          <div style="font-size:11px;color:rgba(192,132,252,.7);letter-spacing:2px;margin-bottom:10px;position:relative;z-index:1;">AI CHARACTER</div>
+          <div class="hero-title" style="color:#e9d5ff;">나만의 AI 운명<br>상담사와 대화하기 ✦</div>
+          <div class="hero-sub" style="color:rgba(233,213,255,.6);">젬나·루나·백호·하데스<br>6명의 AI 캐릭터가 대기 중</div>
+          <div class="hero-btn" style="background:rgba(139,92,246,.2);border-color:rgba(139,92,246,.5);color:#c4b5fd;">✦ 대화 시작하기 ›</div>
         </div>
       </div>
       <!-- 좌우 화살표 -->
-      <button onclick="heroGoSlide(0);_heroReset()" id="heroArrowL"
+      <button onclick="heroGoSlide(Math.max(0,_heroIdx-1));_heroReset()" id="heroArrowL"
         style="position:absolute;left:10px;bottom:14px;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.35);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:opacity .2s;opacity:0;"
         id="heroArrowL">‹</button>
-      <button onclick="heroGoSlide(1);_heroReset()" id="heroArrowR"
+      <button onclick="heroGoSlide(Math.min(2,_heroIdx+1));_heroReset()" id="heroArrowR"
         style="position:absolute;right:10px;bottom:14px;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.35);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:opacity .2s;"
         id="heroArrowR">›</button>
     </div>
@@ -476,28 +486,54 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="hero-dots">
       <div class="hero-dot on" onclick="heroGoSlide(0);_heroReset()" id="hd0"></div>
       <div class="hero-dot" onclick="heroGoSlide(1);_heroReset()" id="hd1"></div>
+      <div class="hero-dot" onclick="heroGoSlide(2);_heroReset()" id="hd2"></div>
     </div>
 
-    <div class="quick-scroll-wrap">
-      <div class="quick-scroll-lbl">빠른 메뉴</div>
-      <div class="quick-scroll">
-        <div class="quick-chip hi" onclick="navSaju()"><span class="qc-ico">✦</span><span class="qc-lbl">AI 사주</span></div>
-        <div class="quick-chip" onclick="navUnse('today')"><span class="qc-badge">NEW</span><span class="qc-ico">☀️</span><span class="qc-lbl">오늘운세</span></div>
-        <div class="quick-chip" onclick="navUnse('tomorrow')"><span class="qc-badge">NEW</span><span class="qc-ico">🌙</span><span class="qc-lbl">내일운세</span></div>
-        <div class="quick-chip" onclick="goScreen('zodiacScreen');renderZodiacScreen()"><span class="qc-ico">⭐</span><span class="qc-lbl">별자리</span></div>
-        <div class="quick-chip" onclick="goScreen('goonghapScreen')"><span class="qc-ico">♡</span><span class="qc-lbl">궁합</span></div>
-        <div class="quick-chip" onclick="goScreen('tarotScreen')"><span class="qc-ico">🃏</span><span class="qc-lbl">타로</span></div>
-        <div class="quick-chip" onclick="navSettings('att')"><span class="qc-ico">🗓</span><span class="qc-lbl">출석체크</span></div>
-        <div class="quick-chip disabled"><span class="qc-badge" style="background:rgba(200,60,60,.38);">준비중</span><span class="qc-ico">🌟</span><span class="qc-lbl">신년운세</span></div>
+    <!-- 중간 광고 배너 -->
+    <div style="margin:0 16px 14px;min-height:100px;background:rgba(255,255,255,.03);border:1px dashed rgba(255,255,255,.1);border-radius:16px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;">
+      <div id="mainAdBanner" style="width:100%;min-height:100px;"></div>
+      <div style="position:absolute;font-size:11px;color:rgba(255,255,255,.15);pointer-events:none;">AD</div>
+    </div>
+
+    <!-- 오늘의 운세 큰 박스 -->
+    <div style="margin:0 16px 16px;position:relative;border-radius:28px;overflow:hidden;">
+      <!-- 운세 콘텐츠 -->
+      <div id="mainUnseBox"
+        style="background:linear-gradient(145deg,rgba(30,15,70,.9),rgba(12,6,35,.95));border:1px solid rgba(240,192,96,.2);border-radius:28px;padding:28px 22px 32px;cursor:pointer;position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent;min-height:180px;">
+        <!-- 배경 글로우들 -->
+        <div style="position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(240,192,96,.12),transparent 70%);pointer-events:none;"></div>
+        <div style="position:absolute;bottom:-60px;left:-30px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.1),transparent 70%);pointer-events:none;"></div>
+        <div style="font-size:10px;color:rgba(240,192,96,.5);letter-spacing:3px;margin-bottom:16px;position:relative;z-index:1;">TODAY'S FORTUNE</div>
+        <div style="display:flex;align-items:center;gap:18px;position:relative;z-index:1;margin-bottom:20px;">
+          <div id="mainUnseScore" style="width:72px;height:72px;border-radius:50%;background:rgba(240,192,96,.1);border:2px solid rgba(240,192,96,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;">
+            <div style="font-size:9px;color:rgba(240,192,96,.6);letter-spacing:1px;line-height:1;">오늘</div>
+            <div id="mainUnseScoreNum" style="font-family:Gowun Dodum,serif;font-size:26px;font-weight:700;color:var(--gold2);line-height:1.1;">-</div>
+          </div>
+          <div style="flex:1;">
+            <div id="mainUnseNick" style="font-size:12px;color:rgba(240,192,96,.5);margin-bottom:6px;"></div>
+            <div id="mainUnseDesc" style="font-size:16px;color:#fff;font-weight:700;line-height:1.5;">오늘의 운세를 확인해보세요</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 그라데이션 블러 오버레이 -->
+      <div id="mainUnseBlur" onclick="_mainUnseAdCheck()"
+        style="position:absolute;inset:0;border-radius:28px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;">
+        <!-- 강한 블러 레이어 -->
+        <div style="position:absolute;inset:0;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:28px;background:rgba(6,4,18,.75);"></div>
+        <!-- CTA -->
+        <div style="position:relative;z-index:2;text-align:center;padding:20px;">
+          <div style="font-size:36px;margin-bottom:10px;">☀️</div>
+          <div style="font-family:Gowun Dodum,serif;font-size:17px;color:var(--gold2);font-weight:700;margin-bottom:6px;">오늘의 운세</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:18px;">광고를 보면 무료로 확인할 수 있어요</div>
+          <div style="display:inline-flex;align-items:center;gap:7px;padding:12px 24px;background:linear-gradient(135deg,rgba(240,192,96,.3),rgba(240,192,96,.15));border:1px solid rgba(240,192,96,.5);border-radius:100px;font-size:14px;color:var(--gold2);font-weight:700;">📺 광고 보고 무료로 보기</div>
+        </div>
       </div>
     </div>
-    <div class="msec">
-      <div class="msec-hdr"><span class="msec-lbl-txt">주요 서비스</span></div>
-      <div class="mgrid">
-        <div class="feat-card purple" onclick="goScreen('tarotScreen')"><span class="fc-ico">🃏</span><div class="fc-ttl">타로 · 젬나</div><div class="fc-desc">팩트 폭격기<br>AI 타로 리딩</div></div>
-        <div class="feat-card gold" onclick="goScreen('goonghapScreen')"><span class="fc-ico">♡</span><div class="fc-ttl">궁합보기</div><div class="fc-desc">만세력 궁합<br>숙요점 전생</div></div>
-      </div>
-    </div>
+
+
+
     <div style="padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(242,237,228,.13);line-height:1.9;word-break:keep-all;">본 서비스는 오락·참고 목적이며 과학적 근거를 보장하지 않습니다.<br>중요한 결정은 반드시 전문가와 상의하세요.</div></div>
   </div>
 </div>
@@ -561,7 +597,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         <div style="padding:14px">
           <div id="snHdr" style="text-align:center;padding:10px 0 14px;border-bottom:1px solid var(--gb);margin-bottom:14px">
             <div style="font-size:12px;color:var(--dim);margin-bottom:5px" id="snDateLbl"></div>
-            <div style="font-family:'Gowun Dodum',serif;font-size:19px;color:var(--gold2);letter-spacing:4px" id="snSaju"></div>
+            <div style="font-family:Gowun Dodum,serif;font-size:19px;color:var(--gold2);letter-spacing:4px" id="snSaju"></div>
             <div style="font-size:11px;color:rgba(200,169,110,.7);margin-top:5px" id="snInfo"></div>
           </div>
           <button class="bai" id="snBai" onclick="handleSinnyunRequest()"><span>🔒</span> 광고보고 신년운세 받기</button>
@@ -606,7 +642,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <!-- 날짜 -->
       <div style="flex:1;">
         <div id="uhDate" style="font-size:12px;color:var(--muted);font-weight:400;letter-spacing:1px;"></div>
-        <div style="font-size:15px;color:var(--text);font-weight:700;font-family:'Gowun Dodum',serif;letter-spacing:1px;">운세 · 점술</div>
+        <div style="font-size:15px;color:var(--text);font-weight:700;font-family:Gowun Dodum,serif;letter-spacing:1px;">운세 · 점술</div>
       </div>
       <!-- 30분 패스 -->
       <div id="uhPass" style="display:none;background:rgba(240,192,96,.15);border:1px solid rgba(240,192,96,.35);border-radius:20px;padding:5px 10px;font-size:11px;color:var(--gold2);font-weight:700;">🎁 <span id="uhPassTxt">00:00</span></div>
@@ -627,7 +663,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         <div onclick="navUnse('today')" style="min-width:100%;border-radius:24px;padding:24px 20px;position:relative;overflow:hidden;cursor:pointer;background:linear-gradient(145deg,rgba(60,30,120,.85),rgba(22,10,60,.9));border:1px solid rgba(255,255,255,.12);border-top:1px solid rgba(255,255,255,.22);">
           <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(240,192,96,.15),transparent 70%);pointer-events:none;"></div>
           <div style="font-size:11px;color:rgba(255,255,255,.45);letter-spacing:2px;margin-bottom:8px;position:relative;z-index:1;">TODAY</div>
-          <div style="font-family:'Gowun Dodum',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;position:relative;z-index:1;">오늘의 운세</div>
+          <div style="font-family:Gowun Dodum,serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;position:relative;z-index:1;">오늘의 운세</div>
           <div id="uhTodayScore" style="font-size:13px;color:rgba(255,255,255,.6);position:relative;z-index:1;">오늘 운세 점수를 확인해보세요</div>
           <div style="margin-top:16px;display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);border-radius:100px;font-size:13px;color:#fff;font-weight:600;position:relative;z-index:1;">☀️ 운세 보기 ›</div>
         </div>
@@ -636,7 +672,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         <div onclick="navUnse('tomorrow')" style="min-width:100%;border-radius:24px;padding:24px 20px;position:relative;overflow:hidden;cursor:pointer;background:linear-gradient(145deg,rgba(20,30,80,.9),rgba(10,15,50,.95));border:1px solid rgba(96,165,250,.2);border-top:1px solid rgba(96,165,250,.35);">
           <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(96,165,250,.15),transparent 70%);pointer-events:none;"></div>
           <div style="font-size:11px;color:rgba(147,197,253,.6);letter-spacing:2px;margin-bottom:8px;position:relative;z-index:1;">TOMORROW</div>
-          <div style="font-family:'Gowun Dodum',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;position:relative;z-index:1;">내일의 운세</div>
+          <div style="font-family:Gowun Dodum,serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;position:relative;z-index:1;">내일의 운세</div>
           <div style="font-size:13px;color:rgba(255,255,255,.55);position:relative;z-index:1;">내일의 흐름을 미리 파악해봐요</div>
           <div style="margin-top:16px;display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:rgba(96,165,250,.18);border:1px solid rgba(96,165,250,.35);border-radius:100px;font-size:13px;color:#93c5fd;font-weight:600;position:relative;z-index:1;">🌙 운세 보기 ›</div>
         </div>
@@ -645,7 +681,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         <div onclick="navSaju()" style="min-width:100%;border-radius:24px;padding:24px 20px;position:relative;overflow:hidden;cursor:pointer;background:linear-gradient(145deg,rgba(80,20,100,.85),rgba(40,10,60,.9));border:1px solid rgba(168,85,247,.25);border-top:1px solid rgba(168,85,247,.4);">
           <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,.2),transparent 70%);pointer-events:none;"></div>
           <div style="font-size:11px;color:rgba(196,181,253,.6);letter-spacing:2px;margin-bottom:8px;position:relative;z-index:1;">AI SAJU</div>
-          <div style="font-family:'Gowun Dodum',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;position:relative;z-index:1;">AI 사주 풀이</div>
+          <div style="font-family:Gowun Dodum,serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:6px;position:relative;z-index:1;">AI 사주 풀이</div>
           <div style="font-size:13px;color:rgba(255,255,255,.55);position:relative;z-index:1;">생년월일시로 정밀 사주 분석</div>
           <div style="margin-top:16px;display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:rgba(168,85,247,.2);border:1px solid rgba(168,85,247,.4);border-radius:100px;font-size:13px;color:#c4b5fd;font-weight:600;position:relative;z-index:1;">✦ 사주 보기 ›</div>
         </div>
@@ -654,7 +690,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         <div onclick="goScreen('zodiacScreen');renderZodiacScreen();" style="min-width:100%;border-radius:24px;padding:24px 20px;position:relative;overflow:hidden;cursor:pointer;background:linear-gradient(145deg,rgba(20,40,80,.85),rgba(10,20,50,.9));border:1px solid rgba(251,191,36,.2);border-top:1px solid rgba(251,191,36,.35);">
           <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(251,191,36,.15),transparent 70%);pointer-events:none;"></div>
           <div style="font-size:11px;color:rgba(253,224,71,.6);letter-spacing:2px;margin-bottom:8px;position:relative;z-index:1;">VEDIC · WESTERN</div>
-          <div style="font-family:'Gowun Dodum',serif;font-size:22px;font-weight:700;color:#fde68a;margin-bottom:6px;position:relative;z-index:1;">별자리 운세 ⭐</div>
+          <div style="font-family:Gowun Dodum,serif;font-size:22px;font-weight:700;color:#fde68a;margin-bottom:6px;position:relative;z-index:1;">별자리 운세 ⭐</div>
           <div style="font-size:13px;color:rgba(253,230,138,.7);position:relative;z-index:1;">네이탈 차트 · 다샤 · AI 리딩</div>
           <div style="margin-top:16px;display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.35);border-radius:100px;font-size:13px;color:#fde68a;font-weight:600;position:relative;z-index:1;">지금 보기 →</div>
         </div>
@@ -680,38 +716,38 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;">
         <div onclick="navUnse('today')" style="background:rgba(22,16,50,.65);border:1px solid rgba(240,192,96,.2);border-radius:18px;padding:14px 10px;cursor:pointer;text-align:center;transition:transform .2s;" ontouchstart="this.style.transform='scale(.95)'" ontouchend="this.style.transform=''">
           <div style="font-size:22px;margin-bottom:6px;">☀️</div>
-          <div style="font-family:'Gowun Dodum',serif;font-size:12px;color:var(--gold2);font-weight:700;margin-bottom:2px;">오늘운세</div>
+          <div style="font-family:Gowun Dodum,serif;font-size:12px;color:var(--gold2);font-weight:700;margin-bottom:2px;">오늘운세</div>
           <div style="font-size:10px;color:var(--dim);font-weight:300;">일일 운세</div>
         </div>
         <div onclick="navUnse('tomorrow')" style="background:rgba(22,16,50,.65);border:1px solid rgba(96,165,250,.2);border-radius:18px;padding:14px 10px;cursor:pointer;text-align:center;transition:transform .2s;" ontouchstart="this.style.transform='scale(.95)'" ontouchend="this.style.transform=''">
           <div style="font-size:22px;margin-bottom:6px;">🌙</div>
-          <div style="font-family:'Gowun Dodum',serif;font-size:12px;color:var(--gold2);font-weight:700;margin-bottom:2px;">내일운세</div>
+          <div style="font-family:Gowun Dodum,serif;font-size:12px;color:var(--gold2);font-weight:700;margin-bottom:2px;">내일운세</div>
           <div style="font-size:10px;color:var(--dim);font-weight:300;">미리 준비</div>
         </div>
         <div onclick="navSaju()" style="background:rgba(22,16,50,.65);border:1px solid rgba(168,85,247,.2);border-radius:18px;padding:14px 10px;cursor:pointer;text-align:center;transition:transform .2s;" ontouchstart="this.style.transform='scale(.95)'" ontouchend="this.style.transform=''">
           <div style="font-size:22px;margin-bottom:6px;">✦</div>
-          <div style="font-family:'Gowun Dodum',serif;font-size:12px;color:var(--gold2);font-weight:700;margin-bottom:2px;">AI 사주</div>
+          <div style="font-family:Gowun Dodum,serif;font-size:12px;color:var(--gold2);font-weight:700;margin-bottom:2px;">AI 사주</div>
           <div style="font-size:10px;color:var(--dim);font-weight:300;">정밀 분석</div>
         </div>
         <div onclick="goScreen('goonghapScreen')" style="background:rgba(22,16,50,.65);border:1px solid rgba(240,192,96,.2);border-radius:18px;padding:14px 10px;cursor:pointer;text-align:center;transition:transform .2s;" ontouchstart="this.style.transform='scale(.95)'" ontouchend="this.style.transform=''">
           <div style="font-size:22px;margin-bottom:6px;">♡</div>
-          <div style="font-family:'Gowun Dodum',serif;font-size:12px;color:var(--gold2);font-weight:700;margin-bottom:2px;">궁합보기</div>
+          <div style="font-family:Gowun Dodum,serif;font-size:12px;color:var(--gold2);font-weight:700;margin-bottom:2px;">궁합보기</div>
           <div style="font-size:10px;color:var(--dim);font-weight:300;">숙요점</div>
         </div>
         <div onclick="goScreen('tarotScreen')" style="background:rgba(22,16,50,.65);border:1px solid rgba(139,92,246,.2);border-radius:18px;padding:14px 10px;cursor:pointer;text-align:center;transition:transform .2s;" ontouchstart="this.style.transform='scale(.95)'" ontouchend="this.style.transform=''">
           <div style="font-size:22px;margin-bottom:6px;">🃏</div>
-          <div style="font-family:'Gowun Dodum',serif;font-size:12px;color:var(--gold2);font-weight:700;margin-bottom:2px;">타로·젬나</div>
+          <div style="font-family:Gowun Dodum,serif;font-size:12px;color:var(--gold2);font-weight:700;margin-bottom:2px;">타로·아르카나</div>
           <div style="font-size:10px;color:var(--dim);font-weight:300;">AI 리딩</div>
         </div>
-        <div onclick="goScreen('zodiacScreen');renderZodiacScreen();" style="background:rgba(22,16,50,.65);border:1px solid rgba(251,191,36,.2);border-radius:18px;padding:14px 10px;cursor:pointer;text-align:center;transition:transform .2s;" ontouchstart="this.style.transform='scale(.95)'" ontouchend="this.style.transform=''"><div style="font-size:22px;margin-bottom:6px;">⭐</div><div style="font-family:'Gowun Dodum',serif;font-size:12px;color:var(--gold2);font-weight:700;margin-bottom:2px;">별자리</div><div style="font-size:10px;color:var(--dim);font-weight:300;">베딕·다샤</div></div>
+        <div onclick="goScreen('zodiacScreen');renderZodiacScreen();" style="background:rgba(22,16,50,.65);border:1px solid rgba(251,191,36,.2);border-radius:18px;padding:14px 10px;cursor:pointer;text-align:center;transition:transform .2s;" ontouchstart="this.style.transform='scale(.95)'" ontouchend="this.style.transform=''"><div style="font-size:22px;margin-bottom:6px;">⭐</div><div style="font-family:Gowun Dodum,serif;font-size:12px;color:var(--gold2);font-weight:700;margin-bottom:2px;">별자리</div><div style="font-size:10px;color:var(--dim);font-weight:300;">베딕·다샤</div></div>
         <div style="background:rgba(22,16,50,.35);border:1px solid rgba(255,255,255,.06);border-radius:18px;padding:14px 10px;text-align:center;opacity:.4;position:relative;">
           <div style="font-size:22px;margin-bottom:6px;">🌟</div>
-          <div style="font-family:'Gowun Dodum',serif;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:2px;">신년운세</div>
+          <div style="font-family:Gowun Dodum,serif;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:2px;">신년운세</div>
           <div style="font-size:9px;color:#f87171;font-weight:600;">준비중</div>
         </div>
         <div onclick="navSettings('att')" style="background:rgba(22,16,50,.65);border:1px solid rgba(74,222,128,.2);border-radius:18px;padding:14px 10px;cursor:pointer;text-align:center;transition:transform .2s;" ontouchstart="this.style.transform='scale(.95)'" ontouchend="this.style.transform=''">
           <div style="font-size:22px;margin-bottom:6px;">🗓</div>
-          <div style="font-family:'Gowun Dodum',serif;font-size:12px;color:var(--gold2);font-weight:700;margin-bottom:2px;">출석체크</div>
+          <div style="font-family:Gowun Dodum,serif;font-size:12px;color:var(--gold2);font-weight:700;margin-bottom:2px;">출석체크</div>
           <div style="font-size:10px;color:var(--dim);font-weight:300;">미니복채</div>
         </div>
       </div>
@@ -741,7 +777,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           </div>
           <div class="pw" id="upw" style="height:180px;"></div>
         </div>
-        <button id="uConfBtn" onclick="handleUnseRequest()" style="width:100%;height:50px;background:linear-gradient(135deg,#b87800,#f0c060,#ffd97a,#f0c060,#b87800);border:none;border-radius:18px;color:#1a0d00;font-family:'Gowun Dodum',serif;font-size:15px;font-weight:700;letter-spacing:1px;cursor:pointer;margin-bottom:12px;">🔒 광고보고 운세 확인하기</button>
+        <button id="uConfBtn" onclick="handleUnseRequest()" style="width:100%;height:50px;background:linear-gradient(135deg,#b87800,#f0c060,#ffd97a,#f0c060,#b87800);border:none;border-radius:18px;color:#1a0d00;font-family:Gowun Dodum,serif;font-size:15px;font-weight:700;letter-spacing:1px;cursor:pointer;margin-bottom:12px;">🔒 광고보고 운세 확인하기</button>
       </div>
 
       <div id="uResult" style="display:none;">
@@ -780,7 +816,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
             <div style="position:absolute;top:0;left:0;right:0;height:80px;background:linear-gradient(to bottom,transparent,rgba(7,7,26,.95));z-index:11;pointer-events:none;"></div>
             <!-- 하단 고정 영역 -->
             <div style="position:absolute;bottom:0;left:0;right:0;padding:20px 0 8px;background:linear-gradient(to bottom,transparent,var(--bg) 40%);z-index:12;text-align:center;">
-              <button id="unseMoreBtn" onclick="handleUnseMore()" style="height:52px;padding:0 32px;background:linear-gradient(135deg,#b87800,#f0c060,#ffd97a,#f0c060,#b87800);border:none;border-radius:100px;color:#1a0d00;font-family:'Gowun Dodum',serif;font-size:15px;font-weight:700;letter-spacing:1px;cursor:pointer;box-shadow:0 4px 20px rgba(240,192,96,.3);">🔒 광고보고 더보기</button>
+              <button id="unseMoreBtn" onclick="handleUnseMore()" style="height:52px;padding:0 32px;background:linear-gradient(135deg,#b87800,#f0c060,#ffd97a,#f0c060,#b87800);border:none;border-radius:100px;color:#1a0d00;font-family:Gowun Dodum,serif;font-size:15px;font-weight:700;letter-spacing:1px;cursor:pointer;box-shadow:0 4px 20px rgba(240,192,96,.3);">🔒 광고보고 더보기</button>
             </div>
           </div>
         </div>
@@ -792,22 +828,89 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
 
 
-<!-- ══ 타로 젬나 화면 ══ -->
-<div id="tarotScreen" class="screen hidden" style="display:flex; flex-direction:column; height:100vh; height:100dvh; background:var(--bg);">
-  
-  <div class="topbar" style="flex-shrink:0; width:100%; max-width:420px; margin:0 auto; background:var(--bg); z-index:10;">
-    <button class="back-btn" onclick="goScreen('mainScreen')">‹</button>
-    <span class="topbar-ttl">타로 · 젬나</span>
-  </div>
+<!-- ══ 타로 아르카나 화면 ══ -->
+<div id="tarotScreen" class="screen hidden">
+  <div class="app" style="display:flex;flex-direction:column;height:100%;position:relative;overflow:hidden;">
 
-  <div id="tarotChat" style="flex:1; overflow-y:auto; width:100%; max-width:420px; margin:0 auto; padding:16px; display:flex; flex-direction:column; gap:0; scroll-behavior:smooth;"></div>
-
-  <div id="tarotInputBar" style="flex-shrink:0; width:100%; max-width:420px; margin:0 auto; background:var(--bg); border-top:1px solid var(--gb); padding:12px 16px 16px; z-index:10;">
-    <div style="display:flex;gap:8px;align-items:flex-end">
-      <textarea id="tarotQ" maxlength="300" placeholder="젬나에게 무엇이든 물어보세요... (최대 300자)" style="flex:1;min-height:44px;max-height:100px;background:var(--bg2);border:1px solid var(--gb);border-radius:12px;padding:12px 14px;color:var(--text);font-family:'Pretendard',sans-serif;font-size:14px;resize:none;outline:none;line-height:1.5" oninput="this.style.height='44px';this.style.height=Math.min(this.scrollHeight,100)+'px';document.getElementById('tqcnt').textContent=this.value.length" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();tChatSubmitQ();}"></textarea>
-      <button onclick="tChatSubmitQ()" style="width:44px;height:44px;background:linear-gradient(135deg,#1a0a2e,#4a1a6e);border:1px solid var(--gold);border-radius:12px;color:var(--gold2);font-size:18px;cursor:pointer;flex-shrink:0">▶</button>
+    <div class="topbar" style="flex-shrink:0;z-index:20;">
+      <button class="back-btn" onclick="tGoBack()">‹</button>
+      <span class="topbar-ttl" id="tarotTitle">타로 · 아르카나</span>
+      <div style="display:flex;gap:5px;align-items:center;">
+        <div class="t-step-dot on" id="tsd0"></div>
+        <div class="t-step-dot" id="tsd1"></div>
+        <div class="t-step-dot" id="tsd2"></div>
+        <div class="t-step-dot" id="tsd3"></div>
+      </div>
     </div>
-    <div style="text-align:right;font-size:10px;color:var(--muted);margin-top:4px"><span id="tqcnt">0</span>/300</div>
+
+    <!-- Step1 -->
+    <div id="tStep1" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;">
+        <div style="font-size:52px;margin-bottom:16px;filter:drop-shadow(0 0 20px rgba(139,92,246,.6));">🔮</div>
+        <div style="font-family:'Gowun Dodum',serif;font-size:22px;color:var(--gold2);margin-bottom:8px;font-weight:700;">아르카나</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.7;">카드는 거짓말을 하지 않아요.<br>무엇이든 솔직하게 물어봐요.</div>
+      </div>
+      <div style="padding:0 20px 28px;flex-shrink:0;">
+        <div style="font-size:11px;color:rgba(240,192,96,.6);letter-spacing:2px;margin-bottom:10px;text-align:center;">WHAT'S YOUR QUESTION?</div>
+        <textarea id="tarotQ" maxlength="300" rows="4"
+          placeholder="오늘 연애운이 어떨까요?&#10;이 사람이 나를 좋아할까요?&#10;직장에서 어떤 변화가 생길까요?"
+          style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:16px;color:var(--text);font-family:Pretendard,sans-serif;font-size:14px;resize:none;outline:none;line-height:1.6;box-sizing:border-box;"
+          oninput="document.getElementById('tqcnt').textContent=this.value.length"></textarea>
+        <div style="text-align:right;font-size:11px;color:var(--muted);margin-top:6px;"><span id="tqcnt">0</span>/300</div>
+        <button onclick="tStep1Submit()" style="width:100%;margin-top:12px;padding:16px;background:linear-gradient(135deg,rgba(139,92,246,.3),rgba(80,30,160,.4));border:1px solid rgba(139,92,246,.5);border-radius:16px;color:#e9d5ff;font-size:16px;font-weight:700;cursor:pointer;font-family:'Gowun Dodum',serif;">카드를 뽑으러 가기 →</button>
+      </div>
+    </div>
+
+    <!-- Step2 -->
+    <div id="tStep2" style="flex:1;overflow-y:auto;display:none;flex-direction:column;">
+      <!-- 질문 요약 -->
+      <div style="padding:12px 16px 0;flex-shrink:0;">
+        <div id="tStep2Label" style="font-size:12px;color:#c4b5fd;background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.2);border-radius:12px;padding:10px 14px;margin-bottom:10px;line-height:1.5;text-align:center;"></div>
+      </div>
+      <!-- 메이저/마이너 탭 -->
+      <div style="display:flex;gap:0;padding:0 16px 10px;flex-shrink:0;">
+        <button id="tDeckTabMajor" onclick="tSwitchDeckTab('major')" style="flex:1;padding:10px;border:1px solid rgba(240,192,96,.5);border-right:none;border-radius:12px 0 0 12px;background:rgba(240,192,96,.15);color:var(--gold2);font-size:13px;font-weight:700;cursor:pointer;font-family:'Gowun Dodum',serif;">
+          🌟 메이저 아르카나<br><span style="font-size:10px;font-weight:400;opacity:.7;">운명의 큰 흐름 (22장)</span>
+        </button>
+        <button id="tDeckTabMinor" onclick="tSwitchDeckTab('minor')" style="flex:1;padding:10px;border:1px solid rgba(255,255,255,.1);border-left:none;border-radius:0 12px 12px 0;background:rgba(255,255,255,.03);color:var(--muted);font-size:13px;font-weight:700;cursor:pointer;font-family:'Gowun Dodum',serif;">
+          🃏 마이너 아르카나<br><span style="font-size:10px;font-weight:400;opacity:.7;">일상 속 에너지 (40장)</span>
+        </button>
+      </div>
+      <!-- 카운트 -->
+      <div style="padding:0 16px 6px;flex-shrink:0;display:flex;justify-content:space-between;">
+        <span style="font-size:11px;color:rgba(240,192,96,.6);">🌟 메이저 <span id="tc-major-cnt">0</span>/<span id="tc-major-max">2</span>장</span>
+        <span style="font-size:11px;color:rgba(96,165,250,.6);">🃏 마이너 <span id="tc-minor-cnt">0</span>/<span id="tc-minor-max">2</span>장</span>
+      </div>
+      <!-- 덱 -->
+      <div id="tDeckWrap" style="overflow-x:auto;overflow-y:hidden;padding:6px 16px 8px;scrollbar-width:none;min-height:170px;flex-shrink:0;"></div>
+      <!-- 선택된 카드 -->
+      <div id="tSelRow" style="overflow-x:auto;padding:0 16px 8px;scrollbar-width:none;flex-shrink:0;"></div>
+      <!-- 버튼 -->
+      <div style="padding:6px 16px 20px;flex-shrink:0;">
+        <button id="tReadBtn" disabled onclick="tStep2Submit()" style="width:100%;padding:15px;background:var(--bg3);border:1px solid var(--gb);border-radius:16px;color:var(--muted);font-size:15px;font-weight:700;cursor:not-allowed;font-family:'Gowun Dodum',serif;transition:all .3s;">🔮 아르카나에게 묻기</button>
+      </div>
+    </div>
+
+    <!-- Step3 -->
+    <div id="tStep3" style="flex:1;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px;">
+      <div style="font-size:60px;margin-bottom:24px;animation:float 2s ease-in-out infinite;filter:drop-shadow(0 0 24px rgba(139,92,246,.8));">🔮</div>
+      <div style="font-family:'Gowun Dodum',serif;font-size:20px;color:var(--gold2);margin-bottom:12px;">카드를 읽고 있어요</div>
+      <div id="tReadingMsg" style="font-size:13px;color:var(--muted);margin-bottom:32px;">운명의 패턴을 분석하는 중...</div>
+      <div class="aidots" style="justify-content:center;"><span></span><span></span><span></span></div>
+    </div>
+
+    <!-- Step4 -->
+    <div id="tStep4" style="flex:1;overflow-y:auto;display:none;flex-direction:column;">
+      <div style="padding:20px 20px 20px;">
+        <div id="tResultCards" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:20px;"></div>
+        <div style="height:1px;background:linear-gradient(90deg,transparent,rgba(240,192,96,.3),transparent);margin-bottom:20px;"></div>
+        <div id="tResultBubbles" style="display:flex;flex-direction:column;gap:12px;"></div>
+      </div>
+    </div>
+
+    <div id="tRestartBar" style="display:none;flex-shrink:0;padding:12px 16px 16px;background:var(--bg);border-top:1px solid rgba(255,255,255,.06);">
+      <button onclick="tRestart()" style="width:100%;padding:14px;background:linear-gradient(135deg,rgba(139,92,246,.2),rgba(80,30,160,.3));border:1px solid rgba(139,92,246,.4);border-radius:14px;color:#c4b5fd;font-size:14px;font-weight:600;cursor:pointer;font-family:Pretendard;">✦ 새 질문하기</button>
+    </div>
   </div>
 </div>
 
@@ -858,10 +961,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
       <!-- 버튼 2개 -->
       <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
-        <button onclick="handleGoonghap('manseryeok')" style="width:100%;height:52px;background:linear-gradient(135deg,#8b7340,#c8a96e,#8b7340);border:none;border-radius:12px;color:#1a1208;font-family:'Gowun Dodum',serif;font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer">
+        <button onclick="handleGoonghap('manseryeok')" style="width:100%;height:52px;background:linear-gradient(135deg,#8b7340,#c8a96e,#8b7340);border:none;border-radius:12px;color:#1a1208;font-family:Gowun Dodum,serif;font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer">
           ☯ 전통 만세력 궁합
         </button>
-        <button onclick="handleGoonghap('suyo')" style="width:100%;height:52px;background:var(--bg2);border:1px solid var(--gold);border-radius:12px;color:var(--gold2);font-family:'Gowun Dodum',serif;font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer">
+        <button onclick="handleGoonghap('suyo')" style="width:100%;height:52px;background:var(--bg2);border:1px solid var(--gold);border-radius:12px;color:var(--gold2);font-family:Gowun Dodum,serif;font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer">
           ☽ 숙요점 전생 궁합
         </button>
       </div>
@@ -872,19 +975,19 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
             <div style="flex:1;text-align:center">
               <div style="font-size:10px;color:var(--muted);margin-bottom:4px">나</div>
-              <div style="font-family:'Gowun Dodum',serif;font-size:13px;color:var(--gold2);letter-spacing:3px" id="gASaju"></div>
+              <div style="font-family:Gowun Dodum,serif;font-size:13px;color:var(--gold2);letter-spacing:3px" id="gASaju"></div>
               <div style="font-size:10px;color:var(--dim);margin-top:2px" id="gAInfo"></div>
             </div>
             <div style="font-size:24px;color:var(--gold);flex-shrink:0" id="gCompatBadge">♡</div>
             <div style="flex:1;text-align:center">
               <div style="font-size:10px;color:var(--muted);margin-bottom:4px">상대방</div>
-              <div style="font-family:'Gowun Dodum',serif;font-size:13px;color:var(--gold2);letter-spacing:3px" id="gBSaju"></div>
+              <div style="font-family:Gowun Dodum,serif;font-size:13px;color:var(--gold2);letter-spacing:3px" id="gBSaju"></div>
               <div style="font-size:10px;color:var(--dim);margin-top:2px" id="gBInfo"></div>
             </div>
           </div>
           <div id="gSuyoTag" style="display:none;margin-top:10px;text-align:center;padding:8px;background:var(--bg3);border-radius:8px">
             <div style="font-size:10px;color:var(--muted);margin-bottom:3px">숙요 관계</div>
-            <div style="font-family:'Gowun Dodum',serif;font-size:16px" id="gSuyoRel"></div>
+            <div style="font-family:Gowun Dodum,serif;font-size:16px" id="gSuyoRel"></div>
             <div style="font-size:11px;color:var(--dim);margin-top:3px" id="gSuyoDesc"></div>
           </div>
         </div>
@@ -903,7 +1006,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <div id="tarotAdModal" class="modal-overlay">
   <div class="modal-box">
     <div style="font-size:28px;margin-bottom:10px">🔮</div>
-    <div style="font-family:'Gowun Dodum',serif;font-size:18px;color:var(--gold2);margin-bottom:8px;letter-spacing:1px">젬나의 리딩을 받으려면</div>
+    <div style="font-family:Gowun Dodum,serif;font-size:18px;color:var(--gold2);margin-bottom:8px;letter-spacing:1px">젬나의 리딩을 받으려면</div>
     <div style="font-size:12px;color:var(--dim);margin-bottom:20px;line-height:1.7">2회 무료 이후에는 광고 1회 시청 후<br>결과를 확인할 수 있습니다.</div>
     <button onclick="tarotAdWatch()" style="width:100%;padding:14px;background:linear-gradient(135deg,#1a0a2e,#4a1a6e,#1a0a2e);border:1px solid var(--gold);border-radius:12px;color:var(--gold2);font-size:14px;font-weight:700;margin-bottom:10px;cursor:pointer">
       ▶ 광고 보고 리딩 받기
@@ -914,7 +1017,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
 <div id="adModal" class="modal-overlay">
   <div class="modal-box">
-    <div style="font-family:'Gowun Dodum',serif; font-size:20px; color:var(--gold2); margin-bottom:8px; letter-spacing:1px;">결과 확인하기</div>
+    <div style="font-family:Gowun Dodum,serif; font-size:20px; color:var(--gold2); margin-bottom:8px; letter-spacing:1px;">결과 확인하기</div>
     <div style="font-size:12px; color:var(--dim); margin-bottom:20px; line-height:1.5;">운세 및 사주 결과를 확인하기 위해<br>원하시는 방식을 선택해주세요.</div>
     <button onclick="selectAdOption('1hour')" style="width:100%; padding:14px; background:linear-gradient(135deg,#8b7340,#c8a96e,#8b7340); border:none; border-radius:12px; color:#1a1208; font-size:14px; font-weight:700; margin-bottom:10px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
       <span style="font-size:16px">🎁</span> 30분 무제한 패스 (광고 1회)
@@ -930,7 +1033,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <div id="rewardAdModal" class="modal-overlay">
   <div class="modal-box" style="text-align:center;">
     <div style="font-size:28px;margin-bottom:10px;">📺</div>
-    <div id="rewardAdTitle" style="font-family:'Gowun Dodum',serif;font-size:18px;color:var(--gold2);margin-bottom:8px;letter-spacing:1px;">광고 보고 받기</div>
+    <div id="rewardAdTitle" style="font-family:Gowun Dodum,serif;font-size:18px;color:var(--gold2);margin-bottom:8px;letter-spacing:1px;">광고 보고 받기</div>
     <div id="rewardAdDesc" style="font-size:12px;color:var(--dim);margin-bottom:20px;line-height:1.6;"></div>
     <button onclick="rewardAdWatch()" style="width:100%;padding:14px;background:linear-gradient(135deg,#b87800,#f0c060,#ffd97a,#f0c060,#b87800);border:none;border-radius:14px;color:#1a0d00;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;">▶ 광고 보기</button>
     <button onclick="closeRewardAdModal()" style="background:none;border:none;color:var(--muted);font-size:12px;text-decoration:underline;cursor:pointer;padding:8px;">취소</button>
@@ -987,7 +1090,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div style="width:56px;height:56px;border-radius:20px;background:rgba(168,85,247,.2);border:2px solid rgba(168,85,247,.4);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;">🃏</div>
           <div style="flex:1;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-              <div style="font-family:'Gowun Dodum',serif;font-size:20px;font-weight:700;color:#e9d5ff;">젬나</div>
+              <div style="font-family:Gowun Dodum,serif;font-size:20px;font-weight:700;color:#e9d5ff;">젬나</div>
               <span style="font-size:9px;background:rgba(74,222,128,.2);color:#4ade80;padding:2px 8px;border-radius:8px;font-weight:700;">무료</span>
             </div>
             <div style="font-size:12px;color:rgba(233,213,255,.6);margin-bottom:8px;font-style:italic;">팩트 폭격기 · 타로 마스터</div>
@@ -1012,7 +1115,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div id="lunaCardAv" style="width:56px;height:56px;border-radius:20px;overflow:hidden;border:2px solid rgba(96,165,250,.35);flex-shrink:0;background:rgba(96,165,250,.15);"><img src="" id="lunaCardImg" style="width:100%;height:100%;object-fit:cover;object-position:center top;"/></div>
           <div style="flex:1;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-              <div style="font-family:'Gowun Dodum',serif;font-size:20px;font-weight:700;color:#bfdbfe;">루나</div>
+              <div style="font-family:Gowun Dodum,serif;font-size:20px;font-weight:700;color:#bfdbfe;">루나</div>
               <span style="font-size:9px;background:rgba(74,222,128,.15);color:#4ade80;padding:2px 8px;border-radius:8px;font-weight:700;">무료</span>
               
             </div>
@@ -1035,7 +1138,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div id="baekhoCardAv" style="width:56px;height:56px;border-radius:20px;overflow:hidden;border:2px solid rgba(251,146,60,.4);flex-shrink:0;background:rgba(251,146,60,.12);"><img src="" id="baekhoCardImg" style="width:100%;height:100%;object-fit:cover;object-position:center top;"/></div>
           <div style="flex:1;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-              <div style="font-family:'Gowun Dodum',serif;font-size:20px;font-weight:700;color:#fed7aa;">백호 </div>
+              <div style="font-family:Gowun Dodum,serif;font-size:20px;font-weight:700;color:#fed7aa;">백호 </div>
               <span style="font-size:9px;background:rgba(74,222,128,.15);color:#4ade80;padding:2px 8px;border-radius:8px;font-weight:700;">무료</span>
               
             </div>
@@ -1061,7 +1164,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div style="width:56px;height:56px;border-radius:20px;background:rgba(248,113,113,.1);border:2px solid rgba(248,113,113,.3);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;">🖤</div>
           <div style="flex:1;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-              <div style="font-family:'Gowun Dodum',serif;font-size:20px;font-weight:700;color:#fca5a5;">하데스</div>
+              <div style="font-family:Gowun Dodum,serif;font-size:20px;font-weight:700;color:#fca5a5;">하데스</div>
               <span style="font-size:9px;background:rgba(168,85,247,.2);color:#c4b5fd;padding:2px 8px;border-radius:8px;font-weight:700;">프리미엄</span>
               <div id="hades-lock" style="font-size:14px;">🔒</div>
             </div>
@@ -1084,7 +1187,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div style="width:56px;height:56px;border-radius:20px;background:rgba(244,114,182,.12);border:2px solid rgba(244,114,182,.3);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;">🌸</div>
           <div style="flex:1;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-              <div style="font-family:'Gowun Dodum',serif;font-size:20px;font-weight:700;color:#fbcfe8;">세라</div>
+              <div style="font-family:Gowun Dodum,serif;font-size:20px;font-weight:700;color:#fbcfe8;">세라</div>
               <span style="font-size:9px;background:rgba(168,85,247,.2);color:#c4b5fd;padding:2px 8px;border-radius:8px;font-weight:700;">프리미엄</span>
               <div id="sera-lock" style="font-size:14px;">🔒</div>
             </div>
@@ -1107,7 +1210,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div style="width:56px;height:56px;border-radius:20px;background:rgba(239,68,68,.12);border:2px solid rgba(239,68,68,.35);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;">🔥</div>
           <div style="flex:1;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-              <div style="font-family:'Gowun Dodum',serif;font-size:20px;font-weight:700;color:#fca5a5;">레드</div>
+              <div style="font-family:Gowun Dodum,serif;font-size:20px;font-weight:700;color:#fca5a5;">레드</div>
               <span style="font-size:9px;background:rgba(168,85,247,.2);color:#c4b5fd;padding:2px 8px;border-radius:8px;font-weight:700;">프리미엄</span>
               <div id="red-lock" style="font-size:14px;">🔒</div>
             </div>
@@ -1148,7 +1251,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   <div style="flex:1;overflow-y:auto;padding:0 24px 40px;display:flex;flex-direction:column;justify-content:center;">
     <div style="text-align:center;margin-bottom:32px;">
       <div style="font-size:48px;margin-bottom:12px;">🔮</div>
-      <div style="font-family:'Gowun Dodum',serif;font-size:26px;color:var(--gold2);font-weight:700;letter-spacing:2px;margin-bottom:8px;">Uncanny</div>
+      <div style="font-family:Gowun Dodum,serif;font-size:26px;color:var(--gold2);font-weight:700;letter-spacing:2px;margin-bottom:8px;">Uncanny</div>
       <div style="font-size:14px;color:var(--muted);line-height:1.7;">당신의 결을 읽는 AI 사주</div>
     </div>
     <!-- 스텝 카드들 -->
@@ -1167,7 +1270,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       </div>
     </div>
     <div style="text-align:center;font-size:11px;color:var(--muted);margin-bottom:16px;">시작하려면 내 사주 프로필이 필요해요</div>
-    <button onclick="onboardingStart()" style="width:100%;height:54px;background:linear-gradient(135deg,#b87800,#f0c060);border:none;border-radius:16px;color:#1a0d00;font-size:16px;font-weight:700;cursor:pointer;font-family:'Gowun Dodum',serif;letter-spacing:1px;">사주 프로필 만들기 →</button>
+    <button onclick="onboardingStart()" style="width:100%;height:54px;background:linear-gradient(135deg,#b87800,#f0c060);border:none;border-radius:16px;color:#1a0d00;font-size:16px;font-weight:700;cursor:pointer;font-family:Gowun Dodum,serif;letter-spacing:1px;">사주 프로필 만들기 →</button>
     <button onclick="onboardingSkip()" style="width:100%;height:44px;background:transparent;border:none;color:var(--muted);font-size:13px;cursor:pointer;margin-top:8px;">일단 둘러볼게요</button>
   </div>
 </div>
@@ -1204,14 +1307,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="topbar">
       <button class="back-btn" onclick="goScreen('personaScreen')">‹</button>
       <div>
-        <div id="pslTitle" style="font-family:'Gowun Dodum',serif;font-size:16px;color:var(--gold2);letter-spacing:2px;"></div>
+        <div id="pslTitle" style="font-family:Gowun Dodum,serif;font-size:16px;color:var(--gold2);letter-spacing:2px;"></div>
         <div id="pslSub" style="font-size:10px;color:var(--muted);font-weight:300;margin-top:1px;"></div>
       </div>
     </div>
     <div style="padding:0 16px 20px;">
       <div id="pslList"></div>
       <button id="pslNewBtn" onclick="startNewPersonaSession(_curPersonaId)"
-        style="width:100%;height:52px;background:linear-gradient(135deg,#1a0a2e,#4a1a6e);border:1px solid rgba(139,92,246,.4);border-radius:18px;color:var(--gold2);font-family:'Gowun Dodum',serif;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:1px;margin-top:8px;">
+        style="width:100%;height:52px;background:linear-gradient(135deg,#1a0a2e,#4a1a6e);border:1px solid rgba(139,92,246,.4);border-radius:18px;color:var(--gold2);font-family:Gowun Dodum,serif;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:1px;margin-top:8px;">
         ＋ 새 대화 시작
       </button>
     </div>
@@ -1265,13 +1368,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div style="background:rgba(255,255,255,.07);border-radius:16px;padding:14px;text-align:center;">
             <div style="font-size:10px;color:var(--muted);margin-bottom:6px;">미니복채</div>
             <div style="font-size:11px;margin-bottom:4px;">✨</div>
-            <div style="font-family:'Gowun Dodum',serif;font-size:28px;font-weight:700;color:var(--gold2);" id="bcMini2">0</div>
+            <div style="font-family:Gowun Dodum,serif;font-size:28px;font-weight:700;color:var(--gold2);" id="bcMini2">0</div>
             <div style="font-size:10px;color:var(--muted);margin-top:2px;">10개 = 복채 1개</div>
           </div>
           <div style="background:rgba(255,255,255,.07);border-radius:16px;padding:14px;text-align:center;">
             <div style="font-size:10px;color:var(--muted);margin-bottom:6px;">복채</div>
             <div style="font-size:11px;margin-bottom:4px;">💎</div>
-            <div style="font-family:'Gowun Dodum',serif;font-size:28px;font-weight:700;color:var(--gold2);" id="bcBokchae2">0</div>
+            <div style="font-family:Gowun Dodum,serif;font-size:28px;font-weight:700;color:var(--gold2);" id="bcBokchae2">0</div>
             <div style="font-size:10px;color:var(--muted);margin-top:2px;">3개 = AI 질문 1회</div>
           </div>
         </div>
@@ -1312,7 +1415,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         <div onclick="bcSubscribe('lite')" style="background:rgba(22,16,50,.7);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:16px 18px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:14px;" ontouchstart="this.style.transform='scale(.98)'" ontouchend="this.style.transform=''">
           <div style="flex:1;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-              <div style="font-family:'Gowun Dodum',serif;font-size:16px;color:var(--text);font-weight:700;">라이트</div>
+              <div style="font-family:Gowun Dodum,serif;font-size:16px;color:var(--text);font-weight:700;">라이트</div>
               <div style="font-size:9px;color:var(--muted);background:rgba(255,255,255,.07);padding:2px 8px;border-radius:8px;">월 구독</div>
             </div>
             <div style="font-size:12px;color:var(--dim);line-height:1.6;margin-bottom:8px;">매월 질문 12개 · 광고 제거<br><span style="color:rgba(255,255,255,.4);font-size:11px;">복채 12개 + 일반패스 4개 포함 · 채팅 기억 없음</span></div>
@@ -1322,7 +1425,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
             </div>
           </div>
           <div style="text-align:right;flex-shrink:0;">
-            <div style="font-family:'Gowun Dodum',serif;font-size:20px;font-weight:700;color:var(--gold2);">9,900원</div>
+            <div style="font-family:Gowun Dodum,serif;font-size:20px;font-weight:700;color:var(--gold2);">9,900원</div>
             <div style="font-size:10px;color:var(--muted);">/월</div>
           </div>
         </div>
@@ -1332,7 +1435,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div style="position:absolute;top:10px;right:10px;font-size:9px;background:linear-gradient(135deg,#b87800,#f0c060);color:#1a0d00;padding:3px 10px;border-radius:10px;font-weight:700;">가장 인기</div>
           <div style="flex:1;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;margin-top:4px;">
-              <div style="font-family:'Gowun Dodum',serif;font-size:16px;color:var(--gold2);font-weight:700;">스탠다드</div>
+              <div style="font-family:Gowun Dodum,serif;font-size:16px;color:var(--gold2);font-weight:700;">스탠다드</div>
               <div style="font-size:9px;color:var(--muted);background:rgba(255,255,255,.07);padding:2px 8px;border-radius:8px;">월 구독</div>
             </div>
             <div style="font-size:12px;color:var(--dim);line-height:1.6;margin-bottom:8px;">매월 질문 24개 · <span style="color:#4ade80;">7일 기억 대화</span><br><span style="color:rgba(255,255,255,.4);font-size:11px;">복채 18개 + 일반패스 9개 포함 · 모든 캐릭터 기억형 채팅</span></div>
@@ -1342,7 +1445,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
             </div>
           </div>
           <div style="text-align:right;flex-shrink:0;">
-            <div style="font-family:'Gowun Dodum',serif;font-size:20px;font-weight:700;color:var(--gold2);">19,900원</div>
+            <div style="font-family:Gowun Dodum,serif;font-size:20px;font-weight:700;color:var(--gold2);">19,900원</div>
             <div style="font-size:10px;color:var(--muted);">/월</div>
           </div>
         </div>
@@ -1351,7 +1454,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         <div onclick="bcSubscribe('premium')" style="background:linear-gradient(145deg,rgba(20,10,50,.9),rgba(10,5,30,.95));border:1px solid rgba(168,85,247,.35);border-radius:20px;padding:16px 18px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:14px;" ontouchstart="this.style.transform='scale(.98)'" ontouchend="this.style.transform=''">
           <div style="flex:1;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-              <div style="font-family:'Gowun Dodum',serif;font-size:16px;color:#c4b5fd;font-weight:700;">프리미엄</div>
+              <div style="font-family:Gowun Dodum,serif;font-size:16px;color:#c4b5fd;font-weight:700;">프리미엄</div>
               <div style="font-size:9px;color:rgba(196,181,253,.5);background:rgba(168,85,247,.1);padding:2px 8px;border-radius:8px;">월 구독</div>
             </div>
             <div style="font-size:12px;color:var(--dim);line-height:1.6;margin-bottom:8px;">매월 질문 52개 · <span style="color:#c4b5fd;">30일 기억 대화</span><br><span style="color:rgba(255,255,255,.4);font-size:11px;">복채 30개 + 프리미엄패스 14개 포함 · 심층 모드</span></div>
@@ -1361,7 +1464,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
             </div>
           </div>
           <div style="text-align:right;flex-shrink:0;">
-            <div style="font-family:'Gowun Dodum',serif;font-size:20px;font-weight:700;color:#c4b5fd;">29,900원</div>
+            <div style="font-family:Gowun Dodum,serif;font-size:20px;font-weight:700;color:#c4b5fd;">29,900원</div>
             <div style="font-size:10px;color:var(--muted);">/월</div>
           </div>
         </div>
@@ -1375,20 +1478,20 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <div style="font-size:10px;color:var(--gold2);letter-spacing:1px;margin-bottom:10px;font-weight:600;">추천 패키지</div>
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
             <div onclick="bcBuyPkg(3,'2900')" style="background:rgba(240,192,96,.1);border:1px solid rgba(240,192,96,.25);border-radius:14px;padding:12px 8px;text-align:center;cursor:pointer;" ontouchstart="this.style.transform='scale(.95)'" ontouchend="this.style.transform=''">
-              <div style="font-family:'Gowun Dodum',serif;font-size:22px;font-weight:700;color:var(--gold2);">3</div>
+              <div style="font-family:Gowun Dodum,serif;font-size:22px;font-weight:700;color:var(--gold2);">3</div>
               <div style="font-size:9px;color:var(--muted);margin:2px 0;">복채</div>
               <div style="font-size:11px;color:var(--text);font-weight:600;">2,900원</div>
               <div style="font-size:9px;color:rgba(74,222,128,.7);margin-top:4px;">체험팩</div>
             </div>
             <div onclick="bcBuyPkg(25,'15900')" style="background:rgba(240,192,96,.15);border:2px solid rgba(240,192,96,.4);border-radius:14px;padding:12px 8px;text-align:center;cursor:pointer;position:relative;" ontouchstart="this.style.transform='scale(.95)'" ontouchend="this.style.transform=''">
               <div style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:8px;background:linear-gradient(135deg,#b87800,#f0c060);color:#1a0d00;padding:2px 8px;border-radius:6px;font-weight:700;white-space:nowrap;">인기</div>
-              <div style="font-family:'Gowun Dodum',serif;font-size:22px;font-weight:700;color:var(--gold2);">25</div>
+              <div style="font-family:Gowun Dodum,serif;font-size:22px;font-weight:700;color:var(--gold2);">25</div>
               <div style="font-size:9px;color:var(--muted);margin:2px 0;">복채</div>
               <div style="font-size:11px;color:var(--text);font-weight:600;">15,900원</div>
               <div style="font-size:9px;color:rgba(74,222,128,.7);margin-top:4px;">밸류팩</div>
             </div>
             <div onclick="bcBuyPkg(40,'24900')" style="background:rgba(240,192,96,.1);border:1px solid rgba(240,192,96,.25);border-radius:14px;padding:12px 8px;text-align:center;cursor:pointer;" ontouchstart="this.style.transform='scale(.95)'" ontouchend="this.style.transform=''">
-              <div style="font-family:'Gowun Dodum',serif;font-size:22px;font-weight:700;color:var(--gold2);">40</div>
+              <div style="font-family:Gowun Dodum,serif;font-size:22px;font-weight:700;color:var(--gold2);">40</div>
               <div style="font-size:9px;color:var(--muted);margin:2px 0;">복채</div>
               <div style="font-size:11px;color:var(--text);font-weight:600;">24,900원</div>
               <div style="font-size:9px;color:rgba(74,222,128,.7);margin-top:4px;">플러스팩</div>
@@ -1403,23 +1506,23 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         <div id="bcAllPkg" style="display:none;padding:0 16px 14px;">
           <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;">
             <div onclick="bcBuyPkg(1,'990')" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;cursor:pointer;">
-              <div style="font-family:'Gowun Dodum',serif;font-size:18px;font-weight:700;color:var(--gold2);">1개</div>
+              <div style="font-family:Gowun Dodum,serif;font-size:18px;font-weight:700;color:var(--gold2);">1개</div>
               <div><div style="font-size:11px;color:var(--text);font-weight:600;">990원</div><div style="font-size:9px;color:var(--muted);">단품</div></div>
             </div>
             <div onclick="bcBuyPkg(5,'3900')" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;cursor:pointer;">
-              <div style="font-family:'Gowun Dodum',serif;font-size:18px;font-weight:700;color:var(--gold2);">5개</div>
+              <div style="font-family:Gowun Dodum,serif;font-size:18px;font-weight:700;color:var(--gold2);">5개</div>
               <div><div style="font-size:11px;color:var(--text);font-weight:600;">3,900원</div><div style="font-size:9px;color:var(--muted);">라이트팩</div></div>
             </div>
             <div onclick="bcBuyPkg(10,'6900')" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;cursor:pointer;">
-              <div style="font-family:'Gowun Dodum',serif;font-size:18px;font-weight:700;color:var(--gold2);">10개</div>
+              <div style="font-family:Gowun Dodum,serif;font-size:18px;font-weight:700;color:var(--gold2);">10개</div>
               <div><div style="font-size:11px;color:var(--text);font-weight:600;">6,900원</div><div style="font-size:9px;color:var(--muted);">스타터팩</div></div>
             </div>
             <div onclick="bcBuyPkg(15,'9900')" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;cursor:pointer;">
-              <div style="font-family:'Gowun Dodum',serif;font-size:18px;font-weight:700;color:var(--gold2);">15개</div>
+              <div style="font-family:Gowun Dodum,serif;font-size:18px;font-weight:700;color:var(--gold2);">15개</div>
               <div><div style="font-size:11px;color:var(--text);font-weight:600;">9,900원</div><div style="font-size:9px;color:var(--muted);">베이직팩</div></div>
             </div>
             <div onclick="bcBuyPkg(65,'39900')" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;cursor:pointer;">
-              <div style="font-family:'Gowun Dodum',serif;font-size:18px;font-weight:700;color:var(--gold2);">65개</div>
+              <div style="font-family:Gowun Dodum,serif;font-size:18px;font-weight:700;color:var(--gold2);">65개</div>
               <div><div style="font-size:11px;color:var(--text);font-weight:600;">39,900원</div><div style="font-size:9px;color:var(--muted);">맥스팩</div></div>
             </div>
           </div>
@@ -1477,7 +1580,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <div id="passModal" class="modal-overlay" onclick="if(event.target===this)closePassModal()">
   <div class="modal-box" style="text-align:left;max-width:360px;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-      <div style="font-family:'Gowun Dodum',serif;font-size:17px;color:var(--gold2);letter-spacing:1px;">AI 전용패스란?</div>
+      <div style="font-family:Gowun Dodum,serif;font-size:17px;color:var(--gold2);letter-spacing:1px;">AI 전용패스란?</div>
       <button onclick="closePassModal()" style="width:30px;height:30px;background:rgba(255,255,255,.08);border:none;border-radius:10px;color:var(--muted);font-size:16px;cursor:pointer;">✕</button>
     </div>
     <div style="font-size:12px;color:var(--dim);line-height:1.8;margin-bottom:16px;">구독하면 매월 자동 지급되는 <span style="color:var(--gold2);">AI 질문 이용권</span>이에요. 복채처럼 소진하는 재화가 아니라, 이번 달에 주어진 질문 횟수예요.</div>
@@ -1514,7 +1617,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     </div>
 
     <!-- 로딩 텍스트 -->
-    <div style="font-family:'Gowun Dodum',serif;font-size:20px;color:var(--gold2);letter-spacing:3px;margin-bottom:12px;text-align:center;">사주를 분석하는 중</div>
+    <div style="font-family:Gowun Dodum,serif;font-size:20px;color:var(--gold2);letter-spacing:3px;margin-bottom:12px;text-align:center;">사주를 분석하는 중</div>
     <div id="sajuLoadingMsg" style="font-size:13px;color:var(--muted);letter-spacing:2px;margin-bottom:36px;text-align:center;min-height:20px;">사주 데이터를 읽는 중...</div>
 
     <!-- 도트 -->
@@ -1561,10 +1664,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <div id="profSaveModal" class="modal-overlay">
   <div class="modal-box">
     <div style="font-size:28px;margin-bottom:12px;">👤</div>
-    <div style="font-family:'Gowun Dodum',serif;font-size:18px;color:var(--gold2);margin-bottom:18px;letter-spacing:1px;">프로필 저장</div>
+    <div style="font-family:Gowun Dodum,serif;font-size:18px;color:var(--gold2);margin-bottom:18px;letter-spacing:1px;">프로필 저장</div>
     <input id="profNameInput" class="prof-modal-input" type="text" placeholder="닉네임 (예: 나, 엄마, 친구)" maxlength="10">
     <input id="profBirthInput" class="prof-modal-input" type="text" placeholder="생년월일 (자동입력)" readonly style="opacity:.55;cursor:default;">
-    <button onclick="confirmSaveProfile()" style="width:100%;height:50px;background:linear-gradient(135deg,#b87800,#f0c060,#ffd97a,#f0c060,#b87800);border:none;border-radius:16px;color:#1a0d00;font-family:'Gowun Dodum',serif;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;">저장하기</button>
+    <button onclick="confirmSaveProfile()" style="width:100%;height:50px;background:linear-gradient(135deg,#b87800,#f0c060,#ffd97a,#f0c060,#b87800);border:none;border-radius:16px;color:#1a0d00;font-family:Gowun Dodum,serif;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;">저장하기</button>
     <button onclick="closeProfSaveModal()" style="background:none;border:none;color:var(--muted);font-size:12px;text-decoration:underline;cursor:pointer;padding:6px;">취소</button>
   </div>
 </div>
@@ -1737,7 +1840,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div id="ztab-dasha-content" style="display:none;">
         <div id="zDashaHero" style="background:linear-gradient(145deg,rgba(88,28,135,.3),rgba(20,10,50,.9));border:1px solid rgba(168,85,247,.3);border-radius:24px;padding:24px 20px;margin-bottom:12px;text-align:center;">
           <div style="font-size:11px;color:rgba(200,180,255,.5);letter-spacing:2px;margin-bottom:8px;">현재 인생 시기</div>
-          <div id="zDashaName" style="font-size:30px;font-weight:700;color:var(--gold2);font-family:'Gowun Dodum',serif;margin-bottom:4px;"></div>
+          <div id="zDashaName" style="font-size:30px;font-weight:700;color:var(--gold2);font-family:Gowun Dodum,serif;margin-bottom:4px;"></div>
           <div id="zDashaYear" style="font-size:13px;color:var(--dim);margin-bottom:12px;"></div>
           <div id="zDashaBar" style="height:6px;background:rgba(255,255,255,.1);border-radius:3px;margin-bottom:8px;overflow:hidden;">
             <div id="zDashaFill" style="height:100%;background:linear-gradient(90deg,#7c3aed,#f0c060);border-radius:3px;"></div>
@@ -1796,10 +1899,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <div id="selectProfModal" class="modal-overlay">
   <div class="modal-box">
     <div style="font-size:28px;margin-bottom:12px;">👤</div>
-    <div id="selectProfModalName" style="font-family:'Gowun Dodum',serif;font-size:19px;color:var(--gold2);margin-bottom:6px;letter-spacing:1px;"></div>
+    <div id="selectProfModalName" style="font-family:Gowun Dodum,serif;font-size:19px;color:var(--gold2);margin-bottom:6px;letter-spacing:1px;"></div>
     <div id="selectProfModalInfo" style="font-size:12px;color:var(--dim);margin-bottom:20px;line-height:1.7;font-weight:300;"></div>
     <div style="font-size:14px;color:var(--text);margin-bottom:20px;font-weight:500;">이 프로필로 설정하시겠습니까?</div>
-    <button onclick="confirmSelectProf()" style="width:100%;height:50px;background:linear-gradient(135deg,#b87800,#f0c060,#ffd97a,#f0c060,#b87800);border:none;border-radius:16px;color:#1a0d00;font-family:'Gowun Dodum',serif;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;">확인</button>
+    <button onclick="confirmSelectProf()" style="width:100%;height:50px;background:linear-gradient(135deg,#b87800,#f0c060,#ffd97a,#f0c060,#b87800);border:none;border-radius:16px;color:#1a0d00;font-family:Gowun Dodum,serif;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;">확인</button>
     <button onclick="closeSelectProfModal()" style="background:none;border:none;color:var(--muted);font-size:12px;text-decoration:underline;cursor:pointer;padding:6px;">취소</button>
   </div>
 </div>
@@ -1822,9 +1925,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div style="font-size:11px;color:var(--muted);letter-spacing:1px;margin-bottom:10px;">성별</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:28px;">
         <button id="apMal" onclick="apSetGen('male')"
-          style="height:54px;border-radius:16px;border:2px solid rgba(96,165,250,.5);background:rgba(96,165,250,.18);color:#93c5fd;font-size:18px;font-weight:700;cursor:pointer;font-family:'Gowun Dodum',serif;letter-spacing:2px;">남 ♂</button>
+          style="height:54px;border-radius:16px;border:2px solid rgba(96,165,250,.5);background:rgba(96,165,250,.18);color:#93c5fd;font-size:18px;font-weight:700;cursor:pointer;font-family:Gowun Dodum,serif;letter-spacing:2px;">남 ♂</button>
         <button id="apFem" onclick="apSetGen('female')"
-          style="height:54px;border-radius:16px;border:2px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:var(--dim);font-size:18px;font-weight:700;cursor:pointer;font-family:'Gowun Dodum',serif;letter-spacing:2px;">여 ♀</button>
+          style="height:54px;border-radius:16px;border:2px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:var(--dim);font-size:18px;font-weight:700;cursor:pointer;font-family:Gowun Dodum,serif;letter-spacing:2px;">여 ♀</button>
       </div>
 
       <!-- 생년월일 (네이티브 date picker) -->
@@ -1834,6 +1937,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           style="flex:1;height:38px;border-radius:12px;border:1px solid rgba(240,192,96,.5);background:rgba(240,192,96,.15);color:var(--gold2);font-size:13px;font-weight:600;cursor:pointer;font-family:'Pretendard';">양력</button>
         <button id="apLun" onclick="apSetCal('lunar')"
           style="flex:1;height:38px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:transparent;color:var(--dim);font-size:13px;cursor:pointer;font-family:'Pretendard';">음력</button>
+      </div>
+      <!-- 윤달 체크박스 (음력 선택 시 표시) -->
+      <div id="apLeapRow" style="display:none;align-items:center;gap:10px;margin-bottom:12px;padding:10px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;">
+        <input type="checkbox" id="apLeapChk" onchange="apAS.leap=this.checked" style="accent-color:var(--gold);width:16px;height:16px;cursor:pointer;">
+        <label for="apLeapChk" style="font-size:13px;color:var(--dim);cursor:pointer;">윤달 (윤달에 태어나셨나요?)</label>
       </div>
       <input id="apDateInput" type="date" min="1930-01-01" max="2025-12-31"
         style="width:100%;height:54px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:16px;color:var(--text);font-family:'Pretendard';font-size:16px;padding:0 18px;outline:none;display:block;margin-bottom:28px;-webkit-appearance:none;appearance:none;color-scheme:dark;">
@@ -2406,6 +2514,36 @@ function calcZiweiDoushu(gY, gM, gD, hour, gen) {
   } catch(e){ return null; }
 }
 
+
+// ── 대운수 정밀 계산 ──
+// 24절기 황경+월 매핑 (fjd용)
+// 24절기 완전 테이블 [황경, 달]
+var _TERM24=[[285,1],[300,1],[315,2],[330,2],[345,3],[0,3],[15,4],[30,4],[45,5],[60,5],[75,6],[90,6],[105,7],[120,7],[135,8],[150,8],[165,9],[180,9],[195,10],[210,10],[225,11],[240,11],[255,12],[270,12]];
+
+function calcDaewunNum(gY,gM,gD,hour,isMale){
+  try{
+    var h=(hour===99||hour===undefined)?12:hour;
+    var utcH=h-9; var d2=gD,m2=gM,y2=gY;
+    if(utcH<0){utcH+=24;d2--;if(d2<1){m2--;if(m2<1){m2=12;y2--;}d2=28;}}
+    var birthJd=jd(y2,m2,d2,utcH);
+    var isYang=(gY%2===1);
+    var fwd=(isMale&&isYang)||(!isMale&&!isYang);
+    var minDiff=99999;
+    for(var dy=-1;dy<=1;dy++){
+      var y=gY+dy;
+      for(var i=0;i<_TERM24.length;i++){
+        try{
+          var tJd=fjd(y,_TERM24[i][0],_TERM24[i][1]);
+          var diff=fwd?(tJd-birthJd):(birthJd-tJd);
+          if(diff>0.1&&diff<minDiff) minDiff=diff;
+        }catch(e2){}
+      }
+    }
+    if(minDiff>=99999) return 3;
+    return Math.max(1,Math.min(9,Math.round(minDiff/3)));
+  }catch(e){return 3;}
+}
+
 function buildRichSajuContext(def, tier){
   if(!def) return '(프로필 없음)';
   var noH=(def.hour===99||def.hour===undefined);
@@ -2575,12 +2713,8 @@ function buildRichSajuContext(def, tier){
     var isYangYear=(def.gY%2===1);
     var isMale=(def.gen==='male');
     var fwd=(isMale&&isYangYear)||(!isMale&&!isYangYear);
-    // 대운수 추정: 절기 일수/3 (LD에 없으면 연도 기반 근사)
-    var dwNum=3; // 기본 3세 대운수 (실제는 절기 계산 필요)
-    if(LD.jn){
-      // 절기명으로 대략 추정 (정확한 계산은 만세력 필요)
-      dwNum=Math.max(1,Math.min(9,3));
-    }
+    // 대운수 정밀 계산 (절기까지 일수÷3)
+    var dwNum=calcDaewunNum(def.gY,def.gM,def.gD,def.hour===99?12:def.hour,def.gen==='male');
     var dwStart=def.gY+dwNum; // 대운 시작 연도
     var dwStartAge=dwNum;     // 대운 시작 나이
 
@@ -4106,8 +4240,7 @@ async function personaSend(){
       return;
     }
     var data=await res.json();
-    console.log('[PERSONA API]', JSON.stringify(data).slice(0,200));
-    var answer='';
+      var answer='';
     if(data&&data.content&&Array.isArray(data.content)){
       // 배열의 모든 text 합치기
       answer=data.content.map(function(c){return c.text||'';}).join('');
@@ -4410,7 +4543,7 @@ async function _zDoNatalFetch(idx,def,profId,cacheKey,lo,re){
     else if(data&&data.text) txt=data.text;
     // 에러 응답 처리
     if(!txt&&data&&data.error) txt='서버 오류: '+(data.error.message||JSON.stringify(data.error));
-    if(!txt){console.error('[zNatalAsk] 빈 응답:', JSON.stringify(data).slice(0,200)); txt='응답이 비어있어요. 다시 시도해주세요.';}
+
     if(lo)lo.style.display='none';
     var rendered=natalMdToHtml(txt);
     localStorage.setItem(cacheKey,rendered);
@@ -4614,7 +4747,7 @@ function zRenderNatal(){
   }catch(e){
     var nc2=document.getElementById('zNatalCards');
     if(nc2) nc2.innerHTML='<div style="padding:16px;color:#f87171;font-size:13px;">오류: '+e.message+'</div>';
-    console.error('[zRenderNatal]',e);
+
   }
 }
 
@@ -4640,7 +4773,6 @@ function zRenderTodayTab(){
   var wrap=document.getElementById('zSignsWrap');
   if(!wrap) return;
   var unlocked=zCheckAdUnlock();
-  console.log('[별자리] unlocked='+unlocked, 'ad_free_until='+localStorage.getItem('ad_free_until'), 'zodiac_ts='+localStorage.getItem('msr_zodiac_ad_ts'));
   if(unlocked){
     wrap.setAttribute('style','position:relative;');
   } else {
@@ -4651,7 +4783,6 @@ function zRenderTodayTab(){
       if(w) w.setAttribute('style','position:relative;');
     };
     var modal=document.getElementById('adModal');
-    console.log('[별자리] 모달 show 시도:', modal);
     if(modal) modal.classList.add('show');
   }
 }
@@ -5094,12 +5225,7 @@ function showRetryToast(msg, retryFn){
 // ══ 별자리·베딕 탭 ══
 var _starTabIdx=0;
 
-function _navStarChart_removed(){
-  _navTo('starScreen','star');
-  document.querySelectorAll('.nav-item').forEach(function(b){b.classList.remove('on');});
-  var nb=document.getElementById('nav-star');if(nb)nb.classList.add('on');
-  renderStarScreen();
-}
+
 
 function starSwitchTab(i){
   _starTabIdx=i;
@@ -5470,7 +5596,8 @@ async function pcAppendSuggestions(answerText){
 
     chat.appendChild(wrap);
     setTimeout(function(){if(!_pcUserScrolled)chat.scrollTop=chat.scrollHeight;},80);
-  }catch(err){console.log('[추천질의]',err&&err.message||err);}
+
+  }catch(err){}
 }
 function pcSendSuggestion(q){
   var chat=document.getElementById('personaChat');
@@ -5565,18 +5692,18 @@ function navUnse(type){
 }
 
 /* ══ 히어로 캐러셀 ══ */
-var _heroIdx=0,_heroTimer=null,_heroStartX=0;
+var _heroIdx=0,_heroTimer=null,_heroStartX=0,_heroTotal=3;
+var _skipUnseBlur=false; // 메인 광고 후 블러 스킵 플래그
 function heroGoSlide(idx){
   var track=document.getElementById('heroTrack');if(!track)return;
-  _heroIdx=idx;
-  track.style.transform='translateX('+(-idx*100)+'%)';
-  document.querySelectorAll('.hero-dot').forEach(function(d,i){d.className='hero-dot'+(i===idx?' on':'');});
-  // 화살표 표시/숨김
+  _heroIdx=Math.max(0,Math.min(_heroTotal-1,idx));
+  track.style.transform='translateX('+(-_heroIdx*100)+'%)';
+  document.querySelectorAll('.hero-dot').forEach(function(d,i){d.className='hero-dot'+(i===_heroIdx?' on':'');});
   var al=document.getElementById('heroArrowL'),ar=document.getElementById('heroArrowR');
-  if(al) al.style.opacity=idx===0?'0':'1';
-  if(ar) ar.style.opacity=idx===1?'0':'1';
+  if(al) al.style.opacity=_heroIdx===0?'0':'1';
+  if(ar) ar.style.opacity=_heroIdx===_heroTotal-1?'0':'1';
 }
-function _heroNext(){heroGoSlide((_heroIdx+1)%2);}
+function _heroNext(){heroGoSlide((_heroIdx+1)%_heroTotal);}
 function _heroStart(){_heroTimer=setInterval(_heroNext,4000);}
 function _heroReset(){clearInterval(_heroTimer);_heroStart();}
 setTimeout(function(){
@@ -5585,7 +5712,7 @@ setTimeout(function(){
   car.addEventListener('touchstart',function(e){_heroStartX=e.touches[0].clientX;clearInterval(_heroTimer);},{passive:true});
   car.addEventListener('touchend',function(e){
     var dx=e.changedTouches[0].clientX-_heroStartX;
-    if(dx<-40)heroGoSlide(1);else if(dx>40)heroGoSlide(0);
+    if(dx<-40)heroGoSlide(_heroIdx+1);else if(dx>40)heroGoSlide(_heroIdx-1);
     _heroStart();
   },{passive:true});
 },800);
@@ -5935,28 +6062,71 @@ setTimeout(function(){
 })();
 
 /* ━━━ 메인 오늘의 운세 카드 ━━━ */
+// 메인 운세박스 광고 체크
+function _mainUnseAdCheck(){
+  var freeUntil=parseInt(localStorage.getItem('ad_free_until')||'0');
+  var active=Date.now()<freeUntil;
+  if(active){
+    var bl=document.getElementById('mainUnseBlur');
+    if(bl) bl.style.display='none';
+    _skipUnseBlur=true;
+    navUnse('today');
+    return;
+  }
+  openAdModal(function(){
+    var bl=document.getElementById('mainUnseBlur');
+    if(bl) bl.style.display='none';
+    _skipUnseBlur=true;
+    navUnse('today');
+  });
+}
+
+function _mainUpdateUnseBox(){
+  var freeUntil=parseInt(localStorage.getItem('ad_free_until')||'0');
+  var active=Date.now()<freeUntil;
+  // 오늘 이미 운세 봤는지 확인
+  var def=getDefaultProfile();
+  var today=getTodayStr();
+  var scoreKey=def?'msr_today_score_'+def.id+'_'+today:null;
+  var hasSeen=scoreKey&&localStorage.getItem(scoreKey)!==null;
+  var show=active||hasSeen; // 30분 패스 or 이미 봤으면 블러 없음
+  var bl=document.getElementById('mainUnseBlur');
+  var box=document.getElementById('mainUnseBox');
+  if(bl) bl.style.display=show?'none':'flex';
+  if(box) box.onclick=show?function(){navUnse('today');}:null;
+  // 점수/닉네임 동기화 (mainTodayCard와 동일)
+  var def=getDefaultProfile();
+  var nick=document.getElementById('mainUnseNick');
+  var desc=document.getElementById('mainUnseDesc');
+  var num=document.getElementById('mainUnseScoreNum');
+  if(nick) nick.textContent=def?def.name+'님의 오늘 운세':'';
+  // 출석 스트릭 업데이트
+  var streakEl=document.getElementById('mainStreakNum');
+  if(streakEl){
+    var st=parseInt(localStorage.getItem('msr_streak')||'0');
+    streakEl.textContent=st;
+  }
+}
+
 function updateMainTodayCard(){
   var def=getDefaultProfile();
-  var nick=document.getElementById('mainTodayNick');
-  var desc=document.getElementById('mainTodayDesc');
-  var sub=document.getElementById('mainTodaySub');
-  var scoreEl=document.getElementById('mainTodayScoreNum');
-  var scoreWrap=document.getElementById('mainTodayScore');
-  if(!nick||!desc||!sub||!scoreEl||!scoreWrap)return;
+  var nick=document.getElementById('mainUnseNick')||document.getElementById('mainTodayNick');
+  var desc=document.getElementById('mainUnseDesc')||document.getElementById('mainTodayDesc');
+  var scoreEl=document.getElementById('mainUnseScoreNum')||document.getElementById('mainTodayScoreNum');
+  var scoreWrap=document.getElementById('mainUnseScore')||document.getElementById('mainTodayScore');
+  if(!nick||!desc||!scoreEl||!scoreWrap)return;
 
   if(!def){
     nick.textContent='';
-    desc.textContent='오늘의 운세를 알아보세요';
-    sub.textContent='프로필 추가 후 바로 확인 →';
+    desc.textContent='오늘의 운세를 확인해보세요';
     scoreEl.textContent='-';
     scoreEl.style.color='var(--muted)';
     scoreWrap.style.borderColor='rgba(255,255,255,.12)';
     return;
   }
 
-  nick.textContent=def.name+'님';
+  nick.textContent=def.name+'님의 오늘 운세';
 
-  // 오늘 점수: 프로필별 키에서 읽기
   var today=getTodayStr();
   var scoreKey='msr_today_score_'+def.id+'_'+today;
   var todayScore=localStorage.getItem(scoreKey);
@@ -5969,16 +6139,15 @@ function updateMainTodayCard(){
     scoreEl.style.color=col;
     scoreWrap.style.borderColor=col;
     scoreWrap.style.background='rgba(255,255,255,.08)';
-    desc.textContent='오늘 운세 점수 '+sc+'점이에요';
-    sub.textContent='터치해서 자세한 운세 보기 →';
+    desc.textContent='오늘 운세 총점 '+sc+'점이에요 →';
   } else {
     scoreEl.textContent='?';
     scoreEl.style.color='var(--gold2)';
     scoreWrap.style.borderColor='rgba(240,192,96,.3)';
     scoreWrap.style.background='rgba(240,192,96,.06)';
-    desc.textContent='오늘의 운세를 아직 안 봤어요';
-    sub.textContent='터치해서 오늘 운세 확인하기 →';
+    desc.textContent='오늘의 운세를 확인해보세요 →';
   }
+  _mainUpdateUnseBox();
 }
 setTimeout(updateMainTodayCard,500);
 
@@ -6810,7 +6979,9 @@ function buildDivinationContext(d){
   try{
     var gY4=d.gY||2000, gen4=d.gen||'female';
     var curY4=new Date().getFullYear(), age4=curY4-gY4;
-    var dwS=d.daewun||8;
+    var isMale4b=(gen4==='male');
+    // 정밀 대운수 계산
+    var dwS=calcDaewunNum(d.gY||2000,d.gM||1,d.gD||1,d.noHour?12:(d.hV||12),isMale4b);
     var dwI=Math.max(0,Math.floor((age4-dwS)/10));
     var isYang4=(gY4%2===1);
     var isMale4=(gen4==='male');
@@ -7127,6 +7298,7 @@ function goUnse(type){
 }
 
 function _applyUnseBlur(){
+  if(_skipUnseBlur){_skipUnseBlur=false;return;} // 메인 광고 후 스킵
   var overlay=document.getElementById('unseBlurOverlay');
   var content=document.getElementById('unseContent');
   var btn=document.getElementById('unseMoreBtn');
@@ -7847,7 +8019,7 @@ function snSwMonth(m){
 /* ══════════════════════════════════════
    젬나 페르소나
 ══════════════════════════════════════ */
-var GEMNA_PERSONA = '당신은 "젬나"입니다. 타로와 사주명리에 통달한 AI 리더로, 신비롭고 서늘하면서도 팩트를 단호하게 꽂아주는 스타일입니다. 뻔한 위로는 절대 하지 않습니다. 유저가 듣고 싶은 말이 아니라 실제로 필요한 진실을 직설적으로 전달합니다. 문장은 짧고 강렬하게. 한 번씩 강조할 때는 "이건 팩트입니다." 같은 단호한 문장을 씁니다. ~습니다 체를 유지합니다.';
+var GEMNA_PERSONA = '당신은 아르카나입니다. 20년 경력의 타로 마스터. 친한 언니나 누나처럼 편하게 말하되, 카드 해석은 날카롭고 직접적으로. 반말과 존댓말 자연스럽게 섞어요. 매번 다른 표현으로 시작하세요 — 같은 리액션 문구 반복 절대 금지. 화려한 수식어 금지. 짧고 임팩트 있게. 진짜 타로 마스터가 옆에서 직접 봐주는 느낌으로. 절대 금지: 볼드체(**) 사용 금지, 마크다운 금지, 카드 포지션 레이블(과거/현재/미래) 언급 금지, 빈 줄 최소화, "묘한데" "특이하네" 같은 상투적 표현 금지.';
 
 /* ══════════════════════════════════════
    타로 기능
@@ -7901,52 +8073,135 @@ function tSetCards(n) {
   tUpdateDeckState();
 }
 
+
+// 질문 분석해서 카드 수 자동 결정
+function _tAutoCardCount(q){
+  // 과거/현재/미래 패턴
+  if(/과거.*현재.*미래|흐름|전체.*운|시간.*흐름|어떻게.*될|어떻게.*흘러/.test(q)) return 3;
+  // 관계/궁합 패턴 (4장)
+  if(/관계|궁합|우리.*사이|연애.*조언|어떻게.*해야|조언.*해줘/.test(q)) return 4;
+  // 5가지 영역 패턴
+  if(/전체적|종합|모든|인생|올해|올 한해|연간/.test(q)) return 5;
+  // 켈틱 크로스 (10장) - 복잡한 상황
+  if(/복잡|전반적.*상황|지금.*상황.*전부|깊게/.test(q)) return 10;
+  // 주간 운세 (7장)
+  if(/이번 주|한 주|7일|일주일/.test(q)) return 7;
+  // 단순 예/아니오, 단일 질문 (1장)
+  if(/^.{0,30}$/.test(q)&&!/[.!?].*[.!?]/.test(q)) return 1;
+  // 두 가지 선택지 (2장)
+  if(/아니면|아니면|둘 중|선택|vs|VS/.test(q)) return 2;
+  // 기본: 3장 (과거-현재-미래)
+  return 3;
+}
+
 // 덱 빌드 (타로 화면 진입 시 1회)
+
+// 카드 뒤집기 파티클
+function _tCardParticle(el){
+  var rect=el.getBoundingClientRect();
+  var cx=rect.left+rect.width/2, cy=rect.top+rect.height/2;
+  var emojis=['✨','⭐','🌟','💫','✦'];
+  for(var i=0;i<8;i++){
+    var p=document.createElement('div');
+    p.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    var angle=Math.random()*Math.PI*2;
+    var dist=30+Math.random()*50;
+    p.style.cssText='position:fixed;left:'+cx+'px;top:'+cy+'px;font-size:'+(10+Math.random()*10)+'px;pointer-events:none;z-index:9999;transition:all .8s ease-out;opacity:1;transform:translate(-50%,-50%)';
+    document.body.appendChild(p);
+    setTimeout(function(el2,ax,ay){
+      el2.style.transform='translate(calc(-50% + '+ax+'px),calc(-50% + '+ay+'px))';
+      el2.style.opacity='0';
+    },10,p,Math.cos(angle)*dist,Math.sin(angle)*dist);
+    setTimeout(function(el2){el2.remove();},900,p);
+  }
+}
 function buildTarotDeck() {
   var deck = document.getElementById('tarotDeck');
   if(!deck) return;
   deck.innerHTML = '';
+  var inner = document.createElement('div');
+  inner.className = 'tc-deck-inner';
+  deck.appendChild(inner);
   var indices = Array.from({length:TAROT_CARDS.length},function(_,i){return i;});
   for(var i=indices.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=indices[i];indices[i]=indices[j];indices[j]=tmp;}
-  indices.forEach(function(cardIdx){
+  indices.forEach(function(cardIdx,pos){
     var card=TAROT_CARDS[cardIdx];
     var reversed=Math.random()>0.6;
     var wrap=document.createElement('div');
     wrap.className='t-card-wrap';
     wrap.dataset.idx=cardIdx;
+    wrap.dataset.pos=pos;
     wrap.dataset.reversed=reversed?'1':'0';
+    // 살짝 랜덤 기울기로 자연스럽게
+    var angle=(Math.random()-0.5)*5;
+    wrap.style.transform='rotate('+angle+'deg)';
+    wrap.style.zIndex=pos;
+    wrap.dataset.origAngle=angle;
     wrap.innerHTML='<div class="t-card-inner">'
       +'<div class="t-card-back">'+makeTarotBack()+'</div>'
       +'<div class="t-card-front'+(reversed?' reversed':'')+'" style="padding:0">'+makeTarotFront(card,cardIdx,reversed)+'</div>'
       +'</div>';
     wrap.addEventListener('click',function(){tCardClick(this);});
-    deck.appendChild(wrap);
+    wrap.addEventListener('mouseenter',function(){
+      if(!this.classList.contains('flipped')&&!this.classList.contains('selected')){
+        this.style.transform='rotate(0deg) translateY(-18px)';
+        this.style.zIndex=999;
+      }
+    });
+    wrap.addEventListener('mouseleave',function(){
+      if(!this.classList.contains('flipped')&&!this.classList.contains('selected')){
+        this.style.transform='rotate('+this.dataset.origAngle+'deg)';
+        this.style.zIndex=this.dataset.pos;
+      }
+    });
+    inner.appendChild(wrap);
   });
 }
 
 function makeTarotBack(){
-  return '<svg viewBox="0 0 64 96" xmlns="http://www.w3.org/2000/svg" style="width:64px;height:96px;display:block">'
-    +'<rect width="64" height="96" rx="6" fill="#0d0820"/>'
-    +'<rect x="3" y="3" width="58" height="90" rx="5" fill="none" stroke="#c8a96e" stroke-width="0.8"/>'
-    +'<rect x="6" y="6" width="52" height="84" rx="4" fill="none" stroke="#c8a96e" stroke-width="0.3" opacity="0.5"/>'
-    // 별 패턴
-    +'<g stroke="#c8a96e" stroke-width="0.5" opacity="0.7">'
-    +'<line x1="32" y1="12" x2="32" y2="84"/><line x1="8" y1="48" x2="56" y2="48"/>'
-    +'<line x1="14" y1="18" x2="50" y2="78"/><line x1="50" y1="18" x2="14" y2="78"/>'
+  return '<svg viewBox="0 0 80 130" xmlns="http://www.w3.org/2000/svg" style="width:80px;height:130px;display:block">'
+    +'<defs>'
+    +'<radialGradient id="bg" cx="50%" cy="50%" r="70%">'
+    +'<stop offset="0%" stop-color="#1e0845"/>'
+    +'<stop offset="100%" stop-color="#080318"/>'
+    +'</radialGradient>'
+    +'</defs>'
+    +'<rect width="80" height="130" rx="10" fill="url(#bg)"/>'
+    +'<rect x="3" y="3" width="74" height="124" rx="8" fill="none" stroke="#c8a96e" stroke-width="1"/>'
+    +'<rect x="6" y="6" width="68" height="118" rx="6" fill="none" stroke="#c8a96e" stroke-width="0.4" opacity="0.4"/>'
+    // 대각선 패턴
+    +'<g stroke="#7c3aed" stroke-width="0.4" opacity="0.5">'
+    +'<line x1="40" y1="10" x2="40" y2="120"/>'
+    +'<line x1="10" y1="65" x2="70" y2="65"/>'
+    +'<line x1="16" y1="22" x2="64" y2="108"/>'
+    +'<line x1="64" y1="22" x2="16" y2="108"/>'
     +'</g>'
-    // 중앙 별
-    +'<polygon points="32,20 34.4,27.2 42,27.2 36,31.8 38.4,39 32,34.4 25.6,39 28,31.8 22,27.2 29.6,27.2" fill="#c8a96e" opacity="0.9"/>'
-    // 코너 장식
-    +'<circle cx="10" cy="10" r="2.5" fill="#c8a96e" opacity="0.7"/>'
-    +'<circle cx="54" cy="10" r="2.5" fill="#c8a96e" opacity="0.7"/>'
-    +'<circle cx="10" cy="86" r="2.5" fill="#c8a96e" opacity="0.7"/>'
-    +'<circle cx="54" cy="86" r="2.5" fill="#c8a96e" opacity="0.7"/>'
+    // 중앙 별 크게
+    +'<polygon points="40,28 43,38 54,38 45,45 48,55 40,49 32,55 35,45 26,38 37,38" fill="#c8a96e" opacity="0.95"/>'
+    // 별 주변 글로우 원
+    +'<circle cx="40" cy="41" r="20" fill="none" stroke="#c8a96e" stroke-width="0.5" opacity="0.3"/>'
+    // 코너 별
+    +'<polygon points="12,14 13.2,17.6 17,17.6 14,19.8 15.2,23.5 12,21.2 8.8,23.5 10,19.8 7,17.6 10.8,17.6" fill="#c8a96e" opacity="0.6"/>'
+    +'<polygon points="68,14 69.2,17.6 73,17.6 70,19.8 71.2,23.5 68,21.2 64.8,23.5 66,19.8 63,17.6 66.8,17.6" fill="#c8a96e" opacity="0.6"/>'
+    +'<polygon points="12,116 13.2,112.4 17,112.4 14,110.2 15.2,106.5 12,108.8 8.8,106.5 10,110.2 7,112.4 10.8,112.4" fill="#c8a96e" opacity="0.6"/>'
+    +'<polygon points="68,116 69.2,112.4 73,112.4 70,110.2 71.2,106.5 68,108.8 64.8,106.5 66,110.2 63,112.4 66.8,112.4" fill="#c8a96e" opacity="0.6"/>'
+    // 하단 ARCANA 텍스트
+    +'<text x="40" y="108" text-anchor="middle" fill="#c8a96e" font-size="5" opacity="0.7" letter-spacing="3" font-family="serif">✦ ARCANA ✦</text>'
     +'</svg>';
 }
 function makeTarotFront(card, idx, reversed) {
-  // TAROT_IMGS 배열에서 이미지를 가져와 카드 앞면을 만듭니다.
-  var imgSrc = TAROT_IMGS[idx] ? TAROT_IMGS[idx] : '';
-  return '<img src="' + imgSrc + '" style="width:100%; height:100%; object-fit:cover; border-radius:8px; display:block;" onerror="this.style.display=\'none\'">';
+  var imgSrc = TAROT_IMGS[idx] || '';
+  var fb='<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(145deg,#120530,#1e0845);">'
+    +'<div style="font-size:28px;margin-bottom:5px;">'+(card.ico||'✦')+'</div>'
+    +'<div style="font-size:10px;color:var(--gold2);text-align:center;font-family:\'Gowun Dodum\',serif;padding:0 6px;">'+card.name+'</div>'
+    +(reversed?'<div style="font-size:8px;color:#e09090;margin-top:2px;">역방향</div>':'')
+    +'</div>';
+  return '<div style="position:absolute;inset:0;overflow:hidden;border-radius:12px;">'
+    +(imgSrc
+      ?'<img src="'+imgSrc+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\';">'
+       +fb.replace('display:flex','display:none')
+      :fb)
+    +'</div>';
 }
 
 /* 라이더-웨이트 타로 실제 이미지 URLs (퍼블릭 도메인, 1909) */
@@ -8030,11 +8285,17 @@ async function tarotAdWatch(){
 function tarotAdSuccess(){
   document.getElementById('tarotAdModal').classList.remove('show');
   if(_tarotPendingQ){
-    var q=_tarotPendingQ;
-    var uid=_tarotPendingUid;
     _tarotPendingQ=null;
     _tarotPendingUid=null;
-    tStartReading(q,tCurSession,uid);
+    // 카드 있으면 바로 리딩
+    var hasCards=(_tSession.cards&&_tSession.cards.length>0)||
+                 ((_tSession.majorCards||[]).length>0);
+    if(hasCards){
+      tDoReading();
+    } else {
+      showToast('카드를 먼저 선택해주세요');
+      tGoStep(2);
+    }
   }
 }
 
@@ -8043,14 +8304,11 @@ var tCurSession={cards:[],count:1,shuffled:[]};
 var tDeckBuilt=false;
 
 /* ── 타로 화면 진입 ── */
-function initTarotScreen(){
-  var chat=document.getElementById('tarotChat');
-  chat.innerHTML='';
-  tAppendGemna('무엇이 궁금하신가요?<br>카드에게 솔직하게 물어보세요. 저는 듣고 싶은 말 대신 진실을 드립니다.');
-}
+
 
 /* ── 버블 추가 헬퍼 ── */
 function tAppendUser(text){
+  _tUserScrolled=false; // 유저가 질문하면 스크롤 재활성화
   var chat=document.getElementById('tarotChat');
   var d=document.createElement('div');
   d.className='tc-bubble tc-user';
@@ -8062,7 +8320,9 @@ function tAppendGemna(html){
   var chat=document.getElementById('tarotChat');
   var d=document.createElement('div');
   d.className='tc-bubble tc-gemna';
-  d.innerHTML='<div class="tc-gemna-ico">🔮</div><div class="tc-gemna-msg">'+html+'</div>';
+  // 볼드/마크다운 제거, 과도한 줄바꿈 정리
+  var cleaned=html.replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\*([^*]+)\*/g,'$1').replace(/(<br\s*\/?>\s*){3,}/gi,'<br>');
+  d.innerHTML='<div class="tc-gemna-ico">🔮</div><div class="tc-gemna-msg" style="line-height:1.65;">'+cleaned+'</div>';
   chat.appendChild(d);
   tScrollBottom();
   return d.querySelector('.tc-gemna-msg');
@@ -8076,10 +8336,13 @@ function tAppendBlock(html){
   tScrollBottom();
   return d;
 }
+var _tUserScrolled=false;
+
 function tScrollBottom(){
+  if(_tUserScrolled) return; // 유저가 위로 스크롤했으면 납치 금지
   setTimeout(function(){
     var chat=document.getElementById('tarotChat');
-    if(chat)chat.scrollTop=chat.scrollHeight; // 화면 전체 스크롤(에러 주범)을 삭제하고 내부만 스크롤!
+    if(chat) chat.scrollTop=chat.scrollHeight;
   },50);
 }
 
@@ -8093,23 +8356,25 @@ function tChatSubmitQ(){
   setTimeout(function(){tShowCardPicker(q);},400);
 }
 
-/* ── 카드 장수 선택 (고유 UID 부여로 2회차 에러 해결) ── */
+/* ── 카드 장수 자동 결정 후 덱 표시 ── */
 function tShowCardPicker(question){
   var uid = Date.now();
+  var n = _tAutoCardCount(question);
+  var nLabel = {1:'1장 · 단일 카드',2:'2장 · 선택/대비',3:'3장 · 과거·현재·미래',4:'4장 · 관계·감정·조언·결론',5:'5장 · 종합 운세',7:'7장 · 주간 운세',10:'10장 · 켈틱 크로스',12:'12장 · 연간 운세'}[n] || n+'장';
   var block=tAppendBlock('');
   block.innerHTML=
-    '<div style="display:flex;gap:8px;margin-bottom:10px">'
-    +'<button class="tb on" id="tc1-'+uid+'" onclick="tSetN(1,\''+uid+'\')" style="flex:1;height:36px;border-radius:10px;border:1px solid var(--gb)">1장</button>'
-    +'<button class="tb" id="tc3-'+uid+'" onclick="tSetN(3,\''+uid+'\')" style="flex:1;height:36px;border-radius:10px;border:1px solid var(--gb)">3장</button>'
-    +'<button class="tb" id="tc5-'+uid+'" onclick="tSetN(5,\''+uid+'\')" style="flex:1;height:36px;border-radius:10px;border:1px solid var(--gb)">5장</button>'
-    +'</div>'
-    +'<div class="tc-deck-label">카드를 직접 선택하세요 · <span id="tc-cnt-'+uid+'">0</span>/<span id="tc-max-'+uid+'">1</span>장</div>'
-    +'<div id="tc-deck-'+uid+'" class="tc-deck-scroll"></div>'
+    '<div style="background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.25);border-radius:12px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:#c4b5fd;">✦ 질문 분석 완료 — <strong style="color:var(--gold2);">'+nLabel+'</strong>을 뽑아주세요</div>'
+    +'<div class="tc-deck-label">카드를 직접 선택하세요 · <span id="tc-cnt-'+uid+'">0</span>/<span id="tc-max-'+uid+'">'+n+'</span>장</div>'
+    +'<div id="tc-deck-'+uid+'" class="tc-deck-wrap"></div>'
     +'<div id="tc-sel-row-'+uid+'" class="tc-selected-row" style="display:none"></div>'
-    +'<button id="tc-read-btn-'+uid+'" class="tc-read-btn" disabled onclick="tCheckAndRead(\''+question.replace(/'/g,"\\'")+'\', \''+uid+'\')">'
-    +'🔮 젬나에게 묻기</button>';
+    +'<button id="tc-read-btn-'+uid+'" class="tc-read-btn" disabled>🔮 아르카나에게 묻기</button>';
 
-  tCurSession={cards:[],count:1,shuffled:[],question:question, uid:uid};
+  tCurSession={cards:[],count:n,shuffled:[],question:question, uid:uid};
+  // 버튼 이벤트 (onclick 문자열 문제 우회)
+  setTimeout(function(){
+    var btn=document.getElementById('tc-read-btn-'+uid);
+    if(btn) btn.addEventListener('click',function(){tCheckAndRead(question,uid);});
+  },0);
   tBuildDeck('tc-deck-'+uid);
   tScrollBottom();
 }
@@ -8133,20 +8398,39 @@ function tSetN(n,uid){
 function tBuildDeck(containerId){
   var w=document.getElementById(containerId);if(!w)return;
   w.innerHTML='';
+  // 가로 스크롤 컨테이너 설정
+  w.style.cssText='overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;padding:20px 8px 12px;min-height:170px;box-sizing:border-box;scrollbar-width:none;';
+  var inner=document.createElement('div');
+  inner.style.cssText='display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;width:max-content;gap:0;';
+  w.appendChild(inner);
   var indices=Array.from({length:TAROT_CARDS.length},function(_,i){return i;});
   for(var i=indices.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=indices[i];indices[i]=indices[j];indices[j]=tmp;}
   tCurSession.shuffled=indices;
-  indices.forEach(function(ci){
+  indices.forEach(function(ci,pos){
     var rev=Math.random()>0.6;
     var wrap=document.createElement('div');
     wrap.className='t-card-wrap';
     wrap.dataset.idx=ci;wrap.dataset.rev=rev?'1':'0';
+    wrap.dataset.pos=pos;
+    var angle=(Math.random()-0.5)*4;
+    wrap.style.cssText='flex-shrink:0;width:80px;height:130px;position:relative;cursor:pointer;perspective:1000px;margin-left:'+(pos===0?'0':'-46px')+';z-index:'+pos+';transform:rotate('+angle+'deg);transition:transform .25s ease;display:inline-block;';
+    wrap.dataset.angle=angle;
     wrap.innerHTML='<div class="t-card-inner">'
       +'<div class="t-card-back">'+makeTarotBack()+'</div>'
       +'<div class="t-card-front'+(rev?' reversed':'')+'" style="padding:0">'+makeTarotFront(TAROT_CARDS[ci],ci,rev)+'</div>'
       +'</div>';
     wrap.addEventListener('click',function(){tPickCard(this);});
-    w.appendChild(wrap);
+    wrap.addEventListener('mouseenter',function(){
+      if(!this.classList.contains('flipped'))
+        this.style.transform='rotate(0deg) translateY(-16px)';
+      this.style.zIndex='999';
+    });
+    wrap.addEventListener('mouseleave',function(){
+      if(!this.classList.contains('flipped'))
+        this.style.transform='rotate('+this.dataset.angle+'deg)';
+      this.style.zIndex=this.dataset.pos;
+    });
+    inner.appendChild(wrap);
   });
 }
 
@@ -8177,17 +8461,19 @@ function tRenderSelected(){
   if(cntEl)cntEl.textContent=sel.length;
   if(!row)return;
   if(!sel.length){row.style.display='none';return;}
-  row.style.display='flex';
-  var posMap={1:[''],3:['과거','현재','미래'],5:['과거','현재','미래','조언','결과']};
-  var labels=posMap[tCurSession.count]||[];
+  row.style.cssText='display:flex;gap:8px;overflow-x:auto;padding:8px 4px 4px;scrollbar-width:none;';
+  var posLabels={1:['✦'],2:['A','B'],3:['과거','현재','미래'],4:['관계','감정','조언','결론'],5:['과거','현재','미래','조언','결과'],7:['월','화','수','목','금','토','일'],10:['현재','도전','과거','최근','미래','가까운미래','자신','외부','희망','결론'],12:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']};
+  var labels=posLabels[tCurSession.count]||sel.map(function(_,i){return (i+1)+'번째';});
   row.innerHTML=sel.map(function(c,i){
     var lbl=labels[i]||'';
-    return '<div style="text-align:center;background:var(--bg2);border:1px solid var(--gold);border-radius:10px;padding:8px 6px;min-width:58px;flex:1;max-width:80px">'
-      +(lbl?'<div style="font-size:8px;color:var(--muted);margin-bottom:3px">'+lbl+'</div>':'')
-      +'<div style="font-size:18px;'+(c.reversed?'transform:rotate(180deg);display:inline-block':'')+'">'+((TAROT_IMGS[c.idx])?'':'✦')+'</div>'
-      +'<img src="'+TAROT_IMGS[c.idx]+'" style="width:40px;height:60px;object-fit:cover;border-radius:4px;'+(c.reversed?'transform:rotate(180deg)':'')+';display:block;margin:2px auto" onerror="this.style.display=\'none\'">'
-      +'<div style="font-size:7px;color:var(--gold2);margin-top:3px;font-family:\'Noto Serif KR\',serif">'+c.name+'</div>'
-      +(c.reversed?'<div style="font-size:7px;color:#e09090">역</div>':'')
+    var img=TAROT_IMGS[c.idx]||'';
+    return '<div style="flex-shrink:0;text-align:center;">'
+      +(lbl?'<div style="font-size:9px;color:rgba(240,192,96,.6);letter-spacing:1px;margin-bottom:5px;">'+lbl+'</div>':'')
+      +'<div style="width:70px;height:115px;border-radius:10px;overflow:hidden;border:2px solid '+(c.reversed?'rgba(224,144,144,.7)':'rgba(200,169,110,.7)')+';box-shadow:0 4px 12px rgba(0,0,0,.5);'+(c.reversed?'transform:rotate(180deg)':'')+'">'
+      +(img?'<img src="'+img+'" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.parentNode.style.background=\'#1a0a2e\'">':'<div style="width:100%;height:100%;background:linear-gradient(145deg,#1a0a2e,#2d0f5e);display:flex;align-items:center;justify-content:center;font-size:24px;">✦</div>')
+      +'</div>'
+      +'<div style="font-size:9px;color:var(--gold2);margin-top:5px;max-width:70px;word-break:keep-all;line-height:1.3;font-family:\'Gowun Dodum\',serif;">'+c.name+'</div>'
+      +(c.reversed?'<div style="font-size:8px;color:#e09090;">역방향</div>':'')
       +'</div>';
   }).join('');
 }
@@ -8206,10 +8492,10 @@ function tUpdateReadBtn(){
 function tCheckAndRead(question,uid){
   var count=getTarotCount();
   if(count<2||count%2!==0){
-    tStartReading(question,tCurSession,uid);
+    tStartReading(question,tCurSession,uid||tCurSession.uid);
   }else{
     _tarotPendingQ=question;
-    _tarotPendingUid=uid;
+    _tarotPendingUid=uid||tCurSession.uid;
     openTarotAdModal();
   }
 }
@@ -8222,37 +8508,60 @@ async function tStartReading(question,session,uid){
   var btn=document.getElementById('tc-read-btn-'+uid);if(btn){btn.disabled=true;btn.textContent='읽는 중...';}
 
   var cards=session.cards;
-  var posMap={1:[''],3:['과거','현재','미래'],5:['과거','현재','미래','조언','결과']};
-  var labels=posMap[session.count]||[];
-  var cardSummary=cards.map(function(c,i){
-    return (labels[i]?'<b>'+labels[i]+'</b> ':'')+'<span style="color:var(--gold2)">'+c.name+'</span>'+(c.reversed?' <span style="font-size:11px;color:#e09090">(역방향)</span>':'');
-  }).join(' &nbsp;·&nbsp; ');
-  tAppendGemna('카드를 뽑았습니다.<br><div style="margin-top:6px;font-size:12px;line-height:2">'+cardSummary+'</div>');
+  var posLabels={
+    1:['✦ 지금 이 순간'],
+    2:['✦ 한 쪽의 에너지','✦ 다른 쪽의 에너지'],
+    3:['◀ 과거','▶ 현재','▲ 미래'],
+    4:['♥ 관계','♦ 감정','♣ 조언','♠ 결론'],
+    5:['과거','현재','미래','숨겨진 영향','결론'],
+    7:['월','화','수','목','금','토','일'],
+    10:['현재 상황','도전','먼 과거','가까운 과거','가능한 미래','가까운 미래','자신','외부 영향','희망/두려움','최종 결과'],
+    12:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+  };
+  var labels=posLabels[session.count]||cards.map(function(_,i){return (i+1)+'번째';});
 
+  // ── 카드 이미지 대형 표시 ──
+  var cardImgHtml='<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:12px 0;">';
+  cards.forEach(function(c,i){
+    var imgSrc=TAROT_IMGS[c.idx]||'';
+    var lbl=labels[i]||'';
+    cardImgHtml+='<div style="text-align:center;flex-shrink:0;">'
+      +'<div style="font-size:10px;color:rgba(240,192,96,.6);letter-spacing:1px;margin-bottom:6px;">'+lbl+'</div>'
+      +'<div style="width:90px;height:150px;border-radius:12px;overflow:hidden;border:2px solid '+(c.reversed?'rgba(224,144,144,.6)':'rgba(200,169,110,.6)')+';box-shadow:0 4px 16px rgba(0,0,0,.5);'+(c.reversed?'transform:rotate(180deg)':'')+'">'
+      +(imgSrc?'<img src="'+imgSrc+'" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentNode.style.background=\'#1a0a2e\';this.remove()">':'<div style="width:100%;height:100%;background:linear-gradient(145deg,#1a0a2e,#2d0f5e);display:flex;align-items:center;justify-content:center;font-size:28px;">✦</div>')
+      +'</div>'
+      +'<div style="font-size:11px;color:var(--gold2);margin-top:6px;font-family:\'Gowun Dodum\',serif;">'+c.name+'</div>'
+      +(c.reversed?'<div style="font-size:9px;color:#e09090;">역방향</div>':'')
+      +'</div>';
+  });
+  cardImgHtml+='</div>';
+  tAppendGemna(cardImgHtml);
+
+  // ── 로딩 ──
   var loadMsg=tAppendGemna('<div class="aidots" style="margin:4px 0"><span></span><span></span><span></span></div><div id="tReadLd" style="font-size:12px;color:var(--muted);letter-spacing:1px;margin-top:4px">카드를 읽는 중...</div>');
-  var loadMsgs=['카드를 읽는 중...','운명의 패턴을 분석하는 중...','팩트를 준비하는 중...'];
+  var loadMsgs=['카드를 읽는 중...','에너지를 분석하는 중...','운명의 패턴을 읽는 중...','소름돋는 진실을 준비하는 중...'];
   var mi=0;
   var lv=setInterval(function(){var e=document.getElementById('tReadLd');if(e)e.textContent=loadMsgs[mi++%loadMsgs.length];},1800);
 
-  var posLabels=posMap[session.count]||[];
+  // ── AI 프롬프트 (카드별 의미 + 종합 + 핵심) ──
   var cardList=cards.map(function(c,i){
-    return (posLabels[i]?posLabels[i]+' - ':'')+c.name+(c.reversed?' (역방향)':' (정방향)');
+    return (labels[i]?'['+labels[i]+'] ':'')+c.name+(c.reversed?' (역방향)':' (정방향)');
   }).join('\n');
 
-  var prompt='【질문】\n'+question+'\n\n【뽑힌 카드】\n'+cardList+'\n\n'
-    +'인사말 없이 바로 아래 형식으로 출력하세요. 각 200~300자, 젬나 스타일.\n\n'
-    +'[READING]여기에 카드 종합 리딩 내용[/READING]\n'
-    +'[MESSAGE]여기에 핵심 메시지[/MESSAGE]\n'
-    +'[ACTION]여기에 단호한 행동 조언[/ACTION]';
+  var prompt='【질문】\n'+question+'\n\n【뽑힌 카드 '+cards.length+'장】\n'+cardList+'\n\n'
+    +'진짜 타로 리더처럼 자연스럽게 말해요. 아래 4개 파트로 나눠서.\n\n'
+    +'[REACT]카드 처음 봤을 때 즉각적인 리액션. 1~2문장. "어," "음," "이거..." 같은 자연스러운 시작. 너무 길면 안 됨.[/REACT]\n\n'
+    +'[CARDS]각 카드 하나씩 짧게. 딱딱한 설명 말고 지금 이 사람 상황에 맞게 해석. 전체 4~6문장 안으로.[/CARDS]\n\n'
+    +'[READING]카드들을 연결해서 질문에 직접 답. 소름돋게. 3~4문장. 자연스러운 구어체.[/READING]\n\n'
+    +'[PUNCHLINE]딱 한 줄. 이 리딩의 핵심. 잊히지 않게. 강렬하게.[/PUNCHLINE]';
 
   var ctrl=new AbortController(),tid=setTimeout(function(){ctrl.abort();},90000);
   var res;
   try{
     res=await fetch('https://my-saju-api.onrender.com/api/saju',{
       method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json'},
-      // ❗ 토큰을 8000으로 늘려 결과가 짤리지 않게 보장
-      body:JSON.stringify({model:'gemini',max_tokens:8000,
-        system:GEMNA_PERSONA+' 반드시 [READING][MESSAGE][ACTION] 태그를 사용하세요.',
+      body:JSON.stringify({model:'gemini',mode:'star',max_tokens:8000,
+        system:GEMNA_PERSONA+' 반드시 [CARDS][/CARDS][READING][/READING][MESSAGE][/MESSAGE][ACTION][/ACTION] 태그를 사용하세요. 소름돋게 정확하고 강렬하게.',
         messages:[{role:'user',content:prompt}]})
     });
   }catch(e){
@@ -8264,36 +8573,60 @@ async function tStartReading(question,session,uid){
 
   if(!res.ok){loadMsg.innerHTML='<span style="color:#e09090">⚠ 리딩을 받지 못했습니다</span>';tAppendNextInput();return;}
   var data;try{data=await res.json();}catch(e){loadMsg.innerHTML='<span style="color:#e09090">⚠ 응답 오류</span>';tAppendNextInput();return;}
-  var raw=(data.content&&data.content[0])?data.content[0].text||'':'';
-  raw=raw.replace(/\*\*/g,'').replace(/```[a-z]*\n?/gi, '').replace(/```/g, '');
+  var raw='';
+  if(data.content&&Array.isArray(data.content)) raw=data.content.map(function(c){return c.text||'';}).join('');
+  else if(data.content&&typeof data.content==='string') raw=data.content;
+  else if(data.text) raw=data.text;
+  raw=raw.replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\*([^*]+)\*/g,'$1').replace(/\n{2,}/g,'\n').replace(/\n/g,' ');
 
-  // ❗ 닫는 태그가 짤려도 내용을 가져오는 무적 방어막 정규식
   function pText(tag){
     var re=new RegExp('\\['+tag+'\\]([\\s\\S]*?)\\[/'+tag+'\\]','i');
     var m=raw.match(re);
     if(m&&m[1].trim()) return m[1].trim();
-    var re2=new RegExp('\\['+tag+'\\]([\\s\\S]*?)(?=\\[(?:READING|MESSAGE|ACTION)|$)','i');
+    var re2=new RegExp('\\['+tag+'\\]([\\s\\S]*)','i');
     var m2=raw.match(re2);
-    return m2&&m2[1].trim() ? m2[1].trim() : '리딩 내용을 불러올 수 없습니다.';
+    return m2&&m2[1].trim()?m2[1].split(/\[(?:REACT|CARDS|READING|PUNCHLINE)/)[0].trim():'';
   }
 
-  var tabs=[{id:'reading',lbl:'🎴 리딩'},{id:'message',lbl:'✦ 메시지'},{id:'action',lbl:'⚡ 조언'}];
-  var texts={reading:pText('READING'),message:pText('MESSAGE'),action:pText('ACTION')};
+  var reactText=pText('REACT');
+  var cardsText=pText('CARDS');
+  var readingText=pText('READING');
+  var messageText=pText('MESSAGE');
+  var actionText=pText('ACTION');
+  var punchText=pText('PUNCHLINE');
 
-  var tabId='tr'+Date.now();
-  loadMsg.className='tc-reading-wrap';
-  loadMsg.innerHTML=
-    '<div class="tc-tabs" id="'+tabId+'-tabs">'
-    +tabs.map(function(t,i){return '<button class="aitab'+(i===0?' on':'')+'" id="'+tabId+'-'+t.id+'" onclick="tSwTab(\''+tabId+'\',\''+t.id+'\')">'+(t.lbl)+'</button>';}).join('')
-    +'</div>'
-    +tabs.map(function(t,i){return '<div class="aisec'+(i===0?' show':'')+'" id="'+tabId+'-sec-'+t.id+'"><div class="aitxt" id="'+tabId+'-txt-'+t.id+'"></div></div>';}).join('');
+  // 결과 파싱
+  var reactText=pText('REACT');
+  var punchText=pText('PUNCHLINE');
 
-  tyTxt(document.getElementById(tabId+'-txt-reading'),texts.reading,10);
-  document.getElementById(tabId+'-txt-message').textContent=texts.message;
-  document.getElementById(tabId+'-txt-action').textContent=texts.action;
+  // 로딩 버블 제거
+  if(loadMsg&&loadMsg.parentNode) loadMsg.parentNode.removeChild(loadMsg);
 
-  tScrollBottom();
-  setTimeout(tAppendNextInput,800);
+  // 말풍선 순차 출력 (자연스럽게)
+  var bubbles=[];
+  if(reactText) bubbles.push({text:reactText, delay:0});
+  if(cardsText) bubbles.push({text:cardsText, delay:700});
+  if(readingText) bubbles.push({text:readingText, delay:1400});
+  if(punchText) bubbles.push({
+    html:'<div style="background:linear-gradient(135deg,rgba(240,192,96,.12),rgba(168,85,247,.08));border:1px solid rgba(240,192,96,.35);border-radius:14px;padding:14px 16px;font-family:\'Gowun Dodum\',serif;font-size:15px;color:var(--gold2);font-weight:700;text-align:center;line-height:1.6;">✦ '+punchText+' ✦</div>',
+    delay:2100
+  });
+
+  bubbles.forEach(function(b){
+    setTimeout(function(){
+      if(b.html){
+        var el=tAppendGemna('');
+        el.innerHTML=b.html;
+      } else {
+        // 볼드/마크다운 제거
+        var t=b.text.replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\*([^*]+)\*/g,'$1');
+        tAppendGemna(t);
+      }
+      tScrollBottom();
+    }, b.delay);
+  });
+
+  setTimeout(tAppendNextInput, bubbles.length*700+800);
 }
 
 function tSwTab(prefix,sid){
@@ -8306,10 +8639,374 @@ function tSwTab(prefix,sid){
 }
 
 function tAppendNextInput(){
-  tAppendGemna('또 다른 궁금한 것이 있으신가요?');
-  var qa=document.getElementById('tarotQ');
-  if(qa)setTimeout(function(){qa.focus();},300);
-  tScrollBottom();
+  tAppendGemna('또 궁금한 게 있으면 물어봐요.');
+}
+
+
+
+/* ══════════════════════════════════════
+   타로 4단계 플로우
+══════════════════════════════════════ */
+var _tStep=0;
+var _tQuestion='';
+var _tSession={cards:[],count:3};
+
+function initTarotScreen(){
+  tGoStep(1);
+}
+
+function tGoStep(n){
+  _tStep=n;
+  [1,2,3,4].forEach(function(i){
+    var el=document.getElementById('tStep'+i);
+    if(el){
+      // flex vs none
+      var isActive=(i===n);
+      el.style.display=isActive?(i===3?'flex':'flex'):'none';
+    }
+    var dot=document.getElementById('tsd'+(i-1));
+    if(dot) dot.className='t-step-dot'+(i<=n?' on':'');
+  });
+  var rb=document.getElementById('tRestartBar');
+  if(rb) rb.style.display=(n===4)?'block':'none';
+  var titles=['타로 · 아르카나','카드를 골라요','리딩 중...','리딩 결과'];
+  var t=document.getElementById('tarotTitle');
+  if(t) t.textContent=titles[n-1]||'타로';
+}
+
+function tGoBack(){
+  if(_tStep<=1){goScreen('mainScreen');return;}
+  if(_tStep===4){tGoStep(1);return;} // 결과에서 뒤로 → 처음으로
+  tGoStep(_tStep-1);
+}
+
+// 메이저/마이너 탭 현재 상태
+var _tCurDeckTab='major';
+
+function tStep1Submit(){
+  var q=document.getElementById('tarotQ');
+  if(!q||!q.value.trim()){showToast('질문을 입력해주세요');return;}
+  _tQuestion=q.value.trim();
+
+  // 질문 분석으로 메이저/마이너 카드 수 결정
+  var total=_tAutoCardCount(_tQuestion);
+  // 메이저: 큰 흐름 1~3장, 마이너: 세부 1~3장
+  var majorN=Math.max(1,Math.min(3,Math.ceil(total/2)));
+  var minorN=Math.max(1,Math.min(3,Math.floor(total/2)));
+
+  _tSession={cards:[],majorCards:[],minorCards:[],majorMax:majorN,minorMax:minorN,uid:Date.now()};
+
+  var lbl=document.getElementById('tStep2Label');
+  if(lbl) lbl.innerHTML='🌟 <strong style="color:var(--gold2);">메이저 '+majorN+'장</strong> + 🃏 <strong style="color:#93c5fd;">마이너 '+minorN+'장</strong>을 뽑아주세요';
+
+  var mm=document.getElementById('tc-major-max'),mn=document.getElementById('tc-minor-max');
+  if(mm) mm.textContent=majorN;
+  if(mn) mn.textContent=minorN;
+  var mc=document.getElementById('tc-major-cnt'),nc=document.getElementById('tc-minor-cnt');
+  if(mc) mc.textContent=0;
+  if(nc) nc.textContent=0;
+
+  _tCurDeckTab='major';
+  tBuildMainDeck();
+  tGoStep(2);
+}
+
+function tSwitchDeckTab(tab){
+  _tCurDeckTab=tab;
+  var majBtn=document.getElementById('tDeckTabMajor');
+  var minBtn=document.getElementById('tDeckTabMinor');
+  if(majBtn){
+    majBtn.style.background=tab==='major'?'rgba(240,192,96,.15)':'rgba(255,255,255,.03)';
+    majBtn.style.borderColor=tab==='major'?'rgba(240,192,96,.5)':'rgba(255,255,255,.1)';
+    majBtn.style.color=tab==='major'?'var(--gold2)':'var(--muted)';
+  }
+  if(minBtn){
+    minBtn.style.background=tab==='minor'?'rgba(96,165,250,.12)':'rgba(255,255,255,.03)';
+    minBtn.style.borderColor=tab==='minor'?'rgba(96,165,250,.4)':'rgba(255,255,255,.1)';
+    minBtn.style.color=tab==='minor'?'#93c5fd':'var(--muted)';
+  }
+  tBuildMainDeck();
+}
+
+function tBuildMainDeck(){
+  var wrap=document.getElementById('tDeckWrap');
+  if(!wrap)return;
+  wrap.innerHTML='';
+  var inner=document.createElement('div');
+  inner.style.cssText='display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;width:max-content;';
+  wrap.appendChild(inner);
+  // 탭에 따라 카드 범위 결정
+  var allIdx=Array.from({length:TAROT_CARDS.length},function(_,i){return i;});
+  var filtered=_tCurDeckTab==='major'?allIdx.slice(0,22):allIdx.slice(22);
+  // 셔플
+  for(var i=filtered.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=filtered[i];filtered[i]=filtered[j];filtered[j]=t;}
+  var indices=filtered;
+  _tSession.shuffled=indices;
+  indices.forEach(function(ci,pos){
+    var rev=Math.random()>0.6;
+    var wrap2=document.createElement('div');
+    wrap2.style.cssText='flex-shrink:0;width:80px;height:130px;position:relative;cursor:pointer;perspective:1000px;margin-left:'+(pos===0?'0':'-46px')+';z-index:'+pos+';transform:rotate('+((Math.random()-.5)*4)+'deg);transition:transform .25s ease;display:inline-block;';
+    wrap2.dataset.idx=ci;wrap2.dataset.rev=rev?'1':'0';wrap2.dataset.pos=pos;
+    var isAlreadySelected=((_tCurDeckTab==='major'?_tSession.majorCards:_tSession.minorCards)||[]).some(function(c){return c.idx===ci;});
+    wrap2.innerHTML='<div class="t-card-inner"><div class="t-card-back">'+makeTarotBack()+'</div><div class="t-card-front'+(rev?' reversed':'')+'" style="padding:0">'+makeTarotFront(TAROT_CARDS[ci],ci,rev)+'</div></div>';
+    if(isAlreadySelected) wrap2.classList.add('flipped','selected');
+    wrap2.addEventListener('click',function(){tMainPickCard(this);});
+    wrap2.addEventListener('mouseenter',function(){if(!this.classList.contains('flipped'))this.style.transform='rotate(0deg) translateY(-16px)';this.style.zIndex=999;});
+    wrap2.addEventListener('mouseleave',function(){if(!this.classList.contains('flipped'))this.style.transform='rotate('+(this.dataset.origAngle||0)+'deg)';this.style.zIndex=this.dataset.pos;});
+    inner.appendChild(wrap2);
+  });
+}
+
+function tMainPickCard(wrap){
+  var ci=parseInt(wrap.dataset.idx),rev=wrap.dataset.rev==='1';
+  var isMajor=ci<22;
+  var arr=isMajor?_tSession.majorCards:_tSession.minorCards;
+  var maxN=isMajor?_tSession.majorMax:_tSession.minorMax;
+  var ei=arr.findIndex(function(c){return c.idx===ci;});
+  if(ei>=0){
+    arr.splice(ei,1);
+    wrap.classList.remove('flipped','selected');
+    wrap.style.transform='rotate('+(wrap.dataset.origAngle||0)+'deg)';
+  } else {
+    if(arr.length>=maxN){
+      showToast((isMajor?'메이저':'마이너')+' 카드는 최대 '+maxN+'장이에요');
+      return;
+    }
+    _tCardParticle(wrap);
+    wrap.classList.add('flipped','selected');
+    arr.push({idx:ci,reversed:rev,name:TAROT_CARDS[ci].name,isMajor:isMajor});
+  }
+  // 전체 카드 합치기
+  _tSession.cards=_tSession.majorCards.concat(_tSession.minorCards);
+  // 카운트
+  var mc=document.getElementById('tc-major-cnt'),nc=document.getElementById('tc-minor-cnt');
+  if(mc) mc.textContent=_tSession.majorCards.length;
+  if(nc) nc.textContent=_tSession.minorCards.length;
+  tMainRenderSel();
+  // 버튼 활성화: 메이저+마이너 모두 채워야
+  var mMax=_tSession.majorMax||1;
+  var nMax=_tSession.minorMax||1;
+  var full=(_tSession.majorCards||[]).length>=mMax&&(_tSession.minorCards||[]).length>=nMax;
+  var btn=document.getElementById('tReadBtn');
+  if(btn){
+    btn.disabled=!full;
+    btn.style.background=full?'linear-gradient(135deg,rgba(139,92,246,.4),rgba(80,30,160,.5))':'var(--bg3)';
+    btn.style.borderColor=full?'rgba(139,92,246,.6)':'var(--gb)';
+    btn.style.color=full?'#e9d5ff':'var(--muted)';
+    btn.style.cursor=full?'pointer':'not-allowed';
+    // 메이저 다 뽑으면 자동으로 마이너 탭으로
+    var majorDone=(_tSession.majorCards||[]).length>=mMax;
+    if(majorDone&&_tCurDeckTab==='major'&&(_tSession.minorCards||[]).length<nMax){
+      setTimeout(function(){tSwitchDeckTab('minor');showToast('마이너 카드를 골라주세요 🃏');},300);
+    }
+  }
+}
+
+function tMainRenderSel(){
+  var row=document.getElementById('tSelRow');
+  var sel=_tSession.cards;
+  if(!row)return;
+  if(!sel.length){row.style.display='none';return;}
+  row.style.cssText='display:flex;gap:8px;overflow-x:auto;padding:0 16px 12px;scrollbar-width:none;';
+  var posLabels={1:['✦'],2:['A','B'],3:['과거','현재','미래'],4:['관계','감정','조언','결론'],5:['과거','현재','미래','조언','결과'],7:['월','화','수','목','금','토','일'],10:['현재','도전','과거','최근','미래','가까운미래','자신','외부','희망','결론'],12:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']};
+  var labels=posLabels[_tSession.count]||sel.map(function(_,i){return (i+1)+'번째';});
+  row.innerHTML=sel.map(function(c,i){
+    var img=TAROT_IMGS[c.idx]||'';
+    return '<div style="flex-shrink:0;text-align:center;">'
+      +'<div style="font-size:9px;color:rgba(240,192,96,.6);margin-bottom:4px;">'+(labels[i]||'')+'</div>'
+      +'<div style="width:55px;height:90px;border-radius:8px;overflow:hidden;border:1.5px solid '+(c.reversed?'rgba(224,144,144,.6)':'rgba(200,169,110,.6)')+';'+(c.reversed?'transform:rotate(180deg)':'')+'">'
+      +(img?'<img src="'+img+'" style="width:100%;height:100%;object-fit:cover;">':'<div style="width:100%;height:100%;background:#1a0a2e;display:flex;align-items:center;justify-content:center;font-size:18px;">✦</div>')
+      +'</div>'
+      +'<div style="font-size:8px;color:var(--gold2);margin-top:4px;max-width:55px;line-height:1.3;">'+c.name+'</div>'
+      +'</div>';
+  }).join('');
+}
+
+function tStep2Submit(){
+  // null 방어
+  if(!_tSession.majorCards) _tSession.majorCards=[];
+  if(!_tSession.minorCards) _tSession.minorCards=[];
+  if(!_tSession.majorMax) _tSession.majorMax=1;
+  if(!_tSession.minorMax) _tSession.minorMax=1;
+
+  var majorFull=_tSession.majorCards.length>=_tSession.majorMax;
+  var minorFull=_tSession.minorCards.length>=_tSession.minorMax;
+  if(!majorFull){showToast('메이저 카드를 '+_tSession.majorMax+'장 선택해주세요');tSwitchDeckTab('major');return;}
+  if(!minorFull){showToast('마이너 카드를 '+_tSession.minorMax+'장 선택해주세요');tSwitchDeckTab('minor');return;}
+
+  var count=getTarotCount();
+  if(count>0&&count%2===0){
+    _tarotPendingQ=_tQuestion;
+    _tarotPendingUid=_tSession.uid;
+    openTarotAdModal();
+  } else {
+    tDoReading();
+  }
+}
+
+async function tDoReading(){
+  incTarotCount();
+  tGoStep(3);
+  // 로딩 메시지 순환
+  var msgs=['운명의 패턴을 분석하는 중...','카드의 에너지를 읽는 중...','소름돋는 진실을 준비하는 중...','아르카나가 말을 건네는 중...'];
+  var mi=0;
+  var lv=setInterval(function(){var e=document.getElementById('tReadingMsg');if(e)e.textContent=msgs[mi++%msgs.length];},1800);
+
+  var cards=_tSession.cards;
+  var posLabels={1:['✦'],2:['첫번째','두번째'],3:['과거','현재','미래'],4:['관계','감정','조언','결론'],5:['과거','현재','미래','조언','결과'],7:['월','화','수','목','금','토','일'],10:['현재','도전','과거','최근','미래','가까운미래','자신','외부','희망','결론'],12:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']};
+  var labels=posLabels[_tSession.count]||cards.map(function(_,i){return (i+1)+'번째';});
+  var majorList=_tSession.majorCards.map(function(c){return c.name+(c.reversed?' (역방향)':'');}).join(', ');
+  var minorList=_tSession.minorCards.map(function(c){return c.name+(c.reversed?' (역방향)':'');}).join(', ');
+
+  // 질문 의도 분석
+  var qLower=_tQuestion.toLowerCase();
+  var intentGuide='';
+  if(/언제|시기|시점|몇 월|얼마나/.test(_tQuestion)) intentGuide='시기와 타이밍을 구체적으로 짚어줘. ';
+  else if(/좋아|마음|감정|느낌|생각/.test(_tQuestion)) intentGuide='상대방 감정과 마음 상태를 카드로 직접 읽어줘. ';
+  else if(/연락|문자|카톡|올까|올것/.test(_tQuestion)) intentGuide='연락 여부와 가능성을 카드로 직접 판단해줘. ';
+  else if(/취직|합격|될까|성공|안될/.test(_tQuestion)) intentGuide='가능성과 현실적 조건을 카드로 직접 말해줘. ';
+  else if(/헤어|이별|끝|그만|포기/.test(_tQuestion)) intentGuide='관계의 흐름과 결말을 카드로 솔직하게 말해줘. ';
+
+  var prompt='질문: '+_tQuestion+'\n\n'
+    +'메이저 아르카나(운명의 흐름): '+majorList+'\n'
+    +'마이너 아르카나(현실 에너지): '+minorList+'\n\n'
+    +(intentGuide?'리딩 포커스: '+intentGuide+'\n\n':'')
+    +'아래 4개 파트를 순서대로 작성해. 각 파트는 <<<REACT>>>, <<<CARDS>>>, <<<READING>>>, <<<PUNCHLINE>>> 으로 구분.\n\n'
+    +'<<<REACT>>>\n카드 보자마자 드는 솔직한 반응. 1~2문장. 매번 다른 표현. 상투어 금지.\n\n'
+    +'<<<CARDS>>>\n카드 이름 나열하지 말 것. 하나의 흐름으로 자연스럽게 풀어서. 카드: 어쩌고 이런 형식 절대 금지. 카드들이 전하는 이야기를 친구한테 말하듯이. 4~5문장.\n\n'
+    +'<<<READING>>>\n카드들을 연결해서 질문에 직접적으로 답. YES/NO식으로 명확하게 방향을 잡아줘. 3~4문장.\n\n'
+    +'<<<PUNCHLINE>>>\n딱 한 줄. 앞 내용과 다른 표현으로. 강렬하고 기억에 남게.';
+
+  try{
+    var ctrl=new AbortController(),tid=setTimeout(function(){ctrl.abort();},90000);
+    var resp=await fetch('https://my-saju-api.onrender.com/api/saju',{
+      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'gemini',mode:'star',max_tokens:6000,
+        system:GEMNA_PERSONA+' 절대 금지: 카드 이름을 나열하며 설명하는 방식 (예: "태양: 어쩌고", "소드 A: 어쩌고") 금지. 카드들의 메시지를 하나의 자연스러운 이야기로 녹여서 전달. 볼드(**) 마크다운 절대 금지. 상투적 표현 금지.',
+        messages:[{role:'user',content:prompt}]})
+    });
+    clearTimeout(tid);clearInterval(lv);
+    var data=await resp.json();
+    var raw='';
+    if(data.content&&Array.isArray(data.content)) raw=data.content.map(function(c){return c.text||'';}).join('');
+    else if(data.content&&typeof data.content==='string') raw=data.content;
+    else if(data.text) raw=data.text;
+    // 볼드 제거
+    // 볼드/태그 제거
+    raw=raw.replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\*([^*]+)\*/g,'$1');
+
+    // <<< >>> 태그로 파싱
+    function pText(tag){
+      var re=new RegExp('<<<'+tag+'>>[\\s\\S]*?\\n([\\s\\S]*?)(?=<<<|$)','i');
+      var m=raw.match(re);
+      if(m) return m[1].replace(/<<<[^>]+>>>/g,'').trim();
+      // fallback: 줄로 찾기
+      var lines=raw.split('\n');
+      var found=false,result=[];
+      for(var i=0;i<lines.length;i++){
+        if(lines[i].indexOf('<<<'+tag+'>>>')>=0){found=true;continue;}
+        if(found&&lines[i].indexOf('<<<')>=0) break;
+        if(found) result.push(lines[i]);
+      }
+      return result.join('\n').trim();
+    }
+
+    var react=pText('REACT'),cardsT=pText('CARDS'),reading=pText('READING'),punch=pText('PUNCHLINE');
+    // 완전 실패 시 단락으로 분리
+    if(!react&&!cardsT&&!reading&&!punch){
+      var parts=raw.replace(/<<<[^>]+>>>/g,'|||').split('|||').map(function(p){return p.trim();}).filter(Boolean);
+      react=parts[0]||''; cardsT=parts[1]||''; reading=parts[2]||''; punch=parts[3]||'';
+      if(!punch&&parts.length===1) reading=parts[0];
+    }
+    tShowResult(cards,labels,react,cardsT,reading,punch);
+  }catch(e){
+    clearInterval(lv);
+    tGoStep(2);
+    showToast(e.name==='AbortError'?'시간 초과. 다시 시도해주세요.':'서버 연결 실패');
+  }
+}
+
+function tShowResult(cards,labels,react,cardsText,reading,punchline){
+  tGoStep(4);
+  // 카드 이미지
+  var rc=document.getElementById('tResultCards');
+  if(rc){
+    rc.innerHTML=cards.map(function(c,i){
+      var img=TAROT_IMGS[c.idx]||'';
+      return '<div style="text-align:center;flex-shrink:0;">'
+        +'<div style="font-size:10px;color:rgba(240,192,96,.55);letter-spacing:1px;margin-bottom:6px;">'+(labels[i]||'')+'</div>'
+        +'<div style="width:80px;height:130px;border-radius:12px;overflow:hidden;border:2px solid '+(c.reversed?'rgba(224,144,144,.6)':'rgba(200,169,110,.6)')+';box-shadow:0 4px 16px rgba(0,0,0,.5);'+(c.reversed?'transform:rotate(180deg)':'')+'">'
+        +(img?'<img src="'+img+'" style="width:100%;height:100%;object-fit:cover;">':'<div style="width:100%;height:100%;background:linear-gradient(145deg,#1a0a2e,#2d0f5e);display:flex;align-items:center;justify-content:center;font-size:28px;">✦</div>')
+        +'</div>'
+        +'<div style="font-size:9px;color:var(--gold2);margin-top:6px;max-width:80px;line-height:1.3;font-family:Gowun Dodum,serif;">'+c.name+'</div>'
+        +(c.reversed?'<div style="font-size:8px;color:#e09090;">역방향</div>':'')
+        +'</div>';
+    }).join('');
+  }
+  // 말풍선 순차 출력
+  var rb=document.getElementById('tResultBubbles');
+  if(!rb)return;
+  rb.innerHTML='';
+  var bubbles=[];
+  if(react) bubbles.push({text:react,delay:0});
+  if(cardsText) bubbles.push({text:cardsText,delay:700});
+  if(reading) bubbles.push({text:reading,delay:1400});
+  if(punchline) bubbles.push({
+    html:'<div style="background:linear-gradient(135deg,rgba(240,192,96,.12),rgba(168,85,247,.08));border:1px solid rgba(240,192,96,.35);border-radius:14px;padding:14px 16px;font-family:Gowun Dodum,serif;font-size:15px;color:var(--gold2);font-weight:700;text-align:center;line-height:1.6;">✦ '+punchline+' ✦</div>',
+    delay:2100
+  });
+  if(!bubbles.length){
+    // 빈 경우 안내
+    var el=document.createElement('div');
+    el.className='tc-gemna';
+    el.innerHTML='<div class="tc-gemna-ico">🔮</div><div class="tc-gemna-msg">리딩을 불러오지 못했어요. 다시 시도해주세요.</div>';
+    rb.appendChild(el);
+  }
+  bubbles.forEach(function(b){
+    setTimeout(function(){
+      var el=document.createElement('div');
+      el.className='tc-gemna';
+      el.style.cssText='display:flex;align-items:flex-start;gap:8px;margin:0;';
+      if(b.html){
+        el.style.cssText='display:block;';
+        el.innerHTML=b.html;
+      } else {
+        el.innerHTML='<div class="tc-gemna-ico">🔮</div><div class="tc-gemna-msg" style="line-height:1.65;">'+b.text+'</div>';
+      }
+      rb.appendChild(el);
+      var s4=document.getElementById('tStep4');
+      if(s4) s4.scrollTop=s4.scrollHeight;
+    },b.delay);
+  });
+  // 새 질문하기 버튼 표시
+  setTimeout(function(){
+    var bar=document.getElementById('tRestartBar');
+    if(bar) bar.style.display='block';
+  }, bubbles.length*700+500);
+}
+
+function tRestart(){
+  _tSession={cards:[],majorCards:[],minorCards:[],majorMax:2,minorMax:2};
+  _tCurDeckTab='major';
+  _tQuestion='';
+  // UI 전체 초기화
+  var q=document.getElementById('tarotQ');
+  if(q){q.value='';var c=document.getElementById('tqcnt');if(c)c.textContent='0';}
+  var mc=document.getElementById('tc-major-cnt'),nc=document.getElementById('tc-minor-cnt');
+  if(mc)mc.textContent='0'; if(nc)nc.textContent='0';
+  var sr=document.getElementById('tSelRow');
+  if(sr){sr.innerHTML='';sr.style.display='none';}
+  var dw=document.getElementById('tDeckWrap');
+  if(dw)dw.innerHTML=''; // 덱 DOM 완전 초기화
+  var rb=document.getElementById('tResultBubbles');
+  if(rb)rb.innerHTML='';
+  var rc2=document.getElementById('tResultCards');
+  if(rc2)rc2.innerHTML='';
+  var btn=document.getElementById('tReadBtn');
+  if(btn){btn.disabled=true;btn.style.background='var(--bg3)';btn.style.borderColor='var(--gb)';btn.style.color='var(--muted)';btn.style.cursor='not-allowed';}
+  // 탭 버튼 원상복구
+  tSwitchDeckTab('major');
+  tGoStep(1);
 }
 
 
@@ -8705,9 +9402,15 @@ function apSetCal(t){
   if(t==='solar'){
     sol.style.cssText+='border-color:rgba(240,192,96,.5);background:rgba(240,192,96,.15);color:var(--gold2);font-weight:600;';
     lun.style.cssText+='border-color:rgba(255,255,255,.1);background:transparent;color:var(--dim);font-weight:400;';
+    // 윤달 행 숨기기
+    var lr=document.getElementById('apLeapRow');if(lr)lr.style.display='none';
+    apAS.leap=false;
+    var lc=document.getElementById('apLeapChk');if(lc)lc.checked=false;
   } else {
     lun.style.cssText+='border-color:rgba(240,192,96,.5);background:rgba(240,192,96,.15);color:var(--gold2);font-weight:600;';
     sol.style.cssText+='border-color:rgba(255,255,255,.1);background:transparent;color:var(--dim);font-weight:400;';
+    // 윤달 행 표시
+    var lr2=document.getElementById('apLeapRow');if(lr2)lr2.style.display='flex';
   }
 }
 function apSetGen(g){
@@ -8747,8 +9450,16 @@ function saveNewProfile(){
 
   var gY=y,gM=m,gD=d;
   if(apAS.cal==='lunar'){
-    var g=l2g(y,m,d,false);
-    if(!g){showToast('유효하지 않은 음력 날짜예요');return;}
+    var isLeap=apAS.leap||false;
+    var g=l2g(y,m,d,isLeap);
+    if(!g){
+      // 윤달로 실패했으면 평달로 재시도
+      if(isLeap){
+        g=l2g(y,m,d,false);
+        if(g) showToast('윤달 데이터 없음. 평달로 저장했어요.');
+      }
+      if(!g){showToast('유효하지 않은 음력 날짜예요. 날짜를 확인해주세요.');return;}
+    }
     gY=g.year;gM=g.month;gD=g.day;
   }
 

@@ -221,10 +221,25 @@ def calc_saju(year, month, day, hour, is_male):
 def index():
     return send_from_directory(DIR, 'index.html')
 
-@app.route('/<path:filename>')
-def static_files(filename):
-    """JS, CSS 등 정적 파일 서빙"""
-    return send_from_directory(DIR, filename)
+@app.route('/style.css')
+def serve_css():
+    return send_from_directory(DIR, 'style.css', mimetype='text/css')
+
+@app.route('/astrology.js')
+def serve_astrology():
+    return send_from_directory(DIR, 'astrology.js', mimetype='application/javascript')
+
+@app.route('/api.js')
+def serve_api_js():
+    return send_from_directory(DIR, 'api.js', mimetype='application/javascript')
+
+@app.route('/ui.js')
+def serve_ui():
+    return send_from_directory(DIR, 'ui.js', mimetype='application/javascript')
+
+@app.route('/main.js')
+def serve_main():
+    return send_from_directory(DIR, 'main.js', mimetype='application/javascript')
 
 @app.route('/api/calc', methods=['POST'])
 def calc_api():

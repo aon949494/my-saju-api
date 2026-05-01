@@ -45,16 +45,16 @@ ENDINGS = ('다', '요', '야', '어', '네', '죠', '게', '.', '!', '?', '…'
            '?**', '.**', '!**', '요**', '다**', '어**', '네**',
            '?**"', '.**"')
 
-def make_model(sys_prompt):
-    # 자르지 않고 전체 전달 (Gemini 1M 컨텍스트 윈도우)
+def make_model(sys_prompt, use_pro=False):
     sys_clean = (sys_prompt or '').strip()
+    model_name = 'gemini-2.5-pro' if use_pro else 'gemini-2.5-flash'
     try:
         if sys_clean:
-            return GenerativeModel('gemini-2.5-flash', system_instruction=sys_clean)
-        return GenerativeModel('gemini-2.5-flash')
+            return GenerativeModel(model_name, system_instruction=sys_clean)
+        return GenerativeModel(model_name)
     except Exception as e:
         log.warning(f"system_instruction 실패: {e}")
-        return GenerativeModel('gemini-2.5-flash')
+        return GenerativeModel(model_name)
 
 def get_text(resp):
     return (getattr(resp, 'text', '') or '').rstrip()
@@ -86,7 +86,10 @@ def saju_api():
         last_msg     = messages[-1].get('content', '')
         history_msgs = messages[:-1]
         t_start = time.time()
-        model = make_model(sys_prompt)
+        req_model_str = data.get('model', 'gemini')
+        use_pro = req_model_str == 'gemini-pro'
+        model = make_model(sys_prompt, use_pro=use_pro)
+        log.info(f"모델: {'gemini-2.5-pro' if use_pro else 'gemini-2.5-flash'}")
 
         history = [
             Content(role='model' if m.get('role') == 'assistant' else 'user',

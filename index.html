@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Uncanny: 당신의 결을 읽는 AI 사주</title>
+<title>OracAi: 당신의 운명을 읽는 AI</title>
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 <style>
@@ -421,14 +421,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
 <div id="splash" class="screen active">
   <div class="sp-sym">&#9776; &#9777; &#9778; &#9779;</div>
-  <div class="sp-ttl">Uncanny</div>
-  <div class="sp-sub">당신의 결을 읽는 AI 사주</div>
+  <div class="sp-ttl">OracAi</div>
+  <div class="sp-sub">운명을 꿰뚫는 AI · 사주 · 타로</div>
 </div>
 
 <div id="mainScreen" class="screen hidden">
   <div class="app">
     <div class="main-topbar">
-      <div class="main-brand">Uncanny</div>
+      <div class="main-brand">OracAi</div>
       <div id="passTimerDisplay" style="display:none;background:rgba(240,192,96,.14);border:1px solid rgba(240,192,96,.32);border-radius:20px;padding:5px 12px;font-size:12px;color:var(--gold2);font-weight:700;">🎁 <span id="passTimerText">00:00</span></div>
     </div>
 
@@ -806,7 +806,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
               <div style="font-size:12px;color:var(--muted);letter-spacing:2px" id="uLdTxt">운세를 분석하는 중...</div>
             </div>
             <div id="uErr" class="aierr" style="display:none"></div>
-            <div id="uTabs" class="aitabs"></div>
+            <div id="uTabs" style="display:none!important;height:0;overflow:hidden;"></div>
             <div id="uSecs"></div>
           </div>
 
@@ -1003,17 +1003,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   </div>
 </div>
 
-<div id="tarotAdModal" class="modal-overlay">
-  <div class="modal-box">
-    <div style="font-size:28px;margin-bottom:10px">🔮</div>
-    <div style="font-family:Gowun Dodum,serif;font-size:18px;color:var(--gold2);margin-bottom:8px;letter-spacing:1px">젬나의 리딩을 받으려면</div>
-    <div style="font-size:12px;color:var(--dim);margin-bottom:20px;line-height:1.7">2회 무료 이후에는 광고 1회 시청 후<br>결과를 확인할 수 있습니다.</div>
-    <button onclick="tarotAdWatch()" style="width:100%;padding:14px;background:linear-gradient(135deg,#1a0a2e,#4a1a6e,#1a0a2e);border:1px solid var(--gold);border-radius:12px;color:var(--gold2);font-size:14px;font-weight:700;margin-bottom:10px;cursor:pointer">
-      ▶ 광고 보고 리딩 받기
-    </button>
-    <button onclick="closeTarotAdModal()" style="background:none;border:none;color:var(--muted);font-size:12px;text-decoration:underline;cursor:pointer;padding:8px">취소</button>
-  </div>
-</div>
+
 
 <div id="adModal" class="modal-overlay">
   <div class="modal-box">
@@ -1251,7 +1241,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   <div style="flex:1;overflow-y:auto;padding:0 24px 40px;display:flex;flex-direction:column;justify-content:center;">
     <div style="text-align:center;margin-bottom:32px;">
       <div style="font-size:48px;margin-bottom:12px;">🔮</div>
-      <div style="font-family:Gowun Dodum,serif;font-size:26px;color:var(--gold2);font-weight:700;letter-spacing:2px;margin-bottom:8px;">Uncanny</div>
+      <div style="font-family:Gowun Dodum,serif;font-size:26px;color:var(--gold2);font-weight:700;letter-spacing:2px;margin-bottom:8px;">OracAi</div>
       <div style="font-size:14px;color:var(--muted);line-height:1.7;">당신의 결을 읽는 AI 사주</div>
     </div>
     <!-- 스텝 카드들 -->
@@ -1286,7 +1276,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div style="padding:16px 20px 80px;font-size:13px;color:var(--dim);line-height:1.9;">
       <div style="font-size:11px;color:var(--muted);margin-bottom:20px;">최종 수정일: 2026년 4월</div>
       <div style="font-size:15px;color:var(--text);font-weight:700;margin-bottom:12px;">1. 수집하는 개인정보</div>
-      <p>Uncanny(이하 "앱")는 서비스 제공을 위해 다음 정보를 수집합니다.<br>· 생년월일, 성별, 출생시간 (사주 계산용)<br>· 앱 사용 기록 (기기 내 로컬 저장, 서버 전송 없음)</p>
+      <p>OracAi(이하 "앱")는 서비스 제공을 위해 다음 정보를 수집합니다.<br>· 생년월일, 성별, 출생시간 (사주 계산용)<br>· 앱 사용 기록 (기기 내 로컬 저장, 서버 전송 없음)</p>
       <div style="font-size:15px;color:var(--text);font-weight:700;margin:20px 0 12px;">2. 개인정보 저장 방식</div>
       <p>입력하신 생년월일 등 정보는 사용자 기기의 로컬 스토리지에만 저장되며, 당사 서버로 전송되지 않습니다. AI 분석 요청 시 생년월일 정보는 암호화 없이 API로 전달되나, 별도로 저장·기록하지 않습니다.</p>
       <div style="font-size:15px;color:var(--text);font-weight:700;margin:20px 0 12px;">3. 제3자 제공</div>
@@ -1296,7 +1286,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div style="font-size:15px;color:var(--text);font-weight:700;margin:20px 0 12px;">5. 이용자의 권리</div>
       <p>앱 내 프로필 삭제 기능을 통해 언제든지 저장된 정보를 삭제할 수 있습니다. 기기의 앱 데이터 삭제 시 모든 정보가 완전히 제거됩니다.</p>
       <div style="font-size:15px;color:var(--text);font-weight:700;margin:20px 0 12px;">6. 문의</div>
-      <p>개인정보 관련 문의: <span style="color:var(--gold2);">uncanny.saju@gmail.com</span></p>
+      <p>개인정보 관련 문의: <span style="color:var(--gold2);">oracai.saju@gmail.com</span></p>
     </div>
   </div>
 </div>
@@ -1339,6 +1329,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
   <!-- 입력창 -->
   <div id="personaInputBar" style="position:fixed;bottom:calc(var(--NAV,64px) + var(--BNR,50px));left:50%;transform:translateX(-50%);width:100%;max-width:420px;padding:10px 14px 12px;background:rgba(8,6,20,.97);backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,.07);z-index:20;">
+    <div id="personaPassBadge" style="display:none;justify-content:flex-end;margin-bottom:6px;gap:6px;"></div>
     <div style="display:flex;gap:8px;align-items:flex-end;">
       <div style="flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:10px 16px;display:flex;align-items:flex-end;gap:8px;transition:border-color .2s;" onfocusin="this.style.borderColor='rgba(139,92,246,.5)'" onfocusout="this.style.borderColor='rgba(255,255,255,.1)'">
         <textarea id="personaQ" maxlength="300" placeholder="무엇이든 물어보세요..." style="flex:1;min-height:22px;max-height:88px;background:transparent;border:none;color:var(--text);font-family:'Pretendard';font-size:14px;resize:none;outline:none;line-height:1.55;" oninput="this.style.height='22px';this.style.height=Math.min(this.scrollHeight,88)+'px'" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();personaSend();}"></textarea>
@@ -1356,6 +1347,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div style="font-size:11px;color:var(--muted);text-align:right;">
         <div>미니복채 <span id="bcMini" style="color:var(--gold2);font-weight:700;">0</span>개</div>
         <div>복채 <span id="bcBokchae" style="color:var(--gold2);font-weight:700;">0</span>개</div>
+        <div id="bcPassBadge" style="display:none;"></div>
       </div>
     </div>
     <div style="padding:0 16px 80px;overflow-y:auto;">
@@ -1650,6 +1642,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <!-- 오행 분포 -->
       <div id="sajuResultOhw" class="ohw" style="margin-bottom:14px;"></div>
 
+      <!-- 광고 (오행분포~총운 사이) -->
+      <div style="margin-bottom:14px;border-radius:12px;overflow:hidden;min-height:100px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;">
+        <span id="sajuMidAd" style="width:100%;text-align:center;font-size:11px;color:var(--muted);letter-spacing:1px;">ADVERTISEMENT</span>
+      </div>
+
       <!-- AI 탭 풀이 -->
       <div id="aip2" class="aip">
         <div class="aitabs" id="aitabs2"></div>
@@ -1704,6 +1701,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
         <!-- 통계 2x2 -->
         <div id="settingsStatsGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:0;">
+        <div id="settingsPassBadge" style="display:none;grid-column:1/-1;margin-bottom:4px;"></div>
           <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:12px 14px;">
             <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">보유 미니복채</div>
             <div style="font-size:20px;color:var(--gold2);font-weight:700;" id="statMini">0<span style="font-size:11px;color:var(--muted);font-weight:300;"> 개</span></div>
@@ -1748,10 +1746,22 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <span style="font-size:14px;color:var(--text);flex:1;">공지사항</span>
           <span style="color:var(--muted);font-size:16px;">›</span>
         </div>
-        <div onclick="togglePremiumTest()" style="display:flex;align-items:center;padding:16px 18px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.06);">
-          <span style="font-size:18px;margin-right:12px;">💎</span>
-          <span style="font-size:14px;color:var(--text);flex:1;">프리미엄 테스트 모드</span>
-          <div id="premiumTestBadge" style="font-size:11px;padding:3px 10px;border-radius:10px;font-weight:600;background:rgba(255,255,255,.07);color:var(--muted);">OFF</div>
+
+        <div onclick="rewardRateApp()" style="display:flex;align-items:center;padding:16px 18px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.06);">
+          <span style="font-size:18px;margin-right:12px;">⭐</span>
+          <div style="flex:1;">
+            <div style="font-size:14px;color:var(--text);">앱 평가하기</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px;">리뷰 남기면 복채 3개 지급</div>
+          </div>
+          <div id="rateRewardBadge" style="font-size:11px;color:rgba(240,192,96,.7);"></div>
+        </div>
+        <div onclick="rewardInstaFollow()" style="display:flex;align-items:center;padding:16px 18px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.06);">
+          <span style="font-size:18px;margin-right:12px;">📸</span>
+          <div style="flex:1;">
+            <div style="font-size:14px;color:var(--text);">인스타그램 팔로우</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px;">@oracai.kr 팔로우하면 복채 3개 지급</div>
+          </div>
+          <div id="instaRewardBadge" style="font-size:11px;color:rgba(240,192,96,.7);"></div>
         </div>
         <div onclick="showPrivacy()" style="display:flex;align-items:center;padding:16px 18px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.06);">
           <span style="font-size:14px;color:var(--text);flex:1;">개인정보처리방침</span>
@@ -1775,7 +1785,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       </div>
 
       <div style="text-align:center;padding:12px 0 4px;">
-        <div style="font-size:10px;color:rgba(242,237,228,.15);letter-spacing:1px;">Uncanny v1.0.0</div>
+        <div style="font-size:10px;color:rgba(242,237,228,.15);letter-spacing:1px;">OracAi v1.0.0</div>
       </div>
     </div>
   </div>
@@ -3400,17 +3410,23 @@ function showNatalBokchaeModal(){
   // 기존 모달 재사용 (이미 1개 텍스트로 수정됨)
   showBokchaeModal();
 }
-function showBokchaeModal(){
-  var m=document.getElementById('bokchaeNeedModal');
-  if(m){m.classList.add('show');return;}
-  // 동적 생성
+function showBokchaeModal(cost){
+  if(isSubscribed()){showToast('구독 중에는 복채 없이 사용 가능해요');return;}
+  var needCnt=cost||1;
+  // 기존 모달 있으면 텍스트 업데이트 후 표시
+  var existing=document.getElementById('bokchaeNeedModal');
+  if(existing){
+    var txt=existing.querySelector('.bokchae-cost-txt');
+    if(txt) txt.textContent='복채 '+needCnt+'개로 리딩을 받을 수 있어요.';
+    existing.classList.add('show');return;
+  }
   var div=document.createElement('div');
   div.id='bokchaeNeedModal';
   div.className='modal-overlay';
   div.innerHTML='<div class="modal-box" style="text-align:center;">'
     +'<div style="font-size:28px;margin-bottom:10px;">💎</div>'
     +'<div style="font-family:Gowun Dodum,serif;font-size:18px;color:var(--gold2);margin-bottom:8px;">복채가 부족해요</div>'
-    +'<div style="font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:20px;">복채 1개로 리딩을 받을 수 있어요.</div>'
+    +'<div class="bokchae-cost-txt" style="font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:20px;">복채 '+needCnt+'개로 리딩을 받을 수 있어요.</div>'
     +'<div style="display:flex;gap:8px;">'
     +'<button onclick="closeBokchaeModal()" style="flex:1;height:44px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;color:var(--muted);font-size:13px;cursor:pointer;font-family:Pretendard;">취소</button>'
     +'<button onclick="closeBokchaeModal();navBokchae();" style="flex:1;height:44px;background:linear-gradient(135deg,#b87800,#f0c060);border:none;border-radius:12px;color:#1a0d00;font-size:13px;font-weight:700;cursor:pointer;font-family:Pretendard;">복채 충전하기</button>'
@@ -3739,13 +3755,12 @@ function pcResumeChat(id){
 
 function openPersonaChat(id){
   var p=PERSONAS[id];if(!p)return;
-  if(p.tier==='standard'||p.tier==='premium'){
-    // 테스트 모드면 통과
-    if(isPremiumTest()){
+  if(p.tier==='premium'){
+    if(isPremiumTest()||canAccessPersona(id)){
       _doOpenPersonaChat(id);
       return;
     }
-    showToast('🔒 '+p.name+'는 '+(p.tier==='standard'?'스탠다드':'프리미엄')+' 구독 전용이에요');
+    showToast('🔒 '+p.name+'는 프리미엄 구독 전용이에요');
     return;
   }
   // 무료 캐릭터: 오늘 이미 메시지 보냈는지 체크 (채팅방 열기는 무제한)
@@ -4121,16 +4136,50 @@ async function personaSend(){
   var p=PERSONAS[_curPersonaId];
 
   // 무료 티어: 하루 1회 무료, 광고 후 1회 추가, 이후 복채 3개 필요
-  if(p.tier==='free'){
-    var usedToday=getFreePersonaToday();
-    var adUsed=getFreePersonaAdToday();
-    var maxFree=1+adUsed; // 기본 1 + 광고 본 횟수(최대 1)
+  // ── 무료 & 구독 게이트 ──
+  var _subbed=isSubscribed();
+
+  if(_subbed){
+    // ── 구독자: 하루 2회 무료 → 패스 차감 → 패스 없으면 복채 → 둘 다 없으면 차단
+    var subFreeKey='msr_sub_free_'+getTodayStr();
+    var subFreeUsed=parseInt(localStorage.getItem(subFreeKey)||'0');
+    var SUB_FREE_LIMIT=2;
 
     if(!_freePersonaCountedThisSession){
-      // 첫 메시지: 오늘 무료 횟수 체크
+      // 첫 메시지
+      if(subFreeUsed<SUB_FREE_LIMIT){
+        // 무료 횟수 남음 → 통과, 차감은 아래 응답 후
+      } else {
+        // 무료 소진 → 패스 체크
+        if(getPassRemain()<=0){
+          // 패스도 없음 → 복채 체크
+          if(getBokchaeCnt()<p.costBokchae){
+            showBokchaeModal();return;
+          }
+        }
+      }
+    } else {
+      // 두 번째 이후 메시지 (같은 세션)
+      if(subFreeUsed<SUB_FREE_LIMIT){
+        // 아직 무료 횟수 남음
+      } else {
+        if(getPassRemain()<=0){
+          if(getBokchaeCnt()<p.costBokchae){
+            showBokchaeModal();return;
+          }
+        }
+      }
+    }
+
+  } else if(p.tier==='free'){
+    // ── 비구독 무료 캐릭터: 하루 1회 무료 → 광고 1회 → 복채
+    var usedToday=getFreePersonaToday();
+    var adUsed=getFreePersonaAdToday();
+    var maxFree=1+adUsed;
+
+    if(!_freePersonaCountedThisSession){
       if(usedToday>=maxFree){
         if(adUsed<1){
-          // 광고 보면 1회 더
           var savedQ=q;
           openRewardAdModal(
             '오늘 무료 횟수를 다 썼어요',
@@ -4143,24 +4192,18 @@ async function personaSend(){
               personaSend();
             }
           );
+          return;
         } else {
-          // 광고도 이미 봄 → 복채 필요
-          var bok0=getBokchaeCnt();
-          if(bok0<p.costBokchae){ showBokchaeModal(); return; }
-          // 복채 있으면 통과 (아래에서 차감)
+          // 광고도 봤음 → 복채
+          if(getBokchaeCnt()<p.costBokchae){showBokchaeModal();return;}
         }
-        if(adUsed<1) return; // 광고 모달 띄우고 중단
       }
     } else {
-      // 두 번째 이후 메시지
       var adUsed2=getFreePersonaAdToday();
       var usedToday2=getFreePersonaToday();
-      var maxFree2=1+adUsed2;
-
-      if(usedToday2<maxFree2){
-        // 광고 보고 생긴 추가 무료 횟수 남아있음 → 무료 통과
+      if(usedToday2<1+adUsed2){
+        // 무료 남음
       } else if(adUsed2<1){
-        // 광고 아직 안 봄 → 광고 모달
         var savedQ2=q;
         openRewardAdModal(
           '무료 횟수를 다 썼어요',
@@ -4174,14 +4217,21 @@ async function personaSend(){
         );
         return;
       } else {
-        // 무료 + 광고 모두 소진 → 복채 필요
-        var bok=getBokchaeCnt();
-        if(bok<p.costBokchae){ showBokchaeModal(); return; }
+        if(getBokchaeCnt()<p.costBokchae){showBokchaeModal();return;}
       }
     }
+
   } else {
-    var bok=getBokchaeCnt();
-    if(bok<p.costBokchae){ showBokchaeModal(); return; }
+    // ── 비구독 프리미엄 캐릭터: 접근 불가
+    // (openPersonaChat에서 이미 막지만 이중 방어)
+    if(p.tier==='standard'||p.tier==='premium'){
+      if(!canAccessPersona(_curPersonaId)){
+        showToast('🔒 '+(p.tier==='standard'?'스탠다드':'프리미엄')+' 구독 전용이에요');
+        return;
+      }
+    }
+    // 혹시 접근 됐다면 복채만
+    if(getBokchaeCnt()<p.costBokchae){showBokchaeModal();return;}
   }
 
   qa.value='';qa.style.height='44px';
@@ -4219,7 +4269,7 @@ async function personaSend(){
         method:'POST',signal:ctrl.signal,
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify({
-          model:'gemini',
+          model:(['hades','sera','red'].indexOf(_curPersonaId)>=0)?'gemini-pro':'gemini',
           max_tokens:6000,
           mode:'long',
           system:sysPrompt,
@@ -4260,25 +4310,47 @@ async function personaSend(){
 
     _personaHistory.push({role:'assistant',content:answer});
 
-    if(p.tier==='free'){
+    if(_subbed){
+      // ── 구독자 차감 ──
+      var subFreeKeyNow='msr_sub_free_'+getTodayStr();
+      var subFreeUsedNow=parseInt(localStorage.getItem(subFreeKeyNow)||'0');
+      if(subFreeUsedNow<2){
+        // 하루 2회 무료 차감
+        localStorage.setItem(subFreeKeyNow, subFreeUsedNow+1);
+        _freePersonaCountedThisSession=true;
+      } else {
+        // 무료 소진 → 패스→복채
+        var crS=chargePersonaChat(p.costBokchae);
+        if(crS==='pass') showToast('🎫 AI 패스 사용 ('+getPassRemain()+'회 남음)');
+        else if(crS==='bokchae') showToast('💎 복채 '+p.costBokchae+'개 사용');
+        renderBokchae&&renderBokchae();
+        renderSettingsProfile&&renderSettingsProfile();
+      }
+      pcFreeSave(_curPersonaId,_personaHistory);
+
+    } else if(p.tier==='free'){
+      // ── 비구독 무료 캐릭터 차감 ──
       var adUsedNow=getFreePersonaAdToday();
       var usedNow=getFreePersonaToday();
       if(!_freePersonaCountedThisSession){
-        // 첫 성공 메시지 카운트
         addFreePersonaToday();
         _freePersonaCountedThisSession=true;
       } else if(usedNow>=1+adUsedNow){
-        // 무료+광고 모두 소진 후 복채로 사용한 경우 차감
-        addBokchae(-p.costBokchae);
+        var cr1=chargePersonaChat(p.costBokchae);
+        if(cr1==='fail'){showBokchaeModal();return;}
+        if(cr1==='pass') showToast('🎫 AI 패스 사용 ('+getPassRemain()+'회 남음)');
         renderBokchae&&renderBokchae();
         renderSettingsProfile&&renderSettingsProfile();
       } else {
-        // 광고로 추가된 무료 횟수 사용
         addFreePersonaToday();
       }
-      // 무료 대화방 저장
       pcFreeSave(_curPersonaId,_personaHistory);
+
     } else {
+      // ── 비구독 프리미엄 캐릭터: 여기 오면 안 됨 (이중 방어)
+      if(p.tier==='premium'){
+        if(!canAccessPersona(_curPersonaId)) return;
+      }
       addBokchae(-p.costBokchae);
       renderBokchae&&renderBokchae();
       renderSettingsProfile&&renderSettingsProfile();
@@ -4754,6 +4826,7 @@ function zRenderNatal(){
 var _zAdUnlockedSession=false; // 세션 내 1회성 잠금 해제 플래그
 
 function zCheckAdUnlock(){
+  if(isSubscribed()) return true;
   if(_zAdUnlockedSession) return true;
   var freeUntil=parseInt(localStorage.getItem('ad_free_until')||'0');
   if(Date.now()<freeUntil) return true; // 30분 패스
@@ -4763,6 +4836,7 @@ function zCheckAdUnlock(){
 
 // 네이탈 free 리딩 전용 - 세션 플래그 + 30분 패스만 체크
 function zCheckNatalFreeUnlock(){
+  if(isSubscribed()) return true;
   if(_zAdUnlockedSession) return true;
   var freeUntil=parseInt(localStorage.getItem('ad_free_until')||'0');
   return Date.now()<freeUntil;
@@ -4986,6 +5060,127 @@ function onboardingSkip(){
   try{renderMainRecent();updateTimer();}catch(e){}
 }
 
+
+// ── 앱 평가 / 인스타 팔로우 보상 ──
+function _renderRewardBadges(){
+  var rateDone=localStorage.getItem('reward_rate_done')==='1';
+  var instaDone=localStorage.getItem('reward_insta_done')==='1';
+  var rb=document.getElementById('rateRewardBadge');
+  var ib=document.getElementById('instaRewardBadge');
+  if(rb) rb.textContent=rateDone?'✓ 받음':'복채 +3';
+  if(ib) ib.textContent=instaDone?'✓ 받음':'복채 +3';
+}
+
+function rewardRateApp(){
+  if(localStorage.getItem('reward_rate_done')==='1'){
+    showToast('이미 보상을 받으셨어요');return;
+  }
+  // 앱스토어 리뷰 페이지 열기 (Capacitor 연동 전 임시)
+  try{
+    if(window.Capacitor&&window.Capacitor.Plugins.Browser){
+      window.Capacitor.Plugins.Browser.open({url:'https://apps.apple.com/app/id0000000000'});
+    }
+  }catch(e){}
+  // 확인 모달
+  showConfirmModal(
+    '앱을 평가해주셨나요?',
+    '앱스토어에서 리뷰를 남겨주시면 복채 3개를 드려요.',
+    '복채 받기',
+    function(){
+      localStorage.setItem('reward_rate_done','1');
+      addBokchae(3);
+      renderBokchae&&renderBokchae();
+      _renderRewardBadges();
+      showToast('⭐ 감사해요! 복채 3개 지급됐어요');
+    }
+  );
+}
+
+function rewardInstaFollow(){
+  if(localStorage.getItem('reward_insta_done')==='1'){
+    showToast('이미 보상을 받으셨어요');return;
+  }
+  // 인스타그램 열기
+  try{
+    if(window.Capacitor&&window.Capacitor.Plugins.Browser){
+      window.Capacitor.Plugins.Browser.open({url:'https://instagram.com/oracai.kr'});
+    } else {
+      window.open('https://instagram.com/oracai.kr','_blank');
+    }
+  }catch(e){}
+  showConfirmModal(
+    '팔로우 하셨나요?',
+    '@oracai.kr 팔로우 후 복채 3개를 드려요.',
+    '복채 받기',
+    function(){
+      localStorage.setItem('reward_insta_done','1');
+      addBokchae(3);
+      renderBokchae&&renderBokchae();
+      _renderRewardBadges();
+      showToast('📸 팔로우 감사해요! 복채 3개 지급됐어요');
+    }
+  );
+}
+
+// ── 구독 확인 ──
+function getSubPlan(){
+  // 'lite' | 'standard' | 'premium' | null
+  var until=parseInt(localStorage.getItem('sub_until')||'0');
+  if(Date.now()>=until) return null;
+  return localStorage.getItem('sub_plan')||'lite';
+}
+function isSubscribed(){ return getSubPlan()!==null; }
+function isSubLite(){    var p=getSubPlan(); return p==='lite'||p==='standard'||p==='premium'; }
+function isSubStandard(){ var p=getSubPlan(); return p==='standard'||p==='premium'; }
+function isSubPremium(){  return getSubPlan()==='premium'; }
+
+/* ── AI 패스 시스템 ──
+   라이트: 일반패스 4장 × 2회 = 월 8회
+   스탠다드: 일반패스 9장 × 2회 = 월 18회
+   프리미엄: 프리미엄패스 14장 × 3회 = 월 42회
+   구독 시작일 기준 30일 주기로 자동 리셋 */
+var _PASS_CONFIG={
+  lite:     {sheets:4,  usesPerSheet:2},
+  standard: {sheets:9,  usesPerSheet:2},
+  premium:  {sheets:14, usesPerSheet:3}
+};
+
+function _getPassKey(){
+  var subStart=parseInt(localStorage.getItem('sub_start')||'0');
+  if(!subStart) return 'ai_pass_nosub';
+  var cycle=Math.floor((Date.now()-subStart)/(30*24*60*60*1000));
+  return 'ai_pass_cycle_'+cycle;
+}
+function getPassUsed(){ return parseInt(localStorage.getItem(_getPassKey())||'0'); }
+function addPassUsed(n){ localStorage.setItem(_getPassKey(), getPassUsed()+n); }
+function getPassRemain(){
+  var plan=getSubPlan(); if(!plan) return 0;
+  var cfg=_PASS_CONFIG[plan]; if(!cfg) return 0;
+  return Math.max(0, cfg.sheets*cfg.usesPerSheet - getPassUsed());
+}
+
+// AI캐릭터 챗 1회 과금: 패스 우선 → 복채 자동 전환
+function chargePersonaChat(costBokchae){
+  if(getPassRemain()>0){ addPassUsed(1); return 'pass'; }
+  var bok=getBokchaeCnt();
+  if(bok>=costBokchae){ addBokchae(-costBokchae); return 'bokchae'; }
+  return 'fail';
+}
+function updatePassUI(){
+  var remain=getPassRemain();
+  var el=document.getElementById('passRemainBadge');
+  if(el) el.textContent=isSubscribed()?'🎫 패스 '+remain+'회 남음':'';
+}
+function canAccessPersona(personaId){
+  var p=PERSONAS[personaId];
+  if(!p) return false;
+  if(p.tier==='free') return true; // 누구나
+  if(isPremiumTest()) return true;
+  var plan=getSubPlan();
+  if(!plan) return false;
+  if(p.tier==='premium') return plan==='premium';
+  return false;
+}
 // ══ 프리미엄 테스트 모드 ══
 function isPremiumTest(){return localStorage.getItem('msr_premium_test')==='1';}
 function togglePremiumTest(){
@@ -5063,7 +5258,7 @@ function createShareCanvas(title, subtitle, score, items, callback){
   ctx.font='bold 28px serif';
   ctx.fillStyle='#f0c060';
   ctx.textAlign='center';
-  ctx.fillText('🔮 Uncanny', 360, 55);
+  ctx.fillText('🔮 OracAi', 360, 55);
 
   // 제목
   ctx.font='bold 42px sans-serif';
@@ -5124,7 +5319,7 @@ function createShareCanvas(title, subtitle, score, items, callback){
   ctx.font='20px sans-serif';
   ctx.fillStyle='rgba(200,180,255,0.6)';
   ctx.textAlign='center';
-  ctx.fillText('당신의 결을 읽는 AI 사주', 360, 1030);
+  ctx.fillText('운명을 꿰뚫는 AI · 사주 · 타로', 360, 1030);
 
   callback(c.toDataURL('image/png'));
 }
@@ -5138,7 +5333,7 @@ function shareImageOrText(title, text, canvasFn){
       var bstr=atob(arr[1]), n=bstr.length, u8=new Uint8Array(n);
       while(n--) u8[n]=bstr.charCodeAt(n);
       var blob=new Blob([u8],{type:mime});
-      var file=new File([blob],'uncanny_result.png',{type:'image/png'});
+      var file=new File([blob],'oracai_result.png',{type:'image/png'});
 
       if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
         navigator.share({title:title,text:text,files:[file]}).catch(function(){
@@ -5150,7 +5345,7 @@ function shareImageOrText(title, text, canvasFn){
       } else {
         // 이미지 다운로드 + 클립보드
         var a=document.createElement('a');
-        a.href=dataUrl;a.download='uncanny_result.png';a.click();
+        a.href=dataUrl;a.download='oracai_result.png';a.click();
         showToast('이미지가 저장됐어요! 📸');
       }
     });
@@ -5160,7 +5355,7 @@ function shareImageOrText(title, text, canvasFn){
 }
 
 function shareTextFallback(title,text){
-  var shareText=title+'\n\n'+text+'\n\n🔮 Uncanny - AI 사주';
+  var shareText=title+'\n\n'+text+'\n\n🔮 OracAi - AI 사주';
   if(navigator.share){
     navigator.share({title:title,text:shareText}).catch(function(){});
   } else {
@@ -5197,7 +5392,7 @@ function shareUnseResult(){
 function shareSajuResult(){
   var def=getDefaultProfile();
   var title='AI 사주 분석 결과';
-  var subtitle=def?def.name+'님의 사주 리딩':'Uncanny 사주 분석';
+  var subtitle=def?def.name+'님의 사주 리딩':'OracAi 사주 분석';
   var items=[
     {label:'사주',value:def&&def.saju?def.saju:''},
     {label:'분석',value:'사주+베딕+자미두수 종합'}
@@ -5368,11 +5563,46 @@ function renderBokchae(){
   var mini=getMiniBokchaeCnt(),bok=getBokchaeCnt();
   ['bcMini','bcMini2'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=mini;});
   ['bcBokchae','bcBokchae2'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=bok;});
-  // 광고 횟수
   var today=getTodayStr();
   var adCnt=parseInt(localStorage.getItem('msr_ad_cnt_'+today)||'0');
   var ac=document.getElementById('bcAdCount');if(ac)ac.textContent=adCnt+'/5';
   if(ac)ac.style.color=adCnt>=5?'var(--muted)':'#fb923c';
+  _renderPassBadges();
+}
+
+function _renderPassBadges(){
+  var plan=getSubPlan();
+  var remain=getPassRemain();
+  var isSubbed=plan!==null;
+  var passType=plan==='premium'?'프리미엄패스':'AI패스';
+  var badgeHtml=isSubbed
+    ?'<span style="font-size:11px;color:#c4b5fd;background:rgba(139,92,246,.15);border:0.5px solid rgba(139,92,246,.3);border-radius:20px;padding:3px 10px;">🎫 '+passType+' '+remain+'회 남음</span>'
+    :'';
+
+  // 복채 탭 뱃지
+  var bcB=document.getElementById('bcPassBadge');
+  if(bcB){bcB.innerHTML=badgeHtml;bcB.style.display=isSubbed?'block':'none';}
+
+  // 채팅 입력창 뱃지
+  var pcB=document.getElementById('personaPassBadge');
+  if(pcB){
+    pcB.innerHTML=badgeHtml;
+    if(isSubbed){
+      // 오늘 무료 사용 현황도 함께
+      var subFreeKey='msr_sub_free_'+getTodayStr();
+      var subFreeUsed=parseInt(localStorage.getItem(subFreeKey)||'0');
+      var freeLeft=Math.max(0,2-subFreeUsed);
+      var freeHtml=freeLeft>0?'<span style="font-size:11px;color:#86efac;background:rgba(34,197,94,.1);border:0.5px solid rgba(34,197,94,.3);border-radius:20px;padding:3px 10px;">✓ 오늘 무료 '+freeLeft+'회 남음</span>':'';
+      pcB.innerHTML=freeHtml+badgeHtml;
+      pcB.style.display='flex';
+    } else {
+      pcB.style.display='none';
+    }
+  }
+
+  // 설정 탭 뱃지
+  var stB=document.getElementById('settingsPassBadge');
+  if(stB){stB.innerHTML=badgeHtml;stB.style.display=isSubbed?'block':'none';}
 }
 function bcExchange(){
   var mini=getMiniBokchaeCnt();
@@ -5404,6 +5634,20 @@ function bcWatchAd(){
 function bcSubscribe(tier){
   var names={lite:'라이트 (9,900원/월)',standard:'스탠다드 (19,900원/월)',premium:'프리미엄 (29,900원/월)'};
   showToast('구독 기능 준비 중이에요: '+names[tier]);
+}
+// 구독 활성화 (인앱결제 연동 시 호출)
+function activateSubscription(tier){
+  var cfg={lite:{bokchae:12},standard:{bokchae:18},premium:{bokchae:30}};
+  var now=Date.now();
+  localStorage.setItem('sub_plan', tier);
+  localStorage.setItem('sub_until', now+30*24*60*60*1000);
+  // 구독 시작일 저장 (갱신 시 업데이트)
+  localStorage.setItem('sub_start', now);
+  // 복채 지급
+  if(cfg[tier]) addBokchae(cfg[tier].bokchae);
+  // 패스는 getPassRemain()이 자동 계산하므로 별도 저장 불필요
+  updatePassUI();
+  showToast('🎉 '+({lite:'라이트',standard:'스탠다드',premium:'프리미엄'}[tier])+' 구독이 시작됐어요!');
 }
 function bcBuyPkg(count,price){
   showToast('결제 기능 준비 중이에요: 복채 '+count+'개 ('+parseInt(price).toLocaleString()+'원)');
@@ -5719,14 +5963,9 @@ setTimeout(function(){
 
 /* ══ 설정 화면 ══ */
 function renderSettingsProfile(){
-  // 테스트 모드 배지
-  var badge=document.getElementById('premiumTestBadge');
-  if(badge){
-    var on=isPremiumTest();
-    badge.textContent=on?'ON':'OFF';
-    badge.style.background=on?'rgba(240,192,96,.2)':'rgba(255,255,255,.07)';
-    badge.style.color=on?'var(--gold2)':'var(--muted)';
-  }
+  // 패스 뱃지 업데이트
+  _renderPassBadges();
+  _renderRewardBadges();
   var def=getDefaultProfile();
   var empty=document.getElementById('spEmpty');
   var card=document.getElementById('settingsProfileCard');
@@ -6064,6 +6303,7 @@ setTimeout(function(){
 /* ━━━ 메인 오늘의 운세 카드 ━━━ */
 // 메인 운세박스 광고 체크
 function _mainUnseAdCheck(){
+  if(isSubscribed()){var bl=document.getElementById('mainUnseBlur');if(bl)bl.style.display='none';navUnse('today');return;}
   var freeUntil=parseInt(localStorage.getItem('ad_free_until')||'0');
   var active=Date.now()<freeUntil;
   if(active){
@@ -6474,21 +6714,16 @@ setTimeout(function(){
       if(sub) sub.textContent=(UNSE_TYPE==='today'?'오늘':'내일')+'의 총점';
     };
   }
-  // renderUnseResult 패치: 총점 색상 + 블러 처리
-  if(typeof renderUnseResult==='function'){
-    var _orig=renderUnseResult;
-    renderUnseResult=function(scores,texts){
-      _orig(scores,texts);
-      // 결과 나오면 공유 버튼 표시
+  // renderUnseResult 부가 처리 (공유버튼/점수저장/블러) - 패치 제거하고 직접 호출
+  if(typeof _initUnseResultExtras!=='function'){
+    window._initUnseResultExtras=function(scores){
       var sb=document.getElementById('unseShareBtn');
       if(sb) sb.style.display='flex';
-      // 총점 색상
       var el=document.getElementById('uTotalScore');
       if(el){
         var tc=scores.overall;
         el.style.color=tc>=80?'#4ade80':tc>=60?'var(--gold2)':tc>=40?'#fb923c':'#f87171';
       }
-      // 오늘 점수 저장 (프로필별) → 메인화면 카드 업데이트
       if(scores.overall!==undefined){
         var _def=getDefaultProfile();
         var _pid=_def?_def.id:'default';
@@ -6496,7 +6731,6 @@ setTimeout(function(){
         localStorage.setItem(scoreKey,Math.round(scores.overall));
         setTimeout(function(){updateMainTodayCard&&updateMainTodayCard();},100);
       }
-      // 블러/더보기 처리
       _applyUnseBlur();
     };
   }
@@ -6637,6 +6871,7 @@ function handleAdSuccess(type) {
     }
 }
 function isPassActive() {
+    if(isSubscribed()) return true; // 구독자 광고 없음
     var until = parseInt(localStorage.getItem('ad_free_until') || '0');
     if(!until || until <= Date.now()) return false;
     // 남은 시간이 30분 초과면 30분으로 클램프
@@ -7233,32 +7468,53 @@ function showSajuResult(secs){
 }
 
 function renderFullSaju(secs) {
-  // sajuResultScreen의 탭/섹션 영역 사용
   var te=document.getElementById('aitabs2')||document.getElementById('aitabs');
   var se=document.getElementById('aisecs2')||document.getElementById('aisecs');
-  te.innerHTML = ''; se.innerHTML = '';
-  var TAGS = [{tag:'TOTAL',id:'total',lbl:'✦ 총운'}, {tag:'NATURE',id:'nature',lbl:'⊕ 성격'}, {tag:'WEALTH',id:'wealth',lbl:'◈ 재물'}, {tag:'LOVE',id:'love',lbl:'♡ 애정'}, {tag:'HEALTH',id:'health',lbl:'☽ 건강'}];
+  te.innerHTML='';
+  if(te) te.style.cssText='display:none!important;height:0;overflow:hidden;';
+  se.innerHTML='';
+
+  var TAGS=[
+    {tag:'TOTAL',  id:'total',  lbl:'✦ 총운',   color:'#c8a96e'},
+    {tag:'NATURE', id:'nature', lbl:'⊕ 성격',   color:'#7ec8c8'},
+    {tag:'WEALTH', id:'wealth', lbl:'◈ 재물운', color:'#4a9a6a'},
+    {tag:'LOVE',   id:'love',   lbl:'♡ 애정운', color:'#c84a7e'},
+    {tag:'HEALTH', id:'health', lbl:'☽ 건강운', color:'#9a6ac8'}
+  ];
 
   TAGS.forEach(function(cat,i){
-    var tab=document.createElement('button');
-    tab.className='aitab'+(i===0?' on':'');
-    tab.textContent=cat.lbl;
-    tab.onclick=(function(id){return function(){swTab2(id);};})(cat.id);
-    tab.id='atb2-'+cat.id;te.appendChild(tab);
+    // 섹션 헤더
     var sec=document.createElement('div');
-    sec.className='aisec'+(i===0?' show':'');sec.id='asc2-'+cat.id;
-    sec.innerHTML='<div class="aist">'+cat.lbl+'</div><div class="aitxt" id="atx2-'+cat.id+'"></div>';
+    sec.style.cssText='margin-bottom:24px;';
+    sec.innerHTML=
+      '<div style="font-size:16px;font-weight:700;color:'+cat.color+';letter-spacing:.5px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.07);">'+cat.lbl+'</div>'
+      +'<div class="aitxt" id="atx2-'+cat.id+'" style="font-size:14px;color:var(--dim);line-height:1.95;word-break:keep-all;"></div>';
     se.appendChild(sec);
+
+    // 재물운과 애정운 사이 광고
+    if(cat.id==='wealth'){
+      var adDiv=document.createElement('div');
+      adDiv.style.cssText='margin:4px 0 24px;border-radius:12px;overflow:hidden;min-height:100px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;';
+      adDiv.innerHTML='<span id="midAdBanner" style="width:100%;text-align:center;font-size:11px;color:var(--muted);letter-spacing:1px;">ADVERTISEMENT</span>';
+      se.appendChild(adDiv);
+    }
+
+    // 섹션 사이 구분선 (마지막 제외, 광고 앞 제외)
+    if(i<TAGS.length-1 && cat.id!=='wealth'){
+      var hr=document.createElement('div');
+      hr.style.cssText='height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);margin:4px 0 24px;';
+      se.appendChild(hr);
+    }
   });
 
-  AT='total';
-  for(var j=0; j<TAGS.length; j++){
-    var tg=TAGS[j];
-    var el=document.getElementById('atx2-'+tg.id);if(!el)continue;
-    if(tg.id==='total') tyTxt(el, secs[tg.id]||'내용 없음', 10);
-    else el.textContent = secs[tg.id]||'내용 없음';
-  }
-
+  // 텍스트 채우기 — 자연스러운 단락 처리
+  TAGS.forEach(function(cat,i){
+    var el=document.getElementById('atx2-'+cat.id);if(!el)return;
+    var raw=secs[cat.tag]||secs[cat.id]||'내용 없음';
+    var formatted=_formatUnseText(raw);
+    if(i===0) tyTxt(el,formatted,10);
+    else el.innerHTML=formatted;
+  });
 }
 
 function swTab2(sid){
@@ -7267,7 +7523,28 @@ function swTab2(sid){
   document.querySelectorAll('#aisecs2 .aisec').forEach(function(s){s.className='aisec'+(s.id==='asc2-'+sid?' show':'');});
 }
 
-function tyTxt(el,text,sp){el.innerHTML='';var i=0;var cur=document.createElement('span');cur.className='cur';el.appendChild(cur);var t=setInterval(function(){if(i>=text.length){clearInterval(t);cur.remove();return;}cur.insertAdjacentText('beforebegin',text[i++]);},sp||12);}
+function tyTxt(el,text,sp){
+  el.innerHTML='';
+  // <br> 태그 기준으로 단락 분리 후 타이핑 효과
+  var parts=text.split(/(<br\s*\/?>)/gi);
+  var i=0,partIdx=0;
+  var cur=document.createElement('span');cur.className='cur';el.appendChild(cur);
+  var t=setInterval(function(){
+    // 현재 파트 처리
+    while(partIdx<parts.length){
+      var part=parts[partIdx];
+      if(/^<br\s*\/?>$/i.test(part)){
+        // br 태그면 바로 삽입
+        cur.insertAdjacentHTML('beforebegin','<br>');
+        partIdx++;i=0;continue;
+      }
+      if(i>=part.length){partIdx++;i=0;continue;}
+      cur.insertAdjacentText('beforebegin',part[i++]);
+      return;
+    }
+    clearInterval(t);cur.remove();
+  },sp||12);
+}
 function swTab(sid){AT=sid;var tabs = document.querySelectorAll('#aitabs .aitab');for(var i=0; i<tabs.length; i++) tabs[i].className='aitab'+(tabs[i].id==='atb-'+sid?' on':'');var secs = document.querySelectorAll('#aisecs .aisec');for(var i=0; i<secs.length; i++) secs[i].className='aisec'+(secs[i].id==='asc-'+sid?' show':'');}
 
 /* ── ❗ 히스토리 관리 (저장 및 불러오기 오류 제거) ── */
@@ -7458,7 +7735,6 @@ function startUnse(){
   document.getElementById('uInfo').textContent=uData.ani+'띠 · '+CG[uData.ys]+JJ[uData.yb]+'년 · '+(uData.gen==='male'?'남성':'여성');
   document.getElementById('uTotalScore').textContent='';
   var _sb=document.getElementById('unseShareBtn');if(_sb)_sb.style.display='none';
-  document.getElementById('uTabs').innerHTML='';
   document.getElementById('uSecs').innerHTML='';
   document.getElementById('uErr').style.display='none';
   document.getElementById('uLd').style.display='block';
@@ -7574,6 +7850,8 @@ async function reqUnseAI(target){
   var unseCache = {};
   try { unseCache = JSON.parse(localStorage.getItem('unse_cache') || '{}'); } catch(e) {}
   var userCache = unseCache[cacheKey] || {};
+  // 레이아웃 버전 체크 (탭→스크롤 전환 후 캐시 무효화)
+  if(userCache._layoutVer!=='scroll'){userCache={};}
 
   var todayObj = new Date();
   var todayStr = todayObj.getFullYear() + '-' + (todayObj.getMonth()+1) + '-' + todayObj.getDate();
@@ -7588,7 +7866,7 @@ async function reqUnseAI(target){
     } else if (userCache.tomorrowDate === todayStr && userCache.tomorrowData) {
       userCache.todayDate = todayStr; userCache.todayData = userCache.tomorrowData;
       userCache.tomorrowDate = null; userCache.tomorrowData = null;
-      unseCache[cacheKey] = userCache; localStorage.setItem('unse_cache', JSON.stringify(unseCache));
+      userCache._layoutVer='scroll';unseCache[cacheKey] = userCache; localStorage.setItem('unse_cache', JSON.stringify(unseCache));
       finalScores = userCache.todayData.scores; finalTexts = userCache.todayData.texts; needFetch = false;
     }
   } else {
@@ -7685,37 +7963,76 @@ function renderUnseResult(scores, texts) {
     return '<div class="sl-item"><div class="sl-dot" style="background:'+s.color+'"></div><span>'+s.lbl.substring(2)+'</span><strong style="color:var(--text)">'+scores[s.id]+'</strong></div>';
   }).join('');
 
-  var te=document.getElementById('uTabs'),se=document.getElementById('uSecs');
-  te.innerHTML=''; se.innerHTML='';
+  // 탭 숨기고 단일 스크롤 페이지로
+  var te=document.getElementById('uTabs');
+  var se=document.getElementById('uSecs');
+  if(te){te.style.cssText='display:none!important;height:0;overflow:hidden;';te.innerHTML='';}
+  se.innerHTML='';
+
   scoreArr.forEach(function(cat,i){
-    var tab=document.createElement('button');
-    tab.className='aitab'+(i===0?' on':'');
-    tab.textContent=cat.lbl.substring(2)+' '+scores[cat.id];
-    tab.onclick=(function(id){return function(){uSwTab(id);};})(cat.id);
-    tab.id='utb-'+cat.id;te.appendChild(tab);
-    
-    var sec=document.createElement('div');
-    sec.className='aisec'+(i===0?' show':'');sec.id='usc-'+cat.id;
     var sv=scores[cat.id];
     var scol=sv>=80?'#4a9a6a':sv>=60?'var(--gold2)':sv>=40?'#e8a090':'#e09090';
-    sec.innerHTML='<div class="aist" style="display:flex;justify-content:space-between;align-items:center">'
-      +'<span>'+cat.lbl+'</span>'
-      +'<span style="font-size:22px;font-weight:700;color:'+scol+';font-family:\'Noto Serif KR\',serif">'+sv+'점</span>'
-      +'</div><div class="aitxt" id="utx-'+cat.id+'"></div>';
+
+    // 섹션 카드
+    var sec=document.createElement('div');
+    sec.style.cssText='margin-bottom:20px;';
+    sec.innerHTML=
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">'
+      +'<span style="font-size:16px;font-weight:700;color:var(--text);letter-spacing:.5px;">'+cat.lbl+'</span>'
+      +'<span style="font-size:20px;font-weight:700;color:'+scol+';font-family:\'Gowun Dodum\',serif;">'+sv+'점</span>'
+      +'</div>'
+      +'<div class="aitxt" id="utx-'+cat.id+'" style="font-size:14px;color:var(--dim);line-height:1.9;word-break:keep-all;"></div>';
     se.appendChild(sec);
+
+    // 재물운 다음 광고 배너 삽입 (연애운 위)
+    if(cat.id==='money'){
+      var adDiv=document.createElement('div');
+      adDiv.style.cssText='margin:4px 0 20px;border-radius:12px;overflow:hidden;min-height:100px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;';
+      adDiv.innerHTML='<div id="unseAdBanner" style="width:100%;text-align:center;"><span style="font-size:11px;color:var(--muted);letter-spacing:1px;">ADVERTISEMENT</span></div>';
+      se.appendChild(adDiv);
+    }
+
+    // 구분선 (마지막 제외)
+    if(i<scoreArr.length-1&&cat.id!=='money'){
+      var hr=document.createElement('div');
+      hr.style.cssText='height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);margin:4px 0 20px;';
+      se.appendChild(hr);
+    }
   });
-  
+
+  // 텍스트 자연스럽게 줄바꿈 처리 후 입력
   scoreArr.forEach(function(cat,i){
     var el=document.getElementById('utx-'+cat.id);if(!el)return;
-    if(i===0)tyTxt(el,texts[cat.id],10);else el.textContent=texts[cat.id];
+    var raw=texts[cat.id]||'';
+    var formatted=_formatUnseText(raw);
+    if(i===0) tyTxt(el,formatted,10);
+    else el.innerHTML=formatted;
   });
+
+  // 공유버튼/점수저장/블러 부가 처리
+  setTimeout(function(){
+    window._initUnseResultExtras&&window._initUnseResultExtras(scores);
+  },100);
 }
 
-function uSwTab(sid){
-  var tabs = document.querySelectorAll('#uTabs .aitab');
-  for(var i=0; i<tabs.length; i++) tabs[i].className='aitab'+(tabs[i].id==='utb-'+sid?' on':'');
-  var secs = document.querySelectorAll('#uSecs .aisec');
-  for(var i=0; i<secs.length; i++) secs[i].className='aisec'+(secs[i].id==='usc-'+sid?' show':'');
+// 운세 텍스트 자연스럽게 단락 나누기
+function _formatUnseText(text){
+  if(!text) return '';
+  // 마크다운 제거
+  text=text.replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\*([^*]+)\*/g,'$1');
+  // 문장 분리 (마침표/요/다/야 뒤에서 단락)
+  var sentences=text.split(/(?<=[다요야죠네\.!?])\s+/);
+  if(sentences.length<=2) return text;
+  // 2~3문장씩 묶어서 단락 구성
+  var paras=[],chunk=[];
+  sentences.forEach(function(s,i){
+    chunk.push(s.trim());
+    if(chunk.length>=2||(i===sentences.length-1)){
+      paras.push(chunk.join(' '));
+      chunk=[];
+    }
+  });
+  return paras.join('<br><br>');
 }
 
 /* ══════════════════════════════════════
@@ -8264,43 +8581,12 @@ var TAROT_IMGS=[
 /* ── 타로 횟수제 광고 ── */
 function getTarotCount(){return parseInt(localStorage.getItem('tarot_play_count')||'0');}
 function incTarotCount(){localStorage.setItem('tarot_play_count',getTarotCount()+1);}
-var _tarotPendingQ=null;
-var _tarotPendingUid=null; // 2회차 에러 방지를 위한 UID 추가
-function openTarotAdModal(){document.getElementById('tarotAdModal').classList.add('show');}
-function closeTarotAdModal(){document.getElementById('tarotAdModal').classList.remove('show');_tarotPendingQ=null;_tarotPendingUid=null;}
 
-async function tarotAdWatch(){
-  try{
-    if(typeof window.capacitorAdMob!=='undefined'){
-      var AdMob=window.capacitorAdMob.AdMob,RE=window.capacitorAdMob.RewardAdPluginEvents;
-      try{await AdMob.removeAllListeners();}catch(e){}
-      AdMob.addListener(RE.Rewarded,tarotAdSuccess);
-      AdMob.addListener(RE.FailedToLoad,tarotAdSuccess);
-      await AdMob.prepareRewardVideoAd({adId:'ca-app-pub-3940256099942544/5224354917',isTesting:true});
-      await AdMob.showRewardVideoAd();
-    }else{tarotAdSuccess();}
-  }catch(e){tarotAdSuccess();}
-}
 
-function tarotAdSuccess(){
-  document.getElementById('tarotAdModal').classList.remove('show');
-  if(_tarotPendingQ){
-    _tarotPendingQ=null;
-    _tarotPendingUid=null;
-    // 카드 있으면 바로 리딩
-    var hasCards=(_tSession.cards&&_tSession.cards.length>0)||
-                 ((_tSession.majorCards||[]).length>0);
-    if(hasCards){
-      tDoReading();
-    } else {
-      showToast('카드를 먼저 선택해주세요');
-      tGoStep(2);
-    }
-  }
-}
+
 
 /* ── 채팅 상태 ── */
-var tCurSession={cards:[],count:1,shuffled:[]};
+
 var tDeckBuilt=false;
 
 /* ── 타로 화면 진입 ── */
@@ -8488,17 +8774,7 @@ function tUpdateReadBtn(){
   btn.style.color=full?'var(--gold2)':'var(--muted)';
 }
 
-/* ── 리딩 시작 (광고 분기) ── */
-function tCheckAndRead(question,uid){
-  var count=getTarotCount();
-  if(count<2||count%2!==0){
-    tStartReading(question,tCurSession,uid||tCurSession.uid);
-  }else{
-    _tarotPendingQ=question;
-    _tarotPendingUid=uid||tCurSession.uid;
-    openTarotAdModal();
-  }
-}
+
 
 async function tStartReading(question,session,uid){
   if(!uid) uid = session.uid;
@@ -8822,8 +9098,12 @@ function tMainRenderSel(){
   }).join('');
 }
 
+function getTarotFreeToday(){return parseInt(localStorage.getItem('msr_tarot_free_'+getTodayStr())||'0');}
+function addTarotFreeToday(){var k='msr_tarot_free_'+getTodayStr();localStorage.setItem(k,getTarotFreeToday()+1);}
+function getTarotAdToday(){return parseInt(localStorage.getItem('msr_tarot_ad_'+getTodayStr())||'0');}
+function addTarotAdToday(){var k='msr_tarot_ad_'+getTodayStr();localStorage.setItem(k,getTarotAdToday()+1);}
+
 function tStep2Submit(){
-  // null 방어
   if(!_tSession.majorCards) _tSession.majorCards=[];
   if(!_tSession.minorCards) _tSession.minorCards=[];
   if(!_tSession.majorMax) _tSession.majorMax=1;
@@ -8834,15 +9114,62 @@ function tStep2Submit(){
   if(!majorFull){showToast('메이저 카드를 '+_tSession.majorMax+'장 선택해주세요');tSwitchDeckTab('major');return;}
   if(!minorFull){showToast('마이너 카드를 '+_tSession.minorMax+'장 선택해주세요');tSwitchDeckTab('minor');return;}
 
-  var count=getTarotCount();
-  if(count>0&&count%2===0){
-    _tarotPendingQ=_tQuestion;
-    _tarotPendingUid=_tSession.uid;
-    openTarotAdModal();
+  var _subbed=isSubscribed();
+
+  if(_subbed){
+    // 구독자: 하루 2회 무료 → 패스 → 복채
+    var subFreeKey='msr_tarot_sub_free_'+getTodayStr();
+    var subFreeUsed=parseInt(localStorage.getItem(subFreeKey)||'0');
+    if(subFreeUsed<2){
+      // 무료 통과
+      localStorage.setItem(subFreeKey, subFreeUsed+1);
+      tDoReading();
+    } else if(getPassRemain()>0){
+      // 패스 차감
+      addPassUsed(1);
+      showToast('🎫 AI 패스 사용 ('+getPassRemain()+'회 남음)');
+      tDoReading();
+    } else if(getBokchaeCnt()>=3){
+      // 복채 차감
+      addBokchae(-3);
+      showToast('💎 복채 3개 사용');
+      renderBokchae&&renderBokchae();
+      tDoReading();
+    } else {
+      showBokchaeModal(3);
+    }
+
   } else {
-    tDoReading();
+    // 비구독자: 하루 1회 무료 → 광고 1회 → 복채
+    var freeUsed=getTarotFreeToday();
+    var adUsed=getTarotAdToday();
+
+    if(freeUsed<1){
+      // 무료 1회
+      addTarotFreeToday();
+      tDoReading();
+    } else if(adUsed<1){
+      // 광고 보기
+      openRewardAdModal(
+        '타로 리딩',
+        '오늘 무료 리딩을 사용했어요.\n광고 1회 보면 오늘 1회 더 받을 수 있어요.',
+        function(){
+          addTarotAdToday();
+          tDoReading();
+        }
+      );
+    } else if(getBokchaeCnt()>=3){
+      // 복채
+      addBokchae(-3);
+      showToast('💎 복채 3개 사용');
+      renderBokchae&&renderBokchae();
+      tDoReading();
+    } else {
+      showBokchaeModal(3);
+    }
   }
 }
+
 
 async function tDoReading(){
   incTarotCount();

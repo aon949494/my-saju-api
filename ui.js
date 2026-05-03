@@ -1255,7 +1255,7 @@ async function saveNewProfile(){
   }
 
   var s;
-  try{s=await callCalcApiWithGender(gY,gM,gD,finalH,gen==='male');}
+  try{s=await callCalcApiWithGender(gY,gM,gD,finalH,apAS.gen==='male');}
   catch(e){showToast('날짜를 다시 확인해주세요');return;}
 
   var profData={

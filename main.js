@@ -2058,7 +2058,7 @@ async function getSajuData(){
   var yV=pd[0].items[ps.year].v,mV=pd[1].items[ps.month].v,dV=pd[2].items[ps.day].v,hV=pd[3].items[ps.hour].v,minV=pd[4].items[ps.min].v;
   var gY,gM,gD;
   if(AS.cal==='lunar'){var g=l2g(yV,mV,dV,AS.leap);if(!g){alert('유효하지 않은 음력 날짜입니다');return null;}gY=g.year;gM=g.month;gD=g.day;}else{gY=yV;gM=mV;gD=dV;}
-  var s;try{s=await callCalcApiWithGender(gY,gM,gD,hV,genV==='male');}catch(e){alert('날짜를 확인해주세요');return null;}
+  var s;try{s=await callCalcApiWithGender(gY,gM,gD,hV,AS.gen==='male');}catch(e){alert('날짜를 확인해주세요');return null;}
   var lunar=g2l(gY,gM,gD,hV),ys=s.ys,yb=s.yb,sy=s.sy,ms=s.ms,mb=s.mb,jn=s.jn,ds=s.ds,db=s.db,hs=s.hs,hb=s.hb;
   var sstr=gY+'년 '+p2(gM)+'월 '+p2(gD)+'일 '+p2(hV)+'시 '+p2(minV)+'분';
   var lstr=lunar?'음력 '+lunar.year+'년 '+p2(lunar.month)+'월 '+p2(lunar.day)+'일'+(lunar.isLeap?' (윤달)':''):null;
@@ -2079,7 +2079,7 @@ async function calc(){
   var noHour=(hV===99);
   var calcH=noHour?12:hV;
 
-  var s;try{s=await callCalcApiWithGender(gY,gM,gD,calcH,genV==='male');}catch(e){alert('날짜를 확인해주세요');return;}
+  var s;try{s=await callCalcApiWithGender(gY,gM,gD,calcH,AS.gen==='male');}catch(e){alert('날짜를 확인해주세요');return;}
   var lunar=g2l(gY,gM,gD,calcH);
   var ys=s.ys,yb=s.yb,sy=s.sy,ms=s.ms,mb=s.mb,jn=s.jn,ds=s.ds,db=s.db,hs=s.hs,hb=s.hb;
   var sstr=gY+'년 '+p2(gM)+'월 '+p2(gD)+'일 '+(noHour?'시간모름':p2(hV)+'시 '+p2(minV)+'분');
@@ -2282,7 +2282,7 @@ function handleUnseRecentClick(i) {
 async function uSelectRecent(i){
   var h=gh()[i];if(!h)return;
   var gY=h.gY,gM=h.gM,gD=h.gD,hV=h.hour,minV=h.min||0;
-  var s;try{s=await callCalcApiWithGender(gY,gM,gD,hV,genV==='male');}catch(e){alert('사주 계산 오류');return;}
+  var s;try{s=await callCalcApiWithGender(gY,gM,gD,hV,AS.gen==='male');}catch(e){alert('사주 계산 오류');return;}
   var lunar=g2l(gY,gM,gD,hV);
   var lstr=lunar?'음력 '+lunar.year+'년 '+p2(lunar.month)+'월 '+p2(lunar.day)+'일'+(lunar.isLeap?' (윤달)':''):null;
   var cnt={목:0,화:0,토:0,금:0,수:0};
@@ -2343,7 +2343,7 @@ async function uConfirm(){
   var gY,gM,gD;
   if(uAS.cal==='lunar'){var g=l2g(yV,mV,dV,uAS.leap);if(!g){alert('유효하지 않은 음력 날짜');return;}gY=g.year;gM=g.month;gD=g.day;}
   else{gY=yV;gM=mV;gD=dV;}
-  var s;try{s=await callCalcApiWithGender(gY,gM,gD,hV,genV==='male');}catch(e){alert('날짜를 확인해주세요');return;}
+  var s;try{s=await callCalcApiWithGender(gY,gM,gD,hV,AS.gen==='male');}catch(e){alert('날짜를 확인해주세요');return;}
   var lunar=g2l(gY,gM,gD,hV);
   var lstr=lunar?'음력 '+lunar.year+'년 '+p2(lunar.month)+'월 '+p2(lunar.day)+'일'+(lunar.isLeap?' (윤달)':''):null;
   var cnt={목:0,화:0,토:0,금:0,수:0};

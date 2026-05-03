@@ -1,13 +1,10 @@
 
 // ── 사주 계산 백엔드 호출 헬퍼 ──
+// 사주 계산 (프론트 알고리즘 직접 사용)
 async function callCalcApiWithGender(gY, gM, gD, hour, isMale) {
-  try {
-    var h = (hour===99||hour===undefined)?99:parseInt(hour);
-    var fh = (h===99)?12:h;
-    return calcSaju(gY, gM, gD, fh, 0);
-  } catch(e) {
-    throw new Error('사주 계산 오류: '+e.message);
-  }
+  var h = (hour===99||hour===undefined)?99:parseInt(hour);
+  var fh = (h===99)?12:h;
+  return calcSaju(gY, gM, gD, fh, 0);
 }
 
 async function callCalcApi(gY, gM, gD, hour) {

@@ -1574,26 +1574,22 @@ async function pcAppendSuggestions(answerText){
       hookQ=hookMap[topic]||hookMap.general;
     }
 
-    var allQs=[q1, q2, hookQ];
-
-    var html2=allQs.map(function(q,i){
-      var safe=q.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-      var isHook=(i===2);
-      return '<button style="width:100%;text-align:left;padding:10px 14px;background:'+(isHook?'rgba(139,92,246,.08)':'rgba(255,255,255,.03)')+';'
-        +'border:1px solid rgba(255,255,255,'+(isHook?'.18':'.07')+');border-radius:14px;'
-        +'color:rgba(220,210,255,'+(isHook?'.92':'.6')+');font-size:13px;cursor:pointer;'
-        +'font-family:Pretendard;line-height:1.5;-webkit-tap-highlight-color:transparent;'
-        +(isHook?'padding-left:14px;border-left:2px solid rgba(139,92,246,.5);':'')+'">'
-        +(isHook?'<span style="font-size:10px;color:rgba(167,139,250,.7);margin-right:6px;">✦</span>':'')+safe+'</button>';
-    }).join('');
+    // 훅 질문 1개만 표시 (답변 내용과 직접 연관)
+    var html2='<button style="width:100%;text-align:left;padding:10px 14px;background:rgba(139,92,246,.08);'
+      +'border:1px solid rgba(139,92,246,.3);border-radius:14px;'
+      +'color:rgba(220,210,255,.92);font-size:13px;cursor:pointer;'
+      +'font-family:Pretendard;line-height:1.5;-webkit-tap-highlight-color:transparent;'
+      +'border-left:3px solid rgba(139,92,246,.6);">'
+      +'<span style="font-size:10px;color:rgba(167,139,250,.7);margin-right:6px;">✦</span>'
+      +hookQ.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</button>';
 
     var wrap=document.createElement('div');
     wrap.className='pc-suggestions';
     wrap.style.cssText='display:flex;flex-direction:column;gap:7px;margin:4px 0 24px;';
     wrap.innerHTML=html2;
 
-    wrap.querySelectorAll('button').forEach(function(btn,i){
-      btn.addEventListener('click',function(){pcSendSuggestion(allQs[i]);});
+    wrap.querySelectorAll('button').forEach(function(btn){
+      btn.addEventListener('click',function(){pcSendSuggestion(hookQ);});
       btn.addEventListener('touchstart',function(){btn.style.opacity='.6';},{passive:true});
       btn.addEventListener('touchend',function(){btn.style.opacity='1';},{passive:true});
     });
@@ -1734,24 +1730,27 @@ function doCheckIn(){
 /* 광고 보고 빠진 날 복구 */
 function doRecovery(missedDate){
   if(getThisWeekRecoveryUsed()>=1){showToast('이번 주 복구는 1회까지만 가능해요');return;}
-  openAdModal(function(){
-    var dates=getAttDates();
-    if(dates.indexOf(missedDate)<0){
-      dates.push(missedDate);saveAttDates(dates);
-      var rec=getRecoveredDates();rec.push(missedDate);saveRecoveredDates(rec);
-      addMiniBokchae(2);
-      // 복구로 7일 연속 달성 시 복채도 지급
-      var streak=getAttStreak();
-      if(streak>0&&streak%7===0){
-        addBokchae(1);
-        showToast('🔄 복구 완료! 미니복채 +2 🎉 7일 달성! 복채 +1');
-      } else {
-        showToast('🔄 '+missedDate.slice(5)+' 복구 완료! 미니복채 +2');
+  openRewardAdModal(
+    '빠진 날 복구하기',
+    '광고 1회를 보면 해당 날짜 출석을 복구할 수 있어요.\n복구 시 미니복채 +2가 지급됩니다.',
+    function(){
+      var dates=getAttDates();
+      if(dates.indexOf(missedDate)<0){
+        dates.push(missedDate);saveAttDates(dates);
+        var rec=getRecoveredDates();rec.push(missedDate);saveRecoveredDates(rec);
+        addMiniBokchae(2);
+        var streak=getAttStreak();
+        if(streak>0&&streak%7===0){
+          addBokchae(1);
+          showToast('🔄 복구 완료! 미니복채 +2 🎉 7일 달성! 복채 +1');
+        } else {
+          showToast('🔄 '+missedDate.slice(5)+' 복구 완료! 미니복채 +2');
+        }
       }
+      renderAttendance();
+      renderSettingsProfile&&renderSettingsProfile();
     }
-    renderAttendance();
-    renderSettingsProfile&&renderSettingsProfile();
-  });
+  );
 }
 
 setTimeout(function(){

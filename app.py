@@ -307,32 +307,35 @@ def saju_api():
             log.info(f"완료: {len(text)}자, {round(time.time()-t_start,1)}s")
             return jsonify({'content': [{'type': 'text', 'text': text}]})
 
-        cfg1 = GenerationConfig(temperature=0.9, max_output_tokens=4000)
-        cfg2 = GenerationConfig(temperature=0.9, max_output_tokens=2000)
+        cfg1 = GenerationConfig(temperature=0.9, max_output_tokens=6000)
+        cfg2 = GenerationConfig(temperature=0.9, max_output_tokens=3000)
 
+        chat_session = None
         if history:
-            chat = model.start_chat(history=history)
-            resp1 = chat.send_message(last_msg, generation_config=cfg1, safety_settings=SAFETY)
+            chat_session = model.start_chat(history=history)
+            resp1 = chat_session.send_message(last_msg, generation_config=cfg1, safety_settings=SAFETY)
         else:
             resp1 = model.generate_content(last_msg, generation_config=cfg1, safety_settings=SAFETY)
 
         text1 = get_text(resp1)
         is_done = any(text1.endswith(e) for e in ENDINGS)
-        is_long = len(text1) >= 400
+        is_long = len(text1) >= 300
 
         if is_done and is_long:
             full_text = text1
         else:
+            # 히스토리 있으면 같은 chat 세션으로 이어쓰기
             cont = (
-                f"앞서 작성한 답변의 마지막 부분:\n\"{text1[-300:].strip()}\"\n\n"
-                "위 내용 바로 다음 문장부터 이어서 작성해주세요.\n"
-                "앞 내용 반복, 자기소개, 인사말 절대 금지.\n"
-                "끊긴 부분 다음 내용만 이어서 마무리해주세요."
+                f"방금 작성한 답변이 잘렸어. 마지막 부분:\n\"{text1[-200:].strip()}\"\n\n"
+                "바로 이어서 완성해줘. 앞 내용 반복 금지. 자연스럽게 이어서."
             )
             try:
-                resp2 = model.generate_content(cont, generation_config=cfg2, safety_settings=SAFETY)
+                if chat_session:
+                    resp2 = chat_session.send_message(cont, generation_config=cfg2, safety_settings=SAFETY)
+                else:
+                    resp2 = model.generate_content(cont, generation_config=cfg2, safety_settings=SAFETY)
                 text2 = (getattr(resp2, 'text', '') or '').strip()
-                full_text = (text1 + "\n\n" + text2) if text2 else text1
+                full_text = (text1 + text2) if text2 else text1
             except Exception as e:
                 log.error(f"2단계 오류: {e}")
                 full_text = text1

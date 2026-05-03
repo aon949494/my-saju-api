@@ -890,6 +890,11 @@ function openPersonaChat(id){
 
 function _doOpenPersonaChat(id){
   var p=PERSONAS[id];if(!p)return;
+  // 생성 중에 돌아온 경우 히스토리 유지
+  if(window._isGenerating && _curPersonaId===id){
+    goScreen('personaChatScreen');
+    return;
+  }
   _curPersonaId=id;
   _curSessionId=null;
   _personaHistory=[];

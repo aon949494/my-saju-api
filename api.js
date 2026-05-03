@@ -7,6 +7,8 @@ async function personaSend(){
   var q=qa.value.trim();
   if(!q)return;
   if(!_curPersonaId){showToast('캐릭터를 선택해주세요');return;}
+  if(window._isGenerating){showToast('답변 생성 중이에요. 잠시 기다려주세요.');return;}
+  window._isGenerating=true;
   var p=PERSONAS[_curPersonaId];
 
   // 무료 티어: 하루 1회 무료, 광고 후 1회 추가, 이후 복채 3개 필요
@@ -160,6 +162,7 @@ async function personaSend(){
     clearTimeout(tid);
     if(!res.ok){
       pcStopLoading();
+      window._isGenerating=false;
       pcAppendPersona('서버 오류가 났어요 ('+res.status+'). 잠시 후 다시 시도해줘.');
       return;
     }
@@ -178,6 +181,7 @@ async function personaSend(){
     if(!answer){
       // 디버그용: 실제 받은 데이터 일부 보여주기
       var raw=JSON.stringify(data).slice(0,100);
+      window._isGenerating=false;
       pcAppendPersona('응답 파싱 실패. 개발자 확인 필요 | '+raw);
       return;
     }
@@ -242,12 +246,14 @@ async function personaSend(){
         setTimeout(function(){pcAppendSuggestions(answer);},300);
       },500);
     } else {
+      window._isGenerating=false;
       pcAppendPersona(answer);
       setTimeout(function(){pcAppendSuggestions(answer);},300);
     }
     if(p.tier!=='free'&&_curSessionId) pcSaveSession(_curPersonaId,_curSessionId,_personaHistory);
   } catch(e){
     pcStopLoading();
+    window._isGenerating=false;
     pcAppendPersona('연결이 끊겼어요. 다시 시도해줘.');
   }
 }

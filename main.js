@@ -1574,22 +1574,27 @@ async function pcAppendSuggestions(answerText){
       hookQ=hookMap[topic]||hookMap.general;
     }
 
-    // 훅 질문 1개만 표시 (답변 내용과 직접 연관)
-    var html2='<button style="width:100%;text-align:left;padding:10px 14px;background:rgba(139,92,246,.08);'
-      +'border:1px solid rgba(139,92,246,.3);border-radius:14px;'
-      +'color:rgba(220,210,255,.92);font-size:13px;cursor:pointer;'
-      +'font-family:Pretendard;line-height:1.5;-webkit-tap-highlight-color:transparent;'
-      +'border-left:3px solid rgba(139,92,246,.6);">'
-      +'<span style="font-size:10px;color:rgba(167,139,250,.7);margin-right:6px;">✦</span>'
-      +hookQ.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</button>';
+    // 3개 버튼: 훅(답변 연관) 1개 + 주제 관련 2개
+    var allQs=[hookQ, q1, q2];
+
+    var html2=allQs.map(function(q,i){
+      var safe=q.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      var isHook=(i===0);
+      return '<button style="width:100%;text-align:left;padding:10px 14px;background:'+(isHook?'rgba(139,92,246,.08)':'rgba(255,255,255,.03)')+';'
+        +'border:1px solid rgba(255,255,255,'+(isHook?'.18':'.07')+');border-radius:14px;'
+        +'color:rgba(220,210,255,'+(isHook?'.92':'.6')+');font-size:13px;cursor:pointer;'
+        +'font-family:Pretendard;line-height:1.5;-webkit-tap-highlight-color:transparent;'
+        +(isHook?'border-left:2px solid rgba(139,92,246,.5);':'')+'">'
+        +(isHook?'<span style="font-size:10px;color:rgba(167,139,250,.7);margin-right:6px;">✦</span>':'')+safe+'</button>';
+    }).join('');
 
     var wrap=document.createElement('div');
     wrap.className='pc-suggestions';
     wrap.style.cssText='display:flex;flex-direction:column;gap:7px;margin:4px 0 24px;';
     wrap.innerHTML=html2;
 
-    wrap.querySelectorAll('button').forEach(function(btn){
-      btn.addEventListener('click',function(){pcSendSuggestion(hookQ);});
+    wrap.querySelectorAll('button').forEach(function(btn,i){
+      btn.addEventListener('click',function(){pcSendSuggestion(allQs[i]);});
       btn.addEventListener('touchstart',function(){btn.style.opacity='.6';},{passive:true});
       btn.addEventListener('touchend',function(){btn.style.opacity='1';},{passive:true});
     });
@@ -3007,26 +3012,56 @@ async function tStartReading(question,session,uid){
   var mi=0;
   var lv=setInterval(function(){var e=document.getElementById('tReadLd');if(e)e.textContent=loadMsgs[mi++%loadMsgs.length];},1800);
 
-  // ── AI 프롬프트 (카드별 의미 + 종합 + 핵심) ──
+  // ── AI 프롬프트 (타로 마스터 리딩) ──
   var cardList=cards.map(function(c,i){
     return (labels[i]?'['+labels[i]+'] ':'')+c.name+(c.reversed?' (역방향)':' (정방향)');
   }).join('\n');
 
-  var prompt='【질문】\n'+question+'\n\n【뽑힌 카드 '+cards.length+'장】\n'+cardList+'\n\n'
-    +'진짜 타로 리더처럼 자연스럽게 말해요. 아래 4개 파트로 나눠서.\n\n'
-    +'[REACT]카드 처음 봤을 때 즉각적인 리액션. 1~2문장. "어," "음," "이거..." 같은 자연스러운 시작. 너무 길면 안 됨.[/REACT]\n\n'
-    +'[CARDS]각 카드 하나씩 짧게. 딱딱한 설명 말고 지금 이 사람 상황에 맞게 해석. 전체 4~6문장 안으로.[/CARDS]\n\n'
-    +'[READING]카드들을 연결해서 질문에 직접 답. 소름돋게. 3~4문장. 자연스러운 구어체.[/READING]\n\n'
-    +'[PUNCHLINE]딱 한 줄. 이 리딩의 핵심. 잊히지 않게. 강렬하게.[/PUNCHLINE]';
+  // 질문 의도 분류
+  var qLower=question.toLowerCase();
+  var qIntent='general';
+  if(/재회|돌아올|돌아|연락|문자|전화|그사람|전남|전여/.test(qLower)) qIntent='reunion';
+  else if(/좋아|마음|감정|느낌|생각하는지|어떻게생각/.test(qLower)) qIntent='feelings';
+  else if(/연애|만날|인연|사귈|새로운사람|새로운인연/.test(qLower)) qIntent='love';
+  else if(/직장|취업|취직|이직|합격|승진|사업|돈|수입|재물/.test(qLower)) qIntent='career';
+  else if(/결과|어떻게될|될까|결말|미래/.test(qLower)) qIntent='outcome';
+
+  var intentGuide={
+    reunion:'이 사람이 돌아올지 말지를 카드가 보여주는 그대로 직격으로. 가능성 퍼센트나 시기를 구체적으로 언급.',
+    feelings:'상대방의 심리 상태를 카드에서 읽어서. 지금 이 순간 그 사람이 어떤 감정인지.',
+    love:'새 인연이 오는지 시기는 언제인지. 현재 에너지가 사랑을 받아들일 준비가 됐는지.',
+    career:'현실적인 시기와 방향. 이 일이 될지 안 될지 솔직하게.',
+    outcome:'지금 흐름이 어디로 가는지 결론을 먼저. 그 다음 왜 그런지.',
+    general:'질문의 핵심을 건드리는 직접적인 답.'
+  };
+
+  var sysPrompt='당신은 20년 경력의 타로 마스터입니다. 젬나라는 이름으로 불립니다.\n\n'
+    +'【핵심 원칙】\n'
+    +'1. 첫 문장에서 이미 핵심 결론을 말한다. "예스" 또는 "노"에 가까운 직접적인 답.\n'
+    +'2. 카드 이름을 직접 언급하지 않는다. 카드가 보여주는 에너지와 상황만 말한다.\n'
+    +'3. 상투적 표현 절대 금지: "카드가 말해요", "에너지가 느껴져요", "흥미롭네요", "흥미롭습니다"\n'
+    +'4. 구체적이고 직격으로. "좋을 수도 있어요" 같은 모호함 금지.\n'
+    +'5. 역방향 카드는 억압된 감정, 지연, 거부, 내면의 갈등으로 읽는다.\n'
+    +'6. 반말로. 친하지만 신비로운 분위기.\n'
+    +'7. 소름이 돋는 이유: 이 사람이 말하지 않은 것을 말할 때. "혹시 요즘 ~하지 않아?" 형식으로 꿰뚫기.\n\n'
+    +'【질문 유형별 핵심】\n'+intentGuide[qIntent]+'\n\n'
+    +'【형식】\n'
+    +'[REACT]카드 처음 봤을 때 본능적 반응. 1~2문장. "어," "잠깐," "이거..." 로 시작.[/REACT]\n'
+    +'[PIERCE]말 안 해도 아는 것. "혹시..." 로 시작하는 꿰뚫는 한 문장. 이 사람 상황의 숨겨진 진실.[/PIERCE]\n'
+    +'[READING]질문에 직접 답. 3~5문장. 결론→이유→구체적 흐름 순서로. 시기나 가능성을 숫자로 언급.[/READING]\n'
+    +'[PUNCHLINE]딱 한 줄. 이 리딩 전체의 핵심. 잊히지 않는 문장.[/PUNCHLINE]';
+
+  var userMsg='【질문】\n'+question+'\n\n【뽑힌 카드 '+cards.length+'장】\n'+cardList
+    +'\n\n이 카드 배열이 질문에 대해 정확히 무엇을 말하는지 직접적으로 읽어줘.';
 
   var ctrl=new AbortController(),tid=setTimeout(function(){ctrl.abort();},90000);
   var res;
   try{
     res=await fetch('https://my-saju-api.onrender.com/api/saju',{
       method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'gemini',mode:'star',max_tokens:8000,
-        system:GEMNA_PERSONA+' 반드시 [CARDS][/CARDS][READING][/READING][MESSAGE][/MESSAGE][ACTION][/ACTION] 태그를 사용하세요. 소름돋게 정확하고 강렬하게.',
-        messages:[{role:'user',content:prompt}]})
+      body:JSON.stringify({model:'gemini-pro',mode:'long',max_tokens:6000,
+        system:sysPrompt,
+        messages:[{role:'user',content:userMsg}]})
     });
   }catch(e){
     clearTimeout(tid);clearInterval(lv);
@@ -3049,28 +3084,25 @@ async function tStartReading(question,session,uid){
     if(m&&m[1].trim()) return m[1].trim();
     var re2=new RegExp('\\['+tag+'\\]([\\s\\S]*)','i');
     var m2=raw.match(re2);
-    return m2&&m2[1].trim()?m2[1].split(/\[(?:REACT|CARDS|READING|PUNCHLINE)/)[0].trim():'';
+    return m2&&m2[1].trim()?m2[1].split(/\[(?:REACT|PIERCE|READING|PUNCHLINE)/)[0].trim():'';
   }
 
   var reactText=pText('REACT');
-  var cardsText=pText('CARDS');
+  var pierceText=pText('PIERCE');
   var readingText=pText('READING');
-  var messageText=pText('MESSAGE');
-  var actionText=pText('ACTION');
-  var punchText=pText('PUNCHLINE');
-
-  // 결과 파싱
-  var reactText=pText('REACT');
   var punchText=pText('PUNCHLINE');
 
   // 로딩 버블 제거
   if(loadMsg&&loadMsg.parentNode) loadMsg.parentNode.removeChild(loadMsg);
 
-  // 말풍선 순차 출력 (자연스럽게)
+  // 말풍선 순차 출력
   var bubbles=[];
   if(reactText) bubbles.push({text:reactText, delay:0});
-  if(cardsText) bubbles.push({text:cardsText, delay:700});
-  if(readingText) bubbles.push({text:readingText, delay:1400});
+  if(pierceText) bubbles.push({
+    html:'<div style="background:rgba(139,92,246,.08);border-left:3px solid rgba(139,92,246,.6);border-radius:0 12px 12px 0;padding:12px 14px;font-size:14px;color:rgba(220,210,255,.9);font-style:italic;line-height:1.75;">'+pierceText+'</div>',
+    delay:800
+  });
+  if(readingText) bubbles.push({text:readingText, delay:pierceText?1600:800});
   if(punchText) bubbles.push({
     html:'<div style="background:linear-gradient(135deg,rgba(240,192,96,.12),rgba(168,85,247,.08));border:1px solid rgba(240,192,96,.35);border-radius:14px;padding:14px 16px;font-family:\'Gowun Dodum\',serif;font-size:15px;color:var(--gold2);font-weight:700;text-align:center;line-height:1.6;">✦ '+punchText+' ✦</div>',
     delay:2100

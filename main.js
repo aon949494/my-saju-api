@@ -3129,9 +3129,20 @@ async function tStartReading(question,session,uid){
         var el=tAppendGemna('');
         el.innerHTML=b.html;
       } else {
-        // 볼드/마크다운 제거, 줄바꿈 변환
+        // 볼드/마크다운 제거, 강제 단락 분리
         var t=b.text.replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\*([^*]+)\*/g,'$1');
         t=t.replace(/\n\n+/g,'<br><br>').replace(/\n/g,'<br>');
+        // Gemini가 줄바꿈 안 하면 문장 단위로 강제 분리 (2~3문장마다)
+        if(t.indexOf('<br>')<0){
+          var sentences=t.split(/(?<=[다요야죠네]\.?\s)/);
+          var chunks=[]; var cur=[];
+          sentences.forEach(function(s,i){
+            cur.push(s.trim());
+            if(cur.length>=2&&i<sentences.length-1){chunks.push(cur.join(' '));cur=[];}
+          });
+          if(cur.length) chunks.push(cur.join(' '));
+          t=chunks.filter(Boolean).join('<br><br>');
+        }
         tAppendGemna(t);
       }
       tScrollBottom();

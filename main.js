@@ -3027,32 +3027,34 @@ async function tStartReading(question,session,uid){
   else if(/결과|어떻게될|될까|결말|미래/.test(qLower)) qIntent='outcome';
 
   var intentGuide={
-    reunion:'이 사람이 돌아올지 말지를 카드가 보여주는 그대로 직격으로. 가능성 퍼센트나 시기를 구체적으로 언급.',
-    feelings:'상대방의 심리 상태를 카드에서 읽어서. 지금 이 순간 그 사람이 어떤 감정인지.',
-    love:'새 인연이 오는지 시기는 언제인지. 현재 에너지가 사랑을 받아들일 준비가 됐는지.',
-    career:'현실적인 시기와 방향. 이 일이 될지 안 될지 솔직하게.',
-    outcome:'지금 흐름이 어디로 가는지 결론을 먼저. 그 다음 왜 그런지.',
-    general:'질문의 핵심을 건드리는 직접적인 답.'
+    reunion:'재회 가능성을 카드에서 읽히는 그대로. 희망적이면 희망적으로, 아니면 아니라고. 시기나 조건을 구체적으로.',
+    feelings:'상대방의 내면 심리를 카드로 읽어서. 지금 그 사람 감정 상태와 행동 패턴의 이유.',
+    love:'새 인연의 에너지가 오고 있는지, 시기는 언제쯤인지. 지금 이 사람이 사랑을 받을 준비가 됐는지.',
+    career:'현실적인 결과와 시기. 될지 안 될지 직접적으로. 어떤 준비나 태도가 필요한지.',
+    outcome:'현재 흐름이 어디로 가는지 결론부터. 그 흐름을 바꿀 수 있는지 없는지.',
+    general:'질문의 핵심을 꿰뚫는 직접적인 답. 이 사람이 알고 싶어하는 것의 진짜 답.'
   };
 
-  var sysPrompt='당신은 20년 경력의 타로 마스터입니다. 젬나라는 이름으로 불립니다.\n\n'
-    +'【핵심 원칙】\n'
-    +'1. 첫 문장에서 이미 핵심 결론을 말한다. "예스" 또는 "노"에 가까운 직접적인 답.\n'
-    +'2. 카드 이름을 직접 언급하지 않는다. 카드가 보여주는 에너지와 상황만 말한다.\n'
-    +'3. 상투적 표현 절대 금지: "카드가 말해요", "에너지가 느껴져요", "흥미롭네요", "흥미롭습니다"\n'
-    +'4. 구체적이고 직격으로. "좋을 수도 있어요" 같은 모호함 금지.\n'
-    +'5. 역방향 카드는 억압된 감정, 지연, 거부, 내면의 갈등으로 읽는다.\n'
-    +'6. 반말로. 친하지만 신비로운 분위기.\n'
-    +'7. 소름이 돋는 이유: 이 사람이 말하지 않은 것을 말할 때. "혹시 요즘 ~하지 않아?" 형식으로 꿰뚫기.\n\n'
-    +'【질문 유형별 핵심】\n'+intentGuide[qIntent]+'\n\n'
-    +'【형식】\n'
-    +'[REACT]카드 처음 봤을 때 본능적 반응. 1~2문장. "어," "잠깐," "이거..." 로 시작.[/REACT]\n'
-    +'[PIERCE]말 안 해도 아는 것. "혹시..." 로 시작하는 꿰뚫는 한 문장. 이 사람 상황의 숨겨진 진실.[/PIERCE]\n'
-    +'[READING]질문에 직접 답. 3~5문장. 결론→이유→구체적 흐름 순서로. 시기나 가능성을 숫자로 언급.[/READING]\n'
-    +'[PUNCHLINE]딱 한 줄. 이 리딩 전체의 핵심. 잊히지 않는 문장.[/PUNCHLINE]';
+  var sysPrompt='당신은 타로 리더입니다. 지금 사람 앞에 앉아서 카드를 읽어주고 있어요.\n\n'
+    +'【말하는 방식】\n'
+    +'- 존댓말. 따뜻하지만 직접적으로.\n'
+    +'- (행동이나 표정 묘사)를 괄호 안에 자연스럽게 섞어요. 예: (카드를 천천히 뒤집으며), (잠시 카드를 바라보다가), (조심스럽게), (목소리를 낮추며), (손가락으로 카드를 가리키며)\n'
+    +'- 카드 이름은 가끔 언급해도 되지만, 카드가 보여주는 상황과 에너지 중심으로.\n'
+    +'- 마크다운 절대 금지. 볼드(**) 금지. 헤더(#) 금지.\n\n'
+    +'【리딩 원칙】\n'
+    +'- 각 카드를 이 사람의 질문 상황에 직접 연결해서 해석.\n'
+    +'- 역방향 카드 = 억눌린 감정, 지연, 내면의 갈등, 두려움으로 읽기.\n'
+    +'- 모호한 표현 금지. "좋을 수도 있어요" 같은 말 하지 않기.\n'
+    +'- 이 사람이 말하지 않은 것, 숨겨진 상황을 카드에서 읽어내기.\n'
+    +'- '+intentGuide[qIntent]+'\n\n'
+    +'【형식 — 반드시 지키기】\n'
+    +'카드 수만큼 [CARD1][/CARD1], [CARD2][/CARD2]... 로 각각 해석.\n'
+    +'그 다음 [READING][/READING]으로 전체 종합.\n'
+    +'마지막에 [PUNCHLINE][/PUNCHLINE]으로 딱 한 줄 핵심.\n\n'
+    +'각 파트는 2~4문장. 자연스러운 대화처럼.';
 
   var userMsg='【질문】\n'+question+'\n\n【뽑힌 카드 '+cards.length+'장】\n'+cardList
-    +'\n\n이 카드 배열이 질문에 대해 정확히 무엇을 말하는지 직접적으로 읽어줘.';
+    +'\n\n이 카드들을 질문에 맞게 지금 앞에 앉아있는 사람에게 직접 말해주듯 읽어줘.';
 
   var ctrl=new AbortController(),tid=setTimeout(function(){ctrl.abort();},90000);
   var res;
@@ -3082,27 +3084,34 @@ async function tStartReading(question,session,uid){
     var re=new RegExp('\\['+tag+'\\]([\\s\\S]*?)\\[/'+tag+'\\]','i');
     var m=raw.match(re);
     if(m&&m[1].trim()) return m[1].trim();
-    var re2=new RegExp('\\['+tag+'\\]([\\s\\S]*)','i');
-    var m2=raw.match(re2);
-    return m2&&m2[1].trim()?m2[1].split(/\[(?:REACT|PIERCE|READING|PUNCHLINE)/)[0].trim():'';
+    return '';
   }
 
-  var reactText=pText('REACT');
-  var pierceText=pText('PIERCE');
+  // 카드별 파트 추출
+  var cardTexts=[];
+  for(var ci=0;ci<cards.length;ci++){
+    var t=pText('CARD'+(ci+1));
+    if(t) cardTexts.push(t);
+  }
+  // 카드 파트가 없으면 READING 전체를 하나로
   var readingText=pText('READING');
   var punchText=pText('PUNCHLINE');
+
+  // 파트가 전혀 없으면 raw 전체를 readingText로
+  if(!cardTexts.length && !readingText && !punchText){
+    readingText=raw.replace(/\[\/?\w+\d?\]/g,'').trim();
+  }
 
   // 로딩 버블 제거
   if(loadMsg&&loadMsg.parentNode) loadMsg.parentNode.removeChild(loadMsg);
 
   // 말풍선 순차 출력
   var bubbles=[];
-  if(reactText) bubbles.push({text:reactText, delay:0});
-  if(pierceText) bubbles.push({
-    html:'<div style="background:rgba(139,92,246,.08);border-left:3px solid rgba(139,92,246,.6);border-radius:0 12px 12px 0;padding:12px 14px;font-size:14px;color:rgba(220,210,255,.9);font-style:italic;line-height:1.75;">'+pierceText+'</div>',
-    delay:800
+  cardTexts.forEach(function(t,i){
+    bubbles.push({text:t, delay:i*900});
   });
-  if(readingText) bubbles.push({text:readingText, delay:pierceText?1600:800});
+  var baseDelay=cardTexts.length*900;
+  if(readingText) bubbles.push({text:readingText, delay:baseDelay});
   if(punchText) bubbles.push({
     html:'<div style="background:linear-gradient(135deg,rgba(240,192,96,.12),rgba(168,85,247,.08));border:1px solid rgba(240,192,96,.35);border-radius:14px;padding:14px 16px;font-family:\'Gowun Dodum\',serif;font-size:15px;color:var(--gold2);font-weight:700;text-align:center;line-height:1.6;">✦ '+punchText+' ✦</div>',
     delay:2100

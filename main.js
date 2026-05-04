@@ -2800,9 +2800,12 @@ function tAppendGemna(html){
   var chat=document.getElementById('tarotChat');
   var d=document.createElement('div');
   d.className='tc-bubble tc-gemna';
-  // 볼드/마크다운 제거, 과도한 줄바꿈 정리
-  var cleaned=html.replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\*([^*]+)\*/g,'$1').replace(/(<br\s*\/?>\s*){3,}/gi,'<br>');
-  d.innerHTML='<div class="tc-gemna-ico">🔮</div><div class="tc-gemna-msg" style="line-height:1.65;">'+cleaned+'</div>';
+  var cleaned=html.replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\*([^*]+)\*/g,'$1').replace(/(<br\s*\/?>\s*){3,}/gi,'<br><br>');
+  // \n을 <br>로 변환
+  if(cleaned.indexOf('<')<0||cleaned.indexOf('<br')<0){
+    cleaned=cleaned.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
+  }
+  d.innerHTML='<div class="tc-gemna-ico">🔮</div><div class="tc-gemna-msg" style="line-height:1.8;">'+cleaned+'</div>';
   chat.appendChild(d);
   tScrollBottom();
   return d.querySelector('.tc-gemna-msg');
@@ -3041,6 +3044,7 @@ async function tStartReading(question,session,uid){
     +'- (행동/표정 묘사)를 괄호 안에 자주 섞어요. 예: (카드를 천천히 뒤집으며), (잠시 카드를 바라보다가), (조심스럽게), (목소리를 낮추며), (눈을 가늘게 뜨며), (손가락으로 카드를 가리키며), (살짝 미소 지으며), (한숨을 내쉬며), (카드를 톡톡 두드리며)\n'
     +'- 마크다운 절대 금지. 볼드(**) 금지. 헤더(#) 금지.\n'
     +'- 각 카드 해석은 반드시 5~7문장 이상으로. 짧게 끝내는 것 절대 금지.\n'
+    +'- 문장 2~3개마다 빈 줄(\\n\\n)로 단락 나누기. 한 덩어리로 쭉 쓰지 않기.\n'
     +'- 상투적 표현 금지: "카드가 말해요", "에너지가 느껴져요", "흥미롭네요"\n\n'
     +'【리딩 원칙】\n'
     +'- 각 카드를 이 사람의 질문 상황에 구체적으로 연결해서 길고 자세하게 해석.\n'
@@ -3079,7 +3083,7 @@ async function tStartReading(question,session,uid){
   if(data.content&&Array.isArray(data.content)) raw=data.content.map(function(c){return c.text||'';}).join('');
   else if(data.content&&typeof data.content==='string') raw=data.content;
   else if(data.text) raw=data.text;
-  raw=raw.replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\*([^*]+)\*/g,'$1').replace(/\n{2,}/g,'\n').replace(/\n/g,' ');
+  raw=raw.replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\*([^*]+)\*/g,'$1').replace(/\n{3,}/g,'\n\n');
 
   function pText(tag){
     var re=new RegExp('\\['+tag+'\\]([\\s\\S]*?)\\[/'+tag+'\\]','i');

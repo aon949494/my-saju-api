@@ -2800,12 +2800,13 @@ function tAppendGemna(html){
   var chat=document.getElementById('tarotChat');
   var d=document.createElement('div');
   d.className='tc-bubble tc-gemna';
-  var cleaned=html.replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\*([^*]+)\*/g,'$1').replace(/(<br\s*\/?>\s*){3,}/gi,'<br><br>');
-  // \n을 <br>로 변환
-  if(cleaned.indexOf('<')<0||cleaned.indexOf('<br')<0){
-    cleaned=cleaned.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
+  var cleaned=html.replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\*([^*]+)\*/g,'$1');
+  // \n\n → 단락 구분, \n → 줄바꿈 (이미지 태그 없는 텍스트에만 적용)
+  if(cleaned.indexOf('<img')<0 && cleaned.indexOf('<div')<0){
+    cleaned=cleaned.replace(/\n\n+/g,'<br><br>').replace(/\n/g,'<br>');
   }
-  d.innerHTML='<div class="tc-gemna-ico">🔮</div><div class="tc-gemna-msg" style="line-height:1.8;">'+cleaned+'</div>';
+  cleaned=cleaned.replace(/(<br\s*\/?>\s*){4,}/gi,'<br><br>');
+  d.innerHTML='<div class="tc-gemna-ico">🔮</div><div class="tc-gemna-msg" style="line-height:1.85;">'+cleaned+'</div>';
   chat.appendChild(d);
   tScrollBottom();
   return d.querySelector('.tc-gemna-msg');
@@ -3128,8 +3129,9 @@ async function tStartReading(question,session,uid){
         var el=tAppendGemna('');
         el.innerHTML=b.html;
       } else {
-        // 볼드/마크다운 제거
+        // 볼드/마크다운 제거, 줄바꿈 변환
         var t=b.text.replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\*([^*]+)\*/g,'$1');
+        t=t.replace(/\n\n+/g,'<br><br>').replace(/\n/g,'<br>');
         tAppendGemna(t);
       }
       tScrollBottom();

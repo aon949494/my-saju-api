@@ -3132,16 +3132,15 @@ async function tStartReading(question,session,uid){
         // 볼드/마크다운 제거, 강제 단락 분리
         var t=b.text.replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\*([^*]+)\*/g,'$1');
         t=t.replace(/\n\n+/g,'<br><br>').replace(/\n/g,'<br>');
-        // Gemini가 줄바꿈 안 하면 문장 단위로 강제 분리 (2~3문장마다)
         if(t.indexOf('<br>')<0){
-          var sentences=t.split(/(?<=[다요야죠네]\.?\s)/);
+          var sents=t.match(/[^.!?]*[다요야죠네.!?][.!?]?\s*/g)||[t];
           var chunks=[]; var cur=[];
-          sentences.forEach(function(s,i){
-            cur.push(s.trim());
-            if(cur.length>=2&&i<sentences.length-1){chunks.push(cur.join(' '));cur=[];}
+          sents.forEach(function(s){
+            if(s.trim()) cur.push(s.trim());
+            if(cur.length>=2){ chunks.push(cur.join(' ')); cur=[]; }
           });
           if(cur.length) chunks.push(cur.join(' '));
-          t=chunks.filter(Boolean).join('<br><br>');
+          if(chunks.length>1) t=chunks.filter(Boolean).join('<br><br>');
         }
         tAppendGemna(t);
       }
@@ -3462,7 +3461,20 @@ function tShowResult(cards,labels,react,cardsText,reading,punchline){
         el.style.cssText='display:block;';
         el.innerHTML=b.html;
       } else {
-        el.innerHTML='<div class="tc-gemna-ico">🔮</div><div class="tc-gemna-msg" style="line-height:1.65;">'+b.text+'</div>';
+        var t=b.text.replace(/\*\*([^*]+)\*\*/g,'$1').replace(/\*([^*]+)\*/g,'$1');
+        t=t.replace(/\n\n+/g,'<br><br>').replace(/\n/g,'<br>');
+        // \n 없으면 문장 단위 강제 단락 (2문장마다)
+        if(t.indexOf('<br>')<0){
+          var sents=t.match(/[^.!?]*[다요야죠네.!?][.!?]?\s*/g)||[t];
+          var chunks3=[]; var cur3=[];
+          sents.forEach(function(s){
+            if(s.trim()) cur3.push(s.trim());
+            if(cur3.length>=2){ chunks3.push(cur3.join(' ')); cur3=[]; }
+          });
+          if(cur3.length) chunks3.push(cur3.join(' '));
+          if(chunks3.length>1) t=chunks3.filter(Boolean).join('<br><br>');
+        }
+        el.innerHTML='<div class="tc-gemna-ico">🔮</div><div class="tc-gemna-msg" style="line-height:1.85;">'+t+'</div>';
       }
       rb.appendChild(el);
       var s4=document.getElementById('tStep4');

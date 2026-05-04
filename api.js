@@ -30,7 +30,7 @@ async function personaSend(){
         if(getPassRemain()<=0){
           // 패스도 없음 → 복채 체크
           if(getBokchaeCnt()<p.costBokchae){
-            showBokchaeModal();return;
+            window._isGenerating=false;showBokchaeModal();return;
           }
         }
       }
@@ -41,7 +41,7 @@ async function personaSend(){
       } else {
         if(getPassRemain()<=0){
           if(getBokchaeCnt()<p.costBokchae){
-            showBokchaeModal();return;
+            window._isGenerating=false;showBokchaeModal();return;
           }
         }
       }
@@ -68,10 +68,11 @@ async function personaSend(){
               personaSend();
             }
           );
+          window._isGenerating=false;
           return;
         } else {
           // 광고도 봤음 → 복채
-          if(getBokchaeCnt()<p.costBokchae){showBokchaeModal();return;}
+          if(getBokchaeCnt()<p.costBokchae){window._isGenerating=false;showBokchaeModal();return;}
         }
       }
     } else {
@@ -91,9 +92,10 @@ async function personaSend(){
             personaSend();
           }
         );
+        window._isGenerating=false;
         return;
       } else {
-        if(getBokchaeCnt()<p.costBokchae){showBokchaeModal();return;}
+        if(getBokchaeCnt()<p.costBokchae){window._isGenerating=false;showBokchaeModal();return;}
       }
     }
 
@@ -103,11 +105,12 @@ async function personaSend(){
     if(p.tier==='standard'||p.tier==='premium'){
       if(!canAccessPersona(_curPersonaId)){
         showToast('🔒 '+(p.tier==='standard'?'스탠다드':'프리미엄')+' 구독 전용이에요');
+        window._isGenerating=false;
         return;
       }
     }
     // 혹시 접근 됐다면 복채만
-    if(getBokchaeCnt()<p.costBokchae){showBokchaeModal();return;}
+    if(getBokchaeCnt()<p.costBokchae){window._isGenerating=false;showBokchaeModal();return;}
   }
 
   qa.value='';qa.style.height='44px';
@@ -115,8 +118,10 @@ async function personaSend(){
   pcAppendLoading();
 
   var def=getDefaultProfile();
-  var sajuInfo=await callContextApi(def);
-  var sysPrompt=p.system(sajuInfo);
+  var sajuInfo='';
+  try{ sajuInfo=await callContextApi(def); }catch(e){ sajuInfo=buildRichSajuContext(def)||''; }
+  var sysPrompt='';
+  try{ sysPrompt=p.system(sajuInfo); }catch(e){ window._isGenerating=false;pcStopLoading();pcAppendPersona('사주 정보를 불러오지 못했어요. 프로필을 확인해주세요.');return; }
 
   // 히스토리 (최근 6턴, 각 200자로 압축)
   var historyText='';
@@ -155,7 +160,11 @@ async function personaSend(){
     } catch(fe){
       clearTimeout(tid);
       pcStopLoading();
-      pcStopLoading();
+      window._isGenerating=false;
+      // 히스토리 롤백 (재시도 시 중복 방지)
+      if(_personaHistory.length>0&&_personaHistory[_personaHistory.length-1].role==='user'){
+        _personaHistory.pop();
+      }
       showRetryToast('서버 응답이 느려요. 재시도할까요?', personaSend);
       return;
     }
@@ -215,7 +224,7 @@ async function personaSend(){
         _freePersonaCountedThisSession=true;
       } else if(usedNow>=1+adUsedNow){
         var cr1=chargePersonaChat(p.costBokchae);
-        if(cr1==='fail'){showBokchaeModal();return;}
+        if(cr1==='fail'){window._isGenerating=false;showBokchaeModal();return;}
         if(cr1==='pass') showToast('🎫 AI 패스 사용 ('+getPassRemain()+'회 남음)');
         renderBokchae&&renderBokchae();
         renderSettingsProfile&&renderSettingsProfile();
@@ -227,7 +236,7 @@ async function personaSend(){
     } else {
       // ── 비구독 프리미엄 캐릭터: 여기 오면 안 됨 (이중 방어)
       if(p.tier==='premium'){
-        if(!canAccessPersona(_curPersonaId)) return;
+        if(!canAccessPersona(_curPersonaId)){window._isGenerating=false;return;}
       }
       addBokchae(-p.costBokchae);
       renderBokchae&&renderBokchae();
@@ -242,6 +251,7 @@ async function personaSend(){
     if(_personaHistory.length<=2){
       _pcBubble(ackLines[_curPersonaId]||'살펴볼게요.',0);
       setTimeout(function(){
+        window._isGenerating=false;
         pcAppendPersona(answer);
         setTimeout(function(){pcAppendSuggestions(answer);},300);
       },500);

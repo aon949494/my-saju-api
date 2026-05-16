@@ -688,15 +688,14 @@ function renderPersonaRecentList2(){
     var p=PERSONAS[id];if(!p)return;
     var hist=null;
 
+    // free: 오늘 대화만 (pcFreeLoad)
+    // premium: 세션 목록 중 가장 최근 1개
     if(p.tier==='free'){
-      hist=pcFreeLoad(id); // 자정 삭제
+      hist=pcFreeLoad(id);
     } else {
-      // 스탠다드/프리미엄: pcGetSessions에서 로드 (구독 연동 후 활성화)
       var sessions=pcGetSessions(id);
-      if(sessions&&sessions.length){
-        // 가장 최근 세션 하나
-        hist=sessions[0].history;
-      }
+      // 세션이 있으면 가장 최근 1개만 표시
+      if(sessions&&sessions.length) hist=sessions[0].history;
     }
 
     if(!hist||!hist.length)return;
@@ -791,7 +790,7 @@ function pcConfirmProfile(ok){
   var chat=document.getElementById('personaChat');
   if(chat){
     var wraps=chat.querySelectorAll('[data-pccard]');
-    wraps.forEach(function(el){el.remove();});
+    wraps.forEach(function(el){(function(e){if(e&&e.parentNode)e.parentNode.removeChild(e);})(el);});
   }
   if(ok){
     // 확인 완료 - 준비됐다는 말풍선
@@ -1360,9 +1359,9 @@ function showRetryToast(msg, retryFn){
   var div=document.createElement('div');
   div.style.cssText='position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:rgba(30,20,60,.97);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:14px 20px;z-index:9999;display:flex;align-items:center;gap:12px;max-width:320px;width:calc(100%-32px);';
   div.innerHTML='<div style="flex:1;font-size:13px;color:var(--dim);">'+msg+'</div>'
-    +'<button onclick="this.parentElement.remove();('+retryFn.toString()+')()" style="height:34px;padding:0 14px;background:rgba(251,191,36,.2);border:1px solid rgba(251,191,36,.4);border-radius:10px;color:var(--gold2);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;">재시도</button>';
+    +'<button onclick="this.(function(e){if(e&&e.parentNode)e.parentNode.removeChild(e);})(parentElement);('+retryFn.toString()+')()" style="height:34px;padding:0 14px;background:rgba(251,191,36,.2);border:1px solid rgba(251,191,36,.4);border-radius:10px;color:var(--gold2);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;">재시도</button>';
   document.body.appendChild(div);
-  setTimeout(function(){if(div.parentElement)div.remove();},8000);
+  setTimeout(function(){if(div.parentElement)(function(e){if(e&&e.parentNode)e.parentNode.removeChild(e);})(div);},8000);
 }
 
 
@@ -1443,7 +1442,8 @@ async function pcAppendSuggestions(answerText){
   try{
     var chat=document.getElementById('personaChat');
     if(!chat) return;
-    var p=PERSONAS[_curPersonaId];
+    var _snapPersonaId=_curPersonaId; // 스냅샷
+    var p=PERSONAS[_snapPersonaId];
     if(!p) return;
 
     // 마지막 사용자 질문
@@ -1455,8 +1455,8 @@ async function pcAppendSuggestions(answerText){
     var turnIdx=userTurns.length;
 
     // 답변 정제
-    var cleanAns=answerText.replace(/<[^>]+>/g,'').replace(/[#*_\[\]]/g,'').trim();
-    var answerEnd=cleanAns.slice(-120);
+    var cleanAns=answerText.replace(/<br>/gi,' ').replace(/<[^>]+>/g,'').replace(/[#*_\[\]]/g,'').trim();
+    var answerEnd=cleanAns.slice(-200); // 더 넓은 범위
 
     // ── 주제 감지: 질문 + 직전 AI 답변도 참고 ──
     // 직전 assistant 답변 (마지막 100자)
@@ -1594,7 +1594,8 @@ async function pcAppendSuggestions(answerText){
     wrap.innerHTML=html2;
 
     wrap.querySelectorAll('button').forEach(function(btn,i){
-      btn.addEventListener('click',function(){pcSendSuggestion(allQs[i]);});
+      var _q=allQs[i]; // 클로저 캡처
+      btn.addEventListener('click',function(){pcSendSuggestion(_q);});
       btn.addEventListener('touchstart',function(){btn.style.opacity='.6';},{passive:true});
       btn.addEventListener('touchend',function(){btn.style.opacity='1';},{passive:true});
     });
@@ -1606,7 +1607,7 @@ async function pcAppendSuggestions(answerText){
 }
 function pcSendSuggestion(q){
   var chat=document.getElementById('personaChat');
-  if(chat) chat.querySelectorAll('.pc-suggestions').forEach(function(el){el.remove();});
+  if(chat) chat.querySelectorAll('.pc-suggestions').forEach(function(el){(function(e){if(e&&e.parentNode)e.parentNode.removeChild(e);})(el);});
   var qa=document.getElementById('personaQ');
   if(qa&&q){qa.value=String(q);}
   personaSend();
@@ -2697,7 +2698,7 @@ function _tCardParticle(el){
       el2.style.transform='translate(calc(-50% + '+ax+'px),calc(-50% + '+ay+'px))';
       el2.style.opacity='0';
     },10,p,Math.cos(angle)*dist,Math.sin(angle)*dist);
-    setTimeout(function(el2){el2.remove();},900,p);
+    setTimeout(function(el2){(function(e){if(e&&e.parentNode)e.parentNode.removeChild(e);})(el2);},900,p);
   }
 }
 function buildTarotDeck() {
@@ -3001,7 +3002,7 @@ async function tStartReading(question,session,uid){
     cardImgHtml+='<div style="text-align:center;flex-shrink:0;">'
       +'<div style="font-size:10px;color:rgba(240,192,96,.6);letter-spacing:1px;margin-bottom:6px;">'+lbl+'</div>'
       +'<div style="width:90px;height:150px;border-radius:12px;overflow:hidden;border:2px solid '+(c.reversed?'rgba(224,144,144,.6)':'rgba(200,169,110,.6)')+';box-shadow:0 4px 16px rgba(0,0,0,.5);'+(c.reversed?'transform:rotate(180deg)':'')+'">'
-      +(imgSrc?'<img src="'+imgSrc+'" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentNode.style.background=\'#1a0a2e\';this.remove()">':'<div style="width:100%;height:100%;background:linear-gradient(145deg,#1a0a2e,#2d0f5e);display:flex;align-items:center;justify-content:center;font-size:28px;">✦</div>')
+      +(imgSrc?'<img src="'+imgSrc+'" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentNode.style.background=\'#1a0a2e\';(function(e){if(e&&e.parentNode)e.parentNode.removeChild(e);})(this)">':'<div style="width:100%;height:100%;background:linear-gradient(145deg,#1a0a2e,#2d0f5e);display:flex;align-items:center;justify-content:center;font-size:28px;">✦</div>')
       +'</div>'
       +'<div style="font-size:11px;color:var(--gold2);margin-top:6px;font-family:\'Gowun Dodum\',serif;">'+c.name+'</div>'
       +(c.reversed?'<div style="font-size:9px;color:#e09090;">역방향</div>':'')

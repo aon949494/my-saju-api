@@ -30,7 +30,7 @@ async function personaSend(){
         if(getPassRemain()<=0){
           // 패스도 없음 → 복채 체크
           if(getBokchaeCnt()<p.costBokchae){
-            window._isGenerating=false;showBokchaeModal();return;
+            window._isGenerating=false;showBokchaeModal(p.costBokchae);return;
           }
         }
       }
@@ -41,7 +41,7 @@ async function personaSend(){
       } else {
         if(getPassRemain()<=0){
           if(getBokchaeCnt()<p.costBokchae){
-            window._isGenerating=false;showBokchaeModal();return;
+            window._isGenerating=false;showBokchaeModal(p.costBokchae);return;
           }
         }
       }
@@ -72,7 +72,7 @@ async function personaSend(){
           return;
         } else {
           // 광고도 봤음 → 복채
-          if(getBokchaeCnt()<p.costBokchae){window._isGenerating=false;showBokchaeModal();return;}
+          if(getBokchaeCnt()<p.costBokchae){window._isGenerating=false;showBokchaeModal(p.costBokchae);return;}
         }
       }
     } else {
@@ -95,7 +95,7 @@ async function personaSend(){
         window._isGenerating=false;
         return;
       } else {
-        if(getBokchaeCnt()<p.costBokchae){window._isGenerating=false;showBokchaeModal();return;}
+        if(getBokchaeCnt()<p.costBokchae){window._isGenerating=false;showBokchaeModal(p.costBokchae);return;}
       }
     }
 
@@ -110,7 +110,7 @@ async function personaSend(){
       }
     }
     // 혹시 접근 됐다면 복채만
-    if(getBokchaeCnt()<p.costBokchae){window._isGenerating=false;showBokchaeModal();return;}
+    if(getBokchaeCnt()<p.costBokchae){window._isGenerating=false;showBokchaeModal(p.costBokchae);return;}
   }
 
   qa.value='';qa.style.height='44px';
@@ -224,7 +224,7 @@ async function personaSend(){
         _freePersonaCountedThisSession=true;
       } else if(usedNow>=1+adUsedNow){
         var cr1=chargePersonaChat(p.costBokchae);
-        if(cr1==='fail'){window._isGenerating=false;showBokchaeModal();return;}
+        if(cr1==='fail'){window._isGenerating=false;showBokchaeModal(p.costBokchae);return;}
         if(cr1==='pass') showToast('🎫 AI 패스 사용 ('+getPassRemain()+'회 남음)');
         renderBokchae&&renderBokchae();
         renderSettingsProfile&&renderSettingsProfile();

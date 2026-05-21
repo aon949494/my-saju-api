@@ -224,6 +224,23 @@ function renderPersonaScreen(){
   var pc=document.getElementById('pcBokchae');
   if(pc) pc.textContent=getBokchaeCnt();
   pcFreeClean();
+  _renderPersonaCards();
+}
+
+function _renderPersonaCards(){
+  // 루나/백호 이미지 로드
+  var lunaImg=document.getElementById('lunaCardImg2');
+  var baekhoImg=document.getElementById('baekhoCardImg2');
+  if(lunaImg&&PERSONAS.luna&&PERSONAS.luna.imgSrc) lunaImg.src=PERSONAS.luna.imgSrc;
+  if(baekhoImg&&PERSONAS.baekho&&PERSONAS.baekho.imgSrc) baekhoImg.src=PERSONAS.baekho.imgSrc;
+
+  // 프리미엄 잠금 업데이트
+  var premiumIds=['hades','sera','red'];
+  var canPremium=canAccessPersona('hades');
+  premiumIds.forEach(function(id){
+    var lock=document.getElementById(id+'Lock2');
+    if(lock) lock.style.display=canPremium?'none':'flex';
+  });
 }
 
 function renderProfileScreen(){

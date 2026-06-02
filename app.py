@@ -40,8 +40,9 @@ SAFETY = [
     SafetySetting(category=HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold=HarmBlockThreshold.BLOCK_NONE),
 ]
 
-ENDINGS = ('다', '요', '야', '어', '네', '죠', '게', '.', '!', '?', '…',
-           '?**', '.**', '!**', '요**', '다**', '어**', '네**', '?**"', '.**"')
+ENDINGS = ('다.', '요.', '야.', '어.', '네.', '죠.', '게.', '다!', '요!', '야!',
+           '다?', '요?', '야?', '다', '요', '야', '어', '네', '죠', '게', '.', '!', '?', '…',
+           '요 ✦', '다 ✦', '야 ✦')
 
 def make_model(sys_prompt, use_pro=False):
     sys_clean = (sys_prompt or '').strip()
@@ -56,6 +57,15 @@ def make_model(sys_prompt, use_pro=False):
 
 def get_text(resp):
     return (getattr(resp, 'text', '') or '').rstrip()
+
+def is_truncated(resp):
+    """Gemini가 MAX_TOKENS로 잘렸는지 확인"""
+    try:
+        fr = resp.candidates[0].finish_reason
+        # FinishReason.MAX_TOKENS = 2, FinishReason.STOP = 1
+        return int(fr) == 2
+    except Exception:
+        return False
 
 # ════════════════════════════════════════════════════════════
 #   사주 계산 알고리즘 (보안상 백엔드에서 처리)
@@ -290,11 +300,29 @@ def saju_api():
         model = make_model(sys_prompt, use_pro=use_pro)
         log.info(f"모델: {'gemini-2.5-pro' if use_pro else 'gemini-2.5-flash'}")
 
-        history = [
+        # history 구성 - user/model 교대 보장
+        raw_history = [
             Content(role='model' if m.get('role') == 'assistant' else 'user',
-                    parts=[Part.from_text(m.get('content', ''))])
+                    parts=[Part.from_text(m.get('content', '') or '(이전 메시지)')])
             for m in history_msgs
         ]
+        # history는 반드시 user로 시작하고 model로 끝나야 함
+        history = []
+        for h in raw_history:
+            if not history:
+                if h.role == 'user':
+                    history.append(h)
+                # user가 아닌 걸로 시작하면 건너뜀
+            else:
+                prev_role = history[-1].role
+                if h.role != prev_role:  # 교대 확인
+                    history.append(h)
+                else:
+                    # 같은 role 연속이면 마지막 것으로 교체
+                    history[-1] = h
+        # 마지막이 user면 제거 (last_msg가 user이므로)
+        if history and history[-1].role == 'user':
+            history = history[:-1]
 
         if not mode:
             cfg = GenerationConfig(temperature=0.85, max_output_tokens=req_tokens)
@@ -307,38 +335,54 @@ def saju_api():
             log.info(f"완료: {len(text)}자, {round(time.time()-t_start,1)}s")
             return jsonify({'content': [{'type': 'text', 'text': text}]})
 
-        cfg1 = GenerationConfig(temperature=0.9, max_output_tokens=6000)
-        cfg2 = GenerationConfig(temperature=0.9, max_output_tokens=3000)
+        # ── 긴 답변 생성 (최대 3회 이어쓰기) ──
+        cfg_main = GenerationConfig(temperature=0.9, max_output_tokens=8192)
+        cfg_cont = GenerationConfig(temperature=0.9, max_output_tokens=4096)
 
+        # 첫 번째 생성
         chat_session = None
         if history:
             chat_session = model.start_chat(history=history)
-            resp1 = chat_session.send_message(last_msg, generation_config=cfg1, safety_settings=SAFETY)
+            resp = chat_session.send_message(last_msg, generation_config=cfg_main, safety_settings=SAFETY)
         else:
-            resp1 = model.generate_content(last_msg, generation_config=cfg1, safety_settings=SAFETY)
+            resp = model.generate_content(last_msg, generation_config=cfg_main, safety_settings=SAFETY)
 
-        text1 = get_text(resp1)
-        is_done = any(text1.endswith(e) for e in ENDINGS)
-        is_long = len(text1) >= 300
+        full_text = get_text(resp)
+        truncated = is_truncated(resp)
 
-        if is_done and is_long:
-            full_text = text1
-        else:
-            # 히스토리 있으면 같은 chat 세션으로 이어쓰기
-            cont = (
-                f"방금 작성한 답변이 잘렸어. 마지막 부분:\n\"{text1[-200:].strip()}\"\n\n"
-                "바로 이어서 완성해줘. 앞 내용 반복 금지. 자연스럽게 이어서."
+        # 잘린 경우 최대 3번 이어쓰기 루프
+        MAX_CONT = 3
+        cont_count = 0
+        while truncated and cont_count < MAX_CONT and len(full_text) < 8000:
+            cont_count += 1
+            log.info(f"이어쓰기 {cont_count}회차 (현재 {len(full_text)}자, 잘림 감지)")
+            cont_msg = (
+                f"답변이 잘렸습니다. 마지막 부분:\n\"{full_text[-300:].strip()}\"\n\n"
+                "위 내용에서 잘린 부분을 바로 이어서 완성해주세요. "
+                "앞 내용 반복 금지. 자연스럽게 이어서 마무리까지."
             )
             try:
                 if chat_session:
-                    resp2 = chat_session.send_message(cont, generation_config=cfg2, safety_settings=SAFETY)
+                    resp_cont = chat_session.send_message(cont_msg, generation_config=cfg_cont, safety_settings=SAFETY)
                 else:
-                    resp2 = model.generate_content(cont, generation_config=cfg2, safety_settings=SAFETY)
-                text2 = (getattr(resp2, 'text', '') or '').strip()
-                full_text = (text1 + text2) if text2 else text1
+                    # 히스토리 없으면 이전 응답을 포함해서 새 세션 생성
+                    tmp_hist = [
+                        Content(role='user', parts=[Part.from_text(last_msg)]),
+                        Content(role='model', parts=[Part.from_text(full_text)])
+                    ]
+                    tmp_chat = model.start_chat(history=tmp_hist)
+                    resp_cont = tmp_chat.send_message(cont_msg, generation_config=cfg_cont, safety_settings=SAFETY)
+
+                added = get_text(resp_cont).strip()
+                if added:
+                    full_text = full_text + added
+                truncated = is_truncated(resp_cont)
             except Exception as e:
-                log.error(f"2단계 오류: {e}")
-                full_text = text1
+                log.error(f"이어쓰기 {cont_count}회 오류: {e}")
+                break
+
+        if cont_count > 0:
+            log.info(f"이어쓰기 {cont_count}회 완료 → 최종 {len(full_text)}자")
 
         elapsed = round(time.time() - t_start, 2)
         log.info(f"완료: {len(full_text)}자, {elapsed}s")

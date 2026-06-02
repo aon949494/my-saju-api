@@ -123,21 +123,20 @@ async function personaSend(){
   var sysPrompt='';
   try{ sysPrompt=p.system(sajuInfo); }catch(e){ window._isGenerating=false;pcStopLoading();pcAppendPersona('사주 정보를 불러오지 못했어요. 프로필을 확인해주세요.');return; }
 
-  // 히스토리 (최근 6턴, 각 200자로 압축)
-  var historyText='';
-  // 프리미엄: 더 긴 컨텍스트 (최근 10턴), 무료: 최근 6턴
-  var ctxLen=(p.tier==='premium')?10:6;
-  var recentHistory=_personaHistory.slice(-ctxLen);
-  if(recentHistory.length>1){
-    var prefix=p.tier==='premium'?'\n\n[이전 대화 — 이 흐름을 기억하고 이어받아서 답해]\n':'\n\n[이전 대화]\n';
-    historyText=prefix+recentHistory.slice(0,-1).map(function(m){
-      var maxLen=p.tier==='premium'?300:200;
-      var content=m.content.length>maxLen?m.content.slice(0,maxLen)+'...':m.content;
-      return (m.role==='user'?'사용자: ':p.name+': ')+content;
-    }).join('\n')+'\n\n[현재 질문]\n';
-  }
-  // system과 user 메시지 분리 전송 (input 토큰 최소화 → output 토큰 최대화)
-  var userMsg=historyText+q;
+  // ── 히스토리 구성 (proper chat format, AI 답변 풀텍스트) ──
+  var ctxLen = (p.tier==='premium') ? 10 : 6;
+  // _personaHistory에는 현재 질문이 아직 없음 → 전부 이전 대화
+  var recentHistory = _personaHistory.slice(-ctxLen);
+
+  // messages 배열: 이전 대화(user/assistant 교대) + 현재 질문
+  var messages = [];
+  recentHistory.forEach(function(m){
+    var content = (m.role === 'user')
+      ? m.content.slice(0, 150)   // user 메시지는 150자 압축
+      : m.content;                 // AI 답변은 풀텍스트 (잘리면 혼란)
+    messages.push({role: m.role, content: content});
+  });
+  messages.push({role: 'user', content: q}); // 현재 질문 마지막에 추가
 
   _personaHistory.push({role:'user',content:q});
 
@@ -151,10 +150,10 @@ async function personaSend(){
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify({
           model:(['hades','sera','red'].indexOf(_curPersonaId)>=0)?'gemini-pro':'gemini',
-          max_tokens:6000,
+          max_tokens:8000,
           mode:'long',
           system:sysPrompt,
-          messages:[{role:'user',content:userMsg}]
+          messages:messages
         })
       });
     } catch(fe){

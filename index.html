@@ -67,10 +67,15 @@
         <!-- 슬라이드 N: 재미로 보는 운세 -->
         <div class="hero-slide" onclick="navFunUnse()"
           style="background:linear-gradient(145deg,rgba(20,50,30,.85),rgba(10,30,15,.9));border:1px solid rgba(74,222,128,.25);border-top:1px solid rgba(74,222,128,.4);">
+          <div style="position:absolute;top:-30px;right:-30px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(74,222,128,.12),transparent 70%);pointer-events:none;"></div>
           <div style="font-size:11px;color:rgba(74,222,128,.7);letter-spacing:2px;margin-bottom:10px;position:relative;z-index:1;">✨ FUN FORTUNE</div>
-          <div class="hero-title" style="color:#bbf7d0;">다이어트 할 수 있을까?<br>전생 직업은 뭘까? 🤔</div>
-          <div class="hero-sub" style="color:rgba(187,247,208,.55);">사주로 보는 소소하고<br>재미있는 이야기들</div>
-          <div class="hero-btn" style="background:rgba(74,222,128,.15);border-color:rgba(74,222,128,.45);color:#4ade80;">✨ 재미로 보기 ›</div>
+          <div class="hero-title" style="color:#bbf7d0;position:relative;z-index:1;">나는 다이어트를<br>할 수 있을까? 🥗</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin:10px 0;position:relative;z-index:1;">
+            <span style="font-size:11px;background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.3);color:#86efac;border-radius:20px;padding:3px 10px;"># 전생에 나는 누구?</span>
+            <span style="font-size:11px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.2);color:#86efac;border-radius:20px;padding:3px 10px;"># 내 연애 유형</span>
+            <span style="font-size:11px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.2);color:#86efac;border-radius:20px;padding:3px 10px;"># 횡재수 언제?</span>
+          </div>
+          <div class="hero-btn" style="background:rgba(74,222,128,.15);border-color:rgba(74,222,128,.45);color:#4ade80;position:relative;z-index:1;">✨ 재미로 보기 ›</div>
         </div>
       </div>
       <!-- 좌우 화살표 -->
@@ -390,7 +395,7 @@
       <button onclick="navFunUnse()" style="width:100%;height:44px;margin-top:8px;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);border-radius:14px;color:rgba(74,222,128,.8);font-size:13px;cursor:pointer;font-family:Pretendard;">✨ 재미운세 전체 보기 →</button>
     </div>
 
-padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(242,237,228,.12);line-height:1.9;word-break:keep-all;">본 서비스는 오락·참고 목적이며 과학적 근거를 보장하지 않습니다.</div></div>
+    <div style="padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(242,237,228,.12);line-height:1.9;word-break:keep-all;">본 서비스는 오락·참고 목적이며 과학적 근거를 보장하지 않습니다.</div></div>
   </div>
 </div>
 
@@ -428,7 +433,6 @@ padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(2
             <div class="fun-card-title">올해 내 연애 유형</div>
             <div class="fun-card-desc">집착형? 쿨한척형? 카드가 알고 있어</div>
           </div>
-          <div class="fun-card-badge fun-badge-free">광고</div>
         </div>
         <div onclick="funUnseAsk('love',1)" class="fun-card" style="border-color:rgba(244,114,182,.2);">
           <div class="fun-card-ico" style="background:rgba(244,114,182,.08);">👫</div>
@@ -436,7 +440,6 @@ padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(2
             <div class="fun-card-title">전생 인연 분석</div>
             <div class="fun-card-desc">이 사람과 나, 전생에 무슨 사이?</div>
           </div>
-          <div class="fun-card-badge fun-badge-paid">💎 1</div>
         </div>
         <div onclick="funUnseAsk('love',2)" class="fun-card" style="border-color:rgba(244,114,182,.2);">
           <div class="fun-card-ico" style="background:rgba(244,114,182,.08);">💔</div>
@@ -444,7 +447,6 @@ padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(2
             <div class="fun-card-title">전 남친/여친 지금 뭐하나?</div>
             <div class="fun-card-desc">사주로 보는 그 사람의 현재</div>
           </div>
-          <div class="fun-card-badge fun-badge-paid">💎 1</div>
         </div>
         <div onclick="funUnseAsk('love',3)" class="fun-card" style="border-color:rgba(244,114,182,.2);">
           <div class="fun-card-ico" style="background:rgba(244,114,182,.08);">💍</div>
@@ -452,7 +454,6 @@ padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(2
             <div class="fun-card-title">결혼 시기 사주</div>
             <div class="fun-card-desc">언제쯤 결혼할 운인가</div>
           </div>
-          <div class="fun-card-badge fun-badge-paid">💎 1</div>
         </div>
       </div>
 
@@ -465,7 +466,6 @@ padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(2
             <div class="fun-card-title">다이어트 사주</div>
             <div class="fun-card-desc">내 사주로 보는 최적 다이어트 방법</div>
           </div>
-          <div class="fun-card-badge fun-badge-free">광고</div>
         </div>
         <div onclick="funUnseAsk('beauty',1)" class="fun-card" style="border-color:rgba(74,222,128,.2);">
           <div class="fun-card-ico" style="background:rgba(74,222,128,.07);">💄</div>
@@ -473,7 +473,6 @@ padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(2
             <div class="fun-card-title">사주로 보는 퍼스널 컬러</div>
             <div class="fun-card-desc">내 사주 오행이 알려주는 나만의 컬러</div>
           </div>
-          <div class="fun-card-badge fun-badge-paid">💎 1</div>
         </div>
         <div onclick="funUnseAsk('beauty',2)" class="fun-card" style="border-color:rgba(74,222,128,.2);">
           <div class="fun-card-ico" style="background:rgba(74,222,128,.07);">💪</div>
@@ -481,7 +480,6 @@ padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(2
             <div class="fun-card-title">운동 사주</div>
             <div class="fun-card-desc">헬스? 요가? 수영? 내게 맞는 운동</div>
           </div>
-          <div class="fun-card-badge fun-badge-paid">💎 1</div>
         </div>
       </div>
 
@@ -494,7 +492,6 @@ padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(2
             <div class="fun-card-title">올해 횡재수 언제?</div>
             <div class="fun-card-desc">돈이 들어오는 시기 사주 분석</div>
           </div>
-          <div class="fun-card-badge fun-badge-free">광고</div>
         </div>
         <div onclick="funUnseAsk('money',1)" class="fun-card" style="border-color:rgba(240,192,96,.2);">
           <div class="fun-card-ico" style="background:rgba(240,192,96,.07);">🎰</div>
@@ -502,7 +499,6 @@ padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(2
             <div class="fun-card-title">나는 투자형? 저축형?</div>
             <div class="fun-card-desc">사주로 보는 내 돈 쓰는 유형</div>
           </div>
-          <div class="fun-card-badge fun-badge-paid">💎 1</div>
         </div>
         <div onclick="funUnseAsk('money',2)" class="fun-card" style="border-color:rgba(240,192,96,.2);">
           <div class="fun-card-ico" style="background:rgba(240,192,96,.07);">🧑‍💼</div>
@@ -510,7 +506,6 @@ padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(2
             <div class="fun-card-title">내 전생 직업</div>
             <div class="fun-card-desc">"당신은 전생에 왕이었습니다"</div>
           </div>
-          <div class="fun-card-badge fun-badge-paid">💎 1</div>
         </div>
       </div>
 
@@ -523,7 +518,6 @@ padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(2
             <div class="fun-card-title">오늘 뭐 먹을까?</div>
             <div class="fun-card-desc">사주로 보는 오늘의 음식 운</div>
           </div>
-          <div class="fun-card-badge fun-badge-free">광고</div>
         </div>
         <div onclick="funUnseAsk('daily',1)" class="fun-card" style="border-color:rgba(96,165,250,.2);">
           <div class="fun-card-ico" style="background:rgba(96,165,250,.07);">😴</div>
@@ -531,7 +525,6 @@ padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(2
             <div class="fun-card-title">내 수면 유형 사주</div>
             <div class="fun-card-desc">왜 나는 밤에 잠이 안 올까</div>
           </div>
-          <div class="fun-card-badge fun-badge-paid">💎 1</div>
         </div>
         <div onclick="funUnseAsk('daily',2)" class="fun-card" style="border-color:rgba(96,165,250,.2);">
           <div class="fun-card-ico" style="background:rgba(96,165,250,.07);">🧬</div>
@@ -539,7 +532,6 @@ padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(2
             <div class="fun-card-title">내 전생 신분</div>
             <div class="fun-card-desc">귀족? 무사? 농부? 내 전생은?</div>
           </div>
-          <div class="fun-card-badge fun-badge-paid">💎 1</div>
         </div>
         <div onclick="funUnseAsk('daily',3)" class="fun-card" style="border-color:rgba(96,165,250,.2);">
           <div class="fun-card-ico" style="background:rgba(96,165,250,.07);">🌍</div>
@@ -547,7 +539,6 @@ padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(2
             <div class="fun-card-title">내 사주로 보는 여행지</div>
             <div class="fun-card-desc">가장 잘 맞는 나라와 도시는?</div>
           </div>
-          <div class="fun-card-badge fun-badge-paid">💎 1</div>
         </div>
         <div onclick="funUnseAsk('daily',4)" class="fun-card" style="border-color:rgba(96,165,250,.2);">
           <div class="fun-card-ico" style="background:rgba(96,165,250,.07);">🐶</div>
@@ -555,7 +546,6 @@ padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(2
             <div class="fun-card-title">사주로 보는 반려동물</div>
             <div class="fun-card-desc">강아지? 고양이? 나한테 맞는 동물</div>
           </div>
-          <div class="fun-card-badge fun-badge-paid">💎 1</div>
         </div>
       </div>
 
@@ -1655,7 +1645,7 @@ padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(2
         <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;" id="zDashaQList">
           <button onclick="zDashaAsk(0)" style="display:flex;align-items:center;justify-content:space-between;text-align:left;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;color:var(--text);font-size:13px;cursor:pointer;font-family:Pretendard;width:100%;gap:10px;">
             <span style="font-weight:600;">🪐 지금 내 다샤 시기 종합 분석</span>
-            <span style="font-size:10px;background:rgba(74,222,128,.12);color:rgba(74,222,128,.8);border:1px solid rgba(74,222,128,.3);border-radius:20px;padding:3px 9px;white-space:nowrap;flex-shrink:0;">광고 후 무료</span>
+            <span style="font-size:10px;background:rgba(74,222,128,.12);color:#4ade80;border:1px solid rgba(74,222,128,.3);border-radius:20px;padding:3px 9px;white-space:nowrap;flex-shrink:0;">광고 후 무료</span>
           </button>
           <button onclick="zDashaAsk(1)" style="display:flex;align-items:center;justify-content:space-between;text-align:left;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;color:var(--text);font-size:13px;cursor:pointer;font-family:Pretendard;width:100%;gap:10px;">
             <span style="font-weight:600;">💫 다샤로 보는 연애·인연 운</span>

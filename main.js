@@ -1632,7 +1632,7 @@ setInterval(function(){
 
 
 /* ══ 히어로 캐러셀 ══ */
-var _heroIdx=0,_heroTimer=null,_heroStartX=0,_heroTotal=3;
+var _heroIdx=0,_heroTimer=null,_heroStartX=0,_heroTotal=4;
 var _skipUnseBlur=false; // 메인 광고 후 블러 스킵 플래그
 setTimeout(function(){
   _heroStart();

@@ -842,9 +842,12 @@ async function zDashaAsk(idx){
     if(!zCheckNatalFreeUnlock()){
       adSuccessCallback=function(){
         _zAdUnlockedSession=true;
+        // 콜백 시점에 DOM 다시 가져오기 (모달 닫힌 후)
+        var lo2=document.getElementById('zDashaLoading');
+        var re2=document.getElementById('zDashaResult');
         var c=localStorage.getItem(cacheKey);
-        if(c){if(re){re.style.display='block';re.innerHTML=c;}if(re)re.scrollIntoView({behavior:'smooth',block:'start'});}
-        else{_zDoDashaFetch(idx,def,profId,cacheKey,lo,re);}
+        if(c){if(re2){re2.style.display='block';re2.innerHTML=c;}if(re2)re2.scrollIntoView({behavior:'smooth',block:'start'});}
+        else{if(lo2)lo2.style.display='block';_zDoDashaFetch(idx,def,profId,cacheKey,lo2,re2);}
       };
       var modal=document.getElementById('adModal');
       if(modal) modal.classList.add('show');

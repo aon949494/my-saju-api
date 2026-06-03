@@ -582,11 +582,6 @@ padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(2
       <div id="ftHeroTitle" style="font-family:Gowun Dodum,serif;font-size:20px;font-weight:700;color:#fff;z-index:1;margin-top:12px;text-align:center;padding:0 20px;text-shadow:0 2px 12px rgba(0,0,0,.5);"></div>
     </div>
 
-    <!-- 중간 광고 -->
-    <div style="margin:0 16px 16px;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.1);height:100px;display:flex;align-items:center;justify-content:center;">
-      <div style="font-size:10px;color:var(--muted);letter-spacing:2px;">ADVERTISEMENT</div>
-    </div>
-
     <!-- 설명 텍스트 -->
     <div id="ftDescArea" style="margin:0 16px 28px;padding:20px;background:rgba(255,255,255,.04);border-radius:20px;border:1px solid rgba(255,255,255,.08);">
       <div id="ftDescIcon" style="font-size:28px;margin-bottom:12px;"></div>
@@ -620,11 +615,6 @@ padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(2
       <div id="frHeroEmoji" style="font-size:90px;z-index:1;filter:drop-shadow(0 4px 32px rgba(0,0,0,.5));"></div>
       <div id="frHeroTitle" style="font-family:Gowun Dodum,serif;font-size:22px;font-weight:700;color:#fff;z-index:1;margin-top:16px;text-align:center;padding:0 24px;text-shadow:0 2px 16px rgba(0,0,0,.5);"></div>
       <div id="frHeroSub" style="font-size:12px;color:rgba(255,255,255,.6);z-index:1;margin-top:6px;text-align:center;"></div>
-    </div>
-
-    <!-- 중간 광고 -->
-    <div style="margin:0 16px 16px;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.1);height:100px;display:flex;align-items:center;justify-content:center;">
-      <div style="font-size:10px;color:var(--muted);letter-spacing:2px;">ADVERTISEMENT</div>
     </div>
 
     <!-- AI 풀이 -->
@@ -1663,10 +1653,18 @@ padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(2
         <div id="zDashaTimeline" style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;"></div>
         <div style="font-size:11px;color:var(--muted);letter-spacing:1px;margin-bottom:8px;padding-left:4px;">다샤 기반 AI 리딩</div>
         <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;" id="zDashaQList">
-          <button onclick="zDashaAsk(0)" style="text-align:left;padding:12px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;color:var(--dim);font-size:13px;cursor:pointer;font-family:Pretendard;">🪐 지금 내 다샤 시기 종합 분석</button>
-          <button onclick="zDashaAsk(1)" style="text-align:left;padding:12px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;color:var(--dim);font-size:13px;cursor:pointer;font-family:Pretendard;">💫 다샤로 보는 연애·인연 운</button>
-          <button onclick="zDashaAsk(2)" style="text-align:left;padding:12px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;color:var(--dim);font-size:13px;cursor:pointer;font-family:Pretendard;">💰 다샤로 보는 재물·직업 운</button>
-          <button onclick="zDashaAsk(3)" style="text-align:left;padding:12px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(139,92,246,.2);border-radius:14px;color:rgba(220,200,255,.8);font-size:13px;cursor:pointer;font-family:Pretendard;">🔮 라후·케투 카르마 심층 분석</button>
+          <button onclick="zDashaAsk(0)" style="display:flex;align-items:center;justify-content:space-between;text-align:left;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;color:var(--text);font-size:13px;cursor:pointer;font-family:Pretendard;width:100%;gap:10px;">
+            <span style="font-weight:600;">🪐 지금 내 다샤 시기 종합 분석</span>
+            <span style="font-size:10px;background:rgba(74,222,128,.12);color:rgba(74,222,128,.8);border:1px solid rgba(74,222,128,.3);border-radius:20px;padding:3px 9px;white-space:nowrap;flex-shrink:0;">광고 후 무료</span>
+          </button>
+          <button onclick="zDashaAsk(1)" style="display:flex;align-items:center;justify-content:space-between;text-align:left;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;color:var(--text);font-size:13px;cursor:pointer;font-family:Pretendard;width:100%;gap:10px;">
+            <span style="font-weight:600;">💫 다샤로 보는 연애·인연 운</span>
+            <span style="font-size:10px;background:rgba(240,192,96,.1);color:var(--gold2);border:1px solid rgba(240,192,96,.25);border-radius:20px;padding:3px 9px;white-space:nowrap;flex-shrink:0;">💎 1</span>
+          </button>
+          <button onclick="zDashaAsk(2)" style="display:flex;align-items:center;justify-content:space-between;text-align:left;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;color:var(--text);font-size:13px;cursor:pointer;font-family:Pretendard;width:100%;gap:10px;">
+            <span style="font-weight:600;">💰 다샤로 보는 재물·직업 운</span>
+            <span style="font-size:10px;background:rgba(240,192,96,.1);color:var(--gold2);border:1px solid rgba(240,192,96,.25);border-radius:20px;padding:3px 9px;white-space:nowrap;flex-shrink:0;">💎 1</span>
+          </button>;font-family:Pretendard;">🔮 라후·케투 카르마 심층 분석</button>
         </div>
         <div id="zDashaLoading" style="display:none;text-align:center;padding:20px;color:var(--muted);font-size:13px;"><div class="aidots" style="justify-content:center;margin-bottom:8px;"><span></span><span></span><span></span></div>별자리를 읽는 중...</div>
         <div id="zDashaResult" style="display:none;background:rgba(16,10,36,.85);border:1px solid rgba(168,85,247,.2);border-radius:20px;padding:18px;font-size:13px;color:var(--dim);line-height:1.9;"></div>

@@ -45,7 +45,12 @@ function goBack(){
   if(active&&active.id==='zodiacScreen') _zAdUnlockedSession=false;
   _screenStack.pop();
   var prev=_screenStack.length>0?_screenStack[_screenStack.length-1]:'mainScreen';
-  goScreen(prev);
+  // goScreen 호출 시 스택에 또 push되므로 직접 화면 전환
+  var screens=document.querySelectorAll('.screen');
+  for(var i=0;i<screens.length;i++){screens[i].classList.remove('active');screens[i].classList.add('hidden');}
+  var el=document.getElementById(prev);
+  if(el){el.classList.remove('hidden');el.classList.add('active');el.scrollTop=0;}
+  if(prev==='mainScreen') setTimeout(updateMainTodayCard,100);
 }
 
 function navSaju(){

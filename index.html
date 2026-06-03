@@ -348,6 +348,187 @@
   </div>
 </div>
 
+
+<!-- ══ 재미 운세 화면 ══ -->
+<div id="funUnseScreen" class="screen hidden">
+  <div class="app">
+    <!-- 상단바 -->
+    <div style="display:flex;align-items:center;padding:16px 16px 12px;position:sticky;top:0;z-index:10;background:rgba(7,7,26,.85);backdrop-filter:blur(16px);">
+      <button class="back-btn" onclick="goBack()">‹</button>
+      <div style="flex:1;text-align:center;">
+        <div style="font-family:Gowun Dodum,serif;font-size:16px;color:var(--text);font-weight:700;">재미로 보는 운세 ✨</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px;">내 사주로 알아보는 소소한 것들</div>
+      </div>
+      <div style="width:36px;"></div>
+    </div>
+
+    <!-- 카테고리 탭 -->
+    <div style="display:flex;gap:0;background:rgba(255,255,255,.05);border-radius:14px;overflow:hidden;margin:0 16px 16px;flex-shrink:0;">
+      <button id="ftab-love" onclick="funSwitchTab('love')" style="flex:1;height:38px;font-size:11px;background:rgba(139,92,246,.3);border:none;color:var(--text);cursor:pointer;font-family:Pretendard;font-weight:700;border-radius:14px;">💕 연애</button>
+      <button id="ftab-beauty" onclick="funSwitchTab('beauty')" style="flex:1;height:38px;font-size:11px;background:transparent;border:none;color:var(--dim);cursor:pointer;font-family:Pretendard;">🥗 외모</button>
+      <button id="ftab-money" onclick="funSwitchTab('money')" style="flex:1;height:38px;font-size:11px;background:transparent;border:none;color:var(--dim);cursor:pointer;font-family:Pretendard;">💰 돈/직업</button>
+      <button id="ftab-daily" onclick="funSwitchTab('daily')" style="flex:1;height:38px;font-size:11px;background:transparent;border:none;color:var(--dim);cursor:pointer;font-family:Pretendard;">🍕 일상</button>
+    </div>
+
+    <!-- 탭 컨텐츠 -->
+    <div style="overflow-y:auto;flex:1;padding:0 16px 100px;">
+
+      <!-- 💕 연애/관계 -->
+      <div id="fcontent-love">
+        <div style="font-size:10px;color:rgba(244,114,182,.6);letter-spacing:3px;font-weight:700;margin-bottom:12px;">LOVE &amp; RELATIONSHIP</div>
+        <div onclick="funUnseAsk('love',0)" class="fun-card" style="border-color:rgba(244,114,182,.3);">
+          <div class="fun-card-ico" style="background:rgba(244,114,182,.12);">💕</div>
+          <div class="fun-card-body">
+            <div class="fun-card-title">올해 내 연애 유형</div>
+            <div class="fun-card-desc">집착형? 쿨한척형? 카드가 알고 있어</div>
+          </div>
+          <div class="fun-card-badge fun-badge-free">광고</div>
+        </div>
+        <div onclick="funUnseAsk('love',1)" class="fun-card" style="border-color:rgba(244,114,182,.2);">
+          <div class="fun-card-ico" style="background:rgba(244,114,182,.08);">👫</div>
+          <div class="fun-card-body">
+            <div class="fun-card-title">전생 인연 분석</div>
+            <div class="fun-card-desc">이 사람과 나, 전생에 무슨 사이?</div>
+          </div>
+          <div class="fun-card-badge fun-badge-paid">💎 1</div>
+        </div>
+        <div onclick="funUnseAsk('love',2)" class="fun-card" style="border-color:rgba(244,114,182,.2);">
+          <div class="fun-card-ico" style="background:rgba(244,114,182,.08);">💔</div>
+          <div class="fun-card-body">
+            <div class="fun-card-title">전 남친/여친 지금 뭐하나?</div>
+            <div class="fun-card-desc">사주로 보는 그 사람의 현재</div>
+          </div>
+          <div class="fun-card-badge fun-badge-paid">💎 1</div>
+        </div>
+        <div onclick="funUnseAsk('love',3)" class="fun-card" style="border-color:rgba(244,114,182,.2);">
+          <div class="fun-card-ico" style="background:rgba(244,114,182,.08);">💍</div>
+          <div class="fun-card-body">
+            <div class="fun-card-title">결혼 시기 사주</div>
+            <div class="fun-card-desc">언제쯤 결혼할 운인가</div>
+          </div>
+          <div class="fun-card-badge fun-badge-paid">💎 1</div>
+        </div>
+      </div>
+
+      <!-- 🥗 외모/자기계발 -->
+      <div id="fcontent-beauty" style="display:none;">
+        <div style="font-size:10px;color:rgba(74,222,128,.6);letter-spacing:3px;font-weight:700;margin-bottom:12px;">BEAUTY &amp; SELF-CARE</div>
+        <div onclick="funUnseAsk('beauty',0)" class="fun-card" style="border-color:rgba(74,222,128,.3);">
+          <div class="fun-card-ico" style="background:rgba(74,222,128,.1);">🥗</div>
+          <div class="fun-card-body">
+            <div class="fun-card-title">다이어트 사주</div>
+            <div class="fun-card-desc">내 사주로 보는 최적 다이어트 방법</div>
+          </div>
+          <div class="fun-card-badge fun-badge-free">광고</div>
+        </div>
+        <div onclick="funUnseAsk('beauty',1)" class="fun-card" style="border-color:rgba(74,222,128,.2);">
+          <div class="fun-card-ico" style="background:rgba(74,222,128,.07);">💄</div>
+          <div class="fun-card-body">
+            <div class="fun-card-title">사주로 보는 퍼스널 컬러</div>
+            <div class="fun-card-desc">내 사주 오행이 알려주는 나만의 컬러</div>
+          </div>
+          <div class="fun-card-badge fun-badge-paid">💎 1</div>
+        </div>
+        <div onclick="funUnseAsk('beauty',2)" class="fun-card" style="border-color:rgba(74,222,128,.2);">
+          <div class="fun-card-ico" style="background:rgba(74,222,128,.07);">💪</div>
+          <div class="fun-card-body">
+            <div class="fun-card-title">운동 사주</div>
+            <div class="fun-card-desc">헬스? 요가? 수영? 내게 맞는 운동</div>
+          </div>
+          <div class="fun-card-badge fun-badge-paid">💎 1</div>
+        </div>
+      </div>
+
+      <!-- 💰 돈/직업 -->
+      <div id="fcontent-money" style="display:none;">
+        <div style="font-size:10px;color:rgba(240,192,96,.6);letter-spacing:3px;font-weight:700;margin-bottom:12px;">MONEY &amp; CAREER</div>
+        <div onclick="funUnseAsk('money',0)" class="fun-card" style="border-color:rgba(240,192,96,.3);">
+          <div class="fun-card-ico" style="background:rgba(240,192,96,.1);">💰</div>
+          <div class="fun-card-body">
+            <div class="fun-card-title">올해 횡재수 언제?</div>
+            <div class="fun-card-desc">돈이 들어오는 시기 사주 분석</div>
+          </div>
+          <div class="fun-card-badge fun-badge-free">광고</div>
+        </div>
+        <div onclick="funUnseAsk('money',1)" class="fun-card" style="border-color:rgba(240,192,96,.2);">
+          <div class="fun-card-ico" style="background:rgba(240,192,96,.07);">🎰</div>
+          <div class="fun-card-body">
+            <div class="fun-card-title">나는 투자형? 저축형?</div>
+            <div class="fun-card-desc">사주로 보는 내 돈 쓰는 유형</div>
+          </div>
+          <div class="fun-card-badge fun-badge-paid">💎 1</div>
+        </div>
+        <div onclick="funUnseAsk('money',2)" class="fun-card" style="border-color:rgba(240,192,96,.2);">
+          <div class="fun-card-ico" style="background:rgba(240,192,96,.07);">🧑‍💼</div>
+          <div class="fun-card-body">
+            <div class="fun-card-title">내 전생 직업</div>
+            <div class="fun-card-desc">"당신은 전생에 왕이었습니다"</div>
+          </div>
+          <div class="fun-card-badge fun-badge-paid">💎 1</div>
+        </div>
+      </div>
+
+      <!-- 🍕 일상/재미 -->
+      <div id="fcontent-daily" style="display:none;">
+        <div style="font-size:10px;color:rgba(96,165,250,.6);letter-spacing:3px;font-weight:700;margin-bottom:12px;">DAILY FORTUNE</div>
+        <div onclick="funUnseAsk('daily',0)" class="fun-card" style="border-color:rgba(96,165,250,.3);">
+          <div class="fun-card-ico" style="background:rgba(96,165,250,.1);">🍕</div>
+          <div class="fun-card-body">
+            <div class="fun-card-title">오늘 뭐 먹을까?</div>
+            <div class="fun-card-desc">사주로 보는 오늘의 음식 운</div>
+          </div>
+          <div class="fun-card-badge fun-badge-free">광고</div>
+        </div>
+        <div onclick="funUnseAsk('daily',1)" class="fun-card" style="border-color:rgba(96,165,250,.2);">
+          <div class="fun-card-ico" style="background:rgba(96,165,250,.07);">😴</div>
+          <div class="fun-card-body">
+            <div class="fun-card-title">내 수면 유형 사주</div>
+            <div class="fun-card-desc">왜 나는 밤에 잠이 안 올까</div>
+          </div>
+          <div class="fun-card-badge fun-badge-paid">💎 1</div>
+        </div>
+        <div onclick="funUnseAsk('daily',2)" class="fun-card" style="border-color:rgba(96,165,250,.2);">
+          <div class="fun-card-ico" style="background:rgba(96,165,250,.07);">🧬</div>
+          <div class="fun-card-body">
+            <div class="fun-card-title">내 전생 신분</div>
+            <div class="fun-card-desc">귀족? 무사? 농부? 내 전생은?</div>
+          </div>
+          <div class="fun-card-badge fun-badge-paid">💎 1</div>
+        </div>
+        <div onclick="funUnseAsk('daily',3)" class="fun-card" style="border-color:rgba(96,165,250,.2);">
+          <div class="fun-card-ico" style="background:rgba(96,165,250,.07);">🌍</div>
+          <div class="fun-card-body">
+            <div class="fun-card-title">내 사주로 보는 여행지</div>
+            <div class="fun-card-desc">가장 잘 맞는 나라와 도시는?</div>
+          </div>
+          <div class="fun-card-badge fun-badge-paid">💎 1</div>
+        </div>
+        <div onclick="funUnseAsk('daily',4)" class="fun-card" style="border-color:rgba(96,165,250,.2);">
+          <div class="fun-card-ico" style="background:rgba(96,165,250,.07);">🐶</div>
+          <div class="fun-card-body">
+            <div class="fun-card-title">사주로 보는 반려동물</div>
+            <div class="fun-card-desc">강아지? 고양이? 나한테 맞는 동물</div>
+          </div>
+          <div class="fun-card-badge fun-badge-paid">💎 1</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 결과 모달 -->
+    <div id="funUnseResultModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;overflow-y:auto;padding:24px 16px;">
+      <div style="max-width:420px;margin:0 auto;background:linear-gradient(160deg,rgba(22,10,60,.98),rgba(7,7,26,.98));border:1px solid rgba(139,92,246,.3);border-radius:24px;padding:24px 20px;min-height:200px;position:relative;">
+        <button onclick="closeFunUnseResult()" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,.08);border:none;color:var(--dim);width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;">×</button>
+        <div id="funUnseResultTitle" style="font-family:Gowun Dodum,serif;font-size:17px;color:var(--gold2);font-weight:700;margin-bottom:4px;padding-right:36px;"></div>
+        <div id="funUnseResultDesc" style="font-size:11px;color:var(--muted);margin-bottom:20px;"></div>
+        <div id="funUnseLoading" style="display:none;text-align:center;padding:40px 0;"><div class="aidots"><span></span><span></span><span></span></div></div>
+        <div id="funUnseResult" style="font-size:14px;color:var(--text);line-height:1.85;"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <div id="unseScreen" class="screen hidden">
   <div class="app">
     <div class="topbar">
@@ -631,6 +812,9 @@
   </button>
   <button class="nav-item" id="nav-unse" onclick="navUnseHome()">
     <span class="nav-ico">☀️</span><span class="nav-lbl">운세</span><span class="nav-dot"></span>
+  </button>
+  <button class="nav-item" id="nav-funUnse" onclick="navFunUnse()">
+    <span class="nav-ico">✨</span><span class="nav-lbl">재미운세</span><span class="nav-dot"></span>
   </button>
   <button class="nav-item" id="nav-bokchae" onclick="navBokchae()">
     <span class="nav-ico">💎</span><span class="nav-lbl">복채</span><span class="nav-dot"></span>

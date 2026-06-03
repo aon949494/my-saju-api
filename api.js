@@ -1262,51 +1262,74 @@ var AppState = {
 
 
 // ══════════════════════════════════════
-// 재미로 보는 운세
+// 재미로 보는 운세 (완전 무료)
 // ══════════════════════════════════════
 
 var _funUnsePrompts = {
   love: [
-    { title:'올해 내 연애 유형', desc:'집착형? 쿨한척형? 카드가 알고 있어',
-      prompt:'이 사람의 사주를 보고 2026년 연애 유형을 분석해줘. 집착형/쿨한척형/감정표현형/도망형/밀당형 중 어떤 유형인지 재미있고 정확하게. 왜 그런 유형인지 사주 근거와 함께. 실제 연애할 때 주의할 점도. 가볍고 재미있는 톤으로 한국어. 500자 이상.' },
-    { title:'전생 인연 분석', desc:'이 사람과 나, 전생에 무슨 사이?',
-      prompt:'이 사주를 가진 사람의 전생 인연 패턴을 분석해줘. 전생에서 어떤 관계로 얽혔을지 (스승과 제자, 원수, 연인, 부모자식 등), 그 업보가 현생에서 어떻게 나타나는지. 재미있지만 그럴듯하게. 한국어 500자 이상.' },
-    { title:'전 남친/여친 지금 뭐하나?', desc:'사주로 보는 그 사람의 현재',
-      prompt:'이 사주를 가진 사람의 연애 이별 후 상대방 에너지를 사주로 읽어줘. 전 연인이 지금 어떤 감정 상태일지, 새로운 사람을 만났을지, 돌아올 가능성이 있는지. 재미있고 위로가 되는 톤으로. 한국어 500자 이상.' },
-    { title:'결혼 시기 사주', desc:'언제쯤 결혼할 운인가',
-      prompt:'이 사주로 결혼 시기를 분석해줘. 언제 결혼 운이 강한지 (몇 살 전후), 어떤 사람을 만나면 좋은지, 결혼 전 반드시 체크해야 할 것들. 구체적이고 현실적으로. 한국어 500자 이상.' }
+    { title:'올해 내 연애 유형', emoji:'💕', desc:'올해 당신의 연애 스타일을 사주가 낱낱이 꿰뚫어 드릴게요. 집착형인지, 쿨한 척 숨기는 타입인지, 아니면 감정 표현이 서툰 건지... 카드는 이미 알고 있어요.',
+      heroTitle:'올해 나의\n연애 유형은?', heroSub:'집착형? 쿨한척형?',
+      prompt:'이 사람의 사주를 보고 2026년 연애 유형을 분석해줘. 집착형/쿨한척형/감정표현형/도망형/밀당형 중 어떤 유형인지 재미있고 정확하게. 왜 그런 유형인지 사주 근거와 함께. 실제 연애할 때 주의할 점도. 가볍고 공감되는 톤으로. 이모지 적절히. 500자 이상.' },
+    { title:'전생 인연 분석', emoji:'👫', desc:'이 사람과 나, 우리는 전생에서도 만난 사이일까요? 스승과 제자였을 수도, 평생 원수였을 수도 있어요. 사주에 남아있는 전생의 흔적을 읽어드릴게요.',
+      heroTitle:'전생에서\n우리의 관계는?', heroSub:'업보가 현생으로 이어진다',
+      prompt:'이 사주를 가진 사람의 전생 인연 패턴을 분석해줘. 전생에서 어떤 관계로 얽혔을지, 그 업보가 현생에서 어떻게 나타나는지. 재미있지만 그럴듯하게. 공감되는 톤. 이모지 적절히. 500자 이상.' },
+    { title:'전 남친/여친 지금 뭐하나?', emoji:'💔', desc:'궁금하죠? 사주는 거짓말을 하지 않아요. 그 사람이 지금 어떤 감정인지, 새로운 사람을 만났는지, 아직 미련이 남아있는지 읽어드릴게요.',
+      heroTitle:'그 사람은 지금\n어디서 뭘 할까?', heroSub:'사주가 보여주는 그 사람의 현재',
+      prompt:'이 사주를 가진 사람의 연애 이별 후 상대방 에너지를 사주로 읽어줘. 전 연인이 지금 어떤 감정 상태일지, 새로운 사람을 만났을지, 돌아올 가능성이 있는지. 재미있고 위로가 되는 톤. 이모지 적절히. 500자 이상.' },
+    { title:'결혼 시기 사주', emoji:'💍', desc:'사주에는 결혼의 기운이 담겨 있어요. 언제쯤 결혼 운이 무르익는지, 어떤 사람을 만나면 좋은지, 미리 알고 준비하면 어떨까요?',
+      heroTitle:'나는 언제쯤\n결혼할 수 있을까?', heroSub:'사주가 알려주는 결혼 시기',
+      prompt:'이 사주로 결혼 시기를 분석해줘. 언제 결혼 운이 강한지, 어떤 사람을 만나면 좋은지, 결혼 전 반드시 체크해야 할 것들. 구체적이고 현실적으로. 이모지 적절히. 500자 이상.' }
   ],
   beauty: [
-    { title:'다이어트 사주', desc:'내 사주로 보는 최적 다이어트 방법',
-      prompt:'이 사주로 다이어트 유형을 분석해줘. 오행 기준으로 어떤 다이어트 방법이 맞는지 (간헐적 단식, 저탄고지, 운동 위주 등), 살이 찌는 이유를 사주에서 찾아주고, 성공하기 위한 맞춤 조언. 실용적이고 재미있게. 한국어 500자 이상.' },
-    { title:'사주로 보는 퍼스널 컬러', desc:'내 사주 오행이 알려주는 나만의 컬러',
-      prompt:'이 사주의 오행 분포를 보고 퍼스널 컬러를 분석해줘. 강한 오행과 부족한 오행에 맞는 색상, 피해야 할 색상, 옷이나 소품에 어떻게 활용하면 좋은지. 패션 어드바이스도 포함. 재미있고 실용적으로. 한국어 500자 이상.' },
-    { title:'운동 사주', desc:'헬스? 요가? 수영? 내게 맞는 운동',
-      prompt:'이 사주로 최적의 운동을 분석해줘. 오행과 일간을 기준으로 어떤 종류의 운동이 맞는지, 운동하기 좋은 시간대, 지속하기 위한 동기부여 방법. 구체적인 운동 추천과 이유. 한국어 500자 이상.' }
+    { title:'다이어트 사주', emoji:'🥗', desc:'왜 나는 먹는 것만 봐도 살이 찔까요? 아니면 왜 열심히 해도 안 빠질까요? 사주 오행이 내 체질과 다이어트 성공 여부를 이미 알고 있어요.',
+      heroTitle:'내 사주로 보는\n다이어트 성공법', heroSub:'왜 나만 살이 안 빠질까?',
+      prompt:'이 사주로 다이어트 유형을 분석해줘. 오행 기준으로 어떤 다이어트 방법이 맞는지, 살이 찌는 이유를 사주에서 찾아주고, 성공하기 위한 맞춤 조언. 실용적이고 재미있게. 이모지 적절히. 500자 이상.' },
+    { title:'사주로 보는 퍼스널 컬러', emoji:'💄', desc:'봄/여름/가을/겨울 퍼스널 컬러 진단, 해봤나요? 사주 오행에는 이미 당신에게 맞는 색이 담겨 있어요. 내 기운을 높여주는 컬러를 찾아드릴게요.',
+      heroTitle:'사주 오행으로 보는\n나의 퍼스널 컬러', heroSub:'내 기운을 높여주는 색은?',
+      prompt:'이 사주의 오행 분포를 보고 퍼스널 컬러를 분석해줘. 강한 오행과 부족한 오행에 맞는 색상, 피해야 할 색상, 옷이나 소품 활용법. 패션 어드바이스 포함. 재미있고 실용적으로. 이모지 적절히. 500자 이상.' },
+    { title:'운동 사주', emoji:'💪', desc:'헬스장에 등록만 하고 안 가는 이유가 사주에 있을 수도 있어요. 오행으로 보는 내 체질에 딱 맞는 운동이 있거든요. 오래 지속할 수 있는 운동을 찾아드릴게요.',
+      heroTitle:'내 체질에 맞는\n최적의 운동은?', heroSub:'헬스? 요가? 수영? 사주가 안다',
+      prompt:'이 사주로 최적의 운동을 분석해줘. 오행과 일간을 기준으로 어떤 종류의 운동이 맞는지, 운동하기 좋은 시간대, 지속하기 위한 동기부여 방법. 구체적인 운동 추천과 이유. 이모지 적절히. 500자 이상.' }
   ],
   money: [
-    { title:'올해 횡재수 언제?', desc:'돈이 들어오는 시기 사주 분석',
-      prompt:'이 사주로 2026년 재물운과 횡재수를 분석해줘. 언제 돈이 들어올 가능성이 높은지, 어떤 방식으로 (일, 투자, 뜻밖의 수입 등), 놓치지 않으려면 어떻게 해야 하는지. 구체적인 시기와 방법. 한국어 500자 이상.' },
-    { title:'나는 투자형? 저축형?', desc:'사주로 보는 내 돈 쓰는 유형',
-      prompt:'이 사주로 돈 쓰는 유형을 분석해줘. 투자형/저축형/충동구매형/베풂형 중 어떤 유형인지, 왜 그런지 사주 근거와 함께, 재정적으로 성공하려면 어떻게 해야 하는지. 재미있고 실용적으로. 한국어 500자 이상.' },
-    { title:'내 전생 직업', desc:'당신은 전생에 왕이었습니다',
-      prompt:'이 사주로 전생 직업과 신분을 분석해줘. 어떤 시대, 어떤 나라에서 무슨 일을 했는지, 그 흔적이 현생 직업관에 어떻게 나타나는지. 역사적 맥락과 함께 재미있고 그럴듯하게. 한국어 500자 이상.' }
+    { title:'올해 횡재수 언제?', emoji:'💰', desc:'2026년, 돈이 들어오는 시기가 있어요. 사주 재성(財星)의 흐름으로 횡재수가 강한 달과 방법을 알려드릴게요. 미리 알면 기회를 잡을 수 있어요.',
+      heroTitle:'올해 돈이\n들어오는 시기는?', heroSub:'재성의 흐름을 읽어드릴게요',
+      prompt:'이 사주로 2026년 재물운과 횡재수를 분석해줘. 언제 돈이 들어올 가능성이 높은지, 어떤 방식으로, 놓치지 않으려면 어떻게 해야 하는지. 구체적인 시기와 방법. 이모지 적절히. 500자 이상.' },
+    { title:'나는 투자형? 저축형?', emoji:'🎰', desc:'통장에 돈이 쌓이는 사람, 들어오는 족족 쓰는 사람... 이게 의지의 문제만은 아니에요. 사주에 이미 내 돈 쓰는 패턴이 새겨져 있거든요.',
+      heroTitle:'사주로 보는\n나의 돈 쓰는 유형', heroSub:'투자형? 저축형? 충동구매형?',
+      prompt:'이 사주로 돈 쓰는 유형을 분석해줘. 투자형/저축형/충동구매형/베풂형 중 어떤 유형인지, 왜 그런지 사주 근거와 함께, 재정적으로 성공하려면 어떻게 해야 하는지. 재미있고 실용적으로. 이모지 적절히. 500자 이상.' },
+    { title:'내 전생 직업', emoji:'🧑‍💼', desc:'현생에서 유독 끌리는 일이 있다면, 전생에서도 그 일을 했을 가능성이 높아요. 사주가 품고 있는 전생의 직업과 신분을 읽어드릴게요.',
+      heroTitle:'전생에서 나는\n어떤 일을 했을까?', heroSub:'"당신은 전생에 왕이었습니다"',
+      prompt:'이 사주로 전생 직업과 신분을 분석해줘. 어떤 시대, 어떤 나라에서 무슨 일을 했는지, 그 흔적이 현생 직업관에 어떻게 나타나는지. 역사적 맥락과 함께 재미있고 그럴듯하게. 이모지 적절히. 500자 이상.' }
   ],
   daily: [
-    { title:'오늘 뭐 먹을까?', desc:'사주로 보는 오늘의 음식 운',
-      prompt:'이 사주와 오늘 날짜의 일진을 보고 오늘 먹으면 좋은 음식을 추천해줘. 오행 기준으로 보충해야 할 에너지와 맞는 음식, 피해야 할 음식, 오늘의 음식 운 전반. 재미있고 실용적으로. 한국어 400자 이상.' },
-    { title:'내 수면 유형 사주', desc:'왜 나는 밤에 잠이 안 올까',
-      prompt:'이 사주로 수면 유형을 분석해줘. 왜 잠들기 어려운지/일찍 깨는지 사주 근거, 최적의 수면 시간대, 숙면을 위한 맞춤 조언. 과학적 설명과 사주 분석을 재미있게 결합해서. 한국어 500자 이상.' },
-    { title:'내 전생 신분', desc:'귀족? 무사? 농부? 내 전생은?',
-      prompt:'이 사주로 전생 신분을 분석해줘. 어떤 시대 어떤 나라에서 어떤 신분이었는지, 어떻게 살았는지, 그 기억이 현생 성격에 어떻게 남아있는지. 드라마틱하고 재미있게. 한국어 500자 이상.' },
-    { title:'내 사주로 보는 여행지', desc:'가장 잘 맞는 나라와 도시는?',
-      prompt:'이 사주로 가장 잘 맞는 여행지를 추천해줘. 오행과 성향을 기준으로 3곳 추천, 각 장소가 왜 맞는지, 가면 좋은 시기, 그 곳에서 특히 하면 좋은 것들. 설레는 톤으로. 한국어 500자 이상.' },
-    { title:'사주로 보는 반려동물', desc:'강아지? 고양이? 나한테 맞는 동물',
-      prompt:'이 사주로 가장 잘 맞는 반려동물을 분석해줘. 오행과 성향 기준으로 어떤 동물이 좋은 기운을 주는지, 견종이나 묘종도 구체적으로, 반려동물과의 관계가 사주에 미치는 영향. 따뜻하고 재미있게. 한국어 500자 이상.' }
+    { title:'오늘 뭐 먹을까?', emoji:'🍕', desc:'배고픈데 뭐 먹을지 모르겠다면 사주에게 물어보세요. 오늘 일진과 내 오행으로 보는 음식 운, 오늘 먹으면 기운이 올라가는 음식을 알려드릴게요.',
+      heroTitle:'사주로 보는\n오늘의 음식 운', heroSub:'지금 먹으면 좋은 음식은?',
+      prompt:'이 사주와 오늘 날짜의 에너지를 보고 오늘 먹으면 좋은 음식을 추천해줘. 오행 기준으로 보충해야 할 에너지와 맞는 음식, 피해야 할 음식. 재미있고 실용적으로. 이모지 적절히. 400자 이상.' },
+    { title:'내 수면 유형 사주', emoji:'😴', desc:'밤에 잠이 안 오는 데도 이유가 있어요. 사주 오행에서 수면 패턴이 보여요. 왜 나는 새벽까지 뒤척이는지, 혹은 왜 10시간 자도 피곤한지 알려드릴게요.',
+      heroTitle:'왜 나는 밤에\n잠이 안 올까?', heroSub:'사주로 보는 내 수면 유형',
+      prompt:'이 사주로 수면 유형을 분석해줘. 왜 잠들기 어려운지 사주 근거, 최적의 수면 시간대, 숙면을 위한 맞춤 조언. 공감되는 톤. 이모지 적절히. 500자 이상.' },
+    { title:'내 전생 신분', emoji:'🧬', desc:'역사 속 어딘가에 당신이 살았을 수도 있어요. 사주가 품고 있는 전생의 기억, 어떤 신분으로 어떤 삶을 살았는지 드라마틱하게 읽어드릴게요.',
+      heroTitle:'전생에서 나는\n어떤 신분이었을까?', heroSub:'귀족? 무사? 농부? 스님?',
+      prompt:'이 사주로 전생 신분을 분석해줘. 어떤 시대 어떤 나라에서 어떤 신분이었는지, 어떻게 살았는지, 그 기억이 현생 성격에 어떻게 남아있는지. 드라마틱하고 재미있게. 이모지 적절히. 500자 이상.' },
+    { title:'내 사주로 보는 여행지', emoji:'🌍', desc:'가면 기운이 올라가는 나라가 따로 있어요. 사주 오행과 방위(方位)를 기준으로 내 기운을 충전해줄 최고의 여행지를 찾아드릴게요.',
+      heroTitle:'사주가 추천하는\n나만의 여행지', heroSub:'가면 기운이 올라가는 나라는?',
+      prompt:'이 사주로 가장 잘 맞는 여행지를 추천해줘. 오행과 방위, 성향을 기준으로 3곳 추천, 각 장소가 왜 맞는지, 가면 좋은 시기. 설레는 톤. 이모지 적절히. 500자 이상.' },
+    { title:'사주로 보는 반려동물', emoji:'🐶', desc:'반려동물도 사주와 궁합이 맞아야 서로 행복해요. 내 오행에 좋은 기운을 주는 동물, 함께하면 운이 올라가는 반려동물을 찾아드릴게요.',
+      heroTitle:'나한테 딱 맞는\n반려동물은?', heroSub:'사주로 보는 나의 반려동물 궁합',
+      prompt:'이 사주로 가장 잘 맞는 반려동물을 분석해줘. 오행과 성향 기준으로 어떤 동물이 좋은 기운을 주는지, 견종이나 묘종도 구체적으로. 따뜻하고 재미있게. 이모지 적절히. 500자 이상.' }
   ]
 };
 
-var _funAdUnlocked = {};
+// 테마 그라디언트
+var _funThemes = {
+  love:   { bg:'linear-gradient(145deg,rgba(160,40,100,.9),rgba(90,10,60,.95))', border:'rgba(244,114,182,.4)', btnBg:'linear-gradient(135deg,#db2777,#9333ea)', accent:'#f9a8d4' },
+  beauty: { bg:'linear-gradient(145deg,rgba(10,80,50,.9),rgba(5,40,25,.95))',   border:'rgba(74,222,128,.4)',  btnBg:'linear-gradient(135deg,#16a34a,#0891b2)', accent:'#86efac' },
+  money:  { bg:'linear-gradient(145deg,rgba(100,70,5,.9),rgba(60,40,5,.95))',   border:'rgba(240,192,96,.4)',  btnBg:'linear-gradient(135deg,#d97706,#b45309)', accent:'#fde68a' },
+  daily:  { bg:'linear-gradient(145deg,rgba(20,50,100,.9),rgba(10,25,60,.95))', border:'rgba(96,165,250,.4)',  btnBg:'linear-gradient(135deg,#2563eb,#7c3aed)', accent:'#bfdbfe' }
+};
+
+var _curFunCategory='', _curFunIdx=0, _curFunItem=null, _funFetchDone=false, _funFetchResult='';
 
 function navFunUnse(){
   _curNav='funUnse';
@@ -1331,78 +1354,53 @@ function funSwitchTab(tab){
   });
 }
 
-function closeFunUnseResult(){
-  var modal=document.getElementById('funUnseResultModal');
-  if(modal) modal.style.display='none';
-}
-
-async function funUnseAsk(category, idx){
-  var def=getDefaultProfile();
-  if(!def){showToast('프로필을 먼저 추가해주세요');return;}
-
+function funUnseAsk(category, idx){
   var items=_funUnsePrompts[category];
   if(!items||!items[idx]) return;
   var item=items[idx];
+  var theme=_funThemes[category]||_funThemes.love;
 
-  // 캐시 키
+  _curFunCategory=category;
+  _curFunIdx=idx;
+  _curFunItem=item;
+  _funFetchDone=false;
+  _funFetchResult='';
+
+  // 티저 화면 구성
+  var heroArea=document.getElementById('ftHeroArea');
+  var heroEmoji=document.getElementById('ftHeroEmoji');
+  var heroTitle=document.getElementById('ftHeroTitle');
+  var titleBar=document.getElementById('ftTitleBar');
+  var descIcon=document.getElementById('ftDescIcon');
+  var descTitle=document.getElementById('ftDescTitle');
+  var descText=document.getElementById('ftDescText');
+  var confirmBtn=document.getElementById('ftConfirmBtn');
+
+  if(heroArea){heroArea.style.background=theme.bg;heroArea.style.border='1px solid '+theme.border;}
+  if(heroEmoji) heroEmoji.textContent=item.emoji;
+  if(heroTitle) heroTitle.textContent=item.heroTitle||item.title;
+  if(titleBar) titleBar.textContent=item.title;
+  if(descIcon) descIcon.textContent=item.emoji;
+  if(descTitle) descTitle.textContent=item.title;
+  if(descText) descText.textContent=item.desc;
+  if(confirmBtn) confirmBtn.style.background=theme.btnBg;
+
+  goScreen('funTeaserScreen');
+
+  // 백그라운드에서 미리 AI 호출 시작
+  _funStartFetch(item);
+}
+
+async function _funStartFetch(item){
+  var def=getDefaultProfile();
+  if(!def) return;
+
+  // 캐시 확인
   var profId=def.id||'default';
   var today=getTodayStr();
-  // 음식운은 날짜 기반, 나머지는 프로필 기반
-  var cacheKey='msr_fun_'+category+'_'+idx+'_'+(category==='daily'&&idx===0?today:profId);
+  var cacheKey='msr_fun2_'+_curFunCategory+'_'+_curFunIdx+'_'+(_curFunCategory==='daily'&&_curFunIdx===0?today:profId);
   var cached=localStorage.getItem(cacheKey);
-
-  // 결과 모달 열기
-  var modal=document.getElementById('funUnseResultModal');
-  var titleEl=document.getElementById('funUnseResultTitle');
-  var descEl=document.getElementById('funUnseResultDesc');
-  var loadEl=document.getElementById('funUnseLoading');
-  var resultEl=document.getElementById('funUnseResult');
-  if(!modal) return;
-
-  if(titleEl) titleEl.textContent=item.title;
-  if(descEl) descEl.textContent=item.desc;
-  if(resultEl) resultEl.innerHTML='';
-  modal.style.display='block';
-  modal.scrollTop=0;
-
-  // 과금 체크 (첫 번째: 광고, 나머지: 복채 1개)
-  var unlockKey='fun_'+category+'_'+idx;
-  if(idx===0){
-    if(!_funAdUnlocked[unlockKey]&&!cached){
-      if(loadEl) loadEl.style.display='none';
-      var oldCb=adSuccessCallback;
-      adSuccessCallback=function(){
-        _funAdUnlocked[unlockKey]=true;
-        adSuccessCallback=oldCb;
-        funUnseAsk(category,idx);
-      };
-      var adModal=document.getElementById('adModal');
-      if(adModal) adModal.classList.add('show');
-      return;
-    }
-  } else {
-    if(!cached){
-      var bok=getBokchaeCnt();
-      if(bok<1){
-        modal.style.display='none';
-        showNatalBokchaeModal();
-        return;
-      }
-      addBokchae(-1);
-      showToast('💎 복채 1개 사용');
-    }
-  }
-
-  // 캐시 있으면 바로 표시
-  if(cached){
-    if(loadEl) loadEl.style.display='none';
-    if(resultEl) resultEl.innerHTML=cached;
-    return;
-  }
-
-  // AI 호출
-  if(loadEl) loadEl.style.display='block';
-  if(resultEl) resultEl.innerHTML='';
+  if(cached){_funFetchResult=cached;_funFetchDone=true;return;}
 
   // 사주 컨텍스트
   var noH=(def.hour===99||def.hour===undefined);
@@ -1410,41 +1408,90 @@ async function funUnseAsk(category, idx){
   var r=calcSaju(def.gY,def.gM,def.gD,h,0);
   var GAN=['갑','을','병','정','무','기','경','신','임','계'];
   var JI=['자','축','인','묘','진','사','오','미','신','유','술','해'];
-  var OH=['목','목','화','화','토','토','금','금','수','수'];
-  var ctx='[사주]\n';
-  ctx+='년주:'+GAN[r.ys]+JI[r.yb]+' 월주:'+GAN[r.ms]+JI[r.mb]+' 일주:'+GAN[r.ds]+JI[r.db];
+  var ctx='[사주] 년주:'+GAN[r.ys]+JI[r.yb]+' 월주:'+GAN[r.ms]+JI[r.mb]+' 일주:'+GAN[r.ds]+JI[r.db];
   if(!noH) ctx+=' 시주:'+GAN[r.hs]+JI[r.hb];
-  ctx+='\n오행: 목'+(OH.slice(0,2).filter(function(o,i){return [r.ys,r.ms,r.ds,r.hs].map(function(s){return ['목','목','화','화','토','토','금','금','수','수'][s];}).indexOf('목')>=0;}).length)
-       +'화'+'토'+'금'+'수';
-  ctx+='\n생년월일: '+def.gY+'년 '+def.gM+'월 '+def.gD+'일'+(noH?'':' '+h+'시');
-  ctx+='\n성별: '+(def.gen==='male'?'남성':'여성');
+  ctx+=' 성별:'+(def.gen==="male"?"남성":"여성")+' 생년월일:'+def.gY+'년'+def.gM+'월'+def.gD+'일';
 
   try{
     var ctrl=new AbortController();
-    var tid=setTimeout(function(){ctrl.abort();},90000);
+    setTimeout(function(){ctrl.abort();},90000);
     var resp=await fetch('https://my-saju-api.onrender.com/api/saju',{
       method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         model:'gemini',max_tokens:6000,
-        system:'당신은 재미있는 사주 분석가입니다. 한국어. 재미있고 공감되게. 마크다운 적절히 사용. 완전한 문장으로 끝낼 것.',
+        system:'재미있고 공감되는 사주 분석가. 한국어. 마크다운 적절히. 이모지 자주. 완전한 문장으로 끝낼 것.',
         messages:[{role:'user',content:ctx+'\n\n'+item.prompt}]
       })
     });
-    clearTimeout(tid);
     var data=await resp.json();
     var txt='';
-    if(data&&data.content&&Array.isArray(data.content))
-      txt=data.content.map(function(c){return c.text||'';}).join('');
+    if(data&&data.content&&Array.isArray(data.content)) txt=data.content.map(function(c){return c.text||'';}).join('');
     else if(data&&data.text) txt=data.text;
     if(!txt) txt='분석에 실패했어요. 다시 시도해주세요.';
     var rendered=natalMdToHtml(txt);
     localStorage.setItem(cacheKey,rendered);
-    if(loadEl) loadEl.style.display='none';
-    if(resultEl) resultEl.innerHTML=rendered;
+    _funFetchResult=rendered;
+    _funFetchDone=true;
+    // 결과 화면이 이미 열려있으면 바로 표시
+    var frLoading=document.getElementById('frLoading');
+    var frResult=document.getElementById('frResult');
+    if(frLoading&&frLoading.style.display!=='none'&&frResult){
+      frLoading.style.display='none';
+      frResult.style.display='block';
+      frResult.innerHTML=rendered;
+    }
   }catch(e){
-    if(loadEl) loadEl.style.display='none';
-    var msg=e.name==='AbortError'?'시간이 초과됐어요. 다시 시도해주세요.':'서버 연결 실패.';
-    if(resultEl) resultEl.innerHTML='<div style="color:var(--muted);text-align:center;padding:20px;">'+msg+'</div>';
-    showRetryToast(msg,function(){funUnseAsk(category,idx);});
+    _funFetchDone=true;
+    _funFetchResult='<div style="color:var(--muted);text-align:center;padding:20px;">분석 중 오류가 발생했어요. 다시 시도해주세요.</div>';
+  }
+}
+
+function funConfirmResult(){
+  var item=_curFunItem;
+  var category=_curFunCategory;
+  if(!item) return;
+  var theme=_funThemes[category]||_funThemes.love;
+
+  // 결과 화면 구성
+  var frHeroArea=document.getElementById('frHeroArea');
+  var frHeroEmoji=document.getElementById('frHeroEmoji');
+  var frHeroTitle=document.getElementById('frHeroTitle');
+  var frHeroSub=document.getElementById('frHeroSub');
+  var frTitleBar=document.getElementById('frTitleBar');
+  var frLoading=document.getElementById('frLoading');
+  var frResult=document.getElementById('frResult');
+
+  if(frHeroArea){frHeroArea.style.background=theme.bg;frHeroArea.style.border='1px solid '+theme.border;}
+  if(frHeroEmoji) frHeroEmoji.textContent=item.emoji;
+  if(frHeroTitle) frHeroTitle.textContent=item.heroTitle||item.title;
+  if(frHeroSub) frHeroSub.textContent=item.heroSub||'';
+  if(frTitleBar) frTitleBar.textContent=item.title;
+  if(frResult) frResult.innerHTML='';
+
+  goScreen('funResultScreen');
+
+  if(_funFetchDone && _funFetchResult){
+    if(frLoading) frLoading.style.display='none';
+    if(frResult){frResult.style.display='block';frResult.innerHTML=_funFetchResult;}
+  } else {
+    if(frLoading) frLoading.style.display='block';
+    if(frResult) frResult.style.display='none';
+    // 아직 로딩 중 - _funStartFetch 완료 후 자동 표시됨
+  }
+}
+
+function funShareResult(){
+  var item=_curFunItem;
+  if(!item) return;
+  var shareText='✨ 재미로 보는 운세\n\n'+item.title+'\n'+item.heroSub+'\n\n내 결과가 궁금하면 OracAi 앱에서 확인해봐요!\n#오라카이 #재미운세 #사주';
+  if(navigator.share){
+    navigator.share({title:item.title, text:shareText}).catch(function(){});
+  } else {
+    try{
+      navigator.clipboard.writeText(shareText);
+      showToast('📋 클립보드에 복사됐어요');
+    }catch(e){
+      showToast('공유 기능을 지원하지 않는 환경이에요');
+    }
   }
 }

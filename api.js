@@ -835,6 +835,34 @@ async function zDashaAsk(idx){
   // 프로필 기반 캐시 (동일 프로필이면 동일 결과)
   var profId=_zNatalGetDefaultProfId();
   var cacheKey='msr_dasha_reading_'+profId+'_'+idx;
+
+  // ── 결제 먼저 체크 ──
+  if(idx===0){
+    // 첫 번째: 광고 or 30분 패스 필요
+    if(!zCheckNatalFreeUnlock()){
+      adSuccessCallback=function(){
+        _zAdUnlockedSession=true;
+        var c=localStorage.getItem(cacheKey);
+        if(c){if(re){re.style.display='block';re.innerHTML=c;}if(re)re.scrollIntoView({behavior:'smooth',block:'start'});}
+        else{_zDoDashaFetch(idx,def,profId,cacheKey,lo,re);}
+      };
+      var modal=document.getElementById('adModal');
+      if(modal) modal.classList.add('show');
+      if(lo) lo.style.display='none';
+      return;
+    }
+  } else {
+    // 나머지: 복채 1개
+    var bok=getBokchaeCnt();
+    if(bok<1){showNatalBokchaeModal();return;}
+    // 캐시 있으면 복채 차감 없이 바로 열람
+    var c2=localStorage.getItem(cacheKey);
+    if(c2){if(re){re.style.display='block';re.innerHTML=c2;}if(re)re.scrollIntoView({behavior:'smooth',block:'start'});return;}
+    addBokchae(-1);
+    showToast('💎 복채 1개 사용');
+  }
+
+  // ── 캐시 확인 (광고/복채 통과 후) ──
   var cached=localStorage.getItem(cacheKey);
   if(cached){
     if(re){re.style.display='block';re.innerHTML=cached;}
@@ -843,7 +871,10 @@ async function zDashaAsk(idx){
   }
 
   if(lo)lo.style.display='block';if(re){re.style.display='none';re.innerHTML='';}
+  _zDoDashaFetch(idx,def,profId,cacheKey,lo,re);
+}
 
+async function _zDoDashaFetch(idx,def,profId,cacheKey,lo,re){
   var noH=(def.hour===99||def.hour===undefined);
   var nc=calcNatalChart(def.gY,def.gM,def.gD,noH?12:def.hour,noH,def.lat||37.5666,def.lon||126.9779);
   var SIGNS=['양자리','황소자리','쌍둥이자리','게자리','사자자리','처녀자리','천칭자리','전갈자리','사수자리','염소자리','물병자리','물고기자리'];

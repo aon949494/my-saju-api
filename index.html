@@ -64,6 +64,14 @@
           <div class="hero-sub" style="color:rgba(233,213,255,.6);">젬나·루나·백호·하데스<br>6명의 AI 캐릭터가 대기 중</div>
           <div class="hero-btn" style="background:rgba(139,92,246,.2);border-color:rgba(139,92,246,.5);color:#c4b5fd;">✦ 대화 시작하기 ›</div>
         </div>
+        <!-- 슬라이드 N: 재미로 보는 운세 -->
+        <div class="hero-slide" onclick="navFunUnse()"
+          style="background:linear-gradient(145deg,rgba(20,50,30,.85),rgba(10,30,15,.9));border:1px solid rgba(74,222,128,.25);border-top:1px solid rgba(74,222,128,.4);">
+          <div style="font-size:11px;color:rgba(74,222,128,.7);letter-spacing:2px;margin-bottom:10px;position:relative;z-index:1;">✨ FUN FORTUNE</div>
+          <div class="hero-title" style="color:#bbf7d0;">다이어트 할 수 있을까?<br>전생 직업은 뭘까? 🤔</div>
+          <div class="hero-sub" style="color:rgba(187,247,208,.55);">사주로 보는 소소하고<br>재미있는 이야기들</div>
+          <div class="hero-btn" style="background:rgba(74,222,128,.15);border-color:rgba(74,222,128,.45);color:#4ade80;">✨ 재미로 보기 ›</div>
+        </div>
       </div>
       <!-- 좌우 화살표 -->
       <button onclick="heroGoSlide(Math.max(0,_heroIdx-1));_heroReset()" id="heroArrowL"
@@ -344,7 +352,45 @@
       </div>
     </div>
 
-    <div style="padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(242,237,228,.12);line-height:1.9;word-break:keep-all;">본 서비스는 오락·참고 목적이며 과학적 근거를 보장하지 않습니다.</div></div>
+    <div style="
+    <!-- 재미로 보는 운세 섹션 -->
+    <div style="padding:0 16px;margin-bottom:16px;">
+      <div style="font-size:10px;color:rgba(74,222,128,.6);letter-spacing:3px;font-weight:700;margin-bottom:12px;">✨ 재미로 보는 운세</div>
+
+      <!-- 가로 스크롤 티저 카드 -->
+      <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
+        <div onclick="navFunUnse()" style="flex-shrink:0;width:140px;background:linear-gradient(135deg,rgba(244,114,182,.12),rgba(139,92,246,.08));border:1px solid rgba(244,114,182,.3);border-radius:16px;padding:14px 12px;cursor:pointer;" ontouchstart="this.style.opacity='.7'" ontouchend="this.style.opacity='1'">
+          <div style="font-size:22px;margin-bottom:8px;">💕</div>
+          <div style="font-size:12px;color:var(--text);font-weight:700;margin-bottom:4px;line-height:1.4;">올해 내<br>연애 유형은?</div>
+          <div style="font-size:10px;color:rgba(244,114,182,.7);">집착형? 쿨한척형?</div>
+        </div>
+        <div onclick="navFunUnse()" style="flex-shrink:0;width:140px;background:linear-gradient(135deg,rgba(74,222,128,.1),rgba(16,185,129,.07));border:1px solid rgba(74,222,128,.3);border-radius:16px;padding:14px 12px;cursor:pointer;" ontouchstart="this.style.opacity='.7'" ontouchend="this.style.opacity='1'">
+          <div style="font-size:22px;margin-bottom:8px;">🥗</div>
+          <div style="font-size:12px;color:var(--text);font-weight:700;margin-bottom:4px;line-height:1.4;">다이어트<br>할 수 있을까?</div>
+          <div style="font-size:10px;color:rgba(74,222,128,.7);">사주로 보는 체질</div>
+        </div>
+        <div onclick="navFunUnse()" style="flex-shrink:0;width:140px;background:linear-gradient(135deg,rgba(240,192,96,.1),rgba(234,179,8,.07));border:1px solid rgba(240,192,96,.3);border-radius:16px;padding:14px 12px;cursor:pointer;" ontouchstart="this.style.opacity='.7'" ontouchend="this.style.opacity='1'">
+          <div style="font-size:22px;margin-bottom:8px;">💰</div>
+          <div style="font-size:12px;color:var(--text);font-weight:700;margin-bottom:4px;line-height:1.4;">올해 횡재수<br>언제 올까?</div>
+          <div style="font-size:10px;color:rgba(240,192,96,.7);">돈 들어오는 시기</div>
+        </div>
+        <div onclick="navFunUnse()" style="flex-shrink:0;width:140px;background:linear-gradient(135deg,rgba(96,165,250,.1),rgba(59,130,246,.07));border:1px solid rgba(96,165,250,.3);border-radius:16px;padding:14px 12px;cursor:pointer;" ontouchstart="this.style.opacity='.7'" ontouchend="this.style.opacity='1'">
+          <div style="font-size:22px;margin-bottom:8px;">🧬</div>
+          <div style="font-size:12px;color:var(--text);font-weight:700;margin-bottom:4px;line-height:1.4;">내 전생은<br>귀족? 농부?</div>
+          <div style="font-size:10px;color:rgba(96,165,250,.7);">전생 신분 분석</div>
+        </div>
+        <div onclick="navFunUnse()" style="flex-shrink:0;width:140px;background:linear-gradient(135deg,rgba(168,85,247,.1),rgba(139,92,246,.07));border:1px solid rgba(168,85,247,.3);border-radius:16px;padding:14px 12px;cursor:pointer;" ontouchstart="this.style.opacity='.7'" ontouchend="this.style.opacity='1'">
+          <div style="font-size:22px;margin-bottom:8px;">🐶</div>
+          <div style="font-size:12px;color:var(--text);font-weight:700;margin-bottom:4px;line-height:1.4;">나한테 맞는<br>반려동물은?</div>
+          <div style="font-size:10px;color:rgba(168,85,247,.7);">사주로 보는 궁합</div>
+        </div>
+      </div>
+
+      <!-- 더보기 버튼 -->
+      <button onclick="navFunUnse()" style="width:100%;height:44px;margin-top:8px;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);border-radius:14px;color:rgba(74,222,128,.8);font-size:13px;cursor:pointer;font-family:Pretendard;">✨ 재미운세 전체 보기 →</button>
+    </div>
+
+padding:4px 20px 16px;text-align:center;"><div style="font-size:9px;color:rgba(242,237,228,.12);line-height:1.9;word-break:keep-all;">본 서비스는 오락·참고 목적이며 과학적 근거를 보장하지 않습니다.</div></div>
   </div>
 </div>
 
@@ -515,19 +561,91 @@
 
     </div>
 
-    <!-- 결과 모달 -->
-    <div id="funUnseResultModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;overflow-y:auto;padding:24px 16px;">
-      <div style="max-width:420px;margin:0 auto;background:linear-gradient(160deg,rgba(22,10,60,.98),rgba(7,7,26,.98));border:1px solid rgba(139,92,246,.3);border-radius:24px;padding:24px 20px;min-height:200px;position:relative;">
-        <button onclick="closeFunUnseResult()" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,.08);border:none;color:var(--dim);width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;">×</button>
-        <div id="funUnseResultTitle" style="font-family:Gowun Dodum,serif;font-size:17px;color:var(--gold2);font-weight:700;margin-bottom:4px;padding-right:36px;"></div>
-        <div id="funUnseResultDesc" style="font-size:11px;color:var(--muted);margin-bottom:20px;"></div>
-        <div id="funUnseLoading" style="display:none;text-align:center;padding:40px 0;"><div class="aidots"><span></span><span></span><span></span></div></div>
-        <div id="funUnseResult" style="font-size:14px;color:var(--text);line-height:1.85;"></div>
-      </div>
+  </div>
+</div>
+
+
+<!-- ══ 재미운세 티저 화면 ══ -->
+<div id="funTeaserScreen" class="screen hidden">
+  <div class="app" style="overflow-y:auto;">
+
+    <!-- 상단바 -->
+    <div style="display:flex;align-items:center;padding:14px 16px 12px;position:sticky;top:0;z-index:10;background:rgba(7,7,26,.85);backdrop-filter:blur(16px);">
+      <button class="back-btn" onclick="goBack()">‹</button>
+      <div id="ftTitleBar" style="flex:1;text-align:center;font-size:15px;color:var(--text);font-weight:700;"></div>
+      <div style="width:36px;"></div>
+    </div>
+
+    <!-- 상단 이미지 영역 (테마 그라디언트 + 이모지) -->
+    <div id="ftHeroArea" style="margin:0 16px 16px;border-radius:24px;overflow:hidden;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;flex-direction:column;position:relative;">
+      <div id="ftHeroEmoji" style="font-size:72px;z-index:1;filter:drop-shadow(0 4px 24px rgba(0,0,0,.4));"></div>
+      <div id="ftHeroTitle" style="font-family:Gowun Dodum,serif;font-size:20px;font-weight:700;color:#fff;z-index:1;margin-top:12px;text-align:center;padding:0 20px;text-shadow:0 2px 12px rgba(0,0,0,.5);"></div>
+    </div>
+
+    <!-- 중간 광고 -->
+    <div style="margin:0 16px 16px;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.1);height:100px;display:flex;align-items:center;justify-content:center;">
+      <div style="font-size:10px;color:var(--muted);letter-spacing:2px;">ADVERTISEMENT</div>
+    </div>
+
+    <!-- 설명 텍스트 -->
+    <div id="ftDescArea" style="margin:0 16px 28px;padding:20px;background:rgba(255,255,255,.04);border-radius:20px;border:1px solid rgba(255,255,255,.08);">
+      <div id="ftDescIcon" style="font-size:28px;margin-bottom:12px;"></div>
+      <div id="ftDescTitle" style="font-family:Gowun Dodum,serif;font-size:17px;color:var(--text);font-weight:700;margin-bottom:10px;line-height:1.4;"></div>
+      <div id="ftDescText" style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.85;"></div>
+    </div>
+
+    <!-- 결과 확인 버튼 -->
+    <div style="padding:0 16px 40px;">
+      <button id="ftConfirmBtn" onclick="funConfirmResult()" style="width:100%;height:58px;border-radius:18px;border:none;font-size:16px;font-weight:700;font-family:Pretendard;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;">
+        ✨ 결과 확인하기
+      </button>
     </div>
 
   </div>
 </div>
+
+<!-- ══ 재미운세 결과 화면 ══ -->
+<div id="funResultScreen" class="screen hidden">
+  <div class="app" style="overflow-y:auto;">
+
+    <!-- 상단바 -->
+    <div style="display:flex;align-items:center;padding:14px 16px 12px;position:sticky;top:0;z-index:10;background:rgba(7,7,26,.85);backdrop-filter:blur(16px);">
+      <button class="back-btn" onclick="goBack()">‹</button>
+      <div id="frTitleBar" style="flex:1;text-align:center;font-size:15px;color:var(--text);font-weight:700;"></div>
+      <div style="width:36px;"></div>
+    </div>
+
+    <!-- 큰 상단 이미지 -->
+    <div id="frHeroArea" style="margin:0 16px 16px;border-radius:24px;overflow:hidden;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;flex-direction:column;position:relative;">
+      <div id="frHeroEmoji" style="font-size:90px;z-index:1;filter:drop-shadow(0 4px 32px rgba(0,0,0,.5));"></div>
+      <div id="frHeroTitle" style="font-family:Gowun Dodum,serif;font-size:22px;font-weight:700;color:#fff;z-index:1;margin-top:16px;text-align:center;padding:0 24px;text-shadow:0 2px 16px rgba(0,0,0,.5);"></div>
+      <div id="frHeroSub" style="font-size:12px;color:rgba(255,255,255,.6);z-index:1;margin-top:6px;text-align:center;"></div>
+    </div>
+
+    <!-- 중간 광고 -->
+    <div style="margin:0 16px 16px;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.1);height:100px;display:flex;align-items:center;justify-content:center;">
+      <div style="font-size:10px;color:var(--muted);letter-spacing:2px;">ADVERTISEMENT</div>
+    </div>
+
+    <!-- AI 풀이 -->
+    <div style="margin:0 16px 20px;padding:22px 18px;background:rgba(255,255,255,.04);border-radius:20px;border:1px solid rgba(255,255,255,.08);">
+      <div id="frLoading" style="text-align:center;padding:32px 0;"><div class="aidots"><span></span><span></span><span></span></div><div style="font-size:12px;color:var(--muted);margin-top:12px;">사주 분석 중...</div></div>
+      <div id="frResult" style="font-size:14px;color:var(--text);line-height:1.9;display:none;"></div>
+    </div>
+
+    <!-- 하단 버튼 2개 -->
+    <div style="display:flex;gap:10px;padding:0 16px 50px;">
+      <button onclick="navFunUnse()" style="flex:1;height:52px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:16px;color:var(--dim);font-size:13px;font-weight:600;cursor:pointer;font-family:Pretendard;">
+        ✨ 다른 재미운세
+      </button>
+      <button onclick="funShareResult()" style="flex:1;height:52px;background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.35);border-radius:16px;color:#c4b5fd;font-size:13px;font-weight:600;cursor:pointer;font-family:Pretendard;">
+        🔗 공유하기
+      </button>
+    </div>
+
+  </div>
+</div>
+
 
 <div id="unseScreen" class="screen hidden">
   <div class="app">

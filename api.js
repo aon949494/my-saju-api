@@ -147,7 +147,7 @@ async function personaSend(){
     try{
       res=await fetch('https://my-saju-api.onrender.com/api/saju',{
         method:'POST',signal:ctrl.signal,
-        headers:{'Content-Type':'application/json'},
+        headers:{'Content-Type':'application/json','X-App-Key':'oracai-2026-prod'},
         body:JSON.stringify({
           model:(['hades','sera','red'].indexOf(_curPersonaId)>=0)?'gemini-pro':'gemini',
           max_tokens:8000,
@@ -326,7 +326,7 @@ async function executeSajuFetch(){
   var res;
   try{
     res=await fetch('https://my-saju-api.onrender.com/api/saju',{
-      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json'},
+      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json','X-App-Key':'oracai-2026-prod'},
       body:JSON.stringify({
         model:'gemini',max_tokens:8000,
         system:'당신은 한국 전통 사주명리학 전문가입니다. 반드시 지정된 태그를 사용하세요.',
@@ -444,7 +444,7 @@ async function reqUnseAI(target){
   var res;
   try{
     res=await fetch('https://my-saju-api.onrender.com/api/saju',{
-      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json'},
+      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json','X-App-Key':'oracai-2026-prod'},
       body:JSON.stringify({model:'gemini',max_tokens:8000,
         system:'당신은 한국 전통 사주명리학 전문가입니다. 반드시 지정된 태그 형식을 정확히 사용하세요.',
         messages:[{role:'user',content:buildUPrompt(d,UNSE_TYPE,target)}]})
@@ -565,7 +565,7 @@ async function reqGoonghapAI(type,dA,dB){
   var res;
   try{
     res=await fetch('https://my-saju-api.onrender.com/api/saju',{
-      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json'},
+      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json','X-App-Key':'oracai-2026-prod'},
       body:JSON.stringify({model:'gemini',max_tokens:8000,
         system:GEMNA_PERSONA+' 반드시 [OVERALL]...[/OVERALL], [CHEMISTRY]...[/CHEMISTRY], [CONFLICT]...[/CONFLICT], [ADVICE]...[/ADVICE] 형식의 4개 태그로만 응답하세요. 태그 외 다른 형식 금지.',
         messages:[{role:'user',content:prompt}]})
@@ -657,7 +657,7 @@ async function snFetch(prompt) {
   var res;
   try {
     res = await fetch('https://my-saju-api.onrender.com/api/saju', {
-      method:'POST', signal:ctrl.signal, headers:{'Content-Type':'application/json'},
+      method:'POST', signal:ctrl.signal, headers:{'Content-Type':'application/json','X-App-Key':'oracai-2026-prod'},
       body: JSON.stringify({model:'gemini', max_tokens:8000,
         system:'당신은 한국 전통 사주명리학 전문가입니다. 반드시 지정된 태그 형식만 사용하고 인사말 없이 바로 내용을 출력하세요. 모든 닫는 태그를 반드시 포함하세요.',
         messages:[{role:'user', content:prompt}]})
@@ -795,7 +795,7 @@ async function _zDoNatalFetch(idx,def,profId,cacheKey,lo,re){
     var ctrl=new AbortController();
     var tid=setTimeout(function(){ctrl.abort();},90000); // 90초 타임아웃
     var resp=await fetch('https://my-saju-api.onrender.com/api/saju',{
-      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json'},
+      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json','X-App-Key':'oracai-2026-prod'},
       body:JSON.stringify({
         model:'gemini',
         mode:'star',
@@ -905,7 +905,7 @@ async function _zDoDashaFetch(idx,def,profId,cacheKey,lo,re){
     var ctrl=new AbortController();
     var tid=setTimeout(function(){ctrl.abort();},90000);
     var resp=await fetch('https://my-saju-api.onrender.com/api/saju',{
-      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json'},
+      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json','X-App-Key':'oracai-2026-prod'},
       body:JSON.stringify({
         model:'gemini',
         mode:'star',
@@ -965,7 +965,7 @@ async function zGetAIReading(mode){
   try{
     var ctrl=new AbortController(),tid=setTimeout(function(){ctrl.abort();},50000);
     var res=await fetch('https://my-saju-api.onrender.com/api/saju',{
-      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json'},
+      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json','X-App-Key':'oracai-2026-prod'},
       body:JSON.stringify({model:'gemini',max_tokens:1200,system:'당신은 신빌 넘치는 점성술 마스터예요.',messages:[{role:'user',content:prompt}]})
     });
     clearTimeout(tid);
@@ -1017,7 +1017,7 @@ async function tDoReading(){
   try{
     var ctrl=new AbortController(),tid=setTimeout(function(){ctrl.abort();},90000);
     var resp=await fetch('https://my-saju-api.onrender.com/api/saju',{
-      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json'},
+      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json','X-App-Key':'oracai-2026-prod'},
       body:JSON.stringify({model:'gemini',mode:'star',max_tokens:6000,
         system:GEMNA_PERSONA+' 절대 금지: 카드 이름을 나열하며 설명하는 방식 (예: "태양: 어쩌고", "소드 A: 어쩌고") 금지. 카드들의 메시지를 하나의 자연스러운 이야기로 녹여서 전달. 볼드(**) 마크다운 절대 금지. 상투적 표현 금지.',
         messages:[{role:'user',content:prompt}]})
@@ -1419,7 +1419,7 @@ async function _funStartFetch(item){
     var ctrl=new AbortController();
     setTimeout(function(){ctrl.abort();},90000);
     var resp=await fetch('https://my-saju-api.onrender.com/api/saju',{
-      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json'},
+      method:'POST',signal:ctrl.signal,headers:{'Content-Type':'application/json','X-App-Key':'oracai-2026-prod'},
       body:JSON.stringify({
         model:'gemini',max_tokens:6000,
         system:'재미있고 공감되는 사주 분석가. 한국어. 마크다운 적절히. 이모지 자주. 완전한 문장으로 끝낼 것.',

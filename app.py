@@ -13,7 +13,16 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(mess
 log = logging.getLogger(__name__)
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api/*": {
+    "origins": [
+        "https://my-saju-api.onrender.com",
+        "capacitor://localhost",
+        "ionic://localhost",
+        "http://localhost",
+        "http://localhost:3000",
+        "http://localhost:8080",
+    ]
+}})
 
 PROJECT_ID = "uncannyai-492713"
 GCP_KEY_JSON = os.environ.get("GCP_SERVICE_ACCOUNT_KEY")
@@ -34,10 +43,10 @@ is_ready, init_msg = init_vertex()
 DIR = os.path.dirname(os.path.abspath(__file__))
 
 SAFETY = [
-    SafetySetting(category=HarmCategory.HARM_CATEGORY_HARASSMENT,       threshold=HarmBlockThreshold.BLOCK_NONE),
-    SafetySetting(category=HarmCategory.HARM_CATEGORY_HATE_SPEECH,       threshold=HarmBlockThreshold.BLOCK_NONE),
-    SafetySetting(category=HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold=HarmBlockThreshold.BLOCK_NONE),
-    SafetySetting(category=HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold=HarmBlockThreshold.BLOCK_NONE),
+    SafetySetting(category=HarmCategory.HARM_CATEGORY_HARASSMENT,       threshold=HarmBlockThreshold.BLOCK_ONLY_HIGH),
+    SafetySetting(category=HarmCategory.HARM_CATEGORY_HATE_SPEECH,       threshold=HarmBlockThreshold.BLOCK_ONLY_HIGH),
+    SafetySetting(category=HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold=HarmBlockThreshold.BLOCK_ONLY_HIGH),
+    SafetySetting(category=HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold=HarmBlockThreshold.BLOCK_ONLY_HIGH),
 ]
 
 ENDINGS = ('다.', '요.', '야.', '어.', '네.', '죠.', '게.', '다!', '요!', '야!',
@@ -253,6 +262,11 @@ def serve_main():
 
 @app.route('/api/calc', methods=['POST'])
 def calc_api():
+    api_secret = os.environ.get('API_SECRET', '')
+    if api_secret:
+        req_key = request.headers.get('X-App-Key', '')
+        if req_key != api_secret:
+            return jsonify({'error': 'unauthorized'}), 401
     """사주 계산 전용 엔드포인트 (알고리즘 보호)"""
     try:
         data = request.json or {}
@@ -275,6 +289,12 @@ def calc_api():
 
 @app.route('/api/saju', methods=['POST'])
 def saju_api():
+    # API 키 인증 (환경변수 없으면 개발 모드)
+    api_secret = os.environ.get('API_SECRET', '')
+    if api_secret:
+        req_key = request.headers.get('X-App-Key', '')
+        if req_key != api_secret:
+            return jsonify({'error': 'unauthorized'}), 401
     if not is_ready:
         return jsonify({'error': init_msg}), 500
     try:
@@ -285,7 +305,7 @@ def saju_api():
         sys_prompt = (data.get('system', '') or '').strip()
         messages   = data.get('messages', [])
         mode       = data.get('mode', '')
-        req_tokens = min(int(data.get('max_tokens', 8000)), 8000)
+        req_tokens = min(int(data.get('max_tokens', 4000)), 8192)  # 최대 8192
 
         log.info(f"요청: mode='{mode}', msgs={len(messages)}, sys={len(sys_prompt)}자")
 
@@ -296,6 +316,8 @@ def saju_api():
         history_msgs = messages[:-1]
         t_start = time.time()
         req_model_str = data.get('model', 'gemini')
+        if req_model_str not in ('gemini', 'gemini-pro'):  # 허용 모델만
+            req_model_str = 'gemini'
         use_pro = req_model_str == 'gemini-pro'
         model = make_model(sys_prompt, use_pro=use_pro)
         log.info(f"모델: {'gemini-2.5-pro' if use_pro else 'gemini-2.5-flash'}")

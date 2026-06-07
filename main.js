@@ -3982,3 +3982,32 @@ function activateSubscription(plan, durationDays){
   updateTimer();
   showToast('🎉 구독이 활성화됐어요!');
 }
+
+// ── 프로필 없을 때 안내 모달 ──
+function requireProfile(cb){
+  if(getDefaultProfile()){
+    if(cb) cb();
+    return true;
+  }
+  var exist=document.getElementById('_noProfileModal');
+  if(exist){exist.style.display='flex';return false;}
+  var modal=document.createElement('div');
+  modal.id='_noProfileModal';
+  modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:999;display:flex;align-items:center;justify-content:center;padding:24px;';
+  var box=document.createElement('div');
+  box.style.cssText='background:linear-gradient(160deg,rgba(22,10,60,.98),rgba(7,7,26,.98));border:1px solid rgba(139,92,246,.3);border-radius:24px;padding:28px 22px;max-width:340px;width:100%;text-align:center;';
+  box.innerHTML='<div style="font-size:44px;margin-bottom:16px;">\uD83D\uDC64</div>'
+    +'<div style="font-family:Gowun Dodum,serif;font-size:19px;color:var(--text);font-weight:700;margin-bottom:10px;">\ud504\ub85c\ud544\uc774 \ud544\uc694\ud574\uc694</div>'
+    +'<div style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:24px;">\uc0dd\ub144\uc6d4\uc77c \uc815\ubcf4\uac00 \uc788\uc5b4\uc57c<br>\uc6b4\uc138\ub97c \ubd84\uc11d\ud560 \uc218 \uc788\uc5b4\uc694.</div>';
+  var goBtn=document.createElement('button');
+  goBtn.textContent='\u2728 \ud504\ub85c\ud544 \uc124\uc815\ud558\uae30';
+  goBtn.style.cssText='width:100%;height:50px;background:linear-gradient(135deg,rgba(139,92,246,.35),rgba(109,40,217,.3));border:1px solid rgba(139,92,246,.5);border-radius:14px;color:#e9d5ff;font-size:15px;font-weight:700;cursor:pointer;font-family:Pretendard;margin-bottom:10px;';
+  goBtn.onclick=function(){if(modal.parentNode)modal.parentNode.removeChild(modal);goScreen('addProfileScreen');};
+  var closeBtn=document.createElement('button');
+  closeBtn.textContent='\ub2eb\uae30';
+  closeBtn.style.cssText='width:100%;height:40px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;color:var(--muted);font-size:13px;cursor:pointer;font-family:Pretendard;';
+  closeBtn.onclick=function(){if(modal.parentNode)modal.parentNode.removeChild(modal);};
+  box.appendChild(goBtn);box.appendChild(closeBtn);
+  modal.appendChild(box);document.body.appendChild(modal);
+  return false;
+}

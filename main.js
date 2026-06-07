@@ -1889,7 +1889,9 @@ async function _runUnseForProfile(id,name){
   uData=Object.assign({},s,{cnt:cnt,gen:p.gen,ani:ANI[s.yb],
     sstr:gY+'년 '+p2(gM)+'월 '+p2(gD)+'일'+(noHour?' 시간모름':' '+p2(hV)+'시 '+p2(minV)+'분'),
     lstr:lstr,noHour:noHour,gY:gY,gM:gM,gD:gD,hV:hV,minV:minV});
-  startUnse();
+  // 광고 패스 없으면 광고 모달
+  if(isPassActive()){ startUnse(); }
+  else { openAdModal(function(){ startUnse(); }); }
 }
 
 /* ── startUnse 이후 닉네임/점수 업데이트 패치 ── */
@@ -3529,9 +3531,11 @@ function tStep2Submit(){
     var adUsed=getTarotAdToday();
 
     if(freeUsed<1){
-      // 무료 1회
-      addTarotFreeToday();
-      tDoReading();
+      // 첫 1회도 광고 보고 무료
+      openAdModal(function(){
+        addTarotFreeToday();
+        tDoReading();
+      });
     } else if(adUsed<1){
       // 광고 보기
       openRewardAdModal(

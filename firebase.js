@@ -34,8 +34,17 @@ function _initFirebase() {
   window.signInWithGoogle = async function() {
     var provider = new firebase.auth.GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
-    var result = await _fbAuth.signInWithPopup(provider);
-    return result.user;
+    // 배포 환경에서는 redirect 방식이 더 안정적
+    try {
+      var result = await _fbAuth.signInWithPopup(provider);
+      return result.user;
+    } catch(popupErr) {
+      if (popupErr.code === 'auth/popup-blocked' || popupErr.code === 'auth/operation-not-supported-in-this-environment') {
+        await _fbAuth.signInWithRedirect(provider);
+        return null;
+      }
+      throw popupErr;
+    }
   };
 
   // ── 로그아웃 ──
@@ -149,6 +158,15 @@ function _initFirebase() {
     if (!window._fbUser) return null;
     return await window._fbUser.getIdToken();
   };
+
+  // redirect 로그인 결과 처리
+  _fbAuth.getRedirectResult().then(function(result) {
+    if (result && result.user) {
+      console.log('redirect 로그인 성공:', result.user.displayName);
+    }
+  }).catch(function(e) {
+    console.error('redirect 결과 오류:', e);
+  });
 
   console.log('✅ Firebase 초기화 완료');
 }

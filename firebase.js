@@ -2,6 +2,14 @@
 // OracAi — Firebase Auth + Firestore (compat)
 // ══════════════════════════════════════════════
 
+window.addEventListener('load', function() {
+  // Firebase SDK 로드 확인
+  if (typeof firebase === 'undefined') {
+    console.error('Firebase SDK 로드 실패');
+    window.signInWithGoogle = function() { alert('Firebase 로드 실패. 새로고침 해주세요.'); };
+    return;
+  }
+
 var firebaseConfig = {
   apiKey: "AIzaSyAewcp26WxeVxtc5dvhs5gyp-CHTvO38oY",
   authDomain: "oracai-7f297.firebaseapp.com",
@@ -166,3 +174,5 @@ function _updateLoginUI(user) {
     if (logoutBtn) logoutBtn.style.display = 'none';
   }
 }
+
+});

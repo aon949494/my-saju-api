@@ -3315,6 +3315,23 @@ var _tSession={cards:[],count:3};
 
 function initTarotScreen(){
   tGoStep(1);
+  _updateTarotFreeInfo();
+}
+
+function _updateTarotFreeInfo(){
+  var freeUsed = getTarotFreeToday();
+  var adUsed = getTarotAdToday();
+  var icon1 = document.getElementById('tarotFreeIcon1');
+  var icon2 = document.getElementById('tarotFreeIcon2');
+  // 1회차 상태
+  if(icon1) icon1.textContent = freeUsed >= 1 ? '✅' : '🎬';
+  // 2회차 상태  
+  if(icon2) icon2.textContent = (freeUsed >= 1 && adUsed >= 1) ? '✅' : '🎬';
+  // 텍스트 색상
+  var row1 = icon1 ? icon1.parentElement : null;
+  var row2 = icon2 ? icon2.parentElement : null;
+  if(row1) row1.style.opacity = freeUsed >= 1 ? '.5' : '1';
+  if(row2) row2.style.opacity = (freeUsed >= 1 && adUsed >= 1) ? '.5' : '1';
 }
 
 function tGoStep(n){

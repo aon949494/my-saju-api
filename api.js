@@ -459,8 +459,14 @@ async function reqUnseAI(target){
 
   raw = raw.replace(/\*\*/g, ''); 
   function pScore(tag){
-    var m = raw.match(new RegExp('\\['+tag+'_SCORE\\][^\\d]*(\\d+)', 'i'));
-    return m ? Math.min(100, Math.max(0, parseInt(m[1]))) : 50;
+    // 두 자리 이상 숫자 우선, 없으면 한 자리 (최소 10점 보장)
+    var m = raw.match(new RegExp('\\['+tag+'_SCORE\\][^\\d]*(\\d{2,3})', 'i'));
+    if(!m) m = raw.match(new RegExp('\\['+tag+'_SCORE\\][^\\d]*(\\d+)', 'i'));
+    if(!m) return 50;
+    var v = parseInt(m[1]);
+    // 한 자리면 10배 (4 → 40)
+    if(v < 10) v = v * 10;
+    return Math.min(95, Math.max(10, v));
   }
   function pText(tag){
     var m = raw.match(new RegExp('\\['+tag+'\\]([\\s\\S]*?)(?=\\[\\/?[A-Z_]+\\]|$)', 'i'));

@@ -488,6 +488,7 @@ async function reqUnseAI(target){
   } else {
      userCache.tomorrowDate = tomorrowStr; userCache.tomorrowData = {scores: scores, texts: texts};
   }
+  userCache._layoutVer = 'scroll2'; // 캐시 유효 버전 저장 필수
   unseCache[cacheKey] = userCache;
   localStorage.setItem('unse_cache', JSON.stringify(unseCache));
 

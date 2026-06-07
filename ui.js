@@ -1512,6 +1512,7 @@ function renderUnseHome(){
 }
 
 function goUnse(type){
+  if(!requireProfile()) return;
   UNSE_TYPE=type;
   document.getElementById('unseTopTitle').textContent=type==='today'?'오늘의 운세':'내일의 운세';
   goScreen('unseScreen');

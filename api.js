@@ -494,6 +494,7 @@ function handleUnseRequest() {
 }
 
 function startUnse(){
+  if(!requireProfile()) return;
   if(!uData)return;
   var today=new Date(),target=UNSE_TYPE==='tomorrow'?new Date(today.getTime()+86400000):today;
   var days=['일','월','화','수','목','금','토'];
@@ -587,6 +588,7 @@ async function reqGoonghapAI(type,dA,dB){
 }
 
 function execGoonghap(type,dA,dB){
+  if(!requireProfile()) return;
   var cached=getGoonghapCache(type,dA,dB);
   var res=document.getElementById('gResult');res.style.display='block';
   document.getElementById('gASaju').textContent=dA.saju;
@@ -829,7 +831,8 @@ async function _zDoNatalFetch(idx,def,profId,cacheKey,lo,re){
 }
 
 async function zDashaAsk(idx){
-  var def=getDefaultProfile();if(!def){showToast('프로필을 먼저 추가해주세요');return;}
+  if(!requireProfile()) return;
+  var def=getDefaultProfile();if(!def)return;
   var lo=document.getElementById('zDashaLoading'),re=document.getElementById('zDashaResult');
 
   // 프로필 기반 캐시 (동일 프로필이면 동일 결과)
@@ -1358,7 +1361,7 @@ function funSwitchTab(tab){
 }
 
 function funUnseAsk(category, idx){
-  var items=_funUnsePrompts[category];
+  if(!requireProfile()) return;
   if(!items||!items[idx]) return;
   var item=items[idx];
   var theme=_funThemes[category]||_funThemes.love;

@@ -3921,11 +3921,17 @@ function apSetGen(g){
 // ══════════════════════════════════════
 
 async function handleGoogleLogin(){
+  if(typeof window.signInWithGoogle !== 'function'){
+    showToast('잠시 후 다시 시도해주세요.');
+    console.warn('Firebase 아직 초기화 중');
+    return;
+  }
   try{
     showToast('구글 로그인 중...');
     await window.signInWithGoogle();
     showToast('✅ 로그인 완료!');
   }catch(e){
+    if(e.code==='auth/popup-closed-by-user'||e.code==='auth/cancelled-popup-request') return;
     showToast('로그인 실패. 다시 시도해주세요.');
     console.error(e);
   }

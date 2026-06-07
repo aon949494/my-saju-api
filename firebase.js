@@ -120,6 +120,20 @@ async function _syncFromFirestore(uid) {
     if (typeof renderBokchae === 'function') renderBokchae();
     if (typeof updateTimer === 'function') updateTimer();
 
+    // 로그인 후 화면 이동 (온보딩 중이면 건너뛰기)
+    var curScreen = document.querySelector('.screen.active');
+    if (curScreen && curScreen.id === 'onboardingScreen') {
+      var profiles = [];
+      try { profiles = JSON.parse(localStorage.getItem('msr_profiles') || '[]'); } catch(e) {}
+      if (profiles.length > 0) {
+        if (typeof goScreen === 'function') { goScreen('mainScreen'); }
+        if (typeof renderMainRecent === 'function') renderMainRecent();
+        if (typeof updateTimer === 'function') updateTimer();
+      } else {
+        if (typeof goScreen === 'function') goScreen('addProfileScreen');
+      }
+    }
+
   } catch(e) {
     console.error('Firestore 동기화 오류:', e);
   }

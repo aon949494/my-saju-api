@@ -1400,8 +1400,6 @@ function funUnseAsk(category, idx){
   if(confirmBtn) confirmBtn.style.background=theme.btnBg;
 
   goScreen('funTeaserScreen');
-
-  // 백그라운드에서 미리 AI 호출 시작
   _funStartFetch(item);
 }
 
@@ -1475,13 +1473,32 @@ function funConfirmResult(){
   var frLoading=document.getElementById('frLoading');
   var frResult=document.getElementById('frResult');
 
+  // 결과 확인하기 = 광고 보고 열기
+  if(isPassActive()){
+    _funShowResult(theme, item, frLoading, frResult);
+  } else {
+    openAdModal(function(){
+      _funShowResult(theme, item, frLoading, frResult);
+    });
+  }
+}
+
+function _funShowResult(theme, item, frLoading, frResult){
+  var frHeroArea=document.getElementById('frHeroArea');
+  var frHeroEmoji=document.getElementById('frHeroEmoji');
+  var frHeroTitle=document.getElementById('frHeroTitle');
+  var frHeroSub=document.getElementById('frHeroSub');
+  var frTitleBar=document.getElementById('frTitleBar');
+  frLoading=document.getElementById('frLoading');
+  frResult=document.getElementById('frResult');
+  if(!theme) theme=_funThemes[_curFunCategory]||_funThemes.love;
+  if(!item) item=_curFunItem;
   if(frHeroArea){frHeroArea.style.background=theme.bg;frHeroArea.style.border='1px solid '+theme.border;}
   if(frHeroEmoji) frHeroEmoji.textContent=item.emoji;
   if(frHeroTitle) frHeroTitle.textContent=item.heroTitle||item.title;
   if(frHeroSub) frHeroSub.textContent=item.heroSub||'';
   if(frTitleBar) frTitleBar.textContent=item.title;
   if(frResult) frResult.innerHTML='';
-
   goScreen('funResultScreen');
 
   if(_funFetchDone && _funFetchResult){

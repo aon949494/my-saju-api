@@ -1301,6 +1301,17 @@ function onboardingSkip(){
   try{renderMainRecent();updateTimer();}catch(e){}
 }
 
+function showGuestWarning(){
+  var box=document.getElementById('guestWarningBox');
+  if(box) box.style.display=(box.style.display==='none'||!box.style.display)?'block':'none';
+}
+
+function startAsGuest(){
+  localStorage.setItem('msr_visited','1');
+  localStorage.setItem('msr_guest_mode','1');
+  goScreen('addProfileScreen');
+}
+
 
 // ── 앱 평가 / 인스타 팔로우 보상 ──
 

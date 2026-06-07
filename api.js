@@ -395,7 +395,7 @@ async function reqUnseAI(target){
   try { unseCache = JSON.parse(localStorage.getItem('unse_cache') || '{}'); } catch(e) {}
   var userCache = unseCache[cacheKey] || {};
   // 레이아웃 버전 체크 (탭→스크롤 전환 후 캐시 무효화)
-  if(userCache._layoutVer!=='scroll'){userCache={};}
+  if(userCache._layoutVer!=='scroll2'){userCache={};}
 
   var todayObj = new Date();
   var todayStr = todayObj.getFullYear() + '-' + (todayObj.getMonth()+1) + '-' + todayObj.getDate();
@@ -410,7 +410,7 @@ async function reqUnseAI(target){
     } else if (userCache.tomorrowDate === todayStr && userCache.tomorrowData) {
       userCache.todayDate = todayStr; userCache.todayData = userCache.tomorrowData;
       userCache.tomorrowDate = null; userCache.tomorrowData = null;
-      userCache._layoutVer='scroll';unseCache[cacheKey] = userCache; localStorage.setItem('unse_cache', JSON.stringify(unseCache));
+      userCache._layoutVer='scroll2';unseCache[cacheKey] = userCache; localStorage.setItem('unse_cache', JSON.stringify(unseCache));
       finalScores = userCache.todayData.scores; finalTexts = userCache.todayData.texts; needFetch = false;
     }
   } else {
@@ -1362,6 +1362,7 @@ function funSwitchTab(tab){
 
 function funUnseAsk(category, idx){
   if(!requireProfile()) return;
+  var items=_funUnsePrompts[category];
   if(!items||!items[idx]) return;
   var item=items[idx];
   var theme=_funThemes[category]||_funThemes.love;

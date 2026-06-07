@@ -3904,3 +3904,70 @@ function apSetGen(g){
 
 /* ── 저장 ── */
 
+
+// ══════════════════════════════════════
+// Firebase 로그인/로그아웃 핸들러
+// ══════════════════════════════════════
+
+async function handleGoogleLogin(){
+  try{
+    showToast('구글 로그인 중...');
+    await window.signInWithGoogle();
+    showToast('✅ 로그인 완료!');
+  }catch(e){
+    showToast('로그인 실패. 다시 시도해주세요.');
+    console.error(e);
+  }
+}
+
+async function handleLogout(){
+  try{
+    await window.signOutUser();
+    showToast('로그아웃 완료');
+  }catch(e){
+    console.error(e);
+  }
+}
+
+// 복채 변경 시 Firestore 동기화
+var _origAddBokchae = addBokchae;
+addBokchae = function(n){
+  _origAddBokchae(n);
+  if(window.syncToFirestore) window.syncToFirestore({
+    bokchae: getBokchaeCnt()
+  });
+};
+
+var _origAddMiniBokchae = addMiniBokchae;
+addMiniBokchae = function(n){
+  _origAddMiniBokchae(n);
+  if(window.syncToFirestore) window.syncToFirestore({
+    miniBokchae: getMiniBokchaeCnt()
+  });
+};
+
+// 프로필 저장 시 Firestore 동기화
+var _origSaveProfiles = saveProfiles;
+saveProfiles = function(arr){
+  _origSaveProfiles(arr);
+  if(window.syncToFirestore) window.syncToFirestore({
+    profiles: arr,
+    defaultProfileId: getDefaultProfileId()
+  });
+};
+
+// 구독 활성화 시 Firestore 동기화 (RevenueCat 연동 시 사용)
+function activateSubscription(plan, durationDays){
+  var now = Date.now();
+  var until = now + (durationDays || 30) * 86400000;
+  localStorage.setItem('sub_plan', plan);
+  localStorage.setItem('sub_until', String(until));
+  localStorage.setItem('sub_start', String(now));
+  if(window.syncToFirestore) window.syncToFirestore({
+    subPlan: plan,
+    subUntil: until,
+    subStart: now
+  });
+  updateTimer();
+  showToast('🎉 구독이 활성화됐어요!');
+}

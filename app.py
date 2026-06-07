@@ -12,6 +12,37 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(mess
                     stream=sys.stdout, force=True)
 log = logging.getLogger(__name__)
 
+# ── IP Rate Limiting (메모리 기반, 재시작 시 초기화) ──
+from collections import defaultdict
+import threading
+
+_rate_lock = threading.Lock()
+_rate_store = defaultdict(list)  # {ip: [timestamp, ...]}
+RATE_LIMIT_PER_MINUTE = 20       # IP당 분당 최대 요청
+RATE_LIMIT_PER_HOUR = 200        # IP당 시간당 최대 요청
+
+def check_rate_limit(ip):
+    """True=통과, False=제한 초과"""
+    now = time.time()
+    with _rate_lock:
+        timestamps = _rate_store[ip]
+        # 오래된 기록 제거
+        timestamps = [t for t in timestamps if now - t < 3600]
+        _rate_store[ip] = timestamps
+        # 분당 제한
+        recent = [t for t in timestamps if now - t < 60]
+        if len(recent) >= RATE_LIMIT_PER_MINUTE:
+            return False
+        # 시간당 제한
+        if len(timestamps) >= RATE_LIMIT_PER_HOUR:
+            return False
+        _rate_store[ip].append(now)
+        return True
+
+def get_client_ip():
+    return request.headers.get('X-Forwarded-For', request.remote_addr or '').split(',')[0].strip()
+
+
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {
     "origins": [
@@ -256,12 +287,18 @@ def serve_api_js():
 def serve_ui():
     return send_from_directory(DIR, 'ui.js', mimetype='application/javascript')
 
+@app.route('/firebase.js')
+def serve_firebase_js():
+    return send_from_directory(DIR, 'firebase.js', mimetype='application/javascript')
+
 @app.route('/main.js')
 def serve_main():
     return send_from_directory(DIR, 'main.js', mimetype='application/javascript')
 
 @app.route('/api/calc', methods=['POST'])
 def calc_api():
+    if not check_rate_limit(get_client_ip()):
+        return jsonify({'error': 'too many requests'}), 429
     api_secret = os.environ.get('API_SECRET', '')
     if api_secret:
         req_key = request.headers.get('X-App-Key', '')
@@ -289,16 +326,28 @@ def calc_api():
 
 @app.route('/api/saju', methods=['POST'])
 def saju_api():
+    # IP Rate Limiting
+    client_ip = get_client_ip()
+    if not check_rate_limit(client_ip):
+        log.warning(f"Rate limit exceeded: {client_ip}")
+        return jsonify({'error': 'too many requests'}), 429
+
     # API 키 인증 (환경변수 없으면 개발 모드)
     api_secret = os.environ.get('API_SECRET', '')
     if api_secret:
         req_key = request.headers.get('X-App-Key', '')
         if req_key != api_secret:
             return jsonify({'error': 'unauthorized'}), 401
+
+    # 요청 파싱 + 크기 제한
+    data = request.json or {}
+    messages_check = data.get('messages', [])
+    for msg in messages_check:
+        if len(str(msg.get('content', ''))) > 5000:
+            return jsonify({'error': 'message too long'}), 400
     if not is_ready:
         return jsonify({'error': init_msg}), 500
     try:
-        data = request.json or {}
         if data.get('ping'):
             return jsonify({'content': [{'type': 'text', 'text': 'pong'}]})
 

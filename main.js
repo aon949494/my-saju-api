@@ -2404,17 +2404,19 @@ function buildUPrompt(d,type,target){
     '4. 각 항목 150~200자, 짧고 임팩트 있게.',
     '5. 인사말 없이 바로 시작.',
     '',
-    '아래 형식 그대로 출력:',
-    '[OVERALL_SCORE]0~100사이숫자[/OVERALL_SCORE]',
-    '[OVERALL]'+dn+' 총운[/OVERALL]',
-    '[MONEY_SCORE]0~100사이숫자[/MONEY_SCORE]',
-    '[MONEY]'+dn+' 재물운[/MONEY]',
-    '[LOVE_SCORE]0~100사이숫자[/LOVE_SCORE]',
-    '[LOVE]'+dn+' 연애운[/LOVE]',
-    '[WORK_SCORE]0~100사이숫자[/WORK_SCORE]',
-    '[WORK]'+dn+' 직업운[/WORK]',
-    '[HEALTH_SCORE]0~100사이숫자[/HEALTH_SCORE]',
-    '[HEALTH]'+dn+' 건강운[/HEALTH]'
+    '아래 형식 그대로 출력 (대괄호 태그는 유지, 내용만 실제로 작성):',
+    '[OVERALL_SCORE]숫자만[/OVERALL_SCORE]',
+    '[OVERALL]실제 '+dn+' 총운 내용을 150~200자로 작성[/OVERALL]',
+    '[MONEY_SCORE]숫자만[/MONEY_SCORE]',
+    '[MONEY]실제 '+dn+' 재물운 내용을 150~200자로 작성[/MONEY]',
+    '[LOVE_SCORE]숫자만[/LOVE_SCORE]',
+    '[LOVE]실제 '+dn+' 연애운 내용을 150~200자로 작성[/LOVE]',
+    '[WORK_SCORE]숫자만[/WORK_SCORE]',
+    '[WORK]실제 '+dn+' 직업운 내용을 150~200자로 작성[/WORK]',
+    '[HEALTH_SCORE]숫자만[/HEALTH_SCORE]',
+    '[HEALTH]실제 '+dn+' 건강운 내용을 150~200자로 작성[/HEALTH]',
+    '',
+    '반드시 위 10개 태그 모두 포함. 태그 안에 "실제 내용을 작성"이라는 문구 그대로 쓰지 말고 진짜 운세 내용을 써.'
   ].join('\n');
 }
 
